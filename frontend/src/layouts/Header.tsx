@@ -8,7 +8,7 @@ function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         {/* 로고/타이틀 */}
         <div className="mr-8 min-w-[220px] flex flex-col justify-center">
-          <span className="text-2xl font-extrabold leading-tight text-black">{'신천지 전문상담소'}</span>
+          <span className="text-2xl font-extrabold leading-tight text-black">{'신천지 문제'}</span>
           <span className="text-xs font-semibold text-gray-500">{'구리이단상담소'}</span>
         </div>
         {/* 네비게이션 */}
