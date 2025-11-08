@@ -11,6 +11,8 @@ const CounselingRequest = React.lazy(() => import('@/pages/CounselingRequest'));
 const DoctrineCertification = React.lazy(() => import('@/pages/DoctrineCertification'));
 const PreventionGuide = React.lazy(() => import('@/pages/PreventionGuide'));
 const WithdrawalCases = React.lazy(() => import('@/pages/WithdrawalCases'));
+const LoginPage = React.lazy(() => import('@/pages/LoginPage'));
+const SignUpPage = React.lazy(() => import('@/pages/SignUpPage'));
 
 export const routes = [
   {
@@ -59,6 +61,14 @@ export const routes = [
       {
         path: '/withdrawal-cases',
         Component: WithdrawalCases,
+      },
+      {
+        path: '/login',
+        Component: LoginPage,
+      },
+      {
+        path: '/signup',
+        Component: SignUpPage,
       },
     ],
   },

@@ -15,4 +15,4 @@
   - eslint (필수)
 
 # 프로젝트 실행방법
-(frontedn 폴더에서) npm run dev
+(frontend 폴더에서) npm run dev

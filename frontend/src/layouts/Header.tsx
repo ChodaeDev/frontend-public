@@ -1,9 +1,12 @@
 
 import { FaBell, FaUser } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import Navigation from './Navigation';
 import VisitorCounter from '../components/VisitorCounter';
 
 function Header() {
+  const navigate = useNavigate();
+
   return (
     <header className="w-full border-b border-gray-200 bg-white">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
@@ -22,7 +25,10 @@ function Header() {
           <button className="text-gray-600 hover:text-black focus:outline-none">
             <FaBell size={22} />
           </button>
-          <button className="text-gray-600 hover:text-black focus:outline-none">
+          <button
+            className="text-gray-600 hover:text-black focus:outline-none"
+            onClick={() => navigate('/login')}
+          >
             <FaUser size={22} />
           </button>
         </div>

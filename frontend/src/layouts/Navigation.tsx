@@ -17,6 +17,8 @@ function Navigation() {
     { path: '/doctrine-certification', label: '교리반증' },
     { path: '/prevention-guide', label: '피해예방' },
     { path: '/withdrawal-cases', label: '탈퇴사례' },
+    { path: '/login', label: '로그인' },
+    { path: '/signup', label: '회원가입' },
   ];
 
   // 각 경로에 대한 매치 상태 확인
@@ -28,6 +30,8 @@ function Navigation() {
   const matchDoctrineCertification = useMatch('/doctrine-certification');
   const matchPreventionGuide = useMatch('/prevention-guide');
   const matchWithdrawalCases = useMatch('/withdrawal-cases');
+  const matchLogin = useMatch('/login');
+  const matchSignup = useMatch('/signup');
 
   return (
     <nav className="flex items-center overflow-x-auto scrollbar-hide">
@@ -42,6 +46,8 @@ function Navigation() {
           if (path === '/doctrine-certification') isActive = !!matchDoctrineCertification;
           if (path === '/prevention-guide') isActive = !!matchPreventionGuide;
           if (path === '/withdrawal-cases') isActive = !!matchWithdrawalCases;
+          if (path === '/login') isActive = !!matchLogin;
+          if (path === '/signup') isActive = !!matchSignup;
           
           return (
             <Link
