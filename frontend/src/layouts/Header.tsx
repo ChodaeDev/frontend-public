@@ -1,6 +1,7 @@
 
 import { FaBell, FaUser } from 'react-icons/fa';
 import Navigation from './Navigation';
+import VisitorCounter from '../components/VisitorCounter';
 
 function Header() {
   return (
@@ -17,6 +18,7 @@ function Header() {
         </nav>
         {/* 우측 아이콘 */}
         <div className="ml-8 flex items-center space-x-6">
+          <VisitorCounter />
           <button className="text-gray-600 hover:text-black focus:outline-none">
             <FaBell size={22} />
           </button>

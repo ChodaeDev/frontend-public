@@ -10,6 +10,8 @@ services:
     volumes:
       - ./logs:/app/logs
     restart: unless-stopped
+    depends_on:
+      - db
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/api/public/health"]
       interval: 30s
@@ -34,23 +36,27 @@ services:
     networks:
       - app-network
 
-  # 개발용 데이터베이스 (필요시)
-  # db:
-  #   image: postgres:15
-  #   environment:
-  #     POSTGRES_DB: chodae_recovery
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: password
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
-  #   networks:
-  #     - app-network
+  # MariaDB 데이터베이스
+  db:
+    image: mariadb:11.4.8
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: chodae_recovery
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      # - ./sql:/docker-entrypoint-initdb.d
+      - ./mysql-config:/etc/mysql/conf.d
+    restart: unless-stopped
+    networks:
+      - app-network
 
 networks:
   app-network:
     driver: bridge
 
-# volumes:
-#   postgres_data:
+volumes:
+  mariadb_data:

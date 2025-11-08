@@ -19,7 +19,7 @@ public class TestController {
         healthInfo.put("service", "Chodae Recovery API");
         healthInfo.put("version", "1.0.0");
         healthInfo.put("timestamp", System.currentTimeMillis());
-        
+
         return ApiResponse.success("서비스가 정상적으로 실행 중입니다.", healthInfo);
     }
 
