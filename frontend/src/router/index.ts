@@ -1,75 +1,31 @@
 import * as React from 'react';
 
 const App = React.lazy(() => import('@/App'));
-const MainView = React.lazy(() => import('@/pages/MainView'));
 const HomePage = React.lazy(() => import('@/pages/HomePage'));
-const OlmapView = React.lazy(() => import('@/pages/SecondView'));
-const CounselingInfo = React.lazy(() => import('@/pages/CounselingInfo'));
-const PastorShin = React.lazy(() => import('@/pages/PastorShin'));
+const CenterInfo = React.lazy(() => import('@/pages/CenterInfo'));
+const Ministry = React.lazy(() => import('@/pages/Ministry'));
+const Counsult = React.lazy(() => import('@/pages/Counsult'));
 const ShincheonjiInfo = React.lazy(() => import('@/pages/ShincheonjiInfo'));
-const CounselingRequest = React.lazy(() => import('@/pages/CounselingRequest'));
-const DoctrineCertification = React.lazy(() => import('@/pages/DoctrineCertification'));
+const Apologetics = React.lazy(() => import('@/pages/Apologetics'));
 const PreventionGuide = React.lazy(() => import('@/pages/PreventionGuide'));
 const WithdrawalCases = React.lazy(() => import('@/pages/WithdrawalCases'));
-const LoginPage = React.lazy(() => import('@/pages/LoginPage'));
-const SignUpPage = React.lazy(() => import('@/pages/SignUpPage'));
+// const LoginPage = React.lazy(() => import('@/pages/LoginPage'));
+// const SignUpPage = React.lazy(() => import('@/pages/SignUpPage'));
 
 export const routes = [
   {
     path: '/',
     Component: App,
     children: [
-      {
-        path: '/',
-        Component: () => {
-          window.location.href = '/home';
-          return null;
-        },
-      },
-      {
-        path: '/home',
-        Component: HomePage,
-      },
-      {
-        path: '/second',
-        Component: OlmapView,
-      },
-      {
-        path: '/counseling-info',
-        Component: CounselingInfo,
-      },
-      {
-        path: '/pastor-shin',
-        Component: PastorShin,
-      },
-      {
-        path: '/shincheonji-info',
-        Component: ShincheonjiInfo,
-      },
-      {
-        path: '/counseling-request',
-        Component: CounselingRequest,
-      },
-      {
-        path: '/doctrine-certification',
-        Component: DoctrineCertification,
-      },
-      {
-        path: '/prevention-guide',
-        Component: PreventionGuide,
-      },
-      {
-        path: '/withdrawal-cases',
-        Component: WithdrawalCases,
-      },
-      {
-        path: '/login',
-        Component: LoginPage,
-      },
-      {
-        path: '/signup',
-        Component: SignUpPage,
-      },
+      { path: '/', Component: () => {window.location.href = '/home';return null;} },
+      { path: '/home', Component: HomePage },
+      { path: '/center', Component: CenterInfo },
+      { path: '/ministry', Component: Ministry },
+      { path: '/counsult', Component: Counsult },
+      { path: '/shincheonji', Component: ShincheonjiInfo },
+      { path: '/apologetics', Component: Apologetics },
+      { path: '/prevention', Component: PreventionGuide },
+      { path: '/cases', Component: WithdrawalCases },
     ],
   },
 ];
