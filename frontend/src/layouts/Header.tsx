@@ -8,25 +8,22 @@ function Header() {
   const navigate = useNavigate();
 
   return (
-    <header className="w-full border-b border-gray-200 bg-white">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-        {/* 로고/타이틀 */}
-        <div className="mr-8 min-w-[220px] flex flex-col justify-center">
-          <span className="text-2xl font-extrabold leading-tight text-black">{'신천지 문제'}</span>
-          <span className="text-xs font-semibold text-gray-500">{'구리이단상담소'}</span>
+    <header className={'border-gray-2 bg-background w-full border-b'}>
+      <div className={'mx-auto flex h-[60px] w-full max-w-[1200px] items-center justify-between'}>
+        <div className={'flex w-[240px] flex-col justify-center'}>
+          <span className={'text-2xl font-extrabold leading-tight text-main'}>{'구리이단상담소'}</span>
+          <span className={'text-xs font-semibold text-gray5'}>{'신천지 관련 전문 상담'}</span>
         </div>
-        {/* 네비게이션 */}
-        <nav className="flex-1">
-          <Navigation />
-        </nav>
-        {/* 우측 아이콘 */}
-        <div className="ml-8 flex items-center space-x-6">
+
+        <Navigation />
+
+        <div className={'flex w-[240px] items-center space-x-6'}>
           <VisitorCounter />
-          <button className="text-gray-600 hover:text-black focus:outline-none">
+          <button className={'text-gray-600 hover:text-black focus:outline-none'}>
             <FaBell size={22} />
           </button>
           <button
-            className="text-gray-600 hover:text-black focus:outline-none"
+            className={'text-gray-600 hover:text-black focus:outline-none'}
             onClick={() => navigate('/login')}
           >
             <FaUser size={22} />
