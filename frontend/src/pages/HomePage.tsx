@@ -1,4 +1,4 @@
-import { FaHeart, FaUsers, FaHandshake, FaLightbulb, FaArrowRight, FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaYoutube, FaNewspaper, FaPlay, FaExternalLinkAlt, FaCalendarAlt, FaUserTie, FaInfoCircle, FaHandsHelping } from 'react-icons/fa';
+import { FaHeart, FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaYoutube, FaNewspaper, FaPlay, FaExternalLinkAlt, FaCalendarAlt, FaUserTie, FaInfoCircle, FaHandsHelping } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
@@ -9,7 +9,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className={'from-blue-50 min-h-screen bg-gradient-to-br via-white to-purple-50'}>
+    <div className={'from-blue-50 min-h-screen'}>
       {/* Hero Section */}
       <section className={'relative overflow-hidden'}>
         <div className={'mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8'}>
@@ -37,7 +37,7 @@ const HomePage = () => {
       </section>
 
       {/* YouTube & News Section */}
-      <section className={'bg-white py-4'}>
+      <section className={'py-4'}>
         <div className={'mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'}>
           <div className={'mb-12 text-center'}>
             <h2 className={'mb-4 text-4xl font-bold text-gray-900'}>{'유튜브 & 뉴스'}</h2>
@@ -46,7 +46,7 @@ const HomePage = () => {
 
           <div className={'grid grid-cols-1 gap-8 lg:grid-cols-2'}>
             {/* YouTube Section */}
-            <div className={'rounded-2xl bg-gradient-to-br from-red-50 to-red-100 p-8'}>
+            <div className={'rounded-2xl p-8'}>
               <div className={'mb-6 flex items-center gap-3'}>
                 <FaYoutube className={'text-4xl text-red-600'} />
                 <h3 className={'text-2xl font-bold text-gray-900'}>{'유튜브 채널'}</h3>
