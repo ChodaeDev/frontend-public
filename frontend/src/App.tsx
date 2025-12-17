@@ -15,9 +15,11 @@ function App() {
 
   return (
     <div id={'app'} >
-      <div className={'relative grid h-screen grid-rows-[60px,1fr]'}>
+      <div className={'relative h-screen'}>
         <Header />
-        <Outlet />
+        <div className={'mt-20 h-[calc(100vh-60px)]'}>
+          <Outlet />
+        </div>
       </div>
     </div>
   );
