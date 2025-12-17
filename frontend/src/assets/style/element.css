@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  font-weight: 400;
+  font-synthesis: none;
+  font-family: Pretendard, Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-primary);
+  background-color: var(--background);
+}
+
+input, textarea {
+  background-color: var(--background);
+}
+
+.dark input, .dark textarea {
+  background-color: var(--background-secondary);
+}

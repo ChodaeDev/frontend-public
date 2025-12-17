@@ -1,57 +1,70 @@
-/* configure tailwindcss */
+@import './assets/style/scrollbar.css';
+@import './assets/style/element.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  font-family: 'Pretendard', sans-serif !important;
-  font-weight: 450;
-  color: var(--text-color);
+  --primary: #1E293B;
+  --secondary: #537FF1;
+  --tertiary: #DBE4F3;
+  --quaternary: #F8FAFD;
   
-  --text-color: #3a3a3a;
-  --foreground-color: var(--gray10);
-  --background-color: var(--gray1);
+  --normal: #16B11B;
+  --warning: #FFA500;
+  --error: #FF0000;
 
-  --main-color: #1e293b;
-  --sub-color: #475569;
+  --text-primary: rgb(5, 5, 5);
+  --text-secondary: rgb(24, 24, 24);
+  --text-inverse: rgb(251, 251, 251);
 
-  --blue: #2563eb;
-  --skyblue: #0ea5e9;
-  --orange: #f97316;
+  --background: rgb(252, 252, 252);
+  --background-secondary: rgb(245, 245, 245);
+  --foreground: rgb(0, 0, 0);
+  --foreground-secondary: rgb(24, 24, 24);
 
-  --gray1: #f1f1f1;
-  --gray2: #e0e0e0;
-  --gray3: #c2c2c2;
-  --gray4: #a3a3a3;
-  --gray5: #999999;
-  --gray6: #7d7d7d;
-  --gray7: #666666;
-  --gray8: #4d4d4d;
-  --gray9: #333333;
-  --gray10: #1a1a1a;
+  --gray-0: rgb(55, 55, 55);
+  --gray-1: rgb(75, 75, 75);
+  --gray-2: rgb(95, 95, 95);
+  --gray-3: rgb(115, 115, 115);
+  --gray-4: rgb(135, 135, 135);
+  --gray-5: rgb(155, 155, 155);
+  --gray-6: rgb(175, 175, 175);
+  --gray-7: rgb(195, 195, 195);
+  --gray-8: rgb(215, 215, 215);
+  --gray-9: rgb(235, 235, 235);
+  --edge: rgb(255, 255, 255);
 }
 
-.loader {
-  width: 100%;
-  aspect-ratio: 1;
-  --_g: no-repeat radial-gradient(farthest-side,#aaa 94%,#0000);
-  background:
-    var(--_g) 0    0,
-    var(--_g) 100% 0,
-    var(--_g) 100% 100%,
-    var(--_g) 0    100%;
-  background-size: 40% 40%;
-  animation: l38 .5s infinite; 
-}
-@keyframes l38 {
-  100% {background-position: 100% 0,100% 100%,0 100%,0 0}
-}
+.dark {
+  --primary: #1E293B;
+  --secondary: #3da1f3;
+  --tertiary: #404652;
+  --quaternary: #122f5a;
 
-/* 스크롤바 숨기기 */
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari and Opera */
+  --normal: #00d107;
+  --warning: #fffb00;
+  --error: #ff4848;
+
+  --text-primary: rgb(251, 251, 251);
+  --text-secondary: rgb(226, 226, 226);
+  --text-inverse: rgb(5, 5, 5);
+  
+  --background: rgb(20, 20, 20);
+  --background-secondary: rgb(32, 32, 32);
+  --foreground: rgb(255, 255, 255);
+  --foreground-secondary: rgb(245, 245, 245);
+
+  --gray-0: rgb(200, 200, 200);
+  --gray-1: rgb(180, 180, 180);
+  --gray-2: rgb(160, 160, 160);
+  --gray-3: rgb(140, 140, 140);
+  --gray-4: rgb(120, 120, 120);
+  --gray-5: rgb(100, 100, 100);
+  --gray-6: rgb(80, 80, 80);
+  --gray-7: rgb(60, 60, 60);
+  --gray-8: rgb(45, 45, 45);
+  --gray-9: rgb(35, 35, 35);
+  --edge: rgb(0, 0, 0);
 }
