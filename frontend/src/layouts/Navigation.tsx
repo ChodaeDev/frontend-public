@@ -1,4 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Sun, Moon } from 'lucide-react';
+import { RootState } from '@/store';
+import { toggleTheme } from '@/store/themeSlice';
 
 // 네비게이션 아이템 타입 정의
 interface NavItem {
@@ -7,6 +11,9 @@ interface NavItem {
 };
 
 function Navigation() {
+  const dispatch = useDispatch();
+  const darkMode = useSelector((state: RootState) => state.theme.darkMode);
+
   // 네비게이션 아이템 설정
   const navItems: NavItem[] = [
     { path: '/home', label: '홈' },
@@ -18,6 +25,10 @@ function Navigation() {
     // { path: '/prevention', label: '피해예방' },
     // { path: '/cases', label: '탈퇴사례' },
   ];
+
+  const handleToggleTheme = () => {
+    dispatch(toggleTheme());
+  };
 
   return (
     <nav className={'flex items-center gap-6'}>
@@ -32,6 +43,17 @@ function Navigation() {
           </Link>
         );
       })}
+      <button
+        onClick={handleToggleTheme}
+        className={'ml-4 rounded-full p-2 transition-colors hover:bg-gray9'}
+        aria-label={darkMode ? '라이트 모드로 전환' : '다크 모드로 전환'}
+      >
+        {darkMode ? (
+          <Sun className={'size-5 text-main'} />
+        ) : (
+          <Moon className={'size-5 text-main'} />
+        )}
+      </button>
     </nav>
   );
 }
