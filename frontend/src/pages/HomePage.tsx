@@ -9,7 +9,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className={'from-blue-50 min-h-screen'}>
+    <div className={'min-h-screen from-blue-50'}>
       {/* Hero Section */}
       <section className={'relative overflow-hidden'}>
         <div className={'mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8'}>
@@ -88,9 +88,9 @@ const HomePage = () => {
             </div>
 
             {/* News Section */}
-            <div className={'from-blue-50 to-blue-100 rounded-2xl bg-gradient-to-br p-8'}>
+            <div className={'rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 p-8'}>
               <div className={'mb-6 flex items-center gap-3'}>
-                <FaNewspaper className={'text-blue-600 text-4xl'} />
+                <FaNewspaper className={'text-4xl text-blue-600'} />
                 <h3 className={'text-2xl font-bold text-sub'}>{'최신 뉴스'}</h3>
               </div>
               <div className={'space-y-4'}>
@@ -100,7 +100,7 @@ const HomePage = () => {
                     <h4 className={'font-bold text-sub'}>{'신천지 피해자 상담소 증가'}</h4>
                   </div>
                   <p className={'mb-3 text-sm text-gray3'}>{'전국적으로 신천지 피해자 상담소가 증가하고 있다는 최신 뉴스입니다.'}</p>
-                  <a href={'#'} className={'text-blue-600 hover:text-blue-700 flex items-center gap-1 text-sm font-semibold'}>
+                  <a href={'#'} className={'flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700'}>
                     {'기사 보기 '}<FaExternalLinkAlt />
                   </a>
                 </div>
@@ -111,7 +111,7 @@ const HomePage = () => {
                     <h4 className={'font-bold text-sub'}>{'상담 효과성 연구 결과'}</h4>
                   </div>
                   <p className={'mb-3 text-sm text-gray3'}>{'전문 상담을 통한 회복 효과에 대한 최신 연구 결과를 소개합니다.'}</p>
-                  <a href={'#'} className={'text-blue-600 hover:text-blue-700 flex items-center gap-1 text-sm font-semibold'}>
+                  <a href={'#'} className={'flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700'}>
                     {'기사 보기 '}<FaExternalLinkAlt />
                   </a>
                 </div>
@@ -122,7 +122,7 @@ const HomePage = () => {
                     <h4 className={'font-bold text-sub'}>{'가족 지원 프로그램 확대'}</h4>
                   </div>
                   <p className={'mb-3 text-sm text-gray3'}>{'피해자 가족을 위한 지원 프로그램이 확대된다는 소식입니다.'}</p>
-                  <a href={'#'} className={'text-blue-600 hover:text-blue-700 flex items-center gap-1 text-sm font-semibold'}>
+                  <a href={'#'} className={'flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700'}>
                     {'기사 보기 '}<FaExternalLinkAlt />
                   </a>
                 </div>
@@ -143,9 +143,9 @@ const HomePage = () => {
           <div className={'grid grid-cols-2 gap-6 md:grid-cols-4'}>
             <div
               onClick={() => handleNavigation('/counseling-info')}
-              className={'from-blue-50 to-blue-100 cursor-pointer rounded-2xl bg-gradient-to-br p-6 text-center transition duration-300 hover:scale-105 hover:shadow-lg'}
+              className={'cursor-pointer rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 p-6 text-center transition duration-300 hover:scale-105 hover:shadow-lg'}
             >
-              <div className={'bg-blue-600 mx-auto mb-4 flex size-16 items-center justify-center rounded-full'}>
+              <div className={'mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-blue-600'}>
                 <FaInfoCircle className={'text-2xl text-white'} />
               </div>
               <h3 className={'mb-2 text-lg font-bold text-sub'}>{'상담소 안내'}</h3>
@@ -176,9 +176,9 @@ const HomePage = () => {
 
             <div
               onClick={() => handleNavigation('/counseling-request')}
-              className={'from-orange-50 to-orange-100 cursor-pointer rounded-2xl bg-gradient-to-br p-6 text-center transition duration-300 hover:scale-105 hover:shadow-lg'}
+              className={'cursor-pointer rounded-2xl bg-gradient-to-br from-orange-50 to-orange-100 p-6 text-center transition duration-300 hover:scale-105 hover:shadow-lg'}
             >
-              <div className={'bg-orange-600 mx-auto mb-4 flex size-16 items-center justify-center rounded-full'}>
+              <div className={'mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-orange-600'}>
                 <FaHandsHelping className={'text-2xl text-white'} />
               </div>
               <h3 className={'mb-2 text-lg font-bold text-sub'}>{'상담 요청'}</h3>
@@ -249,7 +249,7 @@ const HomePage = () => {
             </h3>
             <div className={'grid grid-cols-1 gap-6 md:grid-cols-3'}>
               <div className={'text-center'}>
-                <FaPhone className={'text-blue-600 mx-auto mb-3 text-3xl'} />
+                <FaPhone className={'mx-auto mb-3 text-3xl text-blue-600'} />
                 <h4 className={'mb-2 font-bold text-sub'}>{'전화'}</h4>
                 <p className={'text-gray3'}>{'1588-0000'}</p>
               </div>
@@ -269,21 +269,21 @@ const HomePage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className={'from-blue-600 bg-gradient-to-r to-purple-600 py-20'}>
+      <section className={'bg-gradient-to-r from-blue-600 to-purple-600 py-20'}>
         <div className={'mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8'}>
           <h2 className={'mb-6 text-4xl font-bold text-white'}>{'지금 바로 상담을 시작하세요'}</h2>
-          <p className={'text-blue-100 mb-8 text-xl'}>
+          <p className={'mb-8 text-xl text-blue-100'}>
             {'전문적인 도움을 받아 새로운 삶을 시작할 수 있습니다. '}
             {'언제든지 연락주세요.'}
           </p>
           <div className={'flex flex-col justify-center gap-4 sm:flex-row'}>
             <button
               onClick={() => handleNavigation('/counseling-request')}
-              className={'text-blue-600 rounded-full bg-white px-8 py-4 text-lg font-semibold transition duration-300 hover:scale-105 hover:bg-gray-100'}
+              className={'rounded-full bg-white px-8 py-4 text-lg font-semibold text-blue-600 transition duration-300 hover:scale-105 hover:bg-gray-100'}
             >
               {'무료 상담 신청'}
             </button>
-            <button className={'hover:text-blue-600 rounded-full border-2 border-white px-8 py-4 text-lg font-semibold text-white transition duration-300 hover:bg-white'}>
+            <button className={'rounded-full border-2 border-white px-8 py-4 text-lg font-semibold text-white transition duration-300 hover:bg-white hover:text-blue-600'}>
               {'전화 상담: 1588-0000'}
             </button>
           </div>

@@ -1,5 +1,19 @@
 import React, { useState, useMemo } from 'react';
-import { FaBook, FaGraduationCap, FaClipboardCheck, FaExclamationTriangle, FaCheckCircle, FaTimesCircle, FaQuestionCircle, FaLightbulb, FaHandshake, FaCertificate, FaSearch, FaFilter, FaEye, FaDownload, FaCalendarAlt, FaUser } from 'react-icons/fa';
+import { FaBook, FaGraduationCap, FaClipboardCheck, FaLightbulb, FaHandshake, FaCertificate, FaSearch, FaFilter, FaCalendarAlt, FaUser } from 'react-icons/fa';
+
+interface DoctrineItem {
+  id: number;
+  title: string;
+  author: string;
+  date: string;
+  views: number;
+  status: string;
+  category: string;
+  description: string;
+  icon: React.ElementType;
+  color: string;
+  details: string[];
+}
 
 const Apologetics = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -8,152 +22,154 @@ const Apologetics = () => {
   const itemsPerPage = 5;
 
   // 교리 반증 항목 데이터
-  const doctrineItems = [
-    {
-      id: 1,
-      title: '신천지 기본 교리와 창립 배경',
-      author: '신현욱 목사',
-      date: '2024-01-15',
-      views: 1250,
-      status: '완료',
-      category: '기본교리',
-      description: '신천지의 핵심 교리와 가르침에 대한 이해',
-      icon: FaBook,
-      color: 'blue',
-      details: [
-        '신천지의 창립 배경과 역사',
-        '이만희의 신격화 과정',
-        '성경 해석의 왜곡',
-        '구원관의 문제점',
-      ],
-    },
-    {
-      id: 2,
-      title: '성경 해석 방법론과 그 문제점',
-      author: '김철수 박사',
-      date: '2024-01-20',
-      views: 890,
-      status: '진행중',
-      category: '성경해석',
-      description: '신천지의 성경 해석 방식과 그 문제점',
-      icon: FaGraduationCap,
-      color: 'green',
-      details: [
-        '비유 해석의 오류',
-        '성경 문맥 무시',
-        '자의적 해석 방법',
-        '정통 신학과의 차이점',
-      ],
-    },
-    {
-      id: 3,
-      title: '신천지 특별 가르침 분석',
-      author: '이영희 교수',
-      date: '2024-01-25',
-      views: 650,
-      status: '대기',
-      category: '특별가르침',
-      description: '신천지만의 독특한 교리와 가르침',
-      icon: FaLightbulb,
-      color: 'purple',
-      details: [
-        '144,000명의 개념',
-        '이만희의 신격화',
-        '신천지만의 구원관',
-        '세계 통일 정부론',
-      ],
-    },
-    {
-      id: 4,
-      title: '교리 반증 실습 및 평가 과정',
-      author: '박민수 상담사',
-      date: '2024-02-01',
-      views: 420,
-      status: '대기',
-      category: '실습평가',
-      description: '교리 반증을 위한 실습 과정과 평가',
-      icon: FaClipboardCheck,
-      color: 'orange',
-      details: [
-        '교리 반증 시험',
-        '면접 평가',
-        '실제 사례 분석',
-        '반증서 발급 과정',
-      ],
-    },
-    {
-      id: 5,
-      title: '신천지 탈퇴자 생생 증언',
-      author: '탈퇴자 A씨',
-      date: '2024-02-05',
-      views: 2100,
-      status: '완료',
-      category: '탈퇴증언',
-      description: '신천지 탈퇴자들의 생생한 증언',
-      icon: FaHandshake,
-      color: 'red',
-      details: [
-        '탈퇴 동기와 과정',
-        '피해 경험담',
-        '회복 과정',
-        '경고 메시지',
-      ],
-    },
-    {
-      id: 6,
-      title: '전문가들의 신천지 교리 분석',
-      author: '종교학자 협회',
-      date: '2024-02-10',
-      views: 780,
-      status: '진행중',
-      category: '전문분석',
-      description: '종교학자와 전문가들의 분석',
-      icon: FaCertificate,
-      color: 'indigo',
-      details: [
-        '신학적 분석',
-        '심리학적 접근',
-        '사회학적 관점',
-        '법적 문제점',
-      ],
-    },
-    {
-      id: 7,
-      title: '신천지 교리와 정통 기독교 비교',
-      author: '신학연구소',
-      date: '2024-02-15',
-      views: 950,
-      status: '완료',
-      category: '비교분석',
-      description: '신천지 교리와 정통 기독교의 차이점',
-      icon: FaBook,
-      color: 'blue',
-      details: [
-        '삼위일체 교리 비교',
-        '구원론의 차이',
-        '교회관의 차이',
-        '성경관의 차이',
-      ],
-    },
-    {
-      id: 8,
-      title: '신천지 피해자 가족 상담 사례',
-      author: '가족상담센터',
-      date: '2024-02-20',
-      views: 680,
-      status: '진행중',
-      category: '상담사례',
-      description: '신천지 피해자 가족들의 상담 사례',
-      icon: FaHandshake,
-      color: 'green',
-      details: [
-        '가족 갈등 해결',
-        '의사소통 개선',
-        '치유 과정',
-        '재발 방지',
-      ],
-    },
-  ];
+  const doctrineItems: DoctrineItem[] = (() => {
+    return [
+      {
+        id: 1,
+        title: '신천지 기본 교리와 창립 배경',
+        author: '신현욱 목사',
+        date: '2024-01-15',
+        views: 1250,
+        status: '완료',
+        category: '기본교리',
+        description: '신천지의 핵심 교리와 가르침에 대한 이해',
+        icon: FaBook,
+        color: 'blue',
+        details: [
+          '신천지의 창립 배경과 역사',
+          '이만희의 신격화 과정',
+          '성경 해석의 왜곡',
+          '구원관의 문제점',
+        ],
+      },
+      {
+        id: 2,
+        title: '성경 해석 방법론과 그 문제점',
+        author: '김철수 박사',
+        date: '2024-01-20',
+        views: 890,
+        status: '진행중',
+        category: '성경해석',
+        description: '신천지의 성경 해석 방식과 그 문제점',
+        icon: FaGraduationCap,
+        color: 'green',
+        details: [
+          '비유 해석의 오류',
+          '성경 문맥 무시',
+          '자의적 해석 방법',
+          '정통 신학과의 차이점',
+        ],
+      },
+      {
+        id: 3,
+        title: '신천지 특별 가르침 분석',
+        author: '이영희 교수',
+        date: '2024-01-25',
+        views: 650,
+        status: '대기',
+        category: '특별가르침',
+        description: '신천지만의 독특한 교리와 가르침',
+        icon: FaLightbulb,
+        color: 'purple',
+        details: [
+          '144,000명의 개념',
+          '이만희의 신격화',
+          '신천지만의 구원관',
+          '세계 통일 정부론',
+        ],
+      },
+      {
+        id: 4,
+        title: '교리 반증 실습 및 평가 과정',
+        author: '박민수 상담사',
+        date: '2024-02-01',
+        views: 420,
+        status: '대기',
+        category: '실습평가',
+        description: '교리 반증을 위한 실습 과정과 평가',
+        icon: FaClipboardCheck,
+        color: 'orange',
+        details: [
+          '교리 반증 시험',
+          '면접 평가',
+          '실제 사례 분석',
+          '반증서 발급 과정',
+        ],
+      },
+      {
+        id: 5,
+        title: '신천지 탈퇴자 생생 증언',
+        author: '탈퇴자 A씨',
+        date: '2024-02-05',
+        views: 2100,
+        status: '완료',
+        category: '탈퇴증언',
+        description: '신천지 탈퇴자들의 생생한 증언',
+        icon: FaHandshake,
+        color: 'red',
+        details: [
+          '탈퇴 동기와 과정',
+          '피해 경험담',
+          '회복 과정',
+          '경고 메시지',
+        ],
+      },
+      {
+        id: 6,
+        title: '전문가들의 신천지 교리 분석',
+        author: '종교학자 협회',
+        date: '2024-02-10',
+        views: 780,
+        status: '진행중',
+        category: '전문분석',
+        description: '종교학자와 전문가들의 분석',
+        icon: FaCertificate,
+        color: 'indigo',
+        details: [
+          '신학적 분석',
+          '심리학적 접근',
+          '사회학적 관점',
+          '법적 문제점',
+        ],
+      },
+      {
+        id: 7,
+        title: '신천지 교리와 정통 기독교 비교',
+        author: '신학연구소',
+        date: '2024-02-15',
+        views: 950,
+        status: '완료',
+        category: '비교분석',
+        description: '신천지 교리와 정통 기독교의 차이점',
+        icon: FaBook,
+        color: 'blue',
+        details: [
+          '삼위일체 교리 비교',
+          '구원론의 차이',
+          '교회관의 차이',
+          '성경관의 차이',
+        ],
+      },
+      {
+        id: 8,
+        title: '신천지 피해자 가족 상담 사례',
+        author: '가족상담센터',
+        date: '2024-02-20',
+        views: 680,
+        status: '진행중',
+        category: '상담사례',
+        description: '신천지 피해자 가족들의 상담 사례',
+        icon: FaHandshake,
+        color: 'green',
+        details: [
+          '가족 갈등 해결',
+          '의사소통 개선',
+          '치유 과정',
+          '재발 방지',
+        ],
+      },
+    ];
+  })();
 
   // 검색 및 필터링된 항목들
   const filteredItems = useMemo(() => {
@@ -164,7 +180,7 @@ const Apologetics = () => {
       const matchesStatus = statusFilter === '전체' || item.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
-  }, [searchTerm, statusFilter]);
+  }, [searchTerm, statusFilter, doctrineItems]);
 
   // 페이지네이션
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
@@ -173,31 +189,31 @@ const Apologetics = () => {
     currentPage * itemsPerPage,
   );
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case '완료':
-        return 'bg-green-100 text-green-800';
-      case '진행중':
-        return 'bg-blue-100 text-blue-800';
-      case '대기':
-        return 'bg-yellow-100 text-yellow-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
+  // const getStatusColor = (status: string) => {
+  //   switch (status) {
+  //     case '완료':
+  //       return 'bg-green-100 text-green-800';
+  //     case '진행중':
+  //       return 'bg-blue-100 text-blue-800';
+  //     case '대기':
+  //       return 'bg-yellow-100 text-yellow-800';
+  //     default:
+  //       return 'bg-gray-100 text-gray-800';
+  //   }
+  // };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case '완료':
-        return <FaCheckCircle className={'text-green-600'} />;
-      case '진행중':
-        return <FaQuestionCircle className={'text-blue-600'} />;
-      case '대기':
-        return <FaExclamationTriangle className={'text-yellow-600'} />;
-      default:
-        return <FaTimesCircle className={'text-gray-600'} />;
-    }
-  };
+  // const getStatusIcon = (status: string) => {
+  //   switch (status) {
+  //     case '완료':
+  //       return <FaCheckCircle className={'text-green-600'} />;
+  //     case '진행중':
+  //       return <FaQuestionCircle className={'text-blue-600'} />;
+  //     case '대기':
+  //       return <FaExclamationTriangle className={'text-yellow-600'} />;
+  //     default:
+  //       return <FaTimesCircle className={'text-gray-600'} />;
+  //   }
+  // };
 
   return (
     <div className={'min-h-screen bg-gray-50 py-12'}>
@@ -223,7 +239,7 @@ const Apologetics = () => {
                 placeholder={'제목, 작성자, 카테고리로 검색...'}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={'focus:ring-blue-500 w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 focus:border-transparent focus:ring-2'}
+                className={'w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 focus:border-transparent focus:ring-2 focus:ring-blue-500'}
               />
             </div>
 
@@ -233,7 +249,7 @@ const Apologetics = () => {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className={'focus:ring-blue-500 rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2'}
+                className={'rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500'}
               >
                 <option value={'전체'}>{'전체 상태'}</option>
                 <option value={'완료'}>{'완료'}</option>
@@ -245,7 +261,7 @@ const Apologetics = () => {
 
           {/* 검색 결과 통계 */}
           <div className={'mt-4 text-sm text-gray-600'}>
-            {'총 '}<span className={'text-blue-600 font-semibold'}>{filteredItems.length}</span>{'개의 자료가 검색되었습니다.'}
+            {'총 '}<span className={'font-semibold text-blue-600'}>{filteredItems.length}</span>{'개의 자료가 검색되었습니다.'}
           </div>
         </div>
 
@@ -270,7 +286,7 @@ const Apologetics = () => {
                 <div className={'grid grid-cols-12 items-center gap-4 text-sm'}>
                   {/* 번호 */}
                   <div className={'col-span-1 text-gray-500'}>
-                    {filteredItems.length - ((currentPage - 1) * itemsPerPage + index)}
+                    {filteredItems.length - (((currentPage - 1) * itemsPerPage) + index)}
                   </div>
 
                   {/* 분류 */}
@@ -283,7 +299,7 @@ const Apologetics = () => {
                   {/* 제목 */}
                   <div className={'col-span-4'}>
                     <div className={'flex items-center space-x-2'}>
-                      <span className={'text-blue-600 font-medium'}>{item.title}</span>
+                      <span className={'font-medium text-blue-600'}>{item.title}</span>
                       {item.views > 1000 && (
                         <span className={'rounded-full bg-red-100 px-2 py-1 text-xs text-red-800'}>{'인기'}</span>
                       )}
@@ -336,7 +352,7 @@ const Apologetics = () => {
                       onClick={() => setCurrentPage(page)}
                       className={`rounded border px-3 py-1 text-sm ${
                         currentPage === page
-                          ? 'bg-blue-600 border-blue-600 text-white'
+                          ? 'border-blue-600 bg-blue-600 text-white'
                           : 'border-gray-300 hover:bg-gray-100'
                       }`}
                     >
@@ -357,12 +373,12 @@ const Apologetics = () => {
         </div>
 
         {/* 하단 CTA 섹션 */}
-        <div className={'from-blue-600 mt-8 rounded-lg bg-gradient-to-r to-purple-600 p-8 text-center text-white'}>
+        <div className={'mt-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 p-8 text-center text-white'}>
           <h2 className={'mb-4 text-2xl font-bold'}>{'교리 반증 자료 신청하기'}</h2>
-          <p className={'text-blue-100 mb-6'}>
+          <p className={'mb-6 text-blue-100'}>
             {'추가적인 교리 반증 자료나 특정 주제에 대한 상세 분석을 요청하실 수 있습니다.'}
           </p>
-          <button className={'text-blue-600 rounded-lg bg-white px-8 py-3 font-semibold transition-colors duration-200 hover:bg-gray-100'}>
+          <button className={'rounded-lg bg-white px-8 py-3 font-semibold text-blue-600 transition-colors duration-200 hover:bg-gray-100'}>
             {'자료 요청하기'}
           </button>
         </div>

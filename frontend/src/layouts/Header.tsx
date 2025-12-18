@@ -15,7 +15,7 @@ function Header() {
   };
 
   return (
-    <header className={'bg-background fixed top-0 z-10 w-full border-b border-gray8 shadow-sm'}>
+    <header className={'fixed top-0 z-10 w-full border-b border-gray8 bg-background shadow-sm'}>
       <div className={'mx-auto flex h-[60px] w-full items-center justify-between px-4 sm:max-w-[1200px]'}>
         {/* 로고 영역 */}
         <a href={'/home'} className={'flex w-4/5 flex-col justify-center sm:w-auto'}>

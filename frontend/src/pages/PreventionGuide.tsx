@@ -45,8 +45,8 @@ const PreventionGuide = () => {
               </div>
             </div>
 
-            <div className={'bg-blue-50 mb-8 rounded-lg p-6'}>
-              <h3 className={'text-blue-800 mb-3 text-xl font-semibold'}>
+            <div className={'mb-8 rounded-lg bg-blue-50 p-6'}>
+              <h3 className={'mb-3 text-xl font-semibold text-blue-800'}>
                 {'긴급 연락처'}
               </h3>
               <div className={'grid gap-4 text-gray-700 md:grid-cols-2'}>
@@ -80,7 +80,7 @@ const PreventionGuide = () => {
               <button className={'mr-4 rounded-lg bg-red-600 px-8 py-3 font-semibold text-white transition-colors duration-200 hover:bg-red-700'}>
                 {'긴급 신고하기'}
               </button>
-              <button className={'bg-blue-600 hover:bg-blue-700 rounded-lg px-8 py-3 font-semibold text-white transition-colors duration-200'}>
+              <button className={'rounded-lg bg-blue-600 px-8 py-3 font-semibold text-white transition-colors duration-200 hover:bg-blue-700'}>
                 {'상담 예약하기'}
               </button>
             </div>

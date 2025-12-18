@@ -57,7 +57,7 @@ function SignUpPage() {
   };
 
   return (
-    <div className={'to-blue-100 flex h-full items-center justify-center bg-gradient-to-tl from-purple-100 via-white'}>
+    <div className={'flex h-full items-center justify-center bg-gradient-to-tl from-purple-100 via-white to-blue-100'}>
       <div className={'w-full max-w-2xl rounded-3xl bg-white p-10 shadow-2xl'}>
         <h1 className={'mb-2 text-center text-3xl font-bold text-gray-900'}>{'회원가입'}</h1>
         <p className={'mb-8 text-center text-sm text-gray-500'}>
@@ -76,7 +76,7 @@ function SignUpPage() {
               onChange={handleChange}
               required
               placeholder={'사용할 아이디를 입력하세요'}
-              className={'focus:border-blue-500 focus:ring-blue-200 w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:outline-none focus:ring-2'}
+              className={'w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
             />
           </div>
 
@@ -92,7 +92,7 @@ function SignUpPage() {
               onChange={handleChange}
               required
               placeholder={'비밀번호를 입력하세요'}
-              className={'focus:border-blue-500 focus:ring-blue-200 w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:outline-none focus:ring-2'}
+              className={'w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
             />
           </div>
 
@@ -107,7 +107,7 @@ function SignUpPage() {
               onChange={handleChange}
               required
               placeholder={'이름을 입력하세요'}
-              className={'focus:border-blue-500 focus:ring-blue-200 w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:outline-none focus:ring-2'}
+              className={'w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
             />
           </div>
 
@@ -121,7 +121,7 @@ function SignUpPage() {
               value={formValues.nickname}
               onChange={handleChange}
               placeholder={'닉네임을 입력하세요'}
-              className={'focus:border-blue-500 focus:ring-blue-200 w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:outline-none focus:ring-2'}
+              className={'w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
             />
           </div>
 
@@ -136,7 +136,7 @@ function SignUpPage() {
               onChange={handleChange}
               required
               placeholder={'예: 010-1234-5678'}
-              className={'focus:border-blue-500 focus:ring-blue-200 w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:outline-none focus:ring-2'}
+              className={'w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
             />
           </div>
 
@@ -150,7 +150,7 @@ function SignUpPage() {
               value={formValues.church}
               onChange={handleChange}
               placeholder={'출석 중인 교회명을 입력하세요'}
-              className={'focus:border-blue-500 focus:ring-blue-200 w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:outline-none focus:ring-2'}
+              className={'w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
             />
           </div>
 
@@ -164,7 +164,7 @@ function SignUpPage() {
               type={'date'}
               value={formValues.birthday}
               onChange={handleChange}
-              className={'focus:border-blue-500 focus:ring-blue-200 w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:outline-none focus:ring-2'}
+              className={'w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
             />
           </div>
 
@@ -179,7 +179,7 @@ function SignUpPage() {
               onChange={handleChange}
               placeholder={'상담 요청 사유 등 추가 정보를 입력하세요'}
               rows={4}
-              className={'focus:border-blue-500 focus:ring-blue-200 w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:outline-none focus:ring-2'}
+              className={'w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
             />
             <p className={'mt-1 text-xs text-gray-400'}>{'선택 사항입니다.'}</p>
           </div>

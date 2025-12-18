@@ -19,8 +19,8 @@ const WithdrawalCases = () => {
 
             <div className={'space-y-8'}>
               {/* 사례 1 */}
-              <div className={'bg-blue-50 rounded-lg p-6'}>
-                <h3 className={'text-blue-800 mb-3 text-xl font-semibold'}>
+              <div className={'rounded-lg bg-blue-50 p-6'}>
+                <h3 className={'mb-3 text-xl font-semibold text-blue-800'}>
                   {'김○○님의 탈퇴 사례 (30대 여성)'}
                 </h3>
                 <div className={'space-y-3 text-gray-700'}>
@@ -90,7 +90,7 @@ const WithdrawalCases = () => {
             </div>
 
             <div className={'mt-8 text-center'}>
-              <button className={'bg-blue-600 hover:bg-blue-700 mr-4 rounded-lg px-8 py-3 font-semibold text-white transition-colors duration-200'}>
+              <button className={'mr-4 rounded-lg bg-blue-600 px-8 py-3 font-semibold text-white transition-colors duration-200 hover:bg-blue-700'}>
                 {'상담 신청하기'}
               </button>
               <button className={'rounded-lg bg-green-600 px-8 py-3 font-semibold text-white transition-colors duration-200 hover:bg-green-700'}>

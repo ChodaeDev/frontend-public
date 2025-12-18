@@ -31,11 +31,11 @@ const CenterInfo = () => {
               className={'group flex h-56 cursor-pointer flex-col justify-between rounded-xl border border-gray-100 bg-white p-8 shadow transition hover:border-gray-300 hover:shadow-lg'}
             >
               <div>
-                <h3 className={'group-hover:text-blue-700 mb-2 text-2xl font-bold transition'}>{card.title}</h3>
+                <h3 className={'mb-2 text-2xl font-bold transition group-hover:text-blue-700'}>{card.title}</h3>
                 <p className={'whitespace-pre-line text-gray-500'}>{card.description}</p>
               </div>
               <div className={'flex justify-end'}>
-                <FaChevronRight className={'group-hover:text-blue-700 text-gray-400 transition'} size={28} />
+                <FaChevronRight className={'text-gray-400 transition group-hover:text-blue-700'} size={28} />
               </div>
             </div>
           ))}

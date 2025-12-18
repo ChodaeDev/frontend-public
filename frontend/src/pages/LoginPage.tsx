@@ -47,7 +47,7 @@ function LoginPage() {
   };
 
   return (
-    <div className={'from-blue-100 flex h-full items-center justify-center bg-gradient-to-tr via-white to-purple-100'}>
+    <div className={'flex h-full items-center justify-center bg-gradient-to-tr from-blue-100 via-white to-purple-100'}>
       <div className={'w-full max-w-md rounded-3xl bg-white p-10 shadow-2xl'}>
         <h1 className={'mb-2 text-center text-3xl font-bold text-gray-900'}>{'로그인'}</h1>
         <p className={'mb-8 text-center text-sm text-gray-500'}>
@@ -66,7 +66,7 @@ function LoginPage() {
               value={userId}
               onChange={(event) => setUserId(event.target.value)}
               placeholder={'아이디를 입력하세요'}
-              className={'focus:border-blue-500 focus:ring-blue-200 w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:outline-none focus:ring-2'}
+              className={'w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
               required
             />
           </div>
@@ -82,7 +82,7 @@ function LoginPage() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder={'비밀번호를 입력하세요'}
-              className={'focus:border-blue-500 focus:ring-blue-200 w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:outline-none focus:ring-2'}
+              className={'w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
               required
             />
           </div>
@@ -102,7 +102,7 @@ function LoginPage() {
           <button
             type={'submit'}
             disabled={loading}
-            className={'bg-blue-600 focus:ring-blue-200 disabled:bg-blue-200 w-full rounded-full px-4 py-3 text-sm font-semibold text-black shadow-md transition duration-200 focus:outline-none focus:ring-2 disabled:cursor-not-allowed disabled:text-black'}
+            className={'w-full rounded-full bg-blue-600 px-4 py-3 text-sm font-semibold text-black shadow-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:cursor-not-allowed disabled:bg-blue-200 disabled:text-black'}
           >
             {'로그인'}
           </button>
@@ -113,7 +113,7 @@ function LoginPage() {
           <button
             type={'button'}
             onClick={() => navigate('/signup')}
-            className={'text-blue-600 font-semibold hover:underline'}
+            className={'font-semibold text-blue-600 hover:underline'}
           >
             {'회원가입'}
           </button>

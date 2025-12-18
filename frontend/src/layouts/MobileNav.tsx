@@ -56,10 +56,10 @@ function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
       {/* 메뉴 패널 */}
       <div
-        className={`bg-background absolute right-0 top-0 flex h-full w-72 flex-col shadow-lg ${ panelClass }`}
+        className={`absolute right-0 top-0 flex h-full w-72 flex-col bg-background shadow-lg ${ panelClass }`}
       >
         {/* 헤더 */}
-        <div className={'bg-background-secondary flex h-[60px] items-center justify-between border-b border-gray8 p-4'}>
+        <div className={'flex h-[60px] items-center justify-between border-b border-gray8 bg-background-secondary p-4'}>
           <span className={'text-lg font-bold text-main'}>{'메뉴'}</span>
           <button
             onClick={handleClose}

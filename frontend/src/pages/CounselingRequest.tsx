@@ -19,7 +19,7 @@ const CounselingRequest = () => {
                 </label>
                 <input
                   type={'text'}
-                  className={'focus:ring-blue-500 w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2'}
+                  className={'w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'}
                   placeholder={'이름을 입력하세요'}
                 />
               </div>
@@ -30,7 +30,7 @@ const CounselingRequest = () => {
                 </label>
                 <input
                   type={'tel'}
-                  className={'focus:ring-blue-500 w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2'}
+                  className={'w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'}
                   placeholder={'연락처를 입력하세요'}
                 />
               </div>
@@ -39,7 +39,7 @@ const CounselingRequest = () => {
                 <label className={'mb-2 block text-sm font-medium text-gray-700'}>
                   {'상담 유형'}
                 </label>
-                <select className={'focus:ring-blue-500 w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2'}>
+                <select className={'w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'}>
                   <option>{'상담 유형을 선택하세요'}</option>
                   <option>{'신천지 피해 가족 상담'}</option>
                   <option>{'탈퇴 지원 상담'}</option>
@@ -53,14 +53,14 @@ const CounselingRequest = () => {
                 </label>
                 <textarea
                   rows={4}
-                  className={'focus:ring-blue-500 w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2'}
+                  className={'w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'}
                   placeholder={'상담 내용을 간단히 작성해 주세요'}
                 />
               </div>
 
               <button
                 type={'submit'}
-                className={'bg-blue-600 hover:bg-blue-700 w-full rounded-md px-4 py-2 text-white transition-colors'}
+                className={'w-full rounded-md bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700'}
               >
                 {'상담 신청하기'}
               </button>
