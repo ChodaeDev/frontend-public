@@ -1,5 +1,5 @@
-import { FaHeart, FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaYoutube, FaNewspaper, FaPlay, FaExternalLinkAlt, FaCalendarAlt, FaUserTie, FaInfoCircle, FaHandsHelping } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaYoutube, FaNewspaper, FaPlay, FaExternalLinkAlt, FaCalendarAlt, FaUserTie, FaInfoCircle, FaHandsHelping } from 'react-icons/fa';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className={'min-h-screen from-blue-50'}>
+    <div className={'min-h-screen'}>
       {/* Hero Section */}
       <section className={'relative overflow-hidden'}>
         <div className={'mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8'}>
@@ -22,17 +22,6 @@ const HomePage = () => {
               {'- 누가복음 15장 4~6절 말씀 -'}
             </p>
           </div>
-        </div>
-
-        {/* Floating Elements */}
-        <div className={'absolute left-10 top-20 animate-bounce'}>
-          <FaHeart className={'text-4xl text-red-400'} />
-        </div>
-        <div className={'absolute right-20 top-40 animate-pulse'}>
-          <FaStar className={'text-3xl text-yellow-400'} />
-        </div>
-        <div className={'absolute bottom-20 left-20 animate-bounce'} style={{ animationDelay: '1s' }}>
-          <FaStar className={'text-2xl text-purple-400'} />
         </div>
       </section>
 

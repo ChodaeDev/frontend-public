@@ -17,7 +17,7 @@ function App() {
     <div id={'app'} >
       <div className={'relative h-screen'}>
         <Header />
-        <div className={'mt-20 h-[calc(100vh-60px)]'}>
+        <div className={'mt-[60px] h-[calc(100vh-60px)]'}>
           <Outlet />
         </div>
       </div>
