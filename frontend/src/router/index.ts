@@ -10,8 +10,8 @@ const ShincheonjiInfo = React.lazy(() => import('@/pages/ShincheonjiInfo'));
 const Apologetics = React.lazy(() => import('@/pages/Apologetics'));
 const PreventionGuide = React.lazy(() => import('@/pages/PreventionGuide'));
 const WithdrawalCases = React.lazy(() => import('@/pages/WithdrawalCases'));
-// const LoginPage = React.lazy(() => import('@/pages/LoginPage'));
-// const SignUpPage = React.lazy(() => import('@/pages/SignUpPage'));
+const LoginPage = React.lazy(() => import('@/pages/LoginPage'));
+const SignUpPage = React.lazy(() => import('@/pages/SignUpPage'));
 
 export const routes = [
   {
@@ -28,6 +28,8 @@ export const routes = [
       { path: '/apologetics', Component: Apologetics },
       { path: '/prevention', Component: PreventionGuide },
       { path: '/cases', Component: WithdrawalCases },
+      { path: '/login', Component: LoginPage },
+      { path: '/signup', Component: SignUpPage },
     ],
   },
 ];

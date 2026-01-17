@@ -1,9 +1,9 @@
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */
 ;
 /*!50503 SET character_set_client = utf8mb4 */
 ;
-CREATE TABLE `user` (
+CREATE TABLE `users` (
     `id` int NOT NULL AUTO_INCREMENT,
     `user_id` varchar(100) NOT NULL,
     `username` varchar(100) NOT NULL,
@@ -12,7 +12,9 @@ CREATE TABLE `user` (
     `phone` varchar(50) DEFAULT NULL,
     `church` varchar(150) DEFAULT NULL,
     `birthday` date DEFAULT NULL,
-    `desc` text,
+    `descr` text,
+    `upd_dt` varchar(50) DEFAULT NULL,
+    `reg_dt` varchar(50) DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_user_user_id` (`user_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;

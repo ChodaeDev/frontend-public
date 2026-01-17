@@ -1,0 +1,10 @@
+{
+  "remote": {
+    "host": "your-server.com",
+    "user": "username",
+    "port": 22,
+    "projectPath": "/home/username/chodae_recovery",
+    "sshKeyPath": "~/.ssh/id_rsa"
+  }
+}
+

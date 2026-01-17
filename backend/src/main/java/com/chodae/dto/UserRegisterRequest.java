@@ -11,6 +11,5 @@ public class UserRegisterRequest {
     private String phone;
     private String church;
     private String birthday; // ISO-8601 (yyyy-MM-dd)
-    private String desc;
+    private String descr;
 }
-

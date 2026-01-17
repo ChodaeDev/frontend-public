@@ -1,7 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const API_BASE_URL = 'http://localhost:8080';
+// nginx를 통해 접근 (포트 80) 또는 개발 환경에서는 직접 백엔드 접근
+const API_BASE_URL = window.location.origin.includes('localhost:5173') 
+  ? 'http://localhost:8080'  // 개발 환경 (Vite dev server)
+  : '';  // 프로덕션 환경 (nginx를 통해 접근)
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -13,7 +16,7 @@ function SignUpPage() {
     phone: '',
     church: '',
     birthday: '',
-    desc: '',
+    descr: '',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,9 +42,33 @@ function SignUpPage() {
         body: JSON.stringify(formValues),
       });
 
-      const data = await response.json();
+      // 응답 본문이 비어있는지 확인 후 JSON 파싱
+      const text = await response.text();
+      let data;
+      
+      if (text && text.trim()) {
+        try {
+          data = JSON.parse(text);
+        } catch (parseError) {
+          throw new Error('서버 응답을 파싱할 수 없습니다.');
+        }
+      } else {
+        // 응답이 비어있지만 상태 코드가 200-299 범위면 성공으로 간주
+        if (response.ok) {
+          throw new Error('서버에서 응답이 없습니다. 서버가 정상적으로 실행 중인지 확인해주세요.');
+        } else {
+          // 403 등의 에러는 보통 JSON 응답이 있으므로, 여기 도달했다면 예상치 못한 상황
+          throw new Error(`서버 오류 (${response.status}): ${response.statusText || '알 수 없는 오류'}`);
+        }
+      }
 
-      if (!response.ok || !data.success) {
+      // 응답이 성공이 아니거나 data.success가 false인 경우
+      if (!response.ok) {
+        // 서버에서 보낸 에러 메시지가 있으면 사용, 없으면 기본 메시지
+        throw new Error(data?.message || `서버 오류 (${response.status}): ${response.statusText || '알 수 없는 오류'}`);
+      }
+
+      if (!data.success) {
         throw new Error(data.message ?? '회원가입에 실패했습니다.');
       }
 
@@ -50,7 +77,12 @@ function SignUpPage() {
         navigate('/login');
       }, 1500);
     } catch (err) {
-      setError(err instanceof Error ? err.message : '회원가입 중 오류가 발생했습니다.');
+      // 네트워크 에러 처리
+      if (err instanceof TypeError && err.message.includes('fetch')) {
+        setError('서버에 연결할 수 없습니다. 백엔드 서버가 실행 중인지 확인해주세요. (http://localhost:8080)');
+      } else {
+        setError(err instanceof Error ? err.message : '회원가입 중 오류가 발생했습니다.');
+      }
     } finally {
       setLoading(false);
     }
@@ -169,13 +201,13 @@ function SignUpPage() {
           </div>
 
           <div className={'md:col-span-2'}>
-            <label htmlFor={'desc'} className={'mb-1 block text-sm font-medium text-gray-700'}>
+            <label htmlFor={'descr'} className={'mb-1 block text-sm font-medium text-gray-700'}>
               {'소개 및 비고'}
             </label>
             <textarea
-              id={'desc'}
-              name={'desc'}
-              value={formValues.desc}
+              id={'descr'}
+              name={'descr'}
+              value={formValues.descr}
               onChange={handleChange}
               placeholder={'상담 요청 사유 등 추가 정보를 입력하세요'}
               rows={4}
@@ -201,7 +233,7 @@ function SignUpPage() {
               type={'submit'}
               disabled={loading}
               className={'w-full rounded-full bg-purple-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-200 disabled:cursor-not-allowed disabled:bg-purple-300'}
-            >
+            > 
               {loading ? '회원가입 중...' : '회원가입 완료'}
             </button>
           </div>

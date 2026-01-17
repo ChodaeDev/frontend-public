@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chodae.mapper.UserMapper">
+
+    <!-- UserResponse ResultMap 정의 (password 제외) -->
+    <resultMap id="UserResponseMap" type="com.chodae.dto.UserResponse">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="nickname" column="nickname"/>
+        <result property="phone" column="phone"/>
+        <result property="church" column="church"/>
+        <result property="birthday" column="birthday"/>
+        <result property="descr" column="descr"/>
+    </resultMap>
+
+    <!-- 사용자 ID로 사용자 조회 (비밀번호 포함, 로그인용) -->
+    <select id="findByUserIdWithPassword" parameterType="String" resultType="map">
+        SELECT 
+            id,
+            user_id as userId,
+            username,
+            password,
+            nickname,
+            phone,
+            church,
+            birthday,
+            descr
+        FROM users
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 사용자 ID로 사용자 조회 (비밀번호 제외) -->
+    <select id="findByUserId" parameterType="String" resultMap="UserResponseMap">
+        SELECT 
+            id,
+            user_id,
+            username,
+            nickname,
+            phone,
+            church,
+            birthday,
+            descr
+        FROM users
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 사용자 ID로 사용자 존재 여부 확인 -->
+    <select id="existsByUserId" parameterType="String" resultType="boolean">
+        SELECT
+            CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END
+        FROM users
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 사용자 등록 -->
+    <insert id="insertUser" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users (
+            user_id,
+            username,
+            password,
+            nickname,
+            phone,
+            church,
+            birthday,
+            descr
+        ) VALUES (
+            #{userId},
+            #{username},
+            #{password},
+            #{nickname},
+            #{phone},
+            #{church},
+            #{birthday},
+            #{descr}
+        )
+    </insert>
+
+    <!-- 사용자 정보 수정 -->
+    <update id="updateUser" parameterType="map">
+        UPDATE users
+        SET
+            username = #{username},
+            password = #{password},
+            nickname = #{nickname},
+            phone = #{phone},
+            church = #{church},
+            birthday = #{birthday},
+            descr = #{descr}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 사용자 삭제 -->
+    <delete id="deleteUser" parameterType="Integer">
+        DELETE FROM users
+        WHERE id = #{id}
+    </delete>
+
+    <!-- ID로 사용자 조회 -->
+    <select id="findById" parameterType="Integer" resultMap="UserResponseMap">
+        SELECT 
+            id,
+            user_id,
+            username,
+            nickname,
+            phone,
+            church,
+            birthday,
+            descr
+        FROM users
+        WHERE id = #{id}
+    </select>
+
+</mapper>
+

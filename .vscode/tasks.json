@@ -1,0 +1,260 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "프론트엔드 빌드",
+      "type": "shell",
+      "command": "npm run build",
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "백엔드 Docker 이미지 빌드",
+      "type": "shell",
+      "command": "docker-compose build app",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "problemMatcher": [],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "백엔드 서비스 재시작",
+      "type": "shell",
+      "command": "docker-compose up -d --build app",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "problemMatcher": [],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "전체 서비스 재시작",
+      "type": "shell",
+      "command": "docker-compose up -d --build",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "problemMatcher": [],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "서버 업데이트 (프론트엔드 + 백엔드)",
+      "dependsOn": [
+        "프론트엔드 빌드",
+        "백엔드 서비스 재시작"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "원격 서버 배포 (전체)",
+      "type": "shell",
+      "command": "bash .vscode/deploy.sh full",
+      "dependsOn": [
+        "프론트엔드 빌드"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "원격 서버 배포 (백엔드만)",
+      "type": "shell",
+      "command": "bash .vscode/deploy.sh backend",
+      "problemMatcher": [],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "원격 서버 배포 (프론트엔드만)",
+      "type": "shell",
+      "command": "bash .vscode/deploy.sh frontend",
+      "dependsOn": [
+        "프론트엔드 빌드"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "원격 서버 로그 확인",
+      "type": "shell",
+      "command": "bash .vscode/deploy.sh logs",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "isBackground": true
+    },
+    {
+      "label": "원격 서버 상태 확인",
+      "type": "shell",
+      "command": "bash .vscode/deploy.sh status",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "원격 서버 SSH 접속",
+      "type": "shell",
+      "command": "bash .vscode/deploy.sh shell",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "서버 업데이트 (백엔드만)",
+      "dependsOn": [
+        "백엔드 서비스 재시작"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "서비스 중지",
+      "type": "shell",
+      "command": "docker-compose down",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "서비스 시작",
+      "type": "shell",
+      "command": "docker-compose up -d",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "백엔드 로그 확인",
+      "type": "shell",
+      "command": "docker-compose logs -f app",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "isBackground": true
+    },
+    {
+      "label": "전체 로그 확인",
+      "type": "shell",
+      "command": "docker-compose logs -f",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "isBackground": true
+    },
+    {
+      "label": "컨테이너 상태 확인",
+      "type": "shell",
+      "command": "docker-compose ps",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "데이터베이스 초기화 (SQL 실행)",
+      "type": "shell",
+      "command": "docker-compose exec -T db mysql -uroot -prootpassword chodae_recovery < sql/chodae_recovery.sql",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "Docker 이미지 정리",
+      "type": "shell",
+      "command": "docker system prune -f",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    }
+  ]
+}
+

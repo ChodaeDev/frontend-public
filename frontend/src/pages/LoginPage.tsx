@@ -1,7 +1,10 @@
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const API_BASE_URL = 'http://localhost:8080';
+// nginx를 통해 접근 (포트 80) 또는 개발 환경에서는 직접 백엔드 접근
+const API_BASE_URL = window.location.origin.includes('localhost:5173') 
+  ? 'http://localhost:8080'  // 개발 환경 (Vite dev server)
+  : '';  // 프로덕션 환경 (nginx를 통해 접근)
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -29,7 +32,24 @@ function LoginPage() {
         }),
       });
 
-      const data = await response.json();
+      // 응답 본문이 비어있는지 확인 후 JSON 파싱
+      const text = await response.text();
+      let data;
+      
+      if (text && text.trim()) {
+        try {
+          data = JSON.parse(text);
+        } catch (parseError) {
+          throw new Error('서버 응답을 파싱할 수 없습니다.');
+        }
+      } else {
+        // 응답이 비어있지만 상태 코드가 200-299 범위면 성공으로 간주
+        if (response.ok) {
+          throw new Error('서버에서 응답이 없습니다. 서버가 정상적으로 실행 중인지 확인해주세요.');
+        } else {
+          throw new Error(`서버 오류 (${response.status}): ${response.statusText}`);
+        }
+      }
 
       if (!response.ok || !data.success) {
         throw new Error(data.message ?? '로그인에 실패했습니다.');
@@ -40,7 +60,12 @@ function LoginPage() {
         navigate('/home');
       }, 1500);
     } catch (err) {
-      setError(err instanceof Error ? err.message : '로그인 중 오류가 발생했습니다.');
+      // 네트워크 에러 처리
+      if (err instanceof TypeError && err.message.includes('fetch')) {
+        setError('서버에 연결할 수 없습니다. 백엔드 서버가 실행 중인지 확인해주세요. (http://localhost:8080)');
+      } else {
+        setError(err instanceof Error ? err.message : '로그인 중 오류가 발생했습니다.');
+      }
     } finally {
       setLoading(false);
     }
