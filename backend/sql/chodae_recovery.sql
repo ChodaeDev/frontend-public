@@ -18,8 +18,11 @@ CREATE TABLE `users` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_user_user_id` (`user_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */
-;
+
+INSERT INTO `users` (`user_id`, `username`, `password`, `nickname`, `phone`, `church`,
+ `birthday`,`descr`, `upd_dt`, `reg_dt`) VALUES ('admin', 'admin', '$2a$10$MjfDnfKo/zcteaotzJNx2.
+61v.vK1ktw5WDyzb50qTYm5W8AzwwF.','admin', '01012345678', 'admin', '2026-01-26', 'admin',
+'2026-01-26', '2026-01-26');
 
 -- 접속자 수 테이블 생성
 DROP TABLE IF EXISTS `visitor_count`;
