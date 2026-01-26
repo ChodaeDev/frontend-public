@@ -5,26 +5,28 @@ spring:
   application:
     name: chodae-recovery-api
   
-  # H2 Database 설정 (Docker 환경용)
+  # MariaDB Database 설정 (Docker 환경용)
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: 
+    url: jdbc:mariadb://db:3306/chodae_recovery?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: user
+    password: pass
   
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+  # SQL 초기화 설정
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
   
+  # JPA 설정 (VisitorCount용)
   jpa:
     hibernate:
-      ddl-auto: create-drop
-    show-sql: false  # Docker에서는 로그를 줄이기 위해 false
+      ddl-auto: none  # MyBatis 사용하므로 JPA DDL 비활성화
+    show-sql: false
     properties:
       hibernate:
         format_sql: false
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.MariaDBDialect
   
   # Jackson 설정
   jackson:
