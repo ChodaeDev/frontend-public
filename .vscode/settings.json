@@ -1,0 +1,10 @@
+{
+  // SQL 파일 자동 포맷팅 비활성화
+  "[sql]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false,
+    "editor.formatOnType": false
+  },
+  // 저장 시 자동 포맷팅 비활성화 (전역)
+  "editor.formatOnSave": false
+}
