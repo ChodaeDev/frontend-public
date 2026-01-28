@@ -91,8 +91,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        // 개발 환경: localhost:5173 및 WSL IP:5173 모두 허용 (패턴 사용)
+        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:5173", "http://172.*.*.*:5173", "http://10.*.*.*:5173"));
+        // 프로덕션 환경에서는 특정 origin만 허용하도록 설정
+        // configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("*"));

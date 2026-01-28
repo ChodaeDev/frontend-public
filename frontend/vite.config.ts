@@ -10,22 +10,14 @@ export default defineConfig({
     },
   },
   server: {
-    // proxy: {
-    //   '/geo-proxy': {
-    //     target: 'http://api 주소',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, ''),
-    //     secure: false,
-    //     ws: true,
-    //   },
-    //   '/catch': {
-    //     target: 'http://api 주소',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, ''),
-    //     secure: false,
-    //     ws: true,
-    //   },
-    // },
     host: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+    },
   },
 });

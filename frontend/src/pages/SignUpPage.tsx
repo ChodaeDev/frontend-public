@@ -2,9 +2,11 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // nginx를 통해 접근 (포트 80) 또는 개발 환경에서는 직접 백엔드 접근
-const API_BASE_URL = window.location.origin.includes('localhost:5173') 
-  ? 'http://localhost:8080'  // 개발 환경 (Vite dev server)
-  : '';  // 프로덕션 환경 (nginx를 통해 접근)
+// 포트 5173은 Vite dev 서버 (개발 환경)
+const isDev = window.location.port === '5173' || window.location.origin.includes('localhost:5173');
+// 개발 환경: Vite proxy를 통해 /api 요청이 백엔드로 전달됨 (빈 문자열 = 상대 경로)
+// 프로덕션 환경: nginx를 통해 접근 (빈 문자열 = 상대 경로)
+const API_BASE_URL = '';
 
 function SignUpPage() {
   const navigate = useNavigate();
