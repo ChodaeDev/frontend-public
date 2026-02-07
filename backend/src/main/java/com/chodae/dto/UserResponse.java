@@ -16,4 +16,5 @@ public class UserResponse {
     String church;
     LocalDate birthday;
     String descr;
+    UserLevel level;
 }

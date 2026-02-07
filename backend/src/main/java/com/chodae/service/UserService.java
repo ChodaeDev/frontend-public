@@ -1,5 +1,6 @@
 package com.chodae.service;
 
+import com.chodae.dto.UserLevel;
 import com.chodae.dto.UserLoginRequest;
 import com.chodae.dto.UserRegisterRequest;
 import com.chodae.dto.UserResponse;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
@@ -48,6 +50,7 @@ public class UserService {
         userMap.put("church", request.getChurch());
         userMap.put("birthday", parseDateOrNull(request.getBirthday()));
         userMap.put("descr", request.getDescr());
+        userMap.put("level", UserLevel.GENERAL.toValue()); // 회원가입 시 기본 등급: 일반사용자
 
         log.debug("사용자 등록 시도 - userId: {}", request.getUserId());
         // MyBatis를 통한 사용자 등록
@@ -89,7 +92,18 @@ public class UserService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        // Map을 UserResponse로 변환
+        // Map을 UserResponse로 변환 (MyBatis는 DATE 컬럼을 java.sql.Date로 반환함)
+        Object birthdayObj = userMap.get("birthday");
+        LocalDate birthday = null;
+        if (birthdayObj instanceof Date) {
+            birthday = ((Date) birthdayObj).toLocalDate();
+        } else if (birthdayObj instanceof LocalDate) {
+            birthday = (LocalDate) birthdayObj;
+        }
+
+        Object levelObj = userMap.get("level");
+        UserLevel level = UserLevel.fromString(levelObj != null ? levelObj.toString() : null);
+
         return UserResponse.builder()
                 .id((Integer) userMap.get("id"))
                 .userId((String) userMap.get("userId"))
@@ -97,8 +111,9 @@ public class UserService {
                 .nickname((String) userMap.get("nickname"))
                 .phone((String) userMap.get("phone"))
                 .church((String) userMap.get("church"))
-                .birthday((LocalDate) userMap.get("birthday"))
+                .birthday(birthday)
                 .descr((String) userMap.get("descr"))
+                .level(level)
                 .build();
     }
 

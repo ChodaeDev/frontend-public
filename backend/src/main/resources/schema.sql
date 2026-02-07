@@ -11,5 +11,6 @@ CREATE TABLE users (
     phone VARCHAR(50),
     church VARCHAR(150),
     birthday DATE,
-    descr TEXT
+    descr TEXT,
+    level VARCHAR(20) NOT NULL DEFAULT 'general' COMMENT 'superadmin, admin, general'
 );

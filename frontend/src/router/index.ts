@@ -12,6 +12,7 @@ const PreventionGuide = React.lazy(() => import('@/pages/PreventionGuide'));
 const WithdrawalCases = React.lazy(() => import('@/pages/WithdrawalCases'));
 const LoginPage = React.lazy(() => import('@/pages/LoginPage'));
 const SignUpPage = React.lazy(() => import('@/pages/SignUpPage'));
+const UserInfoPage = React.lazy(() => import('@/pages/UserInfoPage'));
 
 export const routes = [
   {
@@ -30,6 +31,7 @@ export const routes = [
       { path: '/cases', Component: WithdrawalCases },
       { path: '/login', Component: LoginPage },
       { path: '/signup', Component: SignUpPage },
+      { path: '/user-info', Component: UserInfoPage },
     ],
   },
 ];

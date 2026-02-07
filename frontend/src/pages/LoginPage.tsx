@@ -1,5 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '@/store/authSlice';
 
 // nginx를 통해 접근 (포트 80) 또는 개발 환경에서는 직접 백엔드 접근
 // 포트 5173은 Vite dev 서버 (개발 환경)
@@ -10,16 +12,15 @@ const API_BASE_URL = '';
 
 function LoginPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
-    setSuccessMessage(null);
     setLoading(true);
 
     try {
@@ -57,10 +58,8 @@ function LoginPage() {
         throw new Error(data.message ?? '로그인에 실패했습니다.');
       }
 
-      setSuccessMessage(`${ data.data.username }님 환영합니다!`);
-      setTimeout(() => {
-        navigate('/home');
-      }, 1500);
+      dispatch(setUser(data.data));
+      navigate('/home');
     } catch (err) {
       // 네트워크 에러 처리
       if (err instanceof TypeError && err.message.includes('fetch')) {
@@ -68,13 +67,23 @@ function LoginPage() {
       } else {
         setError(err instanceof Error ? err.message : '로그인 중 오류가 발생했습니다.');
       }
-    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className={'flex h-full items-center justify-center bg-gradient-to-tr from-blue-100 via-white to-purple-100'}>
+    <div className={'relative flex h-full items-center justify-center bg-gradient-to-tr from-blue-100 via-white to-purple-100'}>
+      {/* 로그인 중 오버레이 */}
+      {loading && (
+        <div
+          className={'absolute inset-0 z-10 flex items-center justify-center bg-white/60 backdrop-blur-sm'}
+          aria-live={'polite'}
+          aria-busy={'true'}
+        >
+          <div className={'size-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600'} />
+        </div>
+      )}
+
       <div className={'w-full max-w-md rounded-3xl bg-white p-10 shadow-2xl'}>
         <h1 className={'mb-2 text-center text-3xl font-bold text-gray-900'}>{'로그인'}</h1>
         <p className={'mb-8 text-center text-sm text-gray-500'}>
@@ -117,12 +126,6 @@ function LoginPage() {
           {error && (
             <div className={'rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600'}>
               {error}
-            </div>
-          )}
-
-          {successMessage && (
-            <div className={'rounded-lg bg-green-50 px-4 py-3 text-sm text-green-600'}>
-              {successMessage}
             </div>
           )}
 

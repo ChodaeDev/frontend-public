@@ -13,6 +13,7 @@
         <result property="church" column="church"/>
         <result property="birthday" column="birthday"/>
         <result property="descr" column="descr"/>
+        <result property="level" column="level" typeHandler="com.chodae.config.UserLevelTypeHandler"/>
     </resultMap>
 
     <!-- 사용자 ID로 사용자 조회 (비밀번호 포함, 로그인용) -->
@@ -26,7 +27,8 @@
             phone,
             church,
             birthday,
-            descr
+            descr,
+            level
         FROM users
         WHERE user_id = #{userId}
     </select>
@@ -41,7 +43,8 @@
             phone,
             church,
             birthday,
-            descr
+            descr,
+            level
         FROM users
         WHERE user_id = #{userId}
     </select>
@@ -64,7 +67,8 @@
             phone,
             church,
             birthday,
-            descr
+            descr,
+            level
         ) VALUES (
             #{userId},
             #{username},
@@ -73,7 +77,8 @@
             #{phone},
             #{church},
             #{birthday},
-            #{descr}
+            #{descr},
+            #{level, jdbcType=VARCHAR}
         )
     </insert>
 
@@ -87,7 +92,8 @@
             phone = #{phone},
             church = #{church},
             birthday = #{birthday},
-            descr = #{descr}
+            descr = #{descr},
+            level = #{level, jdbcType=VARCHAR}
         WHERE id = #{id}
     </update>
 
@@ -107,7 +113,8 @@
             phone,
             church,
             birthday,
-            descr
+            descr,
+            level
         FROM users
         WHERE id = #{id}
     </select>

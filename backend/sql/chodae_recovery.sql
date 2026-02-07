@@ -13,6 +13,7 @@ CREATE TABLE `users` (
     `church` varchar(150) DEFAULT NULL,
     `birthday` date DEFAULT NULL,
     `descr` text,
+    `level` varchar(20) NOT NULL DEFAULT 'general' COMMENT 'superadmin(슈퍼관리자), admin(관리자), general(일반사용자)',
     `upd_dt` varchar(50) DEFAULT NULL,
     `reg_dt` varchar(50) DEFAULT NULL,
     PRIMARY KEY (`id`),
@@ -20,9 +21,9 @@ CREATE TABLE `users` (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `nickname`, `phone`, `church`,
- `birthday`,`descr`, `upd_dt`, `reg_dt`) VALUES ('admin', 'admin', '$2a$10$MjfDnfKo/zcteaotzJNx2.
+ `birthday`,`descr`, `level`, `upd_dt`, `reg_dt`) VALUES ('admin', 'admin', '$2a$10$MjfDnfKo/zcteaotzJNx2.
 61v.vK1ktw5WDyzb50qTYm5W8AzwwF.','admin', '01012345678', 'admin', '2026-01-26', 'admin',
-'2026-01-26', '2026-01-26');
+'superadmin', '2026-01-26', '2026-01-26');
 
 -- 접속자 수 테이블 생성
 DROP TABLE IF EXISTS `visitor_count`;
