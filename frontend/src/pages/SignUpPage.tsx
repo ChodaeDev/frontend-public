@@ -10,6 +10,10 @@ const API_BASE_URL = '';
 
 function SignUpPage() {
   const navigate = useNavigate();
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => currentYear - i);
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
+  const getDaysInMonth = (y: number, m: number) => new Date(y || 2024, m || 12, 0).getDate();
   const [formValues, setFormValues] = useState({
     userId: '',
     username: '',
@@ -17,14 +21,16 @@ function SignUpPage() {
     nickname: '',
     phone: '',
     church: '',
-    birthday: '',
+    birthdayYear: '',
+    birthdayMonth: '',
+    birthdayDay: '',
     descr: '',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
   };
@@ -36,12 +42,19 @@ function SignUpPage() {
     setLoading(true);
 
     try {
+      const { birthdayYear, birthdayMonth, birthdayDay, ...rest } = formValues;
+      const birthday =
+        birthdayYear && birthdayMonth && birthdayDay
+          ? `${birthdayYear}-${String(birthdayMonth).padStart(2, '0')}-${String(birthdayDay).padStart(2, '0')}`
+          : '';
+      const requestBody = { ...rest, birthday };
+
       const response = await fetch(`${ API_BASE_URL }/api/public/users/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formValues),
+        body: JSON.stringify(requestBody),
       });
 
       // 응답 본문이 비어있는지 확인 후 JSON 파싱
@@ -189,17 +202,48 @@ function SignUpPage() {
           </div>
 
           <div className={'md:col-span-1'}>
-            <label htmlFor={'birthday'} className={'mb-1 block text-sm font-medium text-gray-700'}>
-              {'생년월일'}
-            </label>
-            <input
-              id={'birthday'}
-              name={'birthday'}
-              type={'date'}
-              value={formValues.birthday}
-              onChange={handleChange}
-              className={'w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
-            />
+            <span className={'mb-1 block text-sm font-medium text-gray-700'}>{'생년월일'}</span>
+            <div className={'flex gap-2'}>
+              <select
+                id={'birthdayYear'}
+                name={'birthdayYear'}
+                value={formValues.birthdayYear}
+                onChange={handleChange}
+                className={'flex-1 rounded-lg border border-gray-300 px-3 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
+              >
+                <option value={''}>{'연도'}</option>
+                {years.map((y) => (
+                  <option key={y} value={y}>{y}</option>
+                ))}
+              </select>
+              <select
+                id={'birthdayMonth'}
+                name={'birthdayMonth'}
+                value={formValues.birthdayMonth}
+                onChange={handleChange}
+                className={'flex-1 rounded-lg border border-gray-300 px-3 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
+              >
+                <option value={''}>{'월'}</option>
+                {months.map((m) => (
+                  <option key={m} value={m}>{m}월</option>
+                ))}
+              </select>
+              <select
+                id={'birthdayDay'}
+                name={'birthdayDay'}
+                value={formValues.birthdayDay}
+                onChange={handleChange}
+                className={'flex-1 rounded-lg border border-gray-300 px-3 py-3 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'}
+              >
+                <option value={''}>{'일'}</option>
+                {Array.from(
+                  { length: getDaysInMonth(Number(formValues.birthdayYear) || 2024, Number(formValues.birthdayMonth) || 12) },
+                  (_, i) => i + 1,
+                ).map((d) => (
+                  <option key={d} value={d}>{d}</option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className={'md:col-span-2'}>
