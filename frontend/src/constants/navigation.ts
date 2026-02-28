@@ -9,7 +9,7 @@ export const navItems: NavItem[] = [
   // { path: '/home', label: '홈' },
   { path: '/center', label: '구리이단상담소' },
   { path: '/ministry', label: '목회자' },
-  { path: '/counseling-request', label: '상담 신청' },
+  { path: '/counseling/list', label: '상담 신청' },
   // { path: '/shincheonji', label: '신천지 정보' },
   // { path: '/apologetics', label: '교리반증' },
   // { path: '/prevention', label: '피해예방' },

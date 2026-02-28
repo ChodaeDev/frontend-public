@@ -1,99 +1,103 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const API_BASE_URL = '';
+
+type Post = {
+  id: number;
+  title: string;
+  authorName: string;
+  regDt: string;
+  commentCount: number;
+};
+
 const CounselingRequest = () => {
+  const navigate = useNavigate();
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchList = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/public/counseling/list`);
+        const data = await res.json();
+        if (data.success && data.data) {
+          setPosts(data.data);
+        }
+      } catch (err) {
+        setError('목록을 불러오는데 실패했습니다.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchList();
+  }, []);
+
+  const formatDate = (dt: string) => {
+    if (!dt) return '';
+    const d = new Date(dt);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  };
+
   return (
     <div className={'min-h-[calc(100vh-64px)] w-full bg-gray-50 py-12'}>
       <div className={'mx-auto max-w-5xl px-4'}>
-        <div className={'mb-12 flex flex-col items-start'}>
-          <h2 className={'mb-2 text-3xl font-extrabold'}>{'상담 및 세미나 요청'}</h2>
-          <div className={'mb-4 h-1 w-16 bg-black'} />
-          <p className={'text-lg text-gray-500'}>{'상담 신청과 세미나 참여를 위한 안내입니다.'}</p>
+        <div className={'mb-8 flex flex-col items-center'}>
+          <h2 className={'mb-2 text-3xl font-extrabold'}>{'상담 요청'}</h2>
+          <div className={'mb-4 h-1 w-28 bg-black'} />
         </div>
 
-        <div className={'grid grid-cols-1 gap-8 lg:grid-cols-2'}>
-          {/* 상담 신청 폼 */}
-          <div className={'rounded-xl bg-white p-8 shadow-lg'}>
-            <h3 className={'mb-6 text-2xl font-bold'}>{'상담 신청'}</h3>
-            <form className={'space-y-4'}>
-              <div>
-                <label className={'mb-2 block text-sm font-medium text-gray-700'}>
-                  {'이름 *'}
-                </label>
-                <input
-                  type={'text'}
-                  className={'w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'}
-                  placeholder={'이름을 입력하세요'}
-                />
+        <div className={'mx-auto max-w-4xl'}>
+          <h3 className={'mb-4 text-xl font-bold'}>{'상담 신청 글 확인'}</h3>
+          {loading ? (
+            <div className={'py-12 text-center text-gray-500'}>{'로딩 중...'}</div>
+          ) : error ? (
+            <div className={'py-12 text-center text-red-500'}>{error}</div>
+          ) : (
+            <div className={'overflow-hidden border border-gray-200 bg-white'}>
+              <div className={'grid grid-cols-[4rem_1fr_6rem_6.5rem] gap-4 border-b border-gray-200 bg-gray-50 px-4 py-3 text-center text-sm font-semibold text-gray-700'}>
+                <span>{'번호'}</span>
+                <span>{'제목'}</span>
+                <span>{'작성자'}</span>
+                <span>{'작성 일자'}</span>
               </div>
-
-              <div>
-                <label className={'mb-2 block text-sm font-medium text-gray-700'}>
-                  {'연락처 *'}
-                </label>
-                <input
-                  type={'tel'}
-                  className={'w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'}
-                  placeholder={'연락처를 입력하세요'}
-                />
-              </div>
-
-              <div>
-                <label className={'mb-2 block text-sm font-medium text-gray-700'}>
-                  {'상담 유형'}
-                </label>
-                <select className={'w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'}>
-                  <option>{'상담 유형을 선택하세요'}</option>
-                  <option>{'신천지 피해 가족 상담'}</option>
-                  <option>{'탈퇴 지원 상담'}</option>
-                  <option>{'기타 이단 상담'}</option>
-                </select>
-              </div>
-
-              <div>
-                <label className={'mb-2 block text-sm font-medium text-gray-700'}>
-                  {'상담 내용'}
-                </label>
-                <textarea
-                  rows={4}
-                  className={'w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'}
-                  placeholder={'상담 내용을 간단히 작성해 주세요'}
-                />
-              </div>
-
-              <button
-                type={'submit'}
-                className={'w-full rounded-md bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700'}
-              >
-                {'상담 신청하기'}
-              </button>
-            </form>
-          </div>
-
-          {/* 세미나 안내 */}
-          <div className={'rounded-xl bg-white p-8 shadow-lg'}>
-            <h3 className={'mb-6 text-2xl font-bold'}>{'세미나 안내'}</h3>
-            <div className={'space-y-6'}>
-              <div>
-                <h4 className={'mb-2 font-semibold text-gray-800'}>{'정기 세미나'}</h4>
-                <p className={'mb-2 text-gray-600'}>{'매월 첫째 주 토요일 오후 2시'}</p>
-                <p className={'text-sm text-gray-500'}>{'이단의 특징과 대처 방법에 대한 교육'}</p>
-              </div>
-
-              <div>
-                <h4 className={'mb-2 font-semibold text-gray-800'}>{'특별 세미나'}</h4>
-                <p className={'mb-2 text-gray-600'}>{'분기별 개최'}</p>
-                <p className={'text-sm text-gray-500'}>{'최신 이단 동향과 피해 사례 공유'}</p>
-              </div>
-
-              <div>
-                <h4 className={'mb-2 font-semibold text-gray-800'}>{'참가 방법'}</h4>
-                <p className={'mb-2 text-gray-600'}>{'사전 예약 필수'}</p>
-                <p className={'text-sm text-gray-500'}>{'전화 또는 온라인으로 신청 가능'}</p>
-              </div>
-
-              <button className={'w-full rounded-md bg-green-600 px-4 py-2 text-white transition-colors hover:bg-green-700'}>
-                {'세미나 신청하기'}
-              </button>
+              {posts.length === 0 ? (
+                <div className={'py-8 text-center text-gray-500'}>{'등록된 상담 신청 글이 없습니다.'}</div>
+              ) : (
+                <ul className={'divide-y divide-gray-200'}>
+                  {posts.map((post) => (
+                    <li
+                      key={post.id}
+                      className={'grid grid-cols-[4rem_1fr_6rem_6.5rem] gap-4 px-4 py-3 text-center text-sm'}
+                    >
+                      <span className={'text-gray-600'}>{post.id}</span>
+                      <button
+                        type={'button'}
+                        onClick={() => navigate(`/counseling/detail/${post.id}`)}
+                        className={'flex min-w-0 items-center justify-center gap-1 font-medium text-gray-900 hover:underline focus:outline-none'}
+                      >
+                        <span className={'min-w-0 truncate'}>{post.title}</span>
+                        {(post.commentCount ?? 0) > 0 && (
+                          <span className={'shrink-0 text-blue-600'}>[{post.commentCount}]</span>
+                        )}
+                      </button>
+                      <span className={'text-gray-600'}>{post.authorName}</span>
+                      <span className={'text-gray-600'}>{formatDate(post.regDt)}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-          </div>
+          )}
+
+          <button
+            type={'button'}
+            onClick={() => navigate('/counseling/form')}
+            className={'mt-6 w-full rounded-md bg-green-600 px-4 py-2 text-white transition-colors hover:bg-green-700'}
+          >
+            {'상담 신청하기'}
+          </button>
         </div>
       </div>
     </div>

@@ -42,3 +42,40 @@ CREATE TABLE `visitor_count` (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */
 ;
+
+-- 상담 글 테이블
+DROP TABLE IF EXISTS `comments`;
+DROP TABLE IF EXISTS `private_counseling`;
+/*!50503 SET character_set_client = utf8mb4 */
+;
+CREATE TABLE `private_counseling` (
+    `id` int NOT NULL AUTO_INCREMENT COMMENT '번호',
+    `title` varchar(255) NOT NULL COMMENT '제목',
+    `content` text COMMENT '내용',
+    `author_id` varchar(100) DEFAULT NULL COMMENT '작성자id',
+    `author_name` varchar(100) NOT NULL COMMENT '작성자 이름',
+    `phone` varchar(50) DEFAULT NULL COMMENT '연락처',
+    `counsel_type` varchar(100) DEFAULT NULL COMMENT '상담 유형',
+    `comment_count` int NOT NULL DEFAULT 0 COMMENT '댓글 개수',
+    `private_num` int NOT NULL COMMENT 'private_num',
+    `reg_dt` datetime DEFAULT NULL COMMENT '작성일자',
+    `upd_dt` datetime DEFAULT NULL COMMENT '수정일자',
+    PRIMARY KEY (`id`),
+    KEY `idx_private_num` (`private_num`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+-- 댓글 테이블
+CREATE TABLE `comments` (
+    `id` int NOT NULL AUTO_INCREMENT COMMENT '번호',
+    `author_id` varchar(100) DEFAULT NULL COMMENT '작성자id',
+    `author_name` varchar(100) NOT NULL COMMENT '작성자 이름',
+    `content` text COMMENT '댓글 내용',
+    `private_num` int NOT NULL COMMENT 'private_num (상담 글 참조)',
+    `confirm` varchar(20) DEFAULT NULL COMMENT 'confirm',
+    `reg_dt` datetime DEFAULT NULL COMMENT '작성일자',
+    PRIMARY KEY (`id`),
+    KEY `idx_private_num` (`private_num`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */
+;
+

@@ -6,6 +6,8 @@ const CenterInfo = React.lazy(() => import('@/pages/CenterInfo'));
 const Ministry = React.lazy(() => import('@/pages/Ministry'));
 const Counsult = React.lazy(() => import('@/pages/Counsult'));
 const CounselingRequest = React.lazy(() => import('@/pages/CounselingRequest'));
+const CounselingRequestForm = React.lazy(() => import('@/pages/CounselingRequestForm'));
+const CounselingDetail = React.lazy(() => import('@/pages/CounselingDetail'));
 const ShincheonjiInfo = React.lazy(() => import('@/pages/ShincheonjiInfo'));
 const Apologetics = React.lazy(() => import('@/pages/Apologetics'));
 const PreventionGuide = React.lazy(() => import('@/pages/PreventionGuide'));
@@ -24,7 +26,9 @@ export const routes = [
       { path: '/center', Component: CenterInfo },
       { path: '/ministry', Component: Ministry },
       { path: '/counsult', Component: Counsult },
-      { path: '/counseling-request', Component: CounselingRequest },
+      { path: '/counseling/list', Component: CounselingRequest },
+      { path: '/counseling/detail/:id', Component: CounselingDetail },
+      { path: '/counseling/form', Component: CounselingRequestForm },
       { path: '/shincheonji', Component: ShincheonjiInfo },
       { path: '/apologetics', Component: Apologetics },
       { path: '/prevention', Component: PreventionGuide },

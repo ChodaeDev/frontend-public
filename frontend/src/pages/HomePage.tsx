@@ -164,7 +164,7 @@ const HomePage = () => {
             </div>
 
             <div
-              onClick={() => handleNavigation('/counseling-request')}
+              onClick={() => handleNavigation('/counseling/list')}
               className={'cursor-pointer rounded-2xl bg-gradient-to-br from-orange-50 to-orange-100 p-6 text-center transition duration-300 hover:scale-105 hover:shadow-lg'}
             >
               <div className={'mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-orange-600'}>
@@ -267,7 +267,7 @@ const HomePage = () => {
           </p>
           <div className={'flex flex-col justify-center gap-4 sm:flex-row'}>
             <button
-              onClick={() => handleNavigation('/counseling-request')}
+              onClick={() => handleNavigation('/counseling/list')}
               className={'rounded-full bg-white px-8 py-4 text-lg font-semibold text-blue-600 transition duration-300 hover:scale-105 hover:bg-gray-100'}
             >
               {'무료 상담 신청'}
