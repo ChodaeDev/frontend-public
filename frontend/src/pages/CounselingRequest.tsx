@@ -1,29 +1,45 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const API_BASE_URL = '';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { getAuthHeaders } from '@/utils/api';
 
 type Post = {
   id: number;
   title: string;
-  authorName: string;
+  authorId: string;
   regDt: string;
   commentCount: number;
 };
 
 const CounselingRequest = () => {
   const navigate = useNavigate();
+  const token = useSelector((state: RootState) => state.auth.token);
+  const currentUserId = useSelector((state: RootState) => state.auth.user?.userId);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!token) {
+      setLoading(false);
+      navigate('/login', { replace: true, state: { from: '/counseling/list' } });
+      return;
+    }
     const fetchList = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/public/counseling/list`);
+        const res = await fetch('/api/counseling/list', {
+          headers: getAuthHeaders(token),
+        });
         const data = await res.json();
+        if (res.status === 401 || res.status === 403) {
+          navigate('/login', { replace: true });
+          return;
+        }
         if (data.success && data.data) {
           setPosts(data.data);
+        } else {
+          setError(data.message ?? '목록을 불러오는데 실패했습니다.');
         }
       } catch (err) {
         setError('목록을 불러오는데 실패했습니다.');
@@ -32,7 +48,7 @@ const CounselingRequest = () => {
       }
     };
     fetchList();
-  }, []);
+  }, [token, navigate]);
 
   const formatDate = (dt: string) => {
     if (!dt) return '';
@@ -56,36 +72,48 @@ const CounselingRequest = () => {
             <div className={'py-12 text-center text-red-500'}>{error}</div>
           ) : (
             <div className={'overflow-hidden border border-gray-200 bg-white'}>
-              <div className={'grid grid-cols-[4rem_1fr_6rem_6.5rem] gap-4 border-b border-gray-200 bg-gray-50 px-4 py-3 text-center text-sm font-semibold text-gray-700'}>
+              <div className={'grid grid-cols-[4rem_1fr_8rem_6.5rem] gap-4 border-b border-gray-200 bg-gray-50 px-4 py-3 text-center text-sm font-semibold text-gray-700'}>
                 <span>{'번호'}</span>
                 <span>{'제목'}</span>
-                <span>{'작성자'}</span>
+                <span>{'아이디'}</span>
                 <span>{'작성 일자'}</span>
               </div>
               {posts.length === 0 ? (
                 <div className={'py-8 text-center text-gray-500'}>{'등록된 상담 신청 글이 없습니다.'}</div>
               ) : (
                 <ul className={'divide-y divide-gray-200'}>
-                  {posts.map((post) => (
-                    <li
-                      key={post.id}
-                      className={'grid grid-cols-[4rem_1fr_6rem_6.5rem] gap-4 px-4 py-3 text-center text-sm'}
-                    >
-                      <span className={'text-gray-600'}>{post.id}</span>
-                      <button
-                        type={'button'}
-                        onClick={() => navigate(`/counseling/detail/${post.id}`)}
-                        className={'flex min-w-0 items-center justify-center gap-1 font-medium text-gray-900 hover:underline focus:outline-none'}
+                  {posts.map((post) => {
+                    const isAuthor = post.authorId === currentUserId;
+                    return (
+                      <li
+                        key={post.id}
+                        className={'grid grid-cols-[4rem_1fr_8rem_6.5rem] gap-4 px-4 py-3 text-center text-sm'}
                       >
-                        <span className={'min-w-0 truncate'}>{post.title}</span>
-                        {(post.commentCount ?? 0) > 0 && (
-                          <span className={'shrink-0 text-blue-600'}>[{post.commentCount}]</span>
+                        <span className={'text-gray-600'}>{post.id}</span>
+                        {isAuthor ? (
+                          <button
+                            type={'button'}
+                            onClick={() => navigate(`/counseling/detail/${post.id}`)}
+                            className={'flex min-w-0 items-center justify-center gap-1 font-medium text-gray-900 hover:underline focus:outline-none'}
+                          >
+                            <span className={'min-w-0 truncate'}>{post.title}</span>
+                            {(post.commentCount ?? 0) > 0 && (
+                              <span className={'shrink-0 text-blue-600'}>[{post.commentCount}]</span>
+                            )}
+                          </button>
+                        ) : (
+                          <span className={'flex min-w-0 items-center justify-center gap-1 font-medium text-gray-500'}>
+                            <span className={'min-w-0 truncate'}>{post.title}</span>
+                            {(post.commentCount ?? 0) > 0 && (
+                              <span className={'shrink-0 text-blue-600'}>[{post.commentCount}]</span>
+                            )}
+                          </span>
                         )}
-                      </button>
-                      <span className={'text-gray-600'}>{post.authorName}</span>
-                      <span className={'text-gray-600'}>{formatDate(post.regDt)}</span>
-                    </li>
-                  ))}
+                        <span className={'text-gray-600'}>{post.authorId || '-'}</span>
+                        <span className={'text-gray-600'}>{formatDate(post.regDt)}</span>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </div>

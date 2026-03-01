@@ -14,9 +14,11 @@ export type UserInfo = {
 
 type AuthState = {
   user: UserInfo | null;
+  token: string | null;
 };
 
 const AUTH_STORAGE_KEY = 'chodae_user';
+const TOKEN_STORAGE_KEY = 'chodae_token';
 
 const getInitialUser = (): UserInfo | null => {
   if (typeof window === 'undefined') return null;
@@ -31,8 +33,14 @@ const getInitialUser = (): UserInfo | null => {
   return null;
 };
 
+const getInitialToken = (): string | null => {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem(TOKEN_STORAGE_KEY);
+};
+
 const initialState: AuthState = {
   user: getInitialUser(),
+  token: getInitialToken(),
 };
 
 export const authSlice = createSlice({
@@ -47,12 +55,27 @@ export const authSlice = createSlice({
         localStorage.removeItem(AUTH_STORAGE_KEY);
       }
     },
+    setAuth: (state, action: PayloadAction<{ user: UserInfo; token: string } | null>) => {
+      if (action.payload) {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(action.payload.user));
+        localStorage.setItem(TOKEN_STORAGE_KEY, action.payload.token);
+      } else {
+        state.user = null;
+        state.token = null;
+        localStorage.removeItem(AUTH_STORAGE_KEY);
+        localStorage.removeItem(TOKEN_STORAGE_KEY);
+      }
+    },
     logout: (state) => {
       state.user = null;
+      state.token = null;
       localStorage.removeItem(AUTH_STORAGE_KEY);
+      localStorage.removeItem(TOKEN_STORAGE_KEY);
     },
   },
 });
 
-export const { setUser, logout } = authSlice.actions;
+export const { setUser, setAuth, logout } = authSlice.actions;
 export default authSlice.reducer;

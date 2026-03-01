@@ -24,11 +24,26 @@
         ORDER BY reg_dt DESC
     </select>
 
+    <select id="findByAuthorId" resultMap="PrivateCounselingResponseMap">
+        SELECT id, title, content, author_id, author_name, phone, counsel_type,
+               comment_count, private_num, reg_dt, upd_dt
+        FROM private_counseling
+        WHERE author_id = #{authorId}
+        ORDER BY reg_dt DESC
+    </select>
+
     <select id="findById" resultMap="PrivateCounselingResponseMap">
         SELECT id, title, content, author_id, author_name, phone, counsel_type,
                comment_count, private_num, reg_dt, upd_dt
         FROM private_counseling
         WHERE id = #{id}
+    </select>
+
+    <select id="findByIdAndAuthorId" resultMap="PrivateCounselingResponseMap">
+        SELECT id, title, content, author_id, author_name, phone, counsel_type,
+               comment_count, private_num, reg_dt, upd_dt
+        FROM private_counseling
+        WHERE id = #{id} AND author_id = #{authorId}
     </select>
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">

@@ -12,7 +12,11 @@ public interface PrivateCounselingMapper {
 
     List<PrivateCounselingResponse> findAll();
 
+    List<PrivateCounselingResponse> findByAuthorId(@Param("authorId") String authorId);
+
     PrivateCounselingResponse findById(@Param("id") Integer id);
+
+    PrivateCounselingResponse findByIdAndAuthorId(@Param("id") Integer id, @Param("authorId") String authorId);
 
     int insert(Map<String, Object> params);
 

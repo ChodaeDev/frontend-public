@@ -1,6 +1,7 @@
 package com.chodae.controller;
 
 import com.chodae.dto.ApiResponse;
+import com.chodae.dto.LoginResponse;
 import com.chodae.dto.UserLoginRequest;
 import com.chodae.dto.UserRegisterRequest;
 import com.chodae.dto.UserResponse;
@@ -36,10 +37,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ApiResponse<UserResponse> login(@RequestBody UserLoginRequest request) {
+    public ApiResponse<LoginResponse> login(@RequestBody UserLoginRequest request) {
         log.info("로그인 요청 수신 - userId: {}", request.getUserId());
         try {
-            UserResponse response = userService.login(request);
+            LoginResponse response = userService.login(request);
             log.info("로그인 성공 - userId: {}", request.getUserId());
             return ApiResponse.success("로그인에 성공했습니다.", response);
         } catch (Exception e) {

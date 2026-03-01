@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser } from '@/store/authSlice';
+import { setAuth, setUser } from '@/store/authSlice';
 
 // nginx를 통해 접근 (포트 80) 또는 개발 환경에서는 직접 백엔드 접근
 // 포트 5173은 Vite dev 서버 (개발 환경)
@@ -58,7 +58,14 @@ function LoginPage() {
         throw new Error(data.message ?? '로그인에 실패했습니다.');
       }
 
-      dispatch(setUser(data.data));
+      const payload = data.data;
+      if (payload?.user && payload?.token) {
+        dispatch(setAuth({ user: payload.user, token: payload.token }));
+      } else if (payload?.userId) {
+        dispatch(setUser(payload));
+      } else {
+        throw new Error('로그인 응답 형식이 올바르지 않습니다.');
+      }
       navigate('/home');
     } catch (err) {
       // 네트워크 에러 처리

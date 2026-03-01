@@ -27,8 +27,16 @@ public class PrivateCounselingService {
         return privateCounselingMapper.findAll();
     }
 
+    public List<PrivateCounselingResponse> findByAuthorId(String authorId) {
+        return privateCounselingMapper.findByAuthorId(authorId);
+    }
+
     public PrivateCounselingResponse findById(Integer id) {
         return privateCounselingMapper.findById(id);
+    }
+
+    public PrivateCounselingResponse findByIdAndAuthorId(Integer id, String authorId) {
+        return privateCounselingMapper.findByIdAndAuthorId(id, authorId);
     }
 
     @Transactional

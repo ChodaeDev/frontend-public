@@ -1,10 +1,12 @@
 package com.chodae.service;
 
+import com.chodae.dto.LoginResponse;
 import com.chodae.dto.UserLevel;
 import com.chodae.dto.UserLoginRequest;
 import com.chodae.dto.UserRegisterRequest;
 import com.chodae.dto.UserResponse;
 import com.chodae.mapper.UserMapper;
+import com.chodae.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ public class UserService {
 
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     @Transactional
     public UserResponse registerUser(UserRegisterRequest request) {
@@ -62,22 +65,30 @@ public class UserService {
             throw new IllegalArgumentException("회원가입에 실패했습니다.");
         }
 
-        // 등록된 사용자 조회
-        log.debug("등록된 사용자 조회 중 - userId: {}", request.getUserId());
-        UserResponse saved = userMapper.findByUserId(request.getUserId());
-        log.debug("등록된 사용자 조회 결과 - userId: {}, saved: {}", request.getUserId(), saved != null);
-
-        if (saved == null) {
-            log.error("회원가입 후 사용자 조회 실패 - userId: {}", request.getUserId());
+        // INSERT 후 생성된 id와 요청 데이터로 UserResponse 구성 (findByUserId 호출 제거 - level DB값 대소문자 이슈 회피)
+        Object idObj = userMap.get("id");
+        Integer id = idObj instanceof Number ? ((Number) idObj).intValue() : null;
+        if (id == null) {
+            log.error("회원가입 후 ID 조회 실패 - userId: {}", request.getUserId());
             throw new IllegalArgumentException("회원가입 후 사용자 조회에 실패했습니다.");
         }
 
-        log.info("회원가입 완료 - userId: {}, id: {}", request.getUserId(), saved.getId());
-        return saved;
+        log.info("회원가입 완료 - userId: {}, id: {}", request.getUserId(), id);
+        return UserResponse.builder()
+                .id(id)
+                .userId(request.getUserId())
+                .username(request.getUsername())
+                .nickname(request.getNickname())
+                .phone(request.getPhone())
+                .church(request.getChurch())
+                .birthday(parseDateOrNull(request.getBirthday()))
+                .descr(request.getDescr())
+                .level(UserLevel.GENERAL)
+                .build();
     }
 
     @Transactional(readOnly = true)
-    public UserResponse login(UserLoginRequest request) {
+    public LoginResponse login(UserLoginRequest request) {
         if (request.getPassword() == null || request.getPassword().isBlank()) {
             throw new IllegalArgumentException("비밀번호를 입력해주세요.");
         }
@@ -104,7 +115,7 @@ public class UserService {
         Object levelObj = userMap.get("level");
         UserLevel level = UserLevel.fromString(levelObj != null ? levelObj.toString() : null);
 
-        return UserResponse.builder()
+        UserResponse user = UserResponse.builder()
                 .id((Integer) userMap.get("id"))
                 .userId((String) userMap.get("userId"))
                 .username((String) userMap.get("username"))
@@ -115,6 +126,8 @@ public class UserService {
                 .descr((String) userMap.get("descr"))
                 .level(level)
                 .build();
+        String token = jwtUtil.generateToken(user.getUserId());
+        return LoginResponse.builder().user(user).token(token).build();
     }
 
     private void validateRegisterRequest(UserRegisterRequest request) {

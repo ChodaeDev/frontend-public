@@ -13,7 +13,7 @@ CREATE TABLE `users` (
     `church` varchar(150) DEFAULT NULL,
     `birthday` date DEFAULT NULL,
     `descr` text,
-    `level` varchar(20) NOT NULL DEFAULT 'general' COMMENT 'superadmin(슈퍼관리자), admin(관리자), general(일반사용자)',
+    `level` varchar(20) DEFAULT 'general' COMMENT 'superadmin(슈퍼관리자), admin(관리자), general(일반사용자)',
     `upd_dt` varchar(50) DEFAULT NULL,
     `reg_dt` varchar(50) DEFAULT NULL,
     PRIMARY KEY (`id`),

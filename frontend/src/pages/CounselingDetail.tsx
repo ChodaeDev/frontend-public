@@ -2,14 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-
-const API_BASE_URL = '';
+import { getAuthHeaders } from '@/utils/api';
 
 type Post = {
   id: number;
   title: string;
   content: string;
-  authorName: string;
+  authorId: string;
   regDt: string;
 };
 
@@ -23,6 +22,7 @@ const CounselingDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const user = useSelector((state: RootState) => state.auth.user);
+  const token = useSelector((state: RootState) => state.auth.token);
   const [post, setPost] = useState<Post | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [comment, setComment] = useState('');
@@ -32,33 +32,44 @@ const CounselingDetail = () => {
 
   const fetchDetail = useCallback(async () => {
     if (!id) return;
+    if (!token) {
+      setLoading(false);
+      navigate('/login', { replace: true });
+      return;
+    }
     try {
+      const headers = getAuthHeaders(token);
       const [postRes, commentsRes] = await Promise.all([
-        fetch(`${API_BASE_URL}/api/public/counseling/detail/${id}`),
-        fetch(`${API_BASE_URL}/api/public/counseling/detail/${id}/comments`),
+        fetch(`/api/counseling/detail/${id}`, { headers }),
+        fetch(`/api/counseling/detail/${id}/comments`, { headers }),
       ]);
       const postData = await postRes.json();
       const commentsData = await commentsRes.json();
+      if (postRes.status === 401 || postRes.status === 403) {
+        navigate('/login', { replace: true });
+        return;
+      }
       if (postData.success && postData.data) setPost(postData.data);
       if (commentsData.success && commentsData.data) setComments(commentsData.data);
+      if (!postData.success && postData.message) setError(postData.message);
     } catch {
       setError('글을 불러오는데 실패했습니다.');
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, [id, token, navigate]);
 
   useEffect(() => {
     fetchDetail();
   }, [fetchDetail]);
 
   const handleSubmitComment = async () => {
-    if (!id || !comment.trim()) return;
+    if (!id || !comment.trim() || !token) return;
     setSubmitting(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/public/counseling/detail/${id}/comments`, {
+      const res = await fetch(`/api/counseling/detail/${id}/comments`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(token),
         body: JSON.stringify({
           authorId: user?.userId ?? '',
           authorName: user?.username ?? '익명',
@@ -114,8 +125,7 @@ const CounselingDetail = () => {
     <div className={'min-h-[calc(100vh-64px)] w-full bg-gray-50 py-12'}>
       <div className={'mx-auto max-w-2xl px-4'}>
         <div className={'rounded-xl border border-gray-200 bg-white p-8'}>
-          <div className={'mb-6 flex items-center justify-between border-b border-gray-200 pb-4'}>
-            <h2 className={'text-xl font-bold'}>{post.title}</h2>
+          <div className={'mb-6 flex items-center justify-end border-b border-gray-200 pb-4'}>
             <button
               type={'button'}
               onClick={() => navigate('/counseling/list')}
@@ -125,10 +135,19 @@ const CounselingDetail = () => {
             </button>
           </div>
           <div className={'mb-4 flex gap-4 text-sm text-gray-500'}>
-            <span>{'작성자 '}<strong className={'text-gray-700'}>{post.authorName}</strong></span>
+            <span>{'아이디 '}<strong className={'text-gray-700'}>{post.authorId || '-'}</strong></span>
             <span>{'작성일자 '}<strong className={'text-gray-700'}>{formatDate(post.regDt)}</strong></span>
           </div>
-          <div className={'mb-6 whitespace-pre-wrap text-gray-700'}>{post.content || ''}</div>
+          <div className={'mb-6 space-y-4'}>
+            <div>
+              <h3 className={'mb-1 text-sm font-semibold text-gray-500'}>{'제목'}</h3>
+              <p className={'text-lg font-medium text-gray-900'}>{post.title}</p>
+            </div>
+            <div>
+              <h3 className={'mb-1 text-sm font-semibold text-gray-500'}>{'내용'}</h3>
+              <div className={'whitespace-pre-wrap text-gray-700'}>{post.content || '(내용 없음)'}</div>
+            </div>
+          </div>
 
           {error && (
             <div className={'mb-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-600'}>{error}</div>
