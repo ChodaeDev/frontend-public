@@ -1,0 +1,120 @@
+@import "tailwindcss";
+@import "./animations.css";
+@import "./scrollbar.css" layer(base);
+
+/* Tailwind v4: class 기반 다크모드 활성화 (next-themes와 연동) */
+@custom-variant dark (&:is(.dark *));
+
+/* 테마 색상을 Tailwind 유틸리티 클래스로 등록 */
+@theme {
+  /* 시맨틱 텍스트 */
+  --color-main: var(--text-primary);
+  --color-sub: var(--text-secondary);
+  --color-inverse: var(--text-inverse);
+
+  /* 액센트 */
+  --color-accent1: var(--primary);
+  --color-accent2: var(--secondary);
+  --color-accent3: var(--tertiary);
+  --color-accent4: var(--quaternary);
+
+  /* 상태 */
+  --color-normal: var(--normal);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+
+  /* 배경/전경 */
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+
+  /* 그레이 스케일 */
+  --color-gray0: var(--gray-0);
+  --color-gray1: var(--gray-1);
+  --color-gray2: var(--gray-2);
+  --color-gray3: var(--gray-3);
+  --color-gray4: var(--gray-4);
+  --color-gray5: var(--gray-5);
+  --color-gray6: var(--gray-6);
+  --color-gray7: var(--gray-7);
+  --color-gray8: var(--gray-8);
+  --color-gray9: var(--gray-9);
+
+  /* 기타 */
+  --color-edge: var(--edge);
+
+  /* 애니메이션 */
+  --animate-slideDown: slideDown 0.15s ease-out;
+}
+
+/* Light Mode (기본) */
+:root {
+  --primary: #BB2DD1;
+  --secondary: #537FF1;
+  --tertiary: #DBE4F3;
+  --quaternary: #F8FAFD;
+
+  --normal: #16B11B;
+  --warning: #FFA500;
+  --error: #FF0000;
+
+  --text-primary: rgb(28, 28, 28);
+  --text-secondary: rgb(36, 36, 36);
+  --text-inverse: rgb(251, 251, 251);
+
+  --background: rgb(252, 252, 252);
+  --background-secondary: rgb(245, 245, 245);
+  --foreground: rgb(0, 0, 0);
+  --foreground-secondary: rgb(24, 24, 24);
+
+  --gray-0: rgb(55, 55, 55);
+  --gray-1: rgb(75, 75, 75);
+  --gray-2: rgb(95, 95, 95);
+  --gray-3: rgb(115, 115, 115);
+  --gray-4: rgb(135, 135, 135);
+  --gray-5: rgb(155, 155, 155);
+  --gray-6: rgb(175, 175, 175);
+  --gray-7: rgb(195, 195, 195);
+  --gray-8: rgb(215, 215, 215);
+  --gray-9: rgb(235, 235, 235);
+  --edge: rgb(255, 255, 255);
+}
+
+/* Dark Mode */
+.dark {
+  --primary: #ea63ff;
+  --secondary: #3da1f3;
+  --tertiary: #404652;
+  --quaternary: #122f5a;
+
+  --normal: #00d107;
+  --warning: #fffb00;
+  --error: #ff4848;
+
+  --text-primary: rgb(251, 251, 251);
+  --text-secondary: rgb(226, 226, 226);
+  --text-inverse: rgb(5, 5, 5);
+
+  --background: rgb(20, 20, 20);
+  --background-secondary: rgb(32, 32, 32);
+  --foreground: rgb(255, 255, 255);
+  --foreground-secondary: rgb(245, 245, 245);
+
+  --gray-0: rgb(200, 200, 200);
+  --gray-1: rgb(180, 180, 180);
+  --gray-2: rgb(160, 160, 160);
+  --gray-3: rgb(140, 140, 140);
+  --gray-4: rgb(120, 120, 120);
+  --gray-5: rgb(100, 100, 100);
+  --gray-6: rgb(80, 80, 80);
+  --gray-7: rgb(60, 60, 60);
+  --gray-8: rgb(45, 45, 45);
+  --gray-9: rgb(35, 35, 35);
+  --edge: rgb(0, 0, 0);
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+}
