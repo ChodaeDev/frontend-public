@@ -46,6 +46,10 @@
 
   /* 애니메이션 */
   --animate-slideDown: slideDown 0.15s ease-out;
+  --animate-fadeIn: fadeIn 0.25s ease-out forwards;
+  --animate-fadeOut: fadeOut 0.25s ease-in forwards;
+  --animate-slideInRight: slideInRight 0.3s ease-out forwards;
+  --animate-slideOutRight: slideOutRight 0.25s ease-in forwards;
 }
 
 /* Light Mode (기본) */
@@ -117,4 +121,6 @@
 body {
   background: var(--background);
   color: var(--text-primary);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
 }
