@@ -15,6 +15,6 @@ public class UserResponse {
     String phone;
     String church;
     LocalDate birthday;
-    String descr;
+    String description;
     UserLevel level;
 }

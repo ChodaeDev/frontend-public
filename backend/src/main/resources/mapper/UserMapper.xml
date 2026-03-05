@@ -12,7 +12,7 @@
         <result property="phone" column="phone"/>
         <result property="church" column="church"/>
         <result property="birthday" column="birthday"/>
-        <result property="descr" column="descr"/>
+        <result property="description" column="description"/>
         <result property="level" column="level" typeHandler="com.chodae.config.UserLevelTypeHandler"/>
     </resultMap>
 
@@ -27,7 +27,7 @@
             phone,
             church,
             birthday,
-            descr,
+            description,
             level
         FROM users
         WHERE user_id = #{userId}
@@ -43,7 +43,7 @@
             phone,
             church,
             birthday,
-            descr,
+            description,
             level
         FROM users
         WHERE user_id = #{userId}
@@ -67,7 +67,7 @@
             phone,
             church,
             birthday,
-            descr,
+            description,
             level
         ) VALUES (
             #{userId},
@@ -77,7 +77,7 @@
             #{phone},
             #{church},
             #{birthday},
-            #{descr},
+            #{description},
             #{level, jdbcType=VARCHAR}
         )
     </insert>
@@ -92,7 +92,7 @@
             phone = #{phone},
             church = #{church},
             birthday = #{birthday},
-            descr = #{descr},
+            description = #{description},
             level = #{level, jdbcType=VARCHAR}
         WHERE id = #{id}
     </update>
@@ -113,7 +113,7 @@
             phone,
             church,
             birthday,
-            descr,
+            description,
             level
         FROM users
         WHERE id = #{id}

@@ -52,7 +52,7 @@ public class UserService {
         userMap.put("phone", request.getPhone());
         userMap.put("church", request.getChurch());
         userMap.put("birthday", parseDateOrNull(request.getBirthday()));
-        userMap.put("descr", request.getDescr());
+        userMap.put("description", request.getDescription());
         userMap.put("level", UserLevel.GENERAL.toValue()); // 회원가입 시 기본 등급: 일반사용자
 
         log.debug("사용자 등록 시도 - userId: {}", request.getUserId());
@@ -82,7 +82,7 @@ public class UserService {
                 .phone(request.getPhone())
                 .church(request.getChurch())
                 .birthday(parseDateOrNull(request.getBirthday()))
-                .descr(request.getDescr())
+                .description(request.getDescription())
                 .level(UserLevel.GENERAL)
                 .build();
     }
@@ -123,7 +123,7 @@ public class UserService {
                 .phone((String) userMap.get("phone"))
                 .church((String) userMap.get("church"))
                 .birthday(birthday)
-                .descr((String) userMap.get("descr"))
+                .description((String) userMap.get("description"))
                 .level(level)
                 .build();
         String token = jwtUtil.generateToken(user.getUserId());
