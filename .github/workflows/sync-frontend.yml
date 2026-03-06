@@ -17,10 +17,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set git config
+        run: |
+          git config user.name "judahwon"
+          git config user.email "hwondaa@gmail.com"
+
       - name: Split subtree
         run: |
           git subtree split --prefix=frontend-nextjs -b frontend-split
 
       - name: Push to public repo
         run: |
-          git push https://${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/ChodaeDev/frontend-public.git frontend-split:main --force
+          git push https://judahwon:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/ChodaeDev/frontend-public.git frontend-split:main --force
