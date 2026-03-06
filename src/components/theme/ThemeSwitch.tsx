@@ -9,6 +9,7 @@ import {
   DropdownTrigger,
 } from '@/components/ui/Dropdown';
 import { LucideIcon, Dot, Monitor, Moon, Sun } from 'lucide-react';
+import { useIsLgScreen } from '@/lib/useMediaQuery';
 
 interface ThemeItemProps {
   newTheme: string;
@@ -19,6 +20,7 @@ interface ThemeItemProps {
 const ThemeSwitch = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  const isLgScreen = useIsLgScreen();
 
   useEffect(() => {
     setMounted(true);
@@ -55,7 +57,7 @@ const ThemeSwitch = () => {
           <Moon className={'size-4 text-main hidden dark:block'} />
         </div>
       </DropdownTrigger>
-      <DropdownList align={'end'}>
+      <DropdownList align={'end'} direction={isLgScreen ? 'bottom' : 'left'}>
         <ThemeItem newTheme={'light'} label={'Light'} Icon={Sun} />
         <ThemeItem newTheme={'dark'} label={'Dark'} Icon={Moon} />
         <ThemeItem newTheme={'system'} label={'System'} Icon={Monitor} />

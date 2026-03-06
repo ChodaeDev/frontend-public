@@ -24,9 +24,11 @@ const DropdownTrigger = ({ children }: { children: React.ReactElement }) => {
 const DropdownList = ({
   children,
   align = 'start',
+  direction = 'bottom',
 }: {
   children: ReactNode;
   align?: 'start' | 'end';
+  direction?: 'bottom' | 'top' | 'left' | 'right';
 }) => {
   const { isOpen, close } = useContext(DropdownContext);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -57,12 +59,38 @@ const DropdownList = ({
     e.stopPropagation();
   };
 
+  const getDirectionClasses = () => {
+    switch (direction) {
+      case 'top':
+        return `bottom-full mb-2 ${ align === 'end' ? 'right-0' : 'left-0' }`;
+      case 'left':
+        return `right-full mr-2 ${ align === 'end' ? 'bottom-0' : 'top-0' }`;
+      case 'right':
+        return `left-full ml-2 ${ align === 'end' ? 'bottom-0' : 'top-0' }`;
+      case 'bottom':
+      default:
+        return `top-full mt-2 ${ align === 'end' ? 'right-0' : 'left-0' }`;
+    }
+  };
+
+  const getAnimationClass = () => {
+    switch (direction) {
+      case 'top':
+        return 'animate-slideUp';
+      case 'left':
+        return 'animate-slideLeft';
+      case 'right':
+        return 'animate-slideRight';
+      case 'bottom':
+      default:
+        return 'animate-slideDown';
+    }
+  };
+
   return isOpen ? (
     <div
       ref={contentRef}
-      className={`animate-slideDown absolute flex flex-col p-1 z-40 mt-2 min-w-36 rounded-lg bg-background border border-accent2 shadow-lg ring-1 ring-black/5 transition duration-200 ease-out ${
-        align === 'end' ? 'right-0' : 'left-0'
-      }`}
+      className={`${ getAnimationClass() } absolute flex flex-col p-1 z-40 min-w-36 rounded-lg bg-background border border-accent2 shadow-lg ring-1 ring-black/5 transition duration-200 ease-out ${ getDirectionClasses() }`}
       onClick={handleMenuClick}
     >
       {children}
