@@ -28,8 +28,12 @@ jobs:
 
       - name: Debug token
         run: |
-          echo "token length: ${#{{ secrets.PUBLIC_REPO_TOKEN }}}"
+          echo "token length: ${#TOKEN}"
+        env:
+          TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
 
       - name: Push to public repo
+        env:
+          TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
         run: |
-          git push https://judahwon:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/ChodaeDev/frontend-public.git frontend-split:main --force
+          git push https://judahwon:${TOKEN}@github.com/ChodaeDev/frontend-public.git frontend-split:main --force
