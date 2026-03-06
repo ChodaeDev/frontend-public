@@ -17,12 +17,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create subtree branch
+      - name: Split subtree
         run: |
           git subtree split --prefix=frontend-nextjs -b frontend-split
 
       - name: Push to public repo
-        env:
-          TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
         run: |
-          git push https://$TOKEN@github.com/ChodaeDev/frontend-public.git frontend-split:main --force
+          git push https://${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/ChodaeDev/frontend-public.git frontend-split:main --force
