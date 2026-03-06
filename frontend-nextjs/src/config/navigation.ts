@@ -10,7 +10,7 @@ export interface NavItem {
   subMenus?: SubMenuItem[];
 }
 
-export const NAV_ITEMS: NavItem[] = [
+export const navItems: NavItem[] = [
   {
     label: '상담소 안내',
     slug: 'about',

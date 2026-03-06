@@ -8,7 +8,7 @@ export type UserInfo = {
   phone?: string;
   church?: string;
   birthday?: string;
-  descr?: string;
+  description?: string;
   level?: string;
 };
 
@@ -17,8 +17,8 @@ type AuthState = {
   token: string | null;
 };
 
-const AUTH_STORAGE_KEY = 'chodae_user';
-const TOKEN_STORAGE_KEY = 'chodae_token';
+const authStorageKey = 'chodae_user';
+const tokenStorageKey = 'chodae_token';
 
 const initialState: AuthState = {
   user: null,
@@ -33,9 +33,9 @@ export const authSlice = createSlice({
       state.user = action.payload;
       if (typeof window !== 'undefined') {
         if (action.payload) {
-          localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(action.payload));
+          localStorage.setItem(authStorageKey, JSON.stringify(action.payload));
         } else {
-          localStorage.removeItem(AUTH_STORAGE_KEY);
+          localStorage.removeItem(authStorageKey);
         }
       }
     },
@@ -44,15 +44,15 @@ export const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         if (typeof window !== 'undefined') {
-          localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(action.payload.user));
-          localStorage.setItem(TOKEN_STORAGE_KEY, action.payload.token);
+          localStorage.setItem(authStorageKey, JSON.stringify(action.payload.user));
+          localStorage.setItem(tokenStorageKey, action.payload.token);
         }
       } else {
         state.user = null;
         state.token = null;
         if (typeof window !== 'undefined') {
-          localStorage.removeItem(AUTH_STORAGE_KEY);
-          localStorage.removeItem(TOKEN_STORAGE_KEY);
+          localStorage.removeItem(authStorageKey);
+          localStorage.removeItem(tokenStorageKey);
         }
       }
     },
@@ -60,15 +60,15 @@ export const authSlice = createSlice({
       state.user = null;
       state.token = null;
       if (typeof window !== 'undefined') {
-        localStorage.removeItem(AUTH_STORAGE_KEY);
-        localStorage.removeItem(TOKEN_STORAGE_KEY);
+        localStorage.removeItem(authStorageKey);
+        localStorage.removeItem(tokenStorageKey);
       }
     },
     initAuth: (state) => {
       if (typeof window !== 'undefined') {
         try {
-          const storedUser = localStorage.getItem(AUTH_STORAGE_KEY);
-          const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
+          const storedUser = localStorage.getItem(authStorageKey);
+          const storedToken = localStorage.getItem(tokenStorageKey);
           if (storedUser) {
             state.user = JSON.parse(storedUser) as UserInfo;
           }

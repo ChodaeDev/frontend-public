@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { NAV_ITEMS } from '@/config/navigation';
+import { navItems } from '@/config/navigation';
 
 const Navigation = () => {
   const pathname = usePathname();
@@ -14,7 +14,7 @@ const Navigation = () => {
 
   return (
     <nav className={'flex items-center gap-1'}>
-      {NAV_ITEMS.map((item) => (
+      {navItems.map((item) => (
         <Link
           key={item.slug}
           href={item.slug === '' ? '/' : `/${ item.slug }`}

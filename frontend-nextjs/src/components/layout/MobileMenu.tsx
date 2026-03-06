@@ -3,15 +3,20 @@
 import { useState, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
-import { NAV_ITEMS } from '@/config/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { Menu, X, LogIn, LogOut } from 'lucide-react';
+import { navItems } from '@/config/navigation';
 import ThemeSwitch from '@/components/theme/ThemeSwitch';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { logout } from '@/store/authSlice';
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const user = useAppSelector((state) => state.auth.user);
+  const dispatch = useAppDispatch();
 
   const open = useCallback(() => {
     setIsOpen(true);
@@ -26,6 +31,12 @@ const MobileMenu = () => {
       document.body.classList.remove('overflow-hidden');
     }, 250);
   }, []);
+
+  const handleLogout = useCallback(() => {
+    dispatch(logout());
+    close();
+    router.push('/');
+  }, [dispatch, close, router]);
 
   // pathname 변경 시 메뉴 닫기
   useEffect(() => {
@@ -76,7 +87,7 @@ const MobileMenu = () => {
             </div>
 
             <nav className={'flex-1 overflow-y-auto py-4'}>
-              {NAV_ITEMS.map((item) => (
+              {navItems.map((item) => (
                 <div key={item.slug} className={'mb-2'}>
                   <Link
                     href={item.slug === '' ? '/' : `/${ item.slug }`}
@@ -109,8 +120,25 @@ const MobileMenu = () => {
               ))}
             </nav>
 
-            <div className={'px-6 py-4 border-t border-gray9 flex items-center gap-2'}>
+            <div className={'px-6 py-4 border-t border-gray9 flex items-center justify-between'}>
               <ThemeSwitch />
+              {user ? (
+                <button
+                  onClick={handleLogout}
+                  className={'flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-sub transition-colors hover:bg-background-secondary hover:text-main'}
+                >
+                  <LogOut size={16} />
+                  {'로그아웃'}
+                </button>
+              ) : (
+                <Link
+                  href={'/login'}
+                  className={'flex items-center gap-1.5 rounded-lg bg-accent1 px-3.5 py-2 text-sm font-semibold text-inverse transition-opacity hover:opacity-90'}
+                >
+                  <LogIn size={16} />
+                  {'로그인'}
+                </Link>
+              )}
             </div>
           </div>
         </div>,
