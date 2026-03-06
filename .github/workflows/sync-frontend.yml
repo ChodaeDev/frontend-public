@@ -1,0 +1,28 @@
+name: Sync frontend-nextjs to public repo
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frontend-nextjs/**"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create subtree branch
+        run: |
+          git subtree split --prefix=frontend-nextjs -b frontend-split
+
+      - name: Push to public repo
+        env:
+          TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+        run: |
+          git push https://$TOKEN@github.com/ChodaeDev/frontend-public.git frontend-split:main --force
