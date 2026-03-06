@@ -27,10 +27,12 @@ export default function RootLayout({
       <body className={`${ notoSansKr.variable } font-sans antialiased`}>
         <ReduxProvider>
           <ThemeLayout>
-            <Header />
-            <main className={'max-w-7xl h-[calc(100vh-89px)] mx-auto px-4 md:px-6 lg:px-10'}>
-              {children}
-            </main>
+            <div className={'relative h-full'}>
+              <Header />
+              <main className={'mt-[89px] max-w-7xl min-h-[calc(100vh-89px)] mx-auto px-4 md:px-6 lg:px-10'}>
+                {children}
+              </main>
+            </div>
           </ThemeLayout>
         </ReduxProvider>
       </body>

@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { NAV_ITEMS } from '@/config/navigation';
+import { navItems } from '@/config/navigation';
 import { ChevronRight } from 'lucide-react';
 
 export function generateStaticParams() {
-  return NAV_ITEMS
+  return navItems
     .filter((item) => item.slug !== '' && item.subMenus)
     .map((item) => ({ section: item.slug }));
 }
@@ -15,7 +15,7 @@ export default async function SectionPage({
   params: Promise<{ section: string }>;
 }) {
   const { section } = await params;
-  const navItem = NAV_ITEMS.find((item) => item.slug === section);
+  const navItem = navItems.find((item) => item.slug === section);
 
   if (!navItem?.subMenus) notFound();
 
