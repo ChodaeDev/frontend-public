@@ -26,6 +26,10 @@ jobs:
         run: |
           git subtree split --prefix=frontend-nextjs -b frontend-split
 
+      - name: Debug token
+        run: |
+          echo "token length: ${#{{ secrets.PUBLIC_REPO_TOKEN }}}"
+
       - name: Push to public repo
         run: |
           git push https://judahwon:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/ChodaeDev/frontend-public.git frontend-split:main --force
