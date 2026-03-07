@@ -8,6 +8,7 @@ import Navigation from '@/components/layout/Navigation';
 import MobileMenu from '@/components/layout/MobileMenu';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { logout } from '@/store/authSlice';
+import Image from 'next/image';
 
 const Header = () => {
   const router = useRouter();
@@ -20,16 +21,17 @@ const Header = () => {
   };
 
   return (
-    <header className={'fixed w-full top-0 left-0 z-50 bg-background/80 backdrop-blur-sm border-b border-gray9'}>
+    <header className={'h-[89px] fixed w-full top-0 left-0 z-50 bg-background/80 backdrop-blur-sm border-b border-gray9'}>
       <div className={'flex items-center justify-between max-w-7xl mx-auto px-4 md:px-6 lg:px-10 py-4'}>
-        <div className={'flex items-center gap-6'}>
+        <div className={'flex items-center gap-2'}>
+          <Image src={'/assets/images/logo.png'} alt={'로고 이미지'} width={56} height={56} />
           <Link href={'/'} className={'flex flex-col'}>
             <span className={'text-2xl font-black text-main'}>{'신천지 전문상담소'}</span>
             <span className={'text-sub'}>{'구리이단상담소'}</span>
           </Link>
-          <div className={'hidden lg:flex'}>
-            <Navigation />
-          </div>
+        </div>
+        <div className={'hidden lg:flex'}>
+          <Navigation />
         </div>
         <div className={'flex items-center gap-2'}>
           <div className={'hidden lg:flex items-center gap-2'}>
