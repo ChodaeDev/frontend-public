@@ -1,20 +1,32 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { navItems } from '@/config/navigation';
 import { ChevronRight } from 'lucide-react';
+import { getDictionary } from '@/i18n/getDictionary';
+import { locales, isValidLocale } from '@/i18n/config';
+import { getNavItems } from '@/config/navigation';
 
 export function generateStaticParams() {
-  return navItems
-    .filter((item) => item.slug !== '' && item.subMenus)
-    .map((item) => ({ section: item.slug }));
+  const navItems = getNavItems('ko');
+  return locales.flatMap((locale) =>
+    navItems
+      .filter((item) => item.slug !== '' && item.subMenus)
+      .map((item) => ({ locale, section: item.slug })),
+  );
 }
 
 export default async function SectionPage({
   params,
 }: {
-  params: Promise<{ section: string }>;
+  params: Promise<{ locale: string; section: string }>;
 }) {
-  const { section } = await params;
+  const { locale, section } = await params;
+
+  if (!isValidLocale(locale)) {
+    notFound();
+  }
+
+  const dictionary = await getDictionary(locale);
+  const navItems = getNavItems(locale, dictionary);
   const navItem = navItems.find((item) => item.slug === section);
 
   if (!navItem?.subMenus) notFound();
@@ -26,7 +38,7 @@ export default async function SectionPage({
         {navItem.subMenus.map((sub) => (
           <Link
             key={sub.slug}
-            href={`/${ section }/${ sub.slug }`}
+            href={`/${ locale }/${ section }/${ sub.slug }`}
             className={'group flex flex-col'}
           >
             <div className={'flex items-center justify-between text-main group-hover:text-accent1 transition-colors pb-2 border-b-2 border-gray6'}>

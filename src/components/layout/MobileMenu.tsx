@@ -5,10 +5,12 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, LogIn, LogOut } from 'lucide-react';
-import { navItems } from '@/config/navigation';
 import ThemeSwitch from '@/components/theme/ThemeSwitch';
+import LanguageSwitch from '@/components/ui/LanguageSwitch';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { logout } from '@/store/authSlice';
+import { useTranslation } from '@/i18n/client';
+import { getNavItems } from '@/config/navigation';
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +19,9 @@ const MobileMenu = () => {
   const router = useRouter();
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
+  const { locale, dictionary } = useTranslation();
+  const navItems = getNavItems(locale, dictionary);
+  const t = dictionary;
 
   const open = useCallback(() => {
     setIsOpen(true);
@@ -35,8 +40,8 @@ const MobileMenu = () => {
   const handleLogout = useCallback(() => {
     dispatch(logout());
     close();
-    router.push('/');
-  }, [dispatch, close, router]);
+    router.push(`/${ locale }`);
+  }, [dispatch, close, router, locale]);
 
   // pathname 변경 시 메뉴 닫기
   useEffect(() => {
@@ -51,8 +56,9 @@ const MobileMenu = () => {
   }, []);
 
   const isActive = (slug: string) => {
-    if (slug === '') return pathname === '/';
-    return pathname.startsWith(`/${ slug }`);
+    const basePath = `/${ locale }`;
+    if (slug === '') return pathname === basePath || pathname === `${ basePath }/`;
+    return pathname.startsWith(`${ basePath }/${ slug }`);
   };
 
   return (
@@ -60,7 +66,7 @@ const MobileMenu = () => {
       <button
         onClick={open}
         className={'lg:hidden p-2 rounded-md text-sub hover:text-main hover:bg-background-secondary transition-colors'}
-        aria-label={'메뉴 열기'}
+        aria-label={t.header.openMenu}
       >
         <Menu size={24} />
       </button>
@@ -76,11 +82,11 @@ const MobileMenu = () => {
             className={`absolute top-0 right-0 h-full w-3/4 max-w-sm bg-background border-l border-gray9 flex flex-col ${ isClosing ? 'animate-slideOutRight' : 'animate-slideInRight' }`}
           >
             <div className={'flex items-center justify-between px-4 py-4 border-b border-gray9 min-h-[89px]'}>
-              <span className={'text-lg font-bold text-main'}>{'메뉴'}</span>
+              <span className={'text-lg font-bold text-main'}>{t.common.menu}</span>
               <button
                 onClick={close}
                 className={'p-2 rounded-md text-sub hover:text-main hover:bg-background-secondary transition-colors'}
-                aria-label={'메뉴 닫기'}
+                aria-label={t.header.closeMenu}
               >
                 <X size={24} />
               </button>
@@ -90,7 +96,7 @@ const MobileMenu = () => {
               {navItems.map((item) => (
                 <div key={item.slug} className={'mb-2'}>
                   <Link
-                    href={item.slug === '' ? '/' : `/${ item.slug }`}
+                    href={item.slug === '' ? `/${ locale }` : `/${ locale }/${ item.slug }`}
                     className={`block px-6 py-2.5 text-base font-bold transition-colors ${
                       isActive(item.slug)
                         ? 'text-accent1'
@@ -104,9 +110,9 @@ const MobileMenu = () => {
                       {item.subMenus.map((sub) => (
                         <Link
                           key={sub.slug}
-                          href={`/${ item.slug }/${ sub.slug }`}
+                          href={`/${ locale }/${ item.slug }/${ sub.slug }`}
                           className={`block px-6 py-2 text-sm transition-colors ${
-                            pathname === `/${ item.slug }/${ sub.slug }`
+                            pathname === `/${ locale }/${ item.slug }/${ sub.slug }`
                               ? 'text-accent1 font-semibold'
                               : 'text-sub hover:text-main'
                           }`}
@@ -121,22 +127,25 @@ const MobileMenu = () => {
             </nav>
 
             <div className={'px-6 py-4 border-t border-gray9 flex items-center justify-between'}>
-              <ThemeSwitch />
+              <div className={'flex items-center gap-2'}>
+                <LanguageSwitch />
+                <ThemeSwitch />
+              </div>
               {user ? (
                 <button
                   onClick={handleLogout}
                   className={'flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-sub transition-colors hover:bg-background-secondary hover:text-main'}
                 >
                   <LogOut size={16} />
-                  {'로그아웃'}
+                  {t.common.logout}
                 </button>
               ) : (
                 <Link
-                  href={'/login'}
+                  href={`/${ locale }/login`}
                   className={'flex items-center gap-1.5 rounded-lg bg-accent1 px-3.5 py-2 text-sm font-semibold text-inverse transition-opacity hover:opacity-90'}
                 >
                   <LogIn size={16} />
-                  {'로그인'}
+                  {t.common.login}
                 </Link>
               )}
             </div>
