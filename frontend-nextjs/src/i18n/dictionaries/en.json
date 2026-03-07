@@ -1,0 +1,233 @@
+{
+  "metadata": {
+    "title": "Guri Cult Counseling Center",
+    "description": "Professional Counseling for Shincheonji-related Issues"
+  },
+  "common": {
+    "login": "Login",
+    "logout": "Logout",
+    "signup": "Sign Up",
+    "menu": "Menu",
+    "close": "Close",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "reset": "Reset",
+    "processing": "Processing...",
+    "selectDate": "Select a date",
+    "year": "",
+    "month": ""
+  },
+  "header": {
+    "siteName": "Shincheonji Counseling",
+    "siteSubName": "Guri Cult Counseling Center",
+    "logoAlt": "Logo image",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "selectTheme": "Select theme"
+  },
+  "language": {
+    "select": "Select Language",
+    "korean": "한국어",
+    "english": "English",
+    "german": "Deutsch"
+  },
+  "home": {
+    "title": "Guri Cult Counseling Center",
+    "subtitle": "Professional Counseling for Shincheonji-related Issues"
+  },
+  "login": {
+    "title": "Login",
+    "description": "If you don't have an account, please sign up using the link below.",
+    "userId": "User ID",
+    "userIdPlaceholder": "Enter your user ID",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "submit": "Login",
+    "submitting": "Logging in...",
+    "noAccount": "Don't have an account?",
+    "signupLink": "Sign Up",
+    "errors": {
+      "invalidResponse": "Invalid login response format.",
+      "serverError": "Cannot connect to server. Please check if the backend server is running.",
+      "generic": "An error occurred during login."
+    }
+  },
+  "signup": {
+    "title": "Sign Up",
+    "description": "Please fill in the information below to complete your registration.",
+    "userId": "User ID",
+    "userIdPlaceholder": "Enter your desired user ID",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "username": "Name",
+    "usernamePlaceholder": "Enter your name",
+    "nickname": "Nickname",
+    "nicknamePlaceholder": "Enter your nickname",
+    "phone": "Phone Number",
+    "phonePlaceholder": "e.g., 01012345678",
+    "church": "Church Name",
+    "churchPlaceholder": "Enter your church name",
+    "birthday": "Date of Birth",
+    "bio": "Introduction & Notes",
+    "bioPlaceholder": "Enter additional information such as reason for consultation",
+    "submit": "Complete Sign Up",
+    "submitting": "Signing up...",
+    "hasAccount": "Already have an account?",
+    "loginLink": "Login",
+    "errors": {
+      "serverError": "Cannot connect to server. Please check if the backend server is running.",
+      "generic": "An error occurred during sign up."
+    }
+  },
+  "validation": {
+    "userId": {
+      "required": "Please enter your user ID",
+      "min": "User ID must be at least 4 characters",
+      "max": "User ID must be 20 characters or less",
+      "pattern": "Only letters, numbers, and underscores are allowed"
+    },
+    "password": {
+      "required": "Please enter your password",
+      "min": "Password must be at least 8 characters",
+      "letterRequired": "Must contain at least one letter",
+      "numberRequired": "Must contain at least one number"
+    },
+    "username": {
+      "required": "Please enter your name",
+      "min": "Name must be at least 2 characters",
+      "max": "Name must be 20 characters or less"
+    },
+    "nickname": {
+      "max": "Nickname must be 20 characters or less"
+    },
+    "phone": {
+      "required": "Please enter your phone number",
+      "pattern": "Please enter numbers only",
+      "min": "Phone number must be at least 10 digits",
+      "max": "Phone number must be 11 digits or less"
+    },
+    "church": {
+      "max": "Church name must be 50 characters or less"
+    },
+    "description": {
+      "max": "Introduction must be 500 characters or less"
+    }
+  },
+  "nav": {
+    "about": {
+      "label": "About Us",
+      "introduction": {
+        "label": "Introduction",
+        "description": "Information about our counseling center and directions."
+      },
+      "familyTips": {
+        "label": "Tips for Affected Families",
+        "description": "Important guidelines for families of victims."
+      },
+      "centers": {
+        "label": "Nationwide Centers",
+        "description": "Locations and contact information for counseling centers nationwide."
+      },
+      "pastor": {
+        "label": "Our Pastors",
+        "description": "Introduction to Pastor Shin Hyun-wook and Pastor Kim Kang-rim."
+      },
+      "interviews": {
+        "label": "Interviews & Media",
+        "description": "Interviews and media coverage about our center."
+      },
+      "videos": {
+        "label": "Video Resources",
+        "description": "Video materials related to Shincheonji."
+      }
+    },
+    "scjInfo": {
+      "label": "Shincheonji Info",
+      "history": {
+        "label": "History",
+        "description": "Background and history of Shincheonji's establishment."
+      },
+      "details": {
+        "label": "Organization Details",
+        "description": "Organizational structure and operational methods of Shincheonji."
+      },
+      "strategy": {
+        "label": "Recruitment Tactics",
+        "description": "Exposing various recruitment methods of Shincheonji."
+      },
+      "illegalCases": {
+        "label": "Illegal Activities",
+        "description": "Documented cases of illegal activities by Shincheonji."
+      },
+      "press": {
+        "label": "Press Coverage",
+        "description": "Collection of media reports about Shincheonji."
+      }
+    },
+    "doctrine": {
+      "label": "Doctrine Analysis",
+      "falseClaims": {
+        "label": "False Claims Refuted",
+        "description": "Refuting false claims in Shincheonji doctrine."
+      },
+      "references": {
+        "label": "Reference Materials",
+        "description": "Reference materials to understand the reality of Shincheonji."
+      },
+      "legal": {
+        "label": "Legal Documents",
+        "description": "Legal precedents and documents related to Shincheonji."
+      }
+    },
+    "prevention": {
+      "label": "Prevention",
+      "measures": {
+        "label": "Preventive Measures",
+        "description": "Methods to prevent Shincheonji-related harm."
+      },
+      "resources": {
+        "label": "Prevention Resources",
+        "description": "Educational materials for harm prevention."
+      },
+      "locations": {
+        "label": "Shincheonji Locations",
+        "description": "Location information of Shincheonji facilities nationwide."
+      }
+    },
+    "withdrawal": {
+      "label": "Exit Stories",
+      "methods": {
+        "label": "Safe Exit Methods",
+        "description": "Guide to safely and wisely leaving Shincheonji."
+      },
+      "testimonies": {
+        "label": "Exit Testimonies",
+        "description": "Testimonies and stories from former members."
+      },
+      "damageCases": {
+        "label": "Damage Cases",
+        "description": "Documented cases of harm caused by Shincheonji."
+      },
+      "toMembers": {
+        "label": "To Current Members",
+        "description": "A message to those currently in Shincheonji."
+      }
+    },
+    "board": {
+      "label": "Community",
+      "counseling": {
+        "label": "Counseling Board",
+        "description": "Request counseling related to Shincheonji."
+      },
+      "free": {
+        "label": "Free Board",
+        "description": "A space to freely share opinions."
+      }
+    }
+  }
+}

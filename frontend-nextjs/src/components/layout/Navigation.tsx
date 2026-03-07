@@ -2,14 +2,18 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { navItems } from '@/config/navigation';
+import { useTranslation } from '@/i18n/client';
+import { getNavItems } from '@/config/navigation';
 
 const Navigation = () => {
   const pathname = usePathname();
+  const { locale, dictionary } = useTranslation();
+  const navItems = getNavItems(locale, dictionary);
 
   const isActive = (slug: string) => {
-    if (slug === '') return pathname === '/';
-    return pathname.startsWith(`/${ slug }`);
+    const basePath = `/${ locale }`;
+    if (slug === '') return pathname === basePath || pathname === `${ basePath }/`;
+    return pathname.startsWith(`${ basePath }/${ slug }`);
   };
 
   return (
@@ -17,7 +21,7 @@ const Navigation = () => {
       {navItems.map((item) => (
         <Link
           key={item.slug}
-          href={item.slug === '' ? '/' : `/${ item.slug }`}
+          href={item.slug === '' ? `/${ locale }` : `/${ locale }/${ item.slug }`}
           className={`px-3 py-1.5 rounded-md text-sm transition-colors whitespace-nowrap ${
             isActive(item.slug)
               ? 'text-main font-black bg-gray9'

@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/Dropdown';
 import { LucideIcon, Dot, Monitor, Moon, Sun } from 'lucide-react';
 import { useIsLgScreen } from '@/lib/useMediaQuery';
+import { useTranslation } from '@/i18n/client';
 
 interface ThemeItemProps {
   newTheme: string;
@@ -21,6 +22,8 @@ const ThemeSwitch = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const isLgScreen = useIsLgScreen();
+  const { dictionary } = useTranslation();
+  const t = dictionary.theme;
 
   useEffect(() => {
     setMounted(true);
@@ -38,7 +41,7 @@ const ThemeSwitch = () => {
   );
 
   const ThemeItem = ({ newTheme, Icon, label }: ThemeItemProps) => (
-    <DropdownItem onClick={() => setTheme(newTheme)} ariaLabel={`${ label } 테마 선택`}>
+    <DropdownItem onClick={() => setTheme(newTheme)} ariaLabel={`${ label } ${ t.selectTheme }`}>
       <div className={'flex w-full items-center justify-between'}>
         <div className={'p-2 flex items-center gap-2'}>
           <Icon width={14} />
@@ -58,9 +61,9 @@ const ThemeSwitch = () => {
         </div>
       </DropdownTrigger>
       <DropdownList align={'end'} direction={isLgScreen ? 'bottom' : 'left'}>
-        <ThemeItem newTheme={'light'} label={'Light'} Icon={Sun} />
-        <ThemeItem newTheme={'dark'} label={'Dark'} Icon={Moon} />
-        <ThemeItem newTheme={'system'} label={'System'} Icon={Monitor} />
+        <ThemeItem newTheme={'light'} label={t.light} Icon={Sun} />
+        <ThemeItem newTheme={'dark'} label={t.dark} Icon={Moon} />
+        <ThemeItem newTheme={'system'} label={t.system} Icon={Monitor} />
       </DropdownList>
     </Dropdown>
   );

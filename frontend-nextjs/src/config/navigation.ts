@@ -1,3 +1,6 @@
+import type { Locale } from '@/i18n/config';
+import type { Dictionary } from '@/i18n/getDictionary';
+
 export interface SubMenuItem {
   label: string;
   slug: string;
@@ -10,6 +13,84 @@ export interface NavItem {
   subMenus?: SubMenuItem[];
 }
 
+// slug 기반 네비게이션 구조 (언어 독립적)
+const navStructure = [
+  {
+    key: 'about',
+    slug: 'about',
+    subKeys: ['introduction', 'familyTips', 'centers', 'pastor', 'interviews', 'videos'],
+    subSlugs: ['introduction', 'family-tips', 'centers', 'pastor', 'interviews', 'videos'],
+  },
+  {
+    key: 'scjInfo',
+    slug: 'scj-info',
+    subKeys: ['history', 'details', 'strategy', 'illegalCases', 'press'],
+    subSlugs: ['history', 'details', 'strategy', 'illegal-cases', 'press'],
+  },
+  {
+    key: 'doctrine',
+    slug: 'doctrine',
+    subKeys: ['falseClaims', 'references', 'legal'],
+    subSlugs: ['false-claims', 'references', 'legal'],
+  },
+  {
+    key: 'prevention',
+    slug: 'prevention',
+    subKeys: ['measures', 'resources', 'locations'],
+    subSlugs: ['measures', 'resources', 'locations'],
+  },
+  {
+    key: 'withdrawal',
+    slug: 'withdrawal',
+    subKeys: ['methods', 'testimonies', 'damageCases', 'toMembers'],
+    subSlugs: ['methods', 'testimonies', 'damage-cases', 'to-members'],
+  },
+  {
+    key: 'board',
+    slug: 'board',
+    subKeys: ['counseling', 'free'],
+    subSlugs: ['counseling', 'free'],
+  },
+];
+
+// Dictionary에서 번역된 NavItem 배열 생성
+export function getNavItems(locale: Locale, dictionary?: Dictionary): NavItem[] {
+  if (!dictionary) {
+    // dictionary가 없으면 기본 한국어 구조 반환 (generateStaticParams용)
+    return navStructure.map((nav) => ({
+      label: nav.key,
+      slug: nav.slug,
+      subMenus: nav.subKeys.map((subKey, index) => ({
+        label: subKey,
+        slug: nav.subSlugs[index],
+      })),
+    }));
+  }
+
+  const navDict = dictionary.nav as Record<string, {
+    label: string;
+    [key: string]: { label: string; description?: string } | string;
+  }>;
+
+  return navStructure.map((nav) => {
+    const navSection = navDict[nav.key];
+
+    return {
+      label: navSection.label,
+      slug: nav.slug,
+      subMenus: nav.subKeys.map((subKey, index) => {
+        const subSection = navSection[subKey] as { label: string; description?: string };
+        return {
+          label: subSection.label,
+          slug: nav.subSlugs[index],
+          description: subSection.description,
+        };
+      }),
+    };
+  });
+}
+
+// 하위 호환성을 위해 기본 navItems도 export (한국어)
 export const navItems: NavItem[] = [
   {
     label: '상담소 안내',

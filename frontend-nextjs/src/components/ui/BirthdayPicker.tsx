@@ -2,11 +2,18 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { DayPicker } from 'react-day-picker';
-import { ko } from 'react-day-picker/locale';
+import { ko, enUS, de } from 'react-day-picker/locale';
 import dayjs from 'dayjs';
 import { Calendar } from 'lucide-react';
 import { inputStyle, labelStyle, selectStyle } from './form-styles';
 import { getYears, getMonths, formatBirthday } from '@/lib/date';
+import { useTranslation } from '@/i18n/client';
+
+const localeMap = {
+  ko,
+  en: enUS,
+  de,
+} as const;
 
 type BirthdayPickerProps = {
   name?: string;
@@ -17,10 +24,14 @@ type BirthdayPickerProps = {
 
 export function BirthdayPicker({
   name = 'birthday',
-  label = '생년월일',
+  label,
   defaultValue,
   className,
 }: BirthdayPickerProps) {
+  const { locale, dictionary } = useTranslation();
+  const t = dictionary.common;
+  const displayLabel = label || dictionary.signup.birthday;
+
   const [selected, setSelected] = useState<Date | undefined>(() => {
     if (!defaultValue) return undefined;
     const parsed = dayjs(defaultValue);
@@ -71,11 +82,19 @@ export function BirthdayPicker({
     }
   };
 
-  const displayValue = selected ? dayjs(selected).format('YYYY년 MM월 DD일') : '';
+  // 날짜 형식을 로케일에 맞게 표시
+  const formatDate = (date: Date) => {
+    if (locale === 'ko') {
+      return dayjs(date).format('YYYY년 MM월 DD일');
+    }
+    return dayjs(date).format('MMMM D, YYYY');
+  };
+
+  const displayValue = selected ? formatDate(selected) : '';
 
   return (
     <div className={className} ref={containerRef}>
-      <label className={labelStyle}>{label}</label>
+      <label className={labelStyle}>{displayLabel}</label>
 
       <div className={'relative'}>
         <button
@@ -84,7 +103,7 @@ export function BirthdayPicker({
           className={`${ inputStyle } flex cursor-pointer items-center justify-between text-left`}
         >
           <span className={selected ? 'text-main' : 'text-gray6'}>
-            {displayValue || '날짜를 선택하세요'}
+            {displayValue || t.selectDate}
           </span>
           <Calendar className={'size-4 text-gray6'} />
         </button>
@@ -103,7 +122,7 @@ export function BirthdayPicker({
               >
                 {years.map((y) => (
                   <option key={y} value={y}>
-                    {y}{'년'}
+                    {y}{t.year}
                   </option>
                 ))}
               </select>
@@ -114,7 +133,7 @@ export function BirthdayPicker({
               >
                 {months.map((m) => (
                   <option key={m} value={m}>
-                    {m}{'월'}
+                    {m}{t.month}
                   </option>
                 ))}
               </select>
@@ -126,7 +145,7 @@ export function BirthdayPicker({
               onSelect={handleSelect}
               month={month}
               onMonthChange={setMonth}
-              locale={ko}
+              locale={localeMap[locale as keyof typeof localeMap] || ko}
               showOutsideDays
               fixedWeeks
               classNames={{
@@ -158,7 +177,7 @@ export function BirthdayPicker({
                   'rounded-lg px-3 py-1.5 text-sm text-sub transition-colors hover:bg-background-secondary'
                 }
               >
-                {'초기화'}
+                {t.reset}
               </button>
               <button
                 type={'button'}
@@ -167,7 +186,7 @@ export function BirthdayPicker({
                   'rounded-lg bg-accent1 px-3 py-1.5 text-sm text-inverse transition-colors hover:opacity-90'
                 }
               >
-                {'확인'}
+                {t.confirm}
               </button>
             </div>
           </div>
