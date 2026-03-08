@@ -1,6 +1,7 @@
 import { getDictionary } from '@/i18n/getDictionary';
 import { isValidLocale } from '@/i18n/config';
 import { notFound } from 'next/navigation';
+import { LandingImageSection, MinistrySection, QuickMenuSection } from '@/components/landing';
 
 export default async function Home({
   params,
@@ -15,10 +16,21 @@ export default async function Home({
 
   const dictionary = await getDictionary(locale);
 
+  // TODO: API 호출로 대체
+  const stats = { yearlyCount: 150, totalCount: 2750 };
+
   return (
-    <main className={'flex min-h-screen bg-accent2 flex-col items-center justify-center'}>
-      <h1 className={'text-4xl font-bold text-main'}>{dictionary.home.title}</h1>
-      <p className={'mt-4 text-lg text-sub'}>{dictionary.home.subtitle}</p>
+    <main className={'flex flex-col items-center min-h-screen'}>
+      <LandingImageSection
+        dictionary={dictionary}
+        locale={locale}
+        stats={stats}
+      />
+      <QuickMenuSection
+        dictionary={dictionary}
+        locale={locale}
+      />
+      <MinistrySection dictionary={dictionary} locale={locale} />
     </main>
   );
 }

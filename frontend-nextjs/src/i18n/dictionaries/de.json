@@ -38,7 +38,33 @@
   },
   "home": {
     "title": "Guri Sektenberatungszentrum",
-    "subtitle": "Professionelle Beratung zu Shincheonji-Themen"
+    "subtitle": "Professionelle Beratung zu Shincheonji-Themen",
+    "stats": {
+      "unit": "Personen",
+      "yearlyAverage": "Jährl. Bekehrungen (Durchschn.)",
+      "totalConversions": "Bekehrungen gesamt"
+    },
+    "ministry": {
+      "title": "In der Wahrheit\ngehen wir gemeinsam\nden Weg der Heilung\nund Versöhnung",
+      "ministers": [
+        {
+          "name": "Pastor Shin Hyun-wook",
+          "role": "#Gemeindepfarrer #SektenberatungsLeiter\n#KoreanischeKirchenmedien #PCK(Hapdong)Sektenexperte"
+        },
+        {
+          "name": "Pastor Kim Kang-rim",
+          "role": "#StellvertretenderPfarrer"
+        }
+      ]
+    },
+    "quickMenu": {
+      "counseling": "Beratung anfordern",
+      "testimonies": "Ausstiegsberichte",
+      "falseClaims": "Widerlegte Falschaussagen",
+      "exitMethods": "Sichere Ausstiegsmethoden",
+      "recruitmentTactics": "Rekrutierungstaktiken",
+      "locations": "SCJ-Standorte"
+    }
   },
   "login": {
     "title": "Anmelden",
@@ -117,6 +143,9 @@
     "description": {
       "max": "Einführung darf maximal 500 Zeichen lang sein"
     }
+  },
+  "footer": {
+    "copyright": "\u00a9 2025 Guri Sektenberatungszentrum. Alle Rechte vorbehalten."
   },
   "nav": {
     "about": {

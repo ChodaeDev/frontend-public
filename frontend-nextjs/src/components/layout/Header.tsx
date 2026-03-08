@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { LogIn, LogOut } from 'lucide-react';
@@ -18,6 +19,16 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const { dictionary, locale } = useTranslation();
   const t = dictionary;
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -25,7 +36,7 @@ const Header = () => {
   };
 
   return (
-    <header className={'h-[89px] fixed w-full top-0 left-0 z-50 bg-background/80 backdrop-blur-sm border-b border-gray9'}>
+    <header className={`h-[89px] fixed w-full top-0 left-0 z-50 bg-background/80 backdrop-blur-sm border-b transition-colors duration-300 ${ isScrolled ? 'border-gray9' : 'border-transparent' }`}>
       <div className={'flex items-center justify-between max-w-7xl mx-auto px-4 md:px-6 lg:px-10 py-4'}>
         <div className={'flex items-center gap-2'}>
           <Image src={'/assets/images/logo.png'} alt={t.header.logoAlt} width={56} height={56} />
