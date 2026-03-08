@@ -37,8 +37,34 @@
     "german": "Deutsch"
   },
   "home": {
-    "title": "구리이단상담소",
-    "subtitle": "신천지 관련 전문 상담"
+    "title": "신천지 전문 구리 이단 상담소",
+    "subtitle": "신천지로 인한 문제가 있을 경우 적극적으로 도움을 드리겠습니다.",
+    "stats": {
+      "unit": "명",
+      "yearlyAverage": "매년 평균 회심",
+      "totalConversions": "총 회심"
+    },
+    "ministry": {
+      "title": "진리 안에서\n회복과 화해의 걸음을\n함께하겠습니다",
+      "ministers": [
+        {
+          "name": "신현욱 목사",
+          "role": "#초대교회담임목사 #구리이단상담소장\n#한국교회언론회전문위원 #예장(합동)총회이대위전문위원"
+        },
+        {
+          "name": "김강림 목사",
+          "role": "#초대교회부목사"
+        }
+      ]
+    },
+    "quickMenu": {
+      "counseling": "상담 요청",
+      "testimonies": "탈퇴 후기",
+      "falseClaims": "신천지 거짓 반증",
+      "exitMethods": "지혜로운 탈퇴 방법",
+      "recruitmentTactics": "신천지 포교 전략",
+      "locations": "신천지 위치정보"
+    }
   },
   "login": {
     "title": "로그인",
@@ -117,6 +143,9 @@
     "description": {
       "max": "소개는 500자 이하여야 합니다"
     }
+  },
+  "footer": {
+    "copyright": "\u00a9 2025 구리이단상담소. All rights reserved."
   },
   "nav": {
     "about": {

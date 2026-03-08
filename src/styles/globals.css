@@ -53,14 +53,17 @@
   --animate-fadeOut: fadeOut 0.25s ease-in forwards;
   --animate-slideInRight: slideInRight 0.3s ease-out forwards;
   --animate-slideOutRight: slideOutRight 0.25s ease-in forwards;
+  --animate-heroSlideUp: heroSlideUp 0.6s ease-out both;
+  --animate-heroSlideUp-delay-1: heroSlideUp 0.6s ease-out 0.15s both;
+  --animate-heroSlideUp-delay-2: heroSlideUp 0.6s ease-out 0.3s both;
 }
 
 /* Light Mode (기본) */
 :root {
-  --primary: #BB2DD1;
-  --secondary: #537FF1;
-  --tertiary: #DBE4F3;
-  --quaternary: #F8FAFD;
+  --primary: #02676C;
+  --secondary: #1490A1;
+  --tertiary: #1F2A37;
+  --quaternary: #d2ebe5;
 
   --normal: #16B11B;
   --warning: #FFA500;
@@ -90,10 +93,10 @@
 
 /* Dark Mode */
 .dark {
-  --primary: #ea63ff;
-  --secondary: #3da1f3;
-  --tertiary: #404652;
-  --quaternary: #122f5a;
+  --primary: #119ea5;
+  --secondary: #36b5c5;
+  --tertiary: #8cbbf3;
+  --quaternary: #35574d;
 
   --normal: #00d107;
   --warning: #fffb00;

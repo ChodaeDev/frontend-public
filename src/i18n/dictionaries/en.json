@@ -38,7 +38,33 @@
   },
   "home": {
     "title": "Guri Cult Counseling Center",
-    "subtitle": "Professional Counseling for Shincheonji-related Issues"
+    "subtitle": "Professional Counseling for Shincheonji-related Issues",
+    "stats": {
+      "unit": "People",
+      "yearlyAverage": "Avg. Annual Conversions",
+      "totalConversions": "Total Conversions"
+    },
+    "ministry": {
+      "title": "In truth,\nwe walk together\ntoward recovery\nand reconciliation",
+      "ministers": [
+        {
+          "name": "Pastor Shin Hyun-wook",
+          "role": "#SeniorPastor #CultCounselingDirector\n#KoreanChurchMediaCommittee #PCK(Hapdong)CultExpert"
+        },
+        {
+          "name": "Pastor Kim Kang-rim",
+          "role": "#AssociatePastor"
+        }
+      ]
+    },
+    "quickMenu": {
+      "counseling": "Request Counseling",
+      "testimonies": "Exit Testimonies",
+      "falseClaims": "False Claims Refuted",
+      "exitMethods": "Safe Exit Methods",
+      "recruitmentTactics": "Recruitment Tactics",
+      "locations": "SCJ Locations"
+    }
   },
   "login": {
     "title": "Login",
@@ -117,6 +143,9 @@
     "description": {
       "max": "Introduction must be 500 characters or less"
     }
+  },
+  "footer": {
+    "copyright": "\u00a9 2025 Guri Cult Counseling Center. All rights reserved."
   },
   "nav": {
     "about": {
