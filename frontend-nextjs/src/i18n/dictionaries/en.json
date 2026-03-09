@@ -145,7 +145,21 @@
     }
   },
   "footer": {
-    "copyright": "\u00a9 2025 Guri Cult Counseling Center. All rights reserved."
+    "copyright": "© 2015 Guri Cult Counseling Center. All rights reserved.",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "emailPolicy": "Anti-Spam Policy",
+    "directions": "Directions",
+    "organizationName": "Presbyterian Church of Korea (Hapdong) Chodae Church - Guri Cult Counseling Center",
+    "pastor": "Senior Pastor",
+    "pastorName": "Shin Hyun-wook",
+    "address": "499 Achasan-ro, Gyomun-dong, Guri-si, Gyeonggi-do (Jungang Heights Tium B-404)",
+    "phone": "Contact",
+    "phoneNumber": "T. 0505-369-3391",
+    "donation": "Donation",
+    "donationAccount": "Nonghyup 301-0176-8864-21 (Chodae Church)",
+    "registrationNumber": "Reg. No.",
+    "registrationNumberValue": "132-82-81271"
   },
   "nav": {
     "about": {
