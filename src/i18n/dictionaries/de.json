@@ -57,6 +57,10 @@
         }
       ]
     },
+    "news": {
+      "title": "Aktuelle Nachrichten",
+      "viewAll": "Alle anzeigen"
+    },
     "quickMenu": {
       "counseling": "Beratung anfordern",
       "testimonies": "Ausstiegsberichte",
