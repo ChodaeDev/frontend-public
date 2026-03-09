@@ -61,6 +61,10 @@
       "title": "Aktuelle Nachrichten",
       "viewAll": "Alle anzeigen"
     },
+    "testimony": {
+      "title": "Erfahrungsberichte & Interviews",
+      "viewAll": "Alle anzeigen"
+    },
     "quickMenu": {
       "counseling": "Beratung anfordern",
       "testimonies": "Ausstiegsberichte",

@@ -61,6 +61,10 @@
       "title": "Latest News",
       "viewAll": "View All"
     },
+    "testimony": {
+      "title": "Reviews & Testimony Interviews",
+      "viewAll": "View All"
+    },
     "quickMenu": {
       "counseling": "Request Counseling",
       "testimonies": "Exit Testimonies",
