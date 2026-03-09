@@ -61,6 +61,10 @@
       "title": "주요 뉴스",
       "viewAll": "전체 보기"
     },
+    "testimony": {
+      "title": "후기 및 간증 인터뷰",
+      "viewAll": "전체 보기"
+    },
     "quickMenu": {
       "counseling": "상담 요청",
       "testimonies": "탈퇴 후기",

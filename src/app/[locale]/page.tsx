@@ -1,7 +1,7 @@
 import { getDictionary } from '@/i18n/getDictionary';
 import { isValidLocale } from '@/i18n/config';
 import { notFound } from 'next/navigation';
-import { LandingImageSection, MinistrySection, NewsSection, QuickMenuSection } from '@/components/landing';
+import { LandingImageSection, MinistrySection, NewsSection, QuickMenuSection, TestimonySection } from '@/components/landing';
 
 export default async function Home({
   params,
@@ -30,8 +30,9 @@ export default async function Home({
         dictionary={dictionary}
         locale={locale}
       />
-      <NewsSection dictionary={dictionary} locale={locale} />
       <MinistrySection dictionary={dictionary} locale={locale} />
+      <NewsSection dictionary={dictionary} locale={locale} />
+      <TestimonySection dictionary={dictionary} locale={locale} />
     </main>
   );
 }
