@@ -145,7 +145,21 @@
     }
   },
   "footer": {
-    "copyright": "\u00a9 2025 구리이단상담소. All rights reserved."
+    "copyright": "© 2015 구리이단상담소. All rights reserved.",
+    "terms": "이용약관",
+    "privacy": "개인정보처리방침",
+    "emailPolicy": "이메일집단수집거부",
+    "directions": "오시는길",
+    "organizationName": "대한예수교장로회(합동) 초대교회 부설 구리이단상담소",
+    "pastor": "담임목사",
+    "pastorName": "신현욱",
+    "address": "경기도 구리시 아차산로 499(교문동, 중앙하이츠티움 B동 404호)",
+    "phone": "상담전화",
+    "phoneNumber": "T. 0505-369-3391",
+    "donation": "후원계좌",
+    "donationAccount": "농협 301-0176-8864-21(예금주: 초대교회)",
+    "registrationNumber": "고유번호",
+    "registrationNumberValue": "132-82-81271"
   },
   "nav": {
     "about": {
