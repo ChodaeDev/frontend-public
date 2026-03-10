@@ -303,23 +303,21 @@ export default function TestimonySection({ dictionary, locale }: TestimonySectio
           onClick={goLeft}
           className={
             `hidden sm:block absolute left-4 top-[calc(50%-20px)] -translate-y-1/2
-            opacity-0 group-hover:opacity-100 transition-opacity
-            bg-background/80 backdrop-blur-sm rounded-full p-2 shadow-md hover:bg-accent1`
+            bg-background/60 backdrop-blur-sm rounded-full p-2 shadow-md hover:bg-accent1 text-main hover:text-white`
           }
           aria-label={'Previous'}
         >
-          <ChevronLeft className={'size-5 text-main'} />
+          <ChevronLeft className={'size-5'} />
         </button>
         <button
           onClick={goRight}
           className={
             `hidden sm:block absolute right-4 top-[calc(50%-20px)] -translate-y-1/2
-            opacity-0 group-hover:opacity-100 transition-opacity
-            bg-background/80 backdrop-blur-sm rounded-full p-2 shadow-md hover:bg-accent1`
+            bg-background/60 backdrop-blur-sm rounded-full p-2 shadow-md hover:bg-accent1 text-main hover:text-white`
           }
           aria-label={'Next'}
         >
-          <ChevronRight className={'size-5 text-main'} />
+          <ChevronRight className={'size-5'} />
         </button>
       </div>
     </section>
