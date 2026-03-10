@@ -59,7 +59,7 @@ export default function NewsSection({ dictionary, locale }: NewsSectionProps) {
   const { title, viewAll } = dictionary.home.news;
 
   return (
-    <section className={'w-full my-20'}>
+    <section className={'w-full my-10'}>
       {/* 헤더 */}
       <div className={'flex items-center justify-between mb-6'}>
         <h2 className={'text-2xl font-bold text-main'}>{title}</h2>
