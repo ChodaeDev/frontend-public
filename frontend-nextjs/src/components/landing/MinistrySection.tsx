@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Locale } from '@/i18n/config';
+import { ChevronRight } from 'lucide-react';
 
 interface Minister {
   name: string;
@@ -63,13 +64,21 @@ export default function MinistrySection({ dictionary, locale }: MinistrySectionP
                 }
               />
               {/* 그라데이션 오버레이 - hover 시 accent1으로 변경 */}
-              <div className={'absolute inset-0 rounded-3xl bg-linear-to-t from-black/45 to-transparent transition-all duration-300 group-hover:hidden'} />
+              <div className={'hidden sm:block absolute inset-0 rounded-3xl bg-linear-to-t from-black/45 to-transparent transition-all duration-300 group-hover:hidden'} />
+              <span className={'hidden sm:block absolute right-4 top-4 p-2 rounded-full bg-accent1 backdrop-blur-sm group-hover:bg-accent1/60 transition-all duration-300'}>
+                <ChevronRight className={'size-4 text-white'} />
+              </span>
               {/* 목사님 정보 */}
               <div className={'absolute bottom-0 left-0 right-0 p-5'}>
-                <p className={'text-lg font-bold text-white'}>
-                  {minister.name}
-                </p>
-                <p className={'hidden sm:block text-xs text-white mt-0.5 whitespace-pre-line'}>
+                <span className={'flex items-center justify-between'}>
+                  <p className={'text-lg font-bold text-white text-shadow-sm'}>
+                    {minister.name}
+                  </p>
+                  <span className={'block sm:hidden p-1 rounded-full bg-accent1 backdrop-blur-sm group-hover:bg-accent1/60 transition-all duration-300'}>
+                    <ChevronRight className={'size-4 text-white'} />
+                  </span>
+                </span>
+                <p className={'hidden sm:block text-xs text-white mt-0.5 whitespace-pre-line text-shadow-sm'}>
                   {minister.role}
                 </p>
               </div>

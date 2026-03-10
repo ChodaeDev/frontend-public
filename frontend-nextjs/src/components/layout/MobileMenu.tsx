@@ -127,10 +127,6 @@ const MobileMenu = () => {
             </nav>
 
             <div className={'px-6 py-4 border-t border-gray9 flex items-center justify-between'}>
-              <div className={'flex items-center gap-2'}>
-                <LanguageSwitch />
-                <ThemeSwitch />
-              </div>
               {user ? (
                 <button
                   onClick={handleLogout}
@@ -148,6 +144,10 @@ const MobileMenu = () => {
                   {t.common.login}
                 </Link>
               )}
+              <div className={'flex items-center gap-2'}>
+                <LanguageSwitch />
+                <ThemeSwitch />
+              </div>
             </div>
           </div>
         </div>,

@@ -97,7 +97,7 @@ export default function SignUpPage() {
 
   return (
     <div className={'flex min-h-[calc(100vh-89px)] items-center justify-center py-8'}>
-      <div className={'w-full max-w-2xl rounded-3xl bg-background-secondary p-10 shadow-2xl'}>
+      <div className={'w-full max-w-2xl rounded-3xl bg-background-secondary p-4 sm:p-10 sm:shadow-2xl'}>
         <h1 className={'mb-2 text-center text-3xl font-bold text-main'}>{t.title}</h1>
         <p className={'mb-8 text-center text-sm text-sub'}>
           {t.description}

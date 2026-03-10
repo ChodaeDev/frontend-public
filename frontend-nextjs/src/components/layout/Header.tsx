@@ -38,13 +38,13 @@ const Header = () => {
   return (
     <header className={`h-[89px] fixed w-full top-0 left-0 z-50 bg-background/80 backdrop-blur-sm border-b transition-colors duration-300 ${ isScrolled ? 'border-gray9' : 'border-transparent' }`}>
       <div className={'flex items-center justify-between max-w-7xl mx-auto px-4 md:px-6 lg:px-10 py-4'}>
-        <div className={'flex items-center gap-2'}>
+        <Link href={`/${ locale }`} className={'flex items-center gap-2'}>
           <Image src={'/assets/images/logo.png'} alt={t.header.logoAlt} width={56} height={56} />
-          <Link href={`/${ locale }`} className={'flex flex-col'}>
+          <div className={'flex flex-col'}>
             <span className={'text-2xl font-black text-main'}>{t.header.siteName}</span>
             <span className={'text-sub'}>{t.header.siteSubName}</span>
-          </Link>
-        </div>
+          </div>
+        </Link>
         <div className={'hidden lg:flex'}>
           <Navigation />
         </div>
