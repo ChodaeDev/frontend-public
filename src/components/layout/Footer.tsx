@@ -3,16 +3,21 @@
 import Link from 'next/link';
 import { useTranslation } from '@/i18n/client';
 import { getNavItems } from '@/config/navigation';
+import Image from 'next/image';
 
 // 수직 구분선 컴포넌트
 const VerticalDivider = ({ className = '' }: { className?: string }) => (
-  <div className={`w-px h-3 bg-gray5 ${ className }`} />
+  <div className={`w-px h-2.5 bg-gray3 mt-1 ${ className }`} />
 );
 
 // 정보 항목 컴포넌트 (레이블 | 값 형태)
 const InfoItem = ({ label, value }: { label: string; value: string }) => (
-  <div className={'flex items-center gap-1.5'}>
-    <span className={'font-bold text-main'}>{label}</span>
+  <div className={'flex items-start gap-1.5'}>
+    <span className={'min-w-12 font-bold text-sub flex justify-between'}>
+      {label.split('').map((char, index) => (
+        <span key={index}>{char}</span>
+      ))}
+    </span>
     <VerticalDivider />
     <span className={'text-main'}>{value}</span>
   </div>
@@ -69,21 +74,24 @@ const Footer = () => {
         {/* 구분선 */}
         <div className={'border-t border-background-secondary dark:border-gray8 mt-8 pt-6'}>
           {/* 하단 */}
-          <div className={'flex flex-col lg:flex-row items-start gap-6 lg:gap-20'}>
+          <div className={'flex flex-col lg:flex-row items-start gap-6 lg:gap-16'}>
             {/* 좌측: siteName + 링크 버튼들 */}
-            <div className={'flex flex-col gap-0.5 sm:gap-1.5'}>
-              <p className={'text-2xl font-black text-main'}>
+            <div className={'w-full lg:w-2/5 flex flex-col gap-0.5 sm:gap-1.5'}>
+              <p className={'flex items-center gap-1 text-2xl font-black text-main'}>
+                <Image src={'/assets/images/logo.png'} alt={t.header.logoAlt} width={36} height={36} />
+
                 {t.header.siteName}
               </p>
               {/* 조직명 */}
               <p className={'text-sub'}>{t.footer.organizationName}</p>
+
               {/* 링크 버튼들 */}
               <div className={'flex items-center gap-2 flex-wrap'}>
                 {footerLinks.map((link, index) => (
                   <div key={link.key} className={'flex items-center gap-2'}>
                     <button
                       onClick={() => handleFooterLinkClick(link.key)}
-                      className={'text-xs text-gray3 hover:text-accent1 transition-colors'}
+                      className={'text-xs text-gray1 hover:text-accent1 transition-colors'}
                     >
                       {link.label}
                     </button>
@@ -96,24 +104,21 @@ const Footer = () => {
             </div>
 
             {/* 우측: 교회 정보 + Copyright */}
-            <div className={'flex flex-col gap-1 lg:gap-2 text-xs flex-1'}>
+            <div className={'w-full lg:w-3/5 flex flex-col gap-1 lg:gap-2 text-xs flex-1'}>
+              {/* 주소 */}
+              <InfoItem label={t.footer.addressLabel} value={t.footer.addressValue} />
+
               {/* 담임목사 + 고유번호 (데스크탑: 한 줄, 모바일: 세로) */}
               <div className={'flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6'}>
-                <InfoItem label={t.footer.pastor} value={t.footer.pastorName} />
+                <InfoItem label={t.footer.minister} value={t.footer.ministerName} />
                 <InfoItem label={t.footer.registrationNumber} value={t.footer.registrationNumberValue} />
               </div>
-
-              {/* 주소 */}
-              <p className={'text-main'}>{t.footer.address}</p>
 
               {/* 상담전화 + 후원계좌 (데스크탑: 한 줄, 모바일: 세로) */}
               <div className={'flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6'}>
                 <InfoItem label={t.footer.phone} value={t.footer.phoneNumber} />
                 <InfoItem label={t.footer.donation} value={t.footer.donationAccount} />
               </div>
-
-              {/* 구분선 */}
-              <div className={'w-full h-px bg-gray9 dark:bg-gray7'} />
 
               {/* Copyright */}
               <p className={'text-main/50'}>

@@ -30,10 +30,10 @@ export default function MinistrySection({ dictionary, locale }: MinistrySectionP
   const { title, ministers } = dictionary.home.ministry;
 
   return (
-    <section className={'w-full py-12 lg:py-20'}>
-      <div className={'flex flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-between gap-5 sm:gap-10 lg:gap-16'}>
+    <section className={'w-full my-10'}>
+      <div className={'flex flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-between gap-5'}>
         {/* 좌측 텍스트 */}
-        <div className={'text-center lg:text-left'}>
+        <div className={'text-center lg:text-left shrink-0 max-w-xl'}>
           <h2
             className={
               'text-2xl sm:text-4xl xl:text-6xl font-bold text-main leading-tight whitespace-pre-line'
@@ -44,21 +44,22 @@ export default function MinistrySection({ dictionary, locale }: MinistrySectionP
         </div>
 
         {/* 우측 카드 영역 */}
-        <div className={'flex gap-2.5 sm:gap-5'}>
+        <div className={'sm:w-auto w-full  flex gap-2.5 sm:gap-5 justify-center shrink-0'}>
           {ministers.map((minister, index) => (
             <Link
               key={index}
-              href={`/${ locale }/about/pastor`}
-              className={'group relative w-40 sm:w-72 aspect-3/4 rounded-3xl overflow-hidden bg-accent4'}
+              href={`/${ locale }/about/minister`}
+              className={'group relative w-1/2 sm:w-72 aspect-3/4 rounded-3xl overflow-hidden bg-accent4'}
             >
               <Image
                 src={ministerImages[index]}
                 alt={minister.name}
                 fill
+                sizes={'(min-width: 640px) 288px, 50vw'}
                 className={
                   index === 0
                     ? 'object-cover'
-                    : 'object-cover object-[10%_bottom]'
+                    : 'object-cover'
                 }
               />
               {/* 그라데이션 오버레이 - hover 시 accent1으로 변경 */}

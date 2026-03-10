@@ -75,7 +75,7 @@ export default function QuickMenuSection({
   const quickMenu = dictionary.home.quickMenu;
 
   return (
-    <section className={'w-full py-8'}>
+    <section className={'w-full my-6'}>
       <div className={'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2'}>
         {quickMenuItems.map((item) => (
           <Link
