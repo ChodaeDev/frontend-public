@@ -70,12 +70,12 @@ export default function SideNav({ dictionary, locale }: SideNavProps) {
   return (
     <>
       {/* sm 이상: 항상 표시 */}
-      <div className={'absolute top-0 right-3 2xl:right-auto 2xl:left-[calc(50%+42.25rem)] h-full'}>
+      <div className={'absolute top-0 right-3 2xl:right-auto 2xl:left-[calc(50%+42.25rem)] h-full pointer-events-none'}>
         <div className={'h-32'} />
         <nav
           className={
             `hidden sm:flex sticky top-32 z-40 flex-col items-center gap-1
-            bg-background/70 backdrop-blur-xs rounded-2xl p-2 shadow-lg border border-gray9`
+            bg-background/70 backdrop-blur-xs rounded-2xl p-2 shadow-lg border border-gray9 pointer-events-auto`
           }
         >
           {navItems.map((item) => (
