@@ -20,7 +20,8 @@ export default async function Home({
   const stats = { yearlyCount: 150, totalCount: 2750 };
 
   return (
-    <main className={'flex flex-col items-center min-h-screen'}>
+    <main className={'flex flex-col items-center min-h-screen pb-10'}>
+      <SideNav dictionary={dictionary} locale={locale} />
       <LandingImageSection
         dictionary={dictionary}
         locale={locale}
@@ -31,10 +32,9 @@ export default async function Home({
         locale={locale}
       />
       <MinistrySection dictionary={dictionary} locale={locale} />
-      <NewsSection dictionary={dictionary} locale={locale} />
       <TestimonySection dictionary={dictionary} locale={locale} />
       <BoardPreviewSection dictionary={dictionary} locale={locale} />
-      <SideNav dictionary={dictionary} locale={locale} />
+      <NewsSection dictionary={dictionary} locale={locale} />
     </main>
   );
 }
