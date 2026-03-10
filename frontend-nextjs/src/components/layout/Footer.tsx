@@ -109,13 +109,13 @@ const Footer = () => {
               <InfoItem label={t.footer.addressLabel} value={t.footer.addressValue} />
 
               {/* 담임목사 + 고유번호 (데스크탑: 한 줄, 모바일: 세로) */}
-              <div className={'flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6'}>
+              <div className={'flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6'}>
                 <InfoItem label={t.footer.minister} value={t.footer.ministerName} />
                 <InfoItem label={t.footer.registrationNumber} value={t.footer.registrationNumberValue} />
               </div>
 
               {/* 상담전화 + 후원계좌 (데스크탑: 한 줄, 모바일: 세로) */}
-              <div className={'flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6'}>
+              <div className={'flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6'}>
                 <InfoItem label={t.footer.phone} value={t.footer.phoneNumber} />
                 <InfoItem label={t.footer.donation} value={t.footer.donationAccount} />
               </div>
