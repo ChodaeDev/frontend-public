@@ -18,8 +18,8 @@ const navStructure = [
   {
     key: 'about',
     slug: 'about',
-    subKeys: ['introduction', 'familyTips', 'centers', 'pastor', 'interviews', 'videos'],
-    subSlugs: ['introduction', 'family-tips', 'centers', 'pastor', 'interviews', 'videos'],
+    subKeys: ['introduction', 'familyTips', 'centers', 'minister', 'interviews', 'videos'],
+    subSlugs: ['introduction', 'family-tips', 'centers', 'minister', 'interviews', 'videos'],
   },
   {
     key: 'scjInfo',
@@ -113,7 +113,7 @@ export const navItems: NavItem[] = [
       },
       {
         label: '목회자 소개',
-        slug: 'pastor',
+        slug: 'minister',
         description: '상담소 대표 신현욱 목사님과 김강림 목사님을 소개합니다.',
       },
       {

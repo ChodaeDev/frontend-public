@@ -27,7 +27,7 @@ export default function LandingImageSection({
   stats,
 }: LandingImageSectionProps) {
   return (
-    <div className={'animate-fadeIn w-full'}>
+    <div className={'animate-fadeIn w-full my-10'}>
       {/* 이미지 컨테이너 */}
       <div className={'relative w-full'}>
         <Image

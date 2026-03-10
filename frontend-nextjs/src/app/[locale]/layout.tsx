@@ -37,6 +37,14 @@ export async function generateMetadata({
   return {
     title: dictionary.metadata.title,
     description: dictionary.metadata.description,
+    icons: {
+      icon: [
+        { url: '/favicon/favicon-16*16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/favicon/favicon-32*32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/favicon/favicon-64*64.png', sizes: '64x64', type: 'image/png' },
+        { url: '/favicon/favicon-256*256.png', sizes: '256x256', type: 'image/png' },
+      ],
+    },
   };
 }
 

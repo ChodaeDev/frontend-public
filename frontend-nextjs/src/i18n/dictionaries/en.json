@@ -48,12 +48,12 @@
       "title": "In truth,\nwe walk together\ntoward recovery\nand reconciliation",
       "ministers": [
         {
-          "name": "Pastor Shin Hyun-wook",
-          "role": "#SeniorPastor #CultCounselingDirector\n#KoreanChurchMediaCommittee #PCK(Hapdong)CultExpert"
+          "name": "Minister Shin Hyun-wook",
+          "role": "#SeniorMinister #CultCounselingDirector\n#KoreanChurchMediaCommittee #PCK(Hapdong)CultExpert"
         },
         {
-          "name": "Pastor Kim Kang-rim",
-          "role": "#AssociatePastor"
+          "name": "Minister Kim Kang-rim",
+          "role": "#AssociateMinister"
         }
       ]
     },
@@ -72,6 +72,18 @@
       "exitMethods": "Safe Exit Methods",
       "recruitmentTactics": "Recruitment Tactics",
       "locations": "SCJ Locations"
+    },
+    "boardPreview": {
+      "counselingTitle": "Counseling Board",
+      "damageCasesTitle": "Shincheonji Damage Cases",
+      "viewAll": "View All"
+    },
+    "quickNav": {
+      "counseling": "Call Us",
+      "exitMethods": "Exit Guide",
+      "testimonies": "Testimonies",
+      "falseClaims": "Refutations",
+      "donation": "Donate"
     }
   },
   "login": {
@@ -159,9 +171,10 @@
     "emailPolicy": "Anti-Spam Policy",
     "directions": "Directions",
     "organizationName": "Presbyterian Church of Korea (Hapdong) Chodae Church - Guri Cult Counseling Center",
-    "pastor": "Senior Pastor",
-    "pastorName": "Shin Hyun-wook",
-    "address": "499 Achasan-ro, Gyomun-dong, Guri-si, Gyeonggi-do (Jungang Heights Tium B-404)",
+    "minister": "Senior Minister",
+    "ministerName": "Shin Hyun-wook",
+    "addressLabel": "Address",
+    "addressValue": "499 Achasan-ro, Gyomun-dong, Guri-si, Gyeonggi-do (Jungang Heights Tium B-404)",
     "phone": "Contact",
     "phoneNumber": "T. 0505-369-3391",
     "donation": "Donation",
@@ -184,9 +197,9 @@
         "label": "Nationwide Centers",
         "description": "Locations and contact information for counseling centers nationwide."
       },
-      "pastor": {
-        "label": "Our Pastors",
-        "description": "Introduction to Pastor Shin Hyun-wook and Pastor Kim Kang-rim."
+      "minister": {
+        "label": "Our Ministers",
+        "description": "Introduction to Minister Shin Hyun-wook and Minister Kim Kang-rim."
       },
       "interviews": {
         "label": "Interviews & Media",

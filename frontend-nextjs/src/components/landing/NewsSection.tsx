@@ -59,7 +59,7 @@ export default function NewsSection({ dictionary, locale }: NewsSectionProps) {
   const { title, viewAll } = dictionary.home.news;
 
   return (
-    <section className={'w-full py-12'}>
+    <section className={'w-full my-20'}>
       {/* 헤더 */}
       <div className={'flex items-center justify-between mb-6'}>
         <h2 className={'text-2xl font-bold text-main'}>{title}</h2>
@@ -85,6 +85,7 @@ export default function NewsSection({ dictionary, locale }: NewsSectionProps) {
                 src={news.image}
                 alt={news.title}
                 fill
+                sizes={'(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw'}
                 className={'object-cover group-hover:scale-105 transition-transform duration-300'}
               />
             </div>

@@ -240,7 +240,7 @@ export default function TestimonySection({ dictionary, locale }: TestimonySectio
   }, [startResumeTimer]);
 
   return (
-    <section className={'my-12 bg-gray9'}>
+    <section className={'my-10 bg-gray9 overflow-x-hidden'}>
       {/* 헤더 */}
       <div className={'flex items-center justify-between max-w-7xl py-6 mx-auto px-4 md:px-6 lg:px-10'}>
         <h2 className={'text-2xl font-bold text-main'}>{title}</h2>
@@ -254,7 +254,7 @@ export default function TestimonySection({ dictionary, locale }: TestimonySectio
 
       {/* 캐러셀 */}
       <div
-        className={'relative group w-screen left-1/2 -translate-x-1/2 pb-6'}
+        className={'relative group w-[calc(100vw-8px)] left-1/2 -translate-x-1/2 pb-6'}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -278,6 +278,7 @@ export default function TestimonySection({ dictionary, locale }: TestimonySectio
                     src={item.image}
                     alt={item.title}
                     fill
+                    sizes={'(min-width: 640px) 420px, 280px'}
                     className={'object-cover'}
                   />
                 </div>

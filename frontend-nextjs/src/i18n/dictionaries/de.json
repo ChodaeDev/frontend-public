@@ -48,11 +48,11 @@
       "title": "In der Wahrheit\ngehen wir gemeinsam\nden Weg der Heilung\nund Versöhnung",
       "ministers": [
         {
-          "name": "Pastor Shin Hyun-wook",
+          "name": "Minister Shin Hyun-wook",
           "role": "#Gemeindepfarrer #SektenberatungsLeiter\n#KoreanischeKirchenmedien #PCK(Hapdong)Sektenexperte"
         },
         {
-          "name": "Pastor Kim Kang-rim",
+          "name": "Minister Kim Kang-rim",
           "role": "#StellvertretenderPfarrer"
         }
       ]
@@ -72,6 +72,18 @@
       "exitMethods": "Sichere Ausstiegsmethoden",
       "recruitmentTactics": "Rekrutierungstaktiken",
       "locations": "SCJ-Standorte"
+    },
+    "boardPreview": {
+      "counselingTitle": "Beratungsforum",
+      "damageCasesTitle": "Shincheonji-Schadensfälle",
+      "viewAll": "Alle anzeigen"
+    },
+    "quickNav": {
+      "counseling": "Anrufen",
+      "exitMethods": "Ausstieg",
+      "testimonies": "Berichte",
+      "falseClaims": "Widerlegung",
+      "donation": "Spenden"
     }
   },
   "login": {
@@ -159,9 +171,10 @@
     "emailPolicy": "Anti-Spam-Richtlinie",
     "directions": "Anfahrt",
     "organizationName": "Presbyterianische Kirche Korea (Hapdong) Chodae-Kirche - Guri Sektenberatungszentrum",
-    "pastor": "Leitender Pastor",
-    "pastorName": "Shin Hyun-wook",
-    "address": "499 Achasan-ro, Gyomun-dong, Guri-si, Gyeonggi-do (Jungang Heights Tium B-404)",
+    "minister": "Leitender Minister",
+    "ministerName": "Shin Hyun-wook",
+    "addressLabel": "Adresse",
+    "addressValue": "499 Achasan-ro, Gyomun-dong, Guri-si, Gyeonggi-do (Jungang Heights Tium B-404)",
     "phone": "Kontakt",
     "phoneNumber": "T. 0505-369-3391",
     "donation": "Spende",
@@ -184,9 +197,9 @@
         "label": "Landesweite Zentren",
         "description": "Standorte und Kontaktinformationen für Beratungszentren landesweit."
       },
-      "pastor": {
-        "label": "Unsere Pastoren",
-        "description": "Vorstellung von Pastor Shin Hyun-wook und Pastor Kim Kang-rim."
+      "minister": {
+        "label": "Unsere Ministeren",
+        "description": "Vorstellung von Minister Shin Hyun-wook und Minister Kim Kang-rim."
       },
       "interviews": {
         "label": "Interviews & Medien",
