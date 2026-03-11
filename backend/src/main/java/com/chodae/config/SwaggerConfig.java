@@ -1,0 +1,33 @@
+package com.chodae.config;
+
+import java.util.List;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
+
+@Configuration
+public class SwaggerConfig {
+ 
+    @Bean
+    public OpenAPI openAPI() {
+        Server devServer = new Server();
+        devServer.setUrl("/");
+        devServer.setDescription("로컬 개발 서버");
+
+        Info info = new Info()
+                .title("Chodae API")
+                .version("1.0.0")
+                .description("Chodae Recovery API 문서");
+
+        return new OpenAPI()
+                .info(info)
+                .servers(List.of(devServer));
+    }
+}

@@ -48,6 +48,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -62,7 +63,7 @@ public class SecurityConfig {
                         })
                         .accessDeniedHandler(new CustomAccessDeniedHandler()))
                 .headers(headers -> headers
-                        .frameOptions().disable() // H2 콘솔을 위한 설정
+                        .frameOptions(frameOptions -> frameOptions.disable()) // H2 콘솔을 위한 설정
                 )
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .formLogin(formLogin -> formLogin.disable());
