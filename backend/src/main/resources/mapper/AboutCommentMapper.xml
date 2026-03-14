@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chodae.mapper.AboutCommentMapper">
+
+    <resultMap id="CommentResponseMap" type="com.chodae.dto.CommentResponse">
+        <id property="id" column="id"/>
+        <result property="authorId" column="author_id"/>
+        <result property="authorName" column="author_name"/>
+        <result property="content" column="content"/>
+        <result property="privateNum" column="private_num"/>
+        <result property="confirm" column="confirm"/>
+        <result property="regDt" column="reg_dt"/>
+    </resultMap>
+
+    <select id="findByPrivateNum" resultMap="CommentResponseMap">
+        SELECT id, author_id, author_name, content, private_num, confirm, reg_dt
+        FROM about_comment
+        WHERE private_num = #{privateNum}
+        ORDER BY reg_dt ASC
+    </select>
+
+    <select id="findById" resultMap="CommentResponseMap">
+        SELECT id, author_id, author_name, content, private_num, confirm, reg_dt
+        FROM about_comment WHERE id = #{id}
+    </select>
+
+    <select id="countByPrivateNum" resultType="int">
+        SELECT COUNT(*) FROM about_comment WHERE private_num = #{privateNum}
+    </select>
+
+    <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO about_comment (author_id, author_name, content, private_num, confirm, reg_dt)
+        VALUES (#{authorId}, #{authorName}, #{content}, #{privateNum}, #{confirm}, NOW())
+    </insert>
+</mapper>

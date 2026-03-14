@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chodae.mapper.AboutPostMapper">
+
+    <resultMap id="AboutResponseMap" type="com.chodae.dto.AboutResponse">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="authorId" column="author_id"/>
+        <result property="authorName" column="author_name"/>
+        <result property="phone" column="phone"/>
+        <result property="counselType" column="counsel_type"/>
+        <result property="commentCount" column="comment_count"/>
+        <result property="privateNum" column="private_num"/>
+        <result property="regDt" column="reg_dt"/>
+        <result property="updDt" column="upd_dt"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="AboutResponseMap">
+        SELECT id, title, content, author_id, author_name, phone, counsel_type,
+               comment_count, private_num, reg_dt, upd_dt
+        FROM about_post
+        ORDER BY reg_dt DESC
+    </select>
+
+    <select id="findByAuthorId" resultMap="AboutResponseMap">
+        SELECT id, title, content, author_id, author_name, phone, counsel_type,
+               comment_count, private_num, reg_dt, upd_dt
+        FROM about_post
+        WHERE author_id = #{authorId}
+        ORDER BY reg_dt DESC
+    </select>
+
+    <select id="findById" resultMap="AboutResponseMap">
+        SELECT id, title, content, author_id, author_name, phone, counsel_type,
+               comment_count, private_num, reg_dt, upd_dt
+        FROM about_post
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByIdAndAuthorId" resultMap="AboutResponseMap">
+        SELECT id, title, content, author_id, author_name, phone, counsel_type,
+               comment_count, private_num, reg_dt, upd_dt
+        FROM about_post
+        WHERE id = #{id} AND author_id = #{authorId}
+    </select>
+
+    <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO about_post (title, content, author_id, author_name, phone, counsel_type, comment_count, private_num, reg_dt, upd_dt)
+        VALUES (#{title}, #{content}, #{authorId}, #{authorName}, #{phone}, #{counselType}, 0, #{privateNum}, NOW(), NOW())
+    </insert>
+
+    <update id="updateCommentCount">
+        UPDATE about_post SET comment_count = #{commentCount}, upd_dt = NOW() WHERE id = #{id}
+    </update>
+
+    <update id="updatePrivateNum">
+        UPDATE about_post SET private_num = #{privateNum}, upd_dt = NOW() WHERE id = #{id}
+    </update>
+</mapper>
