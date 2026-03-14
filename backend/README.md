@@ -78,6 +78,17 @@ java -jar build/libs/chodae-recovery-0.0.1-SNAPSHOT.jar
 ### H2 데이터베이스 콘솔
 - `http://localhost:8080/h2-console`
 
+## API 설계
+
+### 페이징 관련 정보
+pageNumber: 현재 페이지
+pageSize: 페이지네이션에 넣을 숫자 개수(보통 5개 또는 10개)
+itemTotal: 데이터 전체 갯수
+sorting: 우리끼리 정해봐야 함
+itemCount: 한 페이징에서 표출할 데이터 갯수(보통 10개~50개 등)
+totalPages: paging 전체 갯수
+
+
 ## Docker 환경
 
 ### 이미지 빌드
