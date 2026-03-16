@@ -12,6 +12,10 @@ public interface DoctrinePostMapper {
 
     List<DoctrineResponse> findAll();
 
+    long countAll();
+
+    List<DoctrineResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
+
     List<DoctrineResponse> findByAuthorId(@Param("authorId") String authorId);
 
     DoctrineResponse findById(@Param("id") Integer id);

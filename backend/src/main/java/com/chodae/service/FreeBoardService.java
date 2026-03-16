@@ -2,6 +2,7 @@ package com.chodae.service;
 
 import com.chodae.dto.FreeBoardCreateRequest;
 import com.chodae.dto.FreeBoardResponse;
+import com.chodae.dto.PagedListResponse;
 import com.chodae.dto.FreeBoardCommentResponse;
 import com.chodae.dto.CommentCreateRequest;
 import com.chodae.mapper.FreeBoardCommentMapper;
@@ -25,6 +26,46 @@ public class FreeBoardService {
 
     public List<FreeBoardResponse> findAll() {
         return freeBoardPostMapper.findAll();
+    }
+
+    /**
+     * 페이징된 목록 조회
+     * @param pageNumber 현재 페이지 (1부터 시작)
+     * @param itemCount 한 페이지당 표시할 데이터 개수
+     * @param pageSize 페이지네이션 UI에 표시할 페이지 번호 개수
+     * @param sorting 정렬 (예: "regDt_desc", "regDt_asc", "title_asc", "title_desc", "commentCount_desc")
+     */
+    public PagedListResponse<FreeBoardResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sorting) {
+        long itemTotal = freeBoardPostMapper.countAll();
+        int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
+
+        String sortColumn = "reg_dt";
+        String sortOrder = "DESC";
+        if (sorting != null && !sorting.isBlank()) {
+            String[] parts = sorting.split("_");
+            if (parts.length == 2) {
+                switch (parts[0].toLowerCase()) {
+                    case "title" -> sortColumn = "title";
+                    case "commentcount" -> sortColumn = "comment_count";
+                    case "regdt" -> sortColumn = "reg_dt";
+                    default -> { /* keep default */ }
+                }
+                sortOrder = "asc".equalsIgnoreCase(parts[1]) ? "ASC" : "DESC";
+            }
+        }
+
+        int offset = Math.max(0, (pageNumber - 1) * itemCount);
+        List<FreeBoardResponse> items = freeBoardPostMapper.findAllWithPaging(offset, itemCount, sortColumn, sortOrder);
+
+        return PagedListResponse.<FreeBoardResponse>builder()
+                .items(items)
+                .pageNumber(pageNumber)
+                .pageSize(pageSize)
+                .itemTotal(itemTotal)
+                .sorting(sorting != null ? sorting : "regDt_desc")
+                .itemCount(itemCount)
+                .totalPages(totalPages)
+                .build();
     }
 
     public FreeBoardResponse findById(Integer id) {

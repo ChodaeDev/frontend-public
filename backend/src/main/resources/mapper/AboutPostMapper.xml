@@ -24,6 +24,25 @@
         ORDER BY reg_dt DESC
     </select>
 
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*) FROM about_post
+    </select>
+
+    <select id="findAllWithPaging" resultMap="AboutResponseMap">
+        SELECT id, title, content, author_id, author_name, phone, counsel_type,
+               comment_count, private_num, reg_dt, upd_dt
+        FROM about_post
+        <choose>
+            <when test="sortColumn == 'title' and sortOrder == 'ASC'">ORDER BY title ASC</when>
+            <when test="sortColumn == 'title' and sortOrder == 'DESC'">ORDER BY title DESC</when>
+            <when test="sortColumn == 'reg_dt' and sortOrder == 'ASC'">ORDER BY reg_dt ASC</when>
+            <when test="sortColumn == 'comment_count' and sortOrder == 'ASC'">ORDER BY comment_count ASC</when>
+            <when test="sortColumn == 'comment_count' and sortOrder == 'DESC'">ORDER BY comment_count DESC</when>
+            <otherwise>ORDER BY reg_dt DESC</otherwise>
+        </choose>
+        LIMIT #{offset}, #{limit}
+    </select>
+
     <select id="findByAuthorId" resultMap="AboutResponseMap">
         SELECT id, title, content, author_id, author_name, phone, counsel_type,
                comment_count, private_num, reg_dt, upd_dt

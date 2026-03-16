@@ -2,6 +2,7 @@ package com.chodae.service;
 
 import com.chodae.dto.CommentCreateRequest;
 import com.chodae.dto.CommentResponse;
+import com.chodae.dto.PagedListResponse;
 import com.chodae.dto.WithdrawalCreateRequest;
 import com.chodae.dto.WithdrawalResponse;
 import com.chodae.mapper.WithdrawalCommentMapper;
@@ -25,6 +26,39 @@ public class WithdrawalService {
 
     public List<WithdrawalResponse> findAll() {
         return withdrawalPostMapper.findAll();
+    }
+
+    public PagedListResponse<WithdrawalResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sorting) {
+        long itemTotal = withdrawalPostMapper.countAll();
+        int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
+
+        String sortColumn = "reg_dt";
+        String sortOrder = "DESC";
+        if (sorting != null && !sorting.isBlank()) {
+            String[] parts = sorting.split("_");
+            if (parts.length == 2) {
+                switch (parts[0].toLowerCase()) {
+                    case "title" -> sortColumn = "title";
+                    case "commentcount" -> sortColumn = "comment_count";
+                    case "regdt" -> sortColumn = "reg_dt";
+                    default -> { /* keep default */ }
+                }
+                sortOrder = "asc".equalsIgnoreCase(parts[1]) ? "ASC" : "DESC";
+            }
+        }
+
+        int offset = Math.max(0, (pageNumber - 1) * itemCount);
+        List<WithdrawalResponse> items = withdrawalPostMapper.findAllWithPaging(offset, itemCount, sortColumn, sortOrder);
+
+        return PagedListResponse.<WithdrawalResponse>builder()
+                .items(items)
+                .pageNumber(pageNumber)
+                .pageSize(pageSize)
+                .itemTotal(itemTotal)
+                .sorting(sorting != null ? sorting : "regDt_desc")
+                .itemCount(itemCount)
+                .totalPages(totalPages)
+                .build();
     }
 
     public WithdrawalResponse findById(Integer id) {

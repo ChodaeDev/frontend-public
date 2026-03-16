@@ -12,6 +12,10 @@ public interface PreventionPostMapper {
 
     List<PreventionResponse> findAll();
 
+    long countAll();
+
+    List<PreventionResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
+
     List<PreventionResponse> findByAuthorId(@Param("authorId") String authorId);
 
     PreventionResponse findById(@Param("id") Integer id);

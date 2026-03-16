@@ -12,6 +12,10 @@ public interface WithdrawalPostMapper {
 
     List<WithdrawalResponse> findAll();
 
+    long countAll();
+
+    List<WithdrawalResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
+
     List<WithdrawalResponse> findByAuthorId(@Param("authorId") String authorId);
 
     WithdrawalResponse findById(@Param("id") Integer id);

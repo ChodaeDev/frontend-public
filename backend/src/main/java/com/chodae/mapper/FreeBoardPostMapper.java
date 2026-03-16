@@ -12,6 +12,10 @@ public interface FreeBoardPostMapper {
 
     List<FreeBoardResponse> findAll();
 
+    long countAll();
+
+    List<FreeBoardResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
+
     List<FreeBoardResponse> findByAuthorId(@Param("authorId") String authorId);
 
     FreeBoardResponse findById(@Param("id") Integer id);

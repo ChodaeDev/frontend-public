@@ -4,6 +4,7 @@ import com.chodae.dto.CommentCreateRequest;
 import com.chodae.dto.CommentResponse;
 import com.chodae.dto.DoctrineCreateRequest;
 import com.chodae.dto.DoctrineResponse;
+import com.chodae.dto.PagedListResponse;
 import com.chodae.mapper.DoctrineCommentMapper;
 import com.chodae.mapper.DoctrinePostMapper;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,39 @@ public class DoctrineService {
 
     public List<DoctrineResponse> findAll() {
         return doctrinePostMapper.findAll();
+    }
+
+    public PagedListResponse<DoctrineResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sorting) {
+        long itemTotal = doctrinePostMapper.countAll();
+        int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
+
+        String sortColumn = "reg_dt";
+        String sortOrder = "DESC";
+        if (sorting != null && !sorting.isBlank()) {
+            String[] parts = sorting.split("_");
+            if (parts.length == 2) {
+                switch (parts[0].toLowerCase()) {
+                    case "title" -> sortColumn = "title";
+                    case "commentcount" -> sortColumn = "comment_count";
+                    case "regdt" -> sortColumn = "reg_dt";
+                    default -> { /* keep default */ }
+                }
+                sortOrder = "asc".equalsIgnoreCase(parts[1]) ? "ASC" : "DESC";
+            }
+        }
+
+        int offset = Math.max(0, (pageNumber - 1) * itemCount);
+        List<DoctrineResponse> items = doctrinePostMapper.findAllWithPaging(offset, itemCount, sortColumn, sortOrder);
+
+        return PagedListResponse.<DoctrineResponse>builder()
+                .items(items)
+                .pageNumber(pageNumber)
+                .pageSize(pageSize)
+                .itemTotal(itemTotal)
+                .sorting(sorting != null ? sorting : "regDt_desc")
+                .itemCount(itemCount)
+                .totalPages(totalPages)
+                .build();
     }
 
     public DoctrineResponse findById(Integer id) {

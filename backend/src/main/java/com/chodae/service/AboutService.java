@@ -4,6 +4,7 @@ import com.chodae.dto.AboutCreateRequest;
 import com.chodae.dto.AboutResponse;
 import com.chodae.dto.CommentCreateRequest;
 import com.chodae.dto.CommentResponse;
+import com.chodae.dto.PagedListResponse;
 import com.chodae.mapper.AboutCommentMapper;
 import com.chodae.mapper.AboutPostMapper;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,39 @@ public class AboutService {
 
     public List<AboutResponse> findAll() {
         return aboutPostMapper.findAll();
+    }
+
+    public PagedListResponse<AboutResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sorting) {
+        long itemTotal = aboutPostMapper.countAll();
+        int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
+
+        String sortColumn = "reg_dt";
+        String sortOrder = "DESC";
+        if (sorting != null && !sorting.isBlank()) {
+            String[] parts = sorting.split("_");
+            if (parts.length == 2) {
+                switch (parts[0].toLowerCase()) {
+                    case "title" -> sortColumn = "title";
+                    case "commentcount" -> sortColumn = "comment_count";
+                    case "regdt" -> sortColumn = "reg_dt";
+                    default -> { /* keep default */ }
+                }
+                sortOrder = "asc".equalsIgnoreCase(parts[1]) ? "ASC" : "DESC";
+            }
+        }
+
+        int offset = Math.max(0, (pageNumber - 1) * itemCount);
+        List<AboutResponse> items = aboutPostMapper.findAllWithPaging(offset, itemCount, sortColumn, sortOrder);
+
+        return PagedListResponse.<AboutResponse>builder()
+                .items(items)
+                .pageNumber(pageNumber)
+                .pageSize(pageSize)
+                .itemTotal(itemTotal)
+                .sorting(sorting != null ? sorting : "regDt_desc")
+                .itemCount(itemCount)
+                .totalPages(totalPages)
+                .build();
     }
 
     public List<AboutResponse> findByAuthorId(String authorId) {

@@ -3,9 +3,11 @@ package com.chodae.controller;
 import com.chodae.dto.ApiResponse;
 import com.chodae.dto.FreeBoardCreateRequest;
 import com.chodae.dto.FreeBoardResponse;
+import com.chodae.dto.PagedListResponse;
 import com.chodae.dto.CommentCreateRequest;
 import com.chodae.dto.FreeBoardCommentResponse;
 import com.chodae.service.FreeBoardService;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,13 +34,22 @@ public class FreeBoardController {
     }
 
     @GetMapping("/list")
-    public ApiResponse<List<FreeBoardResponse>> getList(Authentication auth) {
+    public ApiResponse<PagedListResponse<FreeBoardResponse>> getList(
+            @Parameter(description = "현재 페이지")
+            @RequestParam(defaultValue = "1") int pageNumber,
+            @Parameter(description = "한 페이징에서 표출할 데이터 개수")
+            @RequestParam(defaultValue = "10") int itemCount,
+            @Parameter(description = "페이지네이션에 넣을 숫자 개수")
+            @RequestParam(defaultValue = "10") int pageSize,
+            @Parameter(description = "정렬 기준")
+            @RequestParam(required = false) String sorting,
+            Authentication auth) {
         String userId = getCurrentUserId(auth);
         if (userId == null) {
             return ApiResponse.error("로그인이 필요합니다.");
         }
         // 모든 로그인 사용자가 목록 조회 가능 (내용은 작성자만 상세에서 볼 수 있음)
-        List<FreeBoardResponse> list = freeBoardService.findAll();
+        PagedListResponse<FreeBoardResponse> list = freeBoardService.findAllWithPaging(pageNumber, itemCount, pageSize, sorting);
         return ApiResponse.success(list);
     }
 

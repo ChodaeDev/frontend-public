@@ -12,6 +12,10 @@ public interface AboutPostMapper {
 
     List<AboutResponse> findAll();
 
+    long countAll();
+
+    List<AboutResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
+
     List<AboutResponse> findByAuthorId(@Param("authorId") String authorId);
 
     AboutResponse findById(@Param("id") Integer id);

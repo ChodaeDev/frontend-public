@@ -12,6 +12,10 @@ public interface PrivateCounselingMapper {
 
     List<PrivateCounselingResponse> findAll();
 
+    long countAll();
+
+    List<PrivateCounselingResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
+
     List<PrivateCounselingResponse> findByAuthorId(@Param("authorId") String authorId);
 
     PrivateCounselingResponse findById(@Param("id") Integer id);

@@ -12,6 +12,10 @@ public interface ScjInfoPostMapper {
 
     List<ScjInfoResponse> findAll();
 
+    long countAll();
+
+    List<ScjInfoResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
+
     List<ScjInfoResponse> findByAuthorId(@Param("authorId") String authorId);
 
     ScjInfoResponse findById(@Param("id") Integer id);
