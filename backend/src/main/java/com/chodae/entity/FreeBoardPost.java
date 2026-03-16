@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "board_post")
-public class BoardPost {
+@Table(name = "freeboard_post")
+public class FreeBoardPost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

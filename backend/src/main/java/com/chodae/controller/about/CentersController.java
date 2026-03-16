@@ -6,6 +6,7 @@ import com.chodae.dto.ApiResponse;
 import com.chodae.dto.CommentCreateRequest;
 import com.chodae.dto.CommentResponse;
 import com.chodae.service.AboutService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "전국 상담소 안내", description = "전국 상담소 안내 페이지 관련 API")
 @Slf4j
 @RestController
 @RequestMapping("/api/about/centers")

@@ -1,15 +1,15 @@
 package com.chodae.repository;
 
-import com.chodae.entity.BoardComment;
+import com.chodae.entity.FreeBoardComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface BoardCommentRepository extends JpaRepository<BoardComment, Integer> {
+public interface FreeBoardCommentRepository extends JpaRepository<FreeBoardComment, Integer> {
 
-    List<BoardComment> findByPrivateNumOrderByRegDtAsc(Integer privateNum);
+    List<FreeBoardComment> findByPrivateNumOrderByRegDtAsc(Integer privateNum);
 
     int countByPrivateNum(Integer privateNum);
 }

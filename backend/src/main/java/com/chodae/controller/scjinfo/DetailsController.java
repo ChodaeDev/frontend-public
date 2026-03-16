@@ -6,6 +6,7 @@ import com.chodae.dto.CommentResponse;
 import com.chodae.dto.ScjInfoCreateRequest;
 import com.chodae.dto.ScjInfoResponse;
 import com.chodae.service.ScjInfoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "신천지 정보", description = "신천지 정보 페이지 관련 API")
 @Slf4j
 @RestController
 @RequestMapping("/api/scj-info/details")

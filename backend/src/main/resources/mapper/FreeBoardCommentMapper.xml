@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.chodae.mapper.BoardCommentMapper">
+<mapper namespace="com.chodae.mapper.FreeBoardCommentMapper">
 
-    <resultMap id="CommentResponseMap" type="com.chodae.dto.CommentResponse">
+    <resultMap id="FreeBoardCommentResponseMap" type="com.chodae.dto.FreeBoardCommentResponse">
         <id property="id" column="id"/>
         <result property="authorId" column="author_id"/>
         <result property="authorName" column="author_name"/>
@@ -13,24 +13,24 @@
         <result property="regDt" column="reg_dt"/>
     </resultMap>
 
-    <select id="findByPrivateNum" resultMap="CommentResponseMap">
+    <select id="findByPrivateNum" resultMap="FreeBoardCommentResponseMap">
         SELECT id, author_id, author_name, content, private_num, confirm, reg_dt
-        FROM board_comment
+        FROM freeboard_comment  
         WHERE private_num = #{privateNum}
         ORDER BY reg_dt ASC
     </select>
 
-    <select id="findById" resultMap="CommentResponseMap">
+    <select id="findById" resultMap="FreeBoardCommentResponseMap">
         SELECT id, author_id, author_name, content, private_num, confirm, reg_dt
-        FROM board_comment WHERE id = #{id}
+        FROM freeboard_comment WHERE id = #{id}
     </select>
 
     <select id="countByPrivateNum" resultType="int">
-        SELECT COUNT(*) FROM board_comment WHERE private_num = #{privateNum}
+        SELECT COUNT(*) FROM freeboard_comment WHERE private_num = #{privateNum}
     </select>
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO board_comment (author_id, author_name, content, private_num, confirm, reg_dt)
+        INSERT INTO freeboard_comment (author_id, author_name, content, private_num, confirm, reg_dt)
         VALUES (#{authorId}, #{authorName}, #{content}, #{privateNum}, #{confirm}, NOW())
     </insert>
 </mapper>

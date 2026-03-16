@@ -1,6 +1,6 @@
 package com.chodae.mapper;
 
-import com.chodae.dto.BoardResponse;
+import com.chodae.dto.FreeBoardResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,15 +8,15 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper
-public interface BoardPostMapper {
+public interface FreeBoardPostMapper {
 
-    List<BoardResponse> findAll();
+    List<FreeBoardResponse> findAll();
 
-    List<BoardResponse> findByAuthorId(@Param("authorId") String authorId);
+    List<FreeBoardResponse> findByAuthorId(@Param("authorId") String authorId);
 
-    BoardResponse findById(@Param("id") Integer id);
+    FreeBoardResponse findById(@Param("id") Integer id);
 
-    BoardResponse findByIdAndAuthorId(@Param("id") Integer id, @Param("authorId") String authorId);
+    FreeBoardResponse findByIdAndAuthorId(@Param("id") Integer id, @Param("authorId") String authorId);
 
     int insert(Map<String, Object> params);
 

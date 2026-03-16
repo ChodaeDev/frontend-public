@@ -28,7 +28,7 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `nickname`, `phone`, `ch
  `birthday`,`description`, `level`, `upd_dt`, `reg_dt`) VALUES ('sdhan', '한상대', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'admin',
 'superadmin', '2026-01-26', '2026-01-26');
 INSERT INTO `users` (`user_id`, `username`, `password`, `nickname`, `phone`, `church`,
- `birthday`,`description`, `level`, `upd_dt`, `reg_dt`) VALUES ('judahwon', '주다훤훤', '$2a$10$2jm/TC3qqdyxdjFAVeVULOHGqUFmnOht0sx1lnjJLXLX8EYKLxqIG','admin', '01012345678', 'admin', '2026-01-26', 'admin',
+ `birthday`,`description`, `level`, `upd_dt`, `reg_dt`) VALUES ('judahwon', '주다훤', '$2a$10$2jm/TC3qqdyxdjFAVeVULOHGqUFmnOht0sx1lnjJLXLX8EYKLxqIG','admin', '01012345678', 'admin', '2026-01-26', 'admin',
 'superadmin', '2026-01-26', '2026-01-26');
 
 -- 접속자 수 테이블 생성
@@ -120,8 +120,8 @@ CREATE TABLE `about_comment` (
 );
 
 -- Board
-DROP TABLE IF EXISTS `board_post`;
-CREATE TABLE `board_post` (
+DROP TABLE IF EXISTS `freeboard_post`;
+CREATE TABLE `freeboard_post` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     content TEXT,
@@ -135,8 +135,8 @@ CREATE TABLE `board_post` (
     upd_dt DATETIME
 );
 
-DROP TABLE IF EXISTS `board_comment`;
-CREATE TABLE `board_comment` (
+DROP TABLE IF EXISTS `freeboard_comment`;
+CREATE TABLE `freeboard_comment` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     author_id VARCHAR(100),
     author_name VARCHAR(100) NOT NULL,

@@ -6,6 +6,7 @@ import com.chodae.dto.UserLoginRequest;
 import com.chodae.dto.UserRegisterRequest;
 import com.chodae.dto.UserResponse;
 import com.chodae.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "사용자 정보", description = "사용자 정보 관련 API")
 @Slf4j
 @RestController
 @RequestMapping("/api/public/users")

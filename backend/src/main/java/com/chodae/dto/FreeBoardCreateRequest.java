@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class BoardCreateRequest {
+public class FreeBoardCreateRequest {
     private String title;
     private String content;
     private String authorId;

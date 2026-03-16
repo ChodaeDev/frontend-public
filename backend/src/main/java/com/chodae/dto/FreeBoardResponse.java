@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Value
 @Builder
-public class BoardResponse {
+public class FreeBoardResponse {
     Integer id;
     String title;
     String content;

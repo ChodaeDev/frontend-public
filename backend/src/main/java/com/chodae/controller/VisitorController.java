@@ -1,12 +1,16 @@
 package com.chodae.controller;
 
 import com.chodae.dto.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import com.chodae.service.VisitorCountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@Tag(name = "방문자 정보", description = "방문자 정보 수집 및 표시 관련 API")
+@Slf4j
 @RestController
 @RequestMapping("/api/public/visitor")
 @CrossOrigin(origins = "*")

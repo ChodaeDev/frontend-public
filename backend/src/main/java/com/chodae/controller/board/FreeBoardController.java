@@ -1,11 +1,12 @@
 package com.chodae.controller;
 
 import com.chodae.dto.ApiResponse;
-import com.chodae.dto.BoardCreateRequest;
-import com.chodae.dto.BoardResponse;
+import com.chodae.dto.FreeBoardCreateRequest;
+import com.chodae.dto.FreeBoardResponse;
 import com.chodae.dto.CommentCreateRequest;
-import com.chodae.dto.CommentResponse;
-import com.chodae.service.BoardService;
+import com.chodae.dto.FreeBoardCommentResponse;
+import com.chodae.service.FreeBoardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -13,14 +14,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "자유게시판", description = "자유게시판 페이지 관련 API")
 @Slf4j
 @RestController
-@RequestMapping("/api/board")
+@RequestMapping("/api/freeboard")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
-public class BoardController {
+public class FreeBoardController {
 
-    private final BoardService boardService;
+    private final FreeBoardService freeBoardService;
 
     private String getCurrentUserId(Authentication auth) {
         if (auth == null || !auth.isAuthenticated() || auth.getPrincipal() == null) {
@@ -30,23 +32,23 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public ApiResponse<List<BoardResponse>> getList(Authentication auth) {
+    public ApiResponse<List<FreeBoardResponse>> getList(Authentication auth) {
         String userId = getCurrentUserId(auth);
         if (userId == null) {
             return ApiResponse.error("로그인이 필요합니다.");
         }
         // 모든 로그인 사용자가 목록 조회 가능 (내용은 작성자만 상세에서 볼 수 있음)
-        List<BoardResponse> list = boardService.findAll();
+        List<FreeBoardResponse> list = freeBoardService.findAll();
         return ApiResponse.success(list);
     }
 
     @GetMapping("/detail/{id}")
-    public ApiResponse<BoardResponse> getDetail(@PathVariable Integer id, Authentication auth) {
+    public ApiResponse<FreeBoardResponse> getDetail(@PathVariable Integer id, Authentication auth) {
         String userId = getCurrentUserId(auth);
         if (userId == null) {
             return ApiResponse.error("로그인이 필요합니다.");
         }
-        BoardResponse post = boardService.findByIdAndAuthorId(id, userId);
+        FreeBoardResponse post = freeBoardService.findByIdAndAuthorId(id, userId);
         if (post == null) {
             return ApiResponse.error("글이 존재하지 않거나 접근 권한이 없습니다.");
         }
@@ -54,20 +56,20 @@ public class BoardController {
     }
 
     @GetMapping("/detail/{id}/comments")
-    public ApiResponse<List<CommentResponse>> getComments(@PathVariable Integer id, Authentication auth) {
+    public ApiResponse<List<FreeBoardCommentResponse>> getComments(@PathVariable Integer id, Authentication auth) {
         String userId = getCurrentUserId(auth);
         if (userId == null) {
             return ApiResponse.error("로그인이 필요합니다.");
         }
-        BoardResponse post = boardService.findByIdAndAuthorId(id, userId);
+        FreeBoardResponse post = freeBoardService.findByIdAndAuthorId(id, userId);
         if (post == null) {
             return ApiResponse.error("글이 존재하지 않거나 접근 권한이 없습니다.");
         }
-        return ApiResponse.success(boardService.findCommentsByPostId(id));
+        return ApiResponse.success(freeBoardService.findCommentsByPostId(id));
     }
 
     @PostMapping("/form")
-    public ApiResponse<BoardResponse> create(@RequestBody BoardCreateRequest request, Authentication auth) {
+    public ApiResponse<FreeBoardResponse> create(@RequestBody FreeBoardCreateRequest request, Authentication auth) {
         String userId = getCurrentUserId(auth);
         if (userId == null) {
             return ApiResponse.error("로그인이 필요합니다.");
@@ -79,17 +81,17 @@ public class BoardController {
             return ApiResponse.error("작성자 이름을 입력해주세요.");
         }
         request.setAuthorId(userId);
-        BoardResponse created = boardService.create(request);
+        FreeBoardResponse created = freeBoardService.create(request);
         return ApiResponse.success("상담 신청이 완료되었습니다.", created);
     }
 
     @PostMapping("/detail/{id}/comments")
-    public ApiResponse<CommentResponse> addComment(@PathVariable Integer id, @RequestBody CommentCreateRequest request, Authentication auth) {
+    public ApiResponse<FreeBoardCommentResponse> addComment(@PathVariable Integer id, @RequestBody CommentCreateRequest request, Authentication auth) {
         String userId = getCurrentUserId(auth);
         if (userId == null) {
             return ApiResponse.error("로그인이 필요합니다.");
         }
-        BoardResponse post = boardService.findByIdAndAuthorId(id, userId);
+        FreeBoardResponse post = freeBoardService.findByIdAndAuthorId(id, userId);
         if (post == null) {
             return ApiResponse.error("글이 존재하지 않거나 접근 권한이 없습니다.");
         }
@@ -98,7 +100,7 @@ public class BoardController {
         }
         request.setAuthorId(userId);
         request.setAuthorName(request.getAuthorName() != null ? request.getAuthorName() : "익명");
-        CommentResponse comment = boardService.addComment(id, request);
+        FreeBoardCommentResponse comment = freeBoardService.addComment(id, request);
         return ApiResponse.success("댓글이 등록되었습니다.", comment);
     }
 }
