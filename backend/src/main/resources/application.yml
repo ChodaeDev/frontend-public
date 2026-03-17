@@ -16,6 +16,13 @@ spring:
     username: user
     password: pass
   
+  # Redis (user_session, 트래픽 관련)
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 3000ms
+  
   # SQL 초기화 설정
   sql:
     init:
@@ -42,7 +49,7 @@ mybatis:
 # JWT 설정
 jwt:
   secret: chodaeRecoverySecretKey2024ForJWTTokenGeneration
-  expiration: 86400000 # 24시간
+  expiration: 43200000 # 12시간
 
 # 로깅 설정
 logging:
