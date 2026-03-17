@@ -74,7 +74,7 @@ const Footer = () => {
         {/* 구분선 */}
         <div className={'border-t border-background-secondary dark:border-gray8 mt-8 pt-6'}>
           {/* 하단 */}
-          <div className={'flex flex-col lg:flex-row items-start gap-6 lg:gap-16'}>
+          <div className={'flex flex-col lg:flex-row items-end gap-6 lg:gap-16'}>
             {/* 좌측: siteName + 링크 버튼들 */}
             <div className={'w-full lg:w-2/5 flex flex-col gap-0.5 sm:gap-1.5'}>
               <p className={'flex items-center gap-1 text-2xl font-black text-main'}>
@@ -121,7 +121,7 @@ const Footer = () => {
               </div>
 
               {/* Copyright */}
-              <p className={'text-main/50'}>
+              <p className={'text-main/50 mt-4 sm:mt-0'}>
                 {t.footer.copyright}
               </p>
             </div>
