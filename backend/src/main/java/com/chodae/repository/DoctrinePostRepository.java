@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface DoctrinePostRepository extends JpaRepository<DoctrinePost, Integer> {
 
-    List<DoctrinePost> findAllByOrderByRegDtDesc();
+    List<DoctrinePost> findAllByOrderByCreateDateDesc();
 
-    List<DoctrinePost> findByAuthorIdOrderByRegDtDesc(String authorId);
+    List<DoctrinePost> findByUserIdOrderByCreateDateDesc(String userId);
 }

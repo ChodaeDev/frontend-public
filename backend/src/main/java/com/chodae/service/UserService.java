@@ -27,6 +27,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final TokenSessionService tokenSessionService;
 
     @Transactional
     public UserResponse registerUser(UserRegisterRequest request) {
@@ -126,8 +127,9 @@ public class UserService {
                 .description((String) userMap.get("description"))
                 .level(level)
                 .build();
-        String token = jwtUtil.generateToken(user.getUserId());
-        return LoginResponse.builder().user(user).token(token).build();
+        JwtUtil.TokenWithJti tokenWithJti = jwtUtil.generateToken(user.getUserId());
+        tokenSessionService.registerSession(user.getUserId(), tokenWithJti.jti());
+        return LoginResponse.builder().user(user).token(tokenWithJti.token()).build();
     }
 
     private void validateRegisterRequest(UserRegisterRequest request) {

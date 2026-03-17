@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chodae.mapper.CounselingMapper">
+
+    <resultMap id="CounselingResponseMap" type="com.chodae.dto.CounselingResponse">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="phone" column="phone"/>
+        <result property="counselType" column="counsel_type"/>
+        <result property="commentCount" column="comment_count"/>
+        <result property="isPrivate" column="is_private"/>
+        <result property="createDate" column="create_date"/>
+        <result property="modifiedDate" column="modified_date"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="CounselingResponseMap">
+        SELECT id, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, is_private, create_date, modified_date
+        FROM counseling_post
+        ORDER BY create_date DESC
+    </select>
+
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*) FROM counseling_post
+    </select>
+
+    <select id="findAllWithPaging" resultMap="CounselingResponseMap">
+        SELECT id, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, is_private, create_date, modified_date
+        FROM counseling_post
+        <choose>
+            <when test="sortColumn == 'title' and sortOrder == 'ASC'">ORDER BY title ASC</when>
+            <when test="sortColumn == 'title' and sortOrder == 'DESC'">ORDER BY title DESC</when>
+            <when test="sortColumn == 'create_date' and sortOrder == 'ASC'">ORDER BY create_date ASC</when>
+            <when test="sortColumn == 'comment_count' and sortOrder == 'ASC'">ORDER BY comment_count ASC</when>
+            <when test="sortColumn == 'comment_count' and sortOrder == 'DESC'">ORDER BY comment_count DESC</when>
+            <otherwise>ORDER BY create_date DESC</otherwise>
+        </choose>
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="findByUserId" resultMap="CounselingResponseMap">
+        SELECT id, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, is_private, create_date, modified_date
+        FROM counseling_post
+        WHERE user_id = #{userId}
+        ORDER BY create_date DESC
+    </select>
+
+    <select id="findById" resultMap="CounselingResponseMap">
+        SELECT id, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, is_private, create_date, modified_date
+        FROM counseling_post
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByIdAndUserId" resultMap="CounselingResponseMap">
+        SELECT id, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, is_private, create_date, modified_date
+        FROM counseling_post
+        WHERE id = #{id} AND user_id = #{userId}
+    </select>
+
+    <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO counseling_post (title, content, user_id, user_name, phone, counsel_type, comment_count, is_private, create_date, modified_date)
+        VALUES (#{title}, #{content}, #{userId}, #{userName}, #{phone}, #{counselType}, 0, #{isPrivate}, NOW(), NOW())
+    </insert>
+
+    <update id="updateCommentCount">
+        UPDATE counseling_post SET comment_count = #{commentCount}, modified_date = NOW() WHERE id = #{id}
+    </update>
+
+    <update id="updateIsPrivate">
+        UPDATE counseling_post SET is_private = #{isPrivate}, modified_date = NOW() WHERE id = #{id}
+    </update>
+</mapper>

@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentResponse {
     Integer id;
-    String authorId;
-    String authorName;
+    String userId;
+    String userName;
     String content;
-    Integer privateNum;
+    Integer isPrivate;
     String confirm;
-    LocalDateTime regDt;
+    LocalDateTime createDate;
 }

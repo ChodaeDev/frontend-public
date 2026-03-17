@@ -11,41 +11,41 @@ public class ScjInfoComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "author_id", length = 100)
-    private String authorId;
+    @Column(name = "user_id", length = 100)
+    private String userId;
 
-    @Column(name = "author_name", nullable = false, length = 100)
-    private String authorName;
+    @Column(name = "user_name", nullable = false, length = 100)
+    private String userName;
 
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "private_num", nullable = false)
-    private Integer privateNum;
+    @Column(name = "is_private", nullable = false)
+    private Integer isPrivate;
 
     @Column(length = 20)
     private String confirm;
 
-    @Column(name = "reg_dt")
-    private LocalDateTime regDt;
+    @Column(name = "create_date")
+    private LocalDateTime createDate;
 
     @PrePersist
     protected void onCreate() {
-        regDt = LocalDateTime.now();
+        createDate = LocalDateTime.now();
     }
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
-    public String getAuthorId() { return authorId; }
-    public void setAuthorId(String authorId) { this.authorId = authorId; }
-    public String getAuthorName() { return authorName; }
-    public void setAuthorName(String authorName) { this.authorName = authorName; }
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
-    public Integer getPrivateNum() { return privateNum; }
-    public void setPrivateNum(Integer privateNum) { this.privateNum = privateNum; }
+    public Integer getIsPrivate() { return isPrivate; }
+    public void setIsPrivate(Integer isPrivate) { this.isPrivate = isPrivate; }
     public String getConfirm() { return confirm; }
     public void setConfirm(String confirm) { this.confirm = confirm; }
-    public LocalDateTime getRegDt() { return regDt; }
-    public void setRegDt(LocalDateTime regDt) { this.regDt = regDt; }
+    public LocalDateTime getCreateDate() { return createDate; }
+    public void setCreateDate(LocalDateTime createDate) { this.createDate = createDate; }
 }

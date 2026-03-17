@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface PreventionPostRepository extends JpaRepository<PreventionPost, Integer> {
 
-    List<PreventionPost> findAllByOrderByRegDtDesc();
+    List<PreventionPost> findAllByOrderByCreateDateDesc();
 
-    List<PreventionPost> findByAuthorIdOrderByRegDtDesc(String authorId);
+    List<PreventionPost> findByUserIdOrderByCreateDateDesc(String userId);
 }

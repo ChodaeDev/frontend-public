@@ -16,15 +16,15 @@ public interface FreeBoardPostMapper {
 
     List<FreeBoardResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
 
-    List<FreeBoardResponse> findByAuthorId(@Param("authorId") String authorId);
+    List<FreeBoardResponse> findByUserId(@Param("userId") String userId);
 
     FreeBoardResponse findById(@Param("id") Integer id);
 
-    FreeBoardResponse findByIdAndAuthorId(@Param("id") Integer id, @Param("authorId") String authorId);
+    FreeBoardResponse findByIdAndUserId(@Param("id") Integer id, @Param("userId") String userId);
 
     int insert(Map<String, Object> params);
 
     int updateCommentCount(@Param("id") Integer id, @Param("commentCount") Integer commentCount);
 
-    int updatePrivateNum(@Param("id") Integer id, @Param("privateNum") Integer privateNum);
+    int updateIsPrivate(@Param("id") Integer id, @Param("isPrivate") Integer isPrivate);
 }

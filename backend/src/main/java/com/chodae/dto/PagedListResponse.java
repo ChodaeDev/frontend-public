@@ -24,7 +24,7 @@ public class PagedListResponse<T> {
     /** 데이터 전체 개수 */
     long itemTotal;
 
-    /** 정렬 기준 (예: "regDt_desc", "regDt_asc" 등) */
+    /** 정렬 기준 (예: "createDate_desc", "createDate_asc" 등) */
     String sorting;
 
     /** 한 페이지당 표시할 데이터 개수 (보통 10~50개) */

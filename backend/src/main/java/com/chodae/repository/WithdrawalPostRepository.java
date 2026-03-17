@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface WithdrawalPostRepository extends JpaRepository<WithdrawalPost, Integer> {
 
-    List<WithdrawalPost> findAllByOrderByRegDtDesc();
+    List<WithdrawalPost> findAllByOrderByCreateDateDesc();
 
-    List<WithdrawalPost> findByAuthorIdOrderByRegDtDesc(String authorId);
+    List<WithdrawalPost> findByUserIdOrderByCreateDateDesc(String userId);
 }

@@ -10,11 +10,11 @@ import java.util.Map;
 @Mapper
 public interface FreeBoardCommentMapper {
 
-    List<FreeBoardCommentResponse> findByPrivateNum(@Param("privateNum") Integer privateNum);
+    List<FreeBoardCommentResponse> findByIsPrivate(@Param("isPrivate") Integer isPrivate);
 
     FreeBoardCommentResponse findById(@Param("id") Integer id);
 
-    int countByPrivateNum(@Param("privateNum") Integer privateNum);
+    int countByIsPrivate(@Param("isPrivate") Integer isPrivate);
 
     int insert(Map<String, Object> params);
 }

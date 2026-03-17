@@ -16,15 +16,15 @@ public interface PreventionPostMapper {
 
     List<PreventionResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
 
-    List<PreventionResponse> findByAuthorId(@Param("authorId") String authorId);
+    List<PreventionResponse> findByUserId(@Param("userId") String userId);
 
     PreventionResponse findById(@Param("id") Integer id);
 
-    PreventionResponse findByIdAndAuthorId(@Param("id") Integer id, @Param("authorId") String authorId);
+    PreventionResponse findByIdAndUserId(@Param("id") Integer id, @Param("userId") String userId);
 
     int insert(Map<String, Object> params);
 
     int updateCommentCount(@Param("id") Integer id, @Param("commentCount") Integer commentCount);
 
-    int updatePrivateNum(@Param("id") Integer id, @Param("privateNum") Integer privateNum);
+    int updateIsPrivate(@Param("id") Integer id, @Param("isPrivate") Integer isPrivate);
 }

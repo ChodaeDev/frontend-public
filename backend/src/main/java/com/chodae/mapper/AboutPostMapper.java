@@ -16,15 +16,15 @@ public interface AboutPostMapper {
 
     List<AboutResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
 
-    List<AboutResponse> findByAuthorId(@Param("authorId") String authorId);
+    List<AboutResponse> findByUserId(@Param("userId") String userId);
 
     AboutResponse findById(@Param("id") Integer id);
 
-    AboutResponse findByIdAndAuthorId(@Param("id") Integer id, @Param("authorId") String authorId);
+    AboutResponse findByIdAndUserId(@Param("id") Integer id, @Param("userId") String userId);
 
     int insert(Map<String, Object> params);
 
     int updateCommentCount(@Param("id") Integer id, @Param("commentCount") Integer commentCount);
 
-    int updatePrivateNum(@Param("id") Integer id, @Param("privateNum") Integer privateNum);
+    int updateIsPrivate(@Param("id") Integer id, @Param("isPrivate") Integer isPrivate);
 }

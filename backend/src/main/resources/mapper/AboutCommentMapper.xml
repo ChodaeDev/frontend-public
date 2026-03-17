@@ -5,32 +5,32 @@
 
     <resultMap id="CommentResponseMap" type="com.chodae.dto.CommentResponse">
         <id property="id" column="id"/>
-        <result property="authorId" column="author_id"/>
-        <result property="authorName" column="author_name"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
         <result property="content" column="content"/>
-        <result property="privateNum" column="private_num"/>
+        <result property="isPrivate" column="is_private"/>
         <result property="confirm" column="confirm"/>
-        <result property="regDt" column="reg_dt"/>
+        <result property="createDate" column="create_date"/>
     </resultMap>
 
-    <select id="findByPrivateNum" resultMap="CommentResponseMap">
-        SELECT id, author_id, author_name, content, private_num, confirm, reg_dt
+    <select id="findByIsPrivate" resultMap="CommentResponseMap">
+        SELECT id, user_id, user_name, content, is_private, confirm, create_date
         FROM about_comment
-        WHERE private_num = #{privateNum}
-        ORDER BY reg_dt ASC
+        WHERE is_private = #{isPrivate}
+        ORDER BY create_date ASC
     </select>
 
     <select id="findById" resultMap="CommentResponseMap">
-        SELECT id, author_id, author_name, content, private_num, confirm, reg_dt
+        SELECT id, user_id, user_name, content, is_private, confirm, create_date
         FROM about_comment WHERE id = #{id}
     </select>
 
-    <select id="countByPrivateNum" resultType="int">
-        SELECT COUNT(*) FROM about_comment WHERE private_num = #{privateNum}
+    <select id="countByIsPrivate" resultType="int">
+        SELECT COUNT(*) FROM about_comment WHERE is_private = #{isPrivate}
     </select>
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO about_comment (author_id, author_name, content, private_num, confirm, reg_dt)
-        VALUES (#{authorId}, #{authorName}, #{content}, #{privateNum}, #{confirm}, NOW())
+        INSERT INTO about_comment (user_id, user_name, content, is_private, confirm, create_date)
+        VALUES (#{userId}, #{userName}, #{content}, #{isPrivate}, #{confirm}, NOW())
     </insert>
 </mapper>

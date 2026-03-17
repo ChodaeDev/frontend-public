@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface AboutPostRepository extends JpaRepository<AboutPost, Integer> {
 
-    List<AboutPost> findAllByOrderByRegDtDesc();
+    List<AboutPost> findAllByOrderByCreateDateDesc();
 
-    List<AboutPost> findByAuthorIdOrderByRegDtDesc(String authorId);
+    List<AboutPost> findByUserIdOrderByCreateDateDesc(String userId);
 }

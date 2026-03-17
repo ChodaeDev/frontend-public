@@ -32,7 +32,7 @@ public class DoctrineService {
         long itemTotal = doctrinePostMapper.countAll();
         int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
 
-        String sortColumn = "reg_dt";
+        String sortColumn = "create_date";
         String sortOrder = "DESC";
         if (sorting != null && !sorting.isBlank()) {
             String[] parts = sorting.split("_");
@@ -40,7 +40,7 @@ public class DoctrineService {
                 switch (parts[0].toLowerCase()) {
                     case "title" -> sortColumn = "title";
                     case "commentcount" -> sortColumn = "comment_count";
-                    case "regdt" -> sortColumn = "reg_dt";
+                    case "regdt" -> sortColumn = "create_date";
                     default -> { /* keep default */ }
                 }
                 sortOrder = "asc".equalsIgnoreCase(parts[1]) ? "ASC" : "DESC";
@@ -55,7 +55,7 @@ public class DoctrineService {
                 .pageNumber(pageNumber)
                 .pageSize(pageSize)
                 .itemTotal(itemTotal)
-                .sorting(sorting != null ? sorting : "regDt_desc")
+                .sorting(sorting != null ? sorting : "createDate_desc")
                 .itemCount(itemCount)
                 .totalPages(totalPages)
                 .build();
@@ -65,8 +65,8 @@ public class DoctrineService {
         return doctrinePostMapper.findById(id);
     }
 
-    public DoctrineResponse findByIdAndAuthorId(Integer id, String authorId) {
-        return doctrinePostMapper.findByIdAndAuthorId(id, authorId);
+    public DoctrineResponse findByIdAndUserId(Integer id, String userId) {
+        return doctrinePostMapper.findByIdAndUserId(id, userId);
     }
 
     @Transactional
@@ -74,11 +74,11 @@ public class DoctrineService {
         Map<String, Object> params = new HashMap<>();
         params.put("title", request.getTitle());
         params.put("content", request.getContent());
-        params.put("authorId", request.getAuthorId());
-        params.put("authorName", request.getAuthorName());
+        params.put("userId", request.getUserId());
+        params.put("userName", request.getUserName());
         params.put("phone", request.getPhone());
         params.put("counselType", request.getCounselType());
-        params.put("privateNum", 0);
+        params.put("isPrivate", 0);
 
         doctrinePostMapper.insert(params);
         Object idObj = params.get("id");
@@ -86,7 +86,7 @@ public class DoctrineService {
         if (id == null) {
             throw new IllegalStateException("글 등록 후 ID를 가져오지 못했습니다.");
         }
-        doctrinePostMapper.updatePrivateNum(id, id);
+        doctrinePostMapper.updateIsPrivate(id, id);
         DoctrineResponse created = doctrinePostMapper.findById(id);
         if (created == null) {
             throw new IllegalStateException("등록된 글을 조회할 수 없습니다.");
@@ -95,7 +95,7 @@ public class DoctrineService {
     }
 
     public List<CommentResponse> findCommentsByPostId(Integer postId) {
-        return doctrineCommentMapper.findByPrivateNum(postId);
+        return doctrineCommentMapper.findByIsPrivate(postId);
     }
 
     @Transactional
@@ -106,16 +106,16 @@ public class DoctrineService {
         }
 
         Map<String, Object> params = new HashMap<>();
-        params.put("authorId", request.getAuthorId());
-        params.put("authorName", request.getAuthorName() != null ? request.getAuthorName() : "익명");
+        params.put("userId", request.getUserId());
+        params.put("userName", request.getUserName() != null ? request.getUserName() : "익명");
         params.put("content", request.getContent());
-        params.put("privateNum", postId);
+        params.put("isPrivate", postId);
         params.put("confirm", "N");
 
         doctrineCommentMapper.insert(params);
         Integer commentId = (Integer) params.get("id");
 
-        int count = doctrineCommentMapper.countByPrivateNum(postId);
+        int count = doctrineCommentMapper.countByIsPrivate(postId);
         doctrinePostMapper.updateCommentCount(postId, count);
 
         return doctrineCommentMapper.findById(commentId);

@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ScjInfoPostRepository extends JpaRepository<ScjInfoPost, Integer> {
 
-    List<ScjInfoPost> findAllByOrderByRegDtDesc();
+    List<ScjInfoPost> findAllByOrderByCreateDateDesc();
 
-    List<ScjInfoPost> findByAuthorIdOrderByRegDtDesc(String authorId);
+    List<ScjInfoPost> findByUserIdOrderByCreateDateDesc(String userId);
 }

@@ -32,7 +32,7 @@ public class ScjInfoService {
         long itemTotal = scjInfoPostMapper.countAll();
         int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
 
-        String sortColumn = "reg_dt";
+        String sortColumn = "create_date";
         String sortOrder = "DESC";
         if (sorting != null && !sorting.isBlank()) {
             String[] parts = sorting.split("_");
@@ -40,7 +40,7 @@ public class ScjInfoService {
                 switch (parts[0].toLowerCase()) {
                     case "title" -> sortColumn = "title";
                     case "commentcount" -> sortColumn = "comment_count";
-                    case "regdt" -> sortColumn = "reg_dt";
+                    case "regdt" -> sortColumn = "create_date";
                     default -> { /* keep default */ }
                 }
                 sortOrder = "asc".equalsIgnoreCase(parts[1]) ? "ASC" : "DESC";
@@ -55,7 +55,7 @@ public class ScjInfoService {
                 .pageNumber(pageNumber)
                 .pageSize(pageSize)
                 .itemTotal(itemTotal)
-                .sorting(sorting != null ? sorting : "regDt_desc")
+                .sorting(sorting != null ? sorting : "createDate_desc")
                 .itemCount(itemCount)
                 .totalPages(totalPages)
                 .build();
@@ -65,8 +65,8 @@ public class ScjInfoService {
         return scjInfoPostMapper.findById(id);
     }
 
-    public ScjInfoResponse findByIdAndAuthorId(Integer id, String authorId) {
-        return scjInfoPostMapper.findByIdAndAuthorId(id, authorId);
+    public ScjInfoResponse findByIdAndUserId(Integer id, String userId) {
+        return scjInfoPostMapper.findByIdAndUserId(id, userId);
     }
 
     @Transactional
@@ -74,11 +74,11 @@ public class ScjInfoService {
         Map<String, Object> params = new HashMap<>();
         params.put("title", request.getTitle());
         params.put("content", request.getContent());
-        params.put("authorId", request.getAuthorId());
-        params.put("authorName", request.getAuthorName());
+        params.put("userId", request.getUserId());
+        params.put("userName", request.getUserName());
         params.put("phone", request.getPhone());
         params.put("counselType", request.getCounselType());
-        params.put("privateNum", 0);
+        params.put("isPrivate", 0);
 
         scjInfoPostMapper.insert(params);
         Object idObj = params.get("id");
@@ -86,7 +86,7 @@ public class ScjInfoService {
         if (id == null) {
             throw new IllegalStateException("글 등록 후 ID를 가져오지 못했습니다.");
         }
-        scjInfoPostMapper.updatePrivateNum(id, id);
+        scjInfoPostMapper.updateIsPrivate(id, id);
         ScjInfoResponse created = scjInfoPostMapper.findById(id);
         if (created == null) {
             throw new IllegalStateException("등록된 글을 조회할 수 없습니다.");
@@ -95,7 +95,7 @@ public class ScjInfoService {
     }
 
     public List<CommentResponse> findCommentsByPostId(Integer postId) {
-        return scjInfoCommentMapper.findByPrivateNum(postId);
+        return scjInfoCommentMapper.findByIsPrivate(postId);
     }
 
     @Transactional
@@ -106,16 +106,16 @@ public class ScjInfoService {
         }
 
         Map<String, Object> params = new HashMap<>();
-        params.put("authorId", request.getAuthorId());
-        params.put("authorName", request.getAuthorName() != null ? request.getAuthorName() : "익명");
+        params.put("userId", request.getUserId());
+        params.put("userName", request.getUserName() != null ? request.getUserName() : "익명");
         params.put("content", request.getContent());
-        params.put("privateNum", postId);
+        params.put("isPrivate", postId);
         params.put("confirm", "N");
 
         scjInfoCommentMapper.insert(params);
         Integer commentId = (Integer) params.get("id");
 
-        int count = scjInfoCommentMapper.countByPrivateNum(postId);
+        int count = scjInfoCommentMapper.countByIsPrivate(postId);
         scjInfoPostMapper.updateCommentCount(postId, count);
 
         return scjInfoCommentMapper.findById(commentId);

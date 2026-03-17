@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface WithdrawalCommentRepository extends JpaRepository<WithdrawalComment, Integer> {
 
-    List<WithdrawalComment> findByPrivateNumOrderByRegDtAsc(Integer privateNum);
+    List<WithdrawalComment> findByIsPrivateOrderByCreateDateAsc(Integer isPrivate);
 
-    int countByPrivateNum(Integer privateNum);
+    int countByIsPrivate(Integer isPrivate);
 }

@@ -7,16 +7,16 @@ import java.time.LocalDateTime;
 
 @Value
 @Builder
-public class PrivateCounselingResponse {
+public class CounselingResponse {
     Integer id;
     String title;
     String content;
-    String authorId;
-    String authorName;
+    String userId;
+    String userName;
     String phone;
     String counselType;
     Integer commentCount;
-    Integer privateNum;
-    LocalDateTime regDt;
-    LocalDateTime updDt;
+    Integer isPrivate;
+    LocalDateTime createDate;
+    LocalDateTime modifiedDate;
 }

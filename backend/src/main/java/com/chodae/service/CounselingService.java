@@ -3,10 +3,10 @@ package com.chodae.service;
 import com.chodae.dto.CommentCreateRequest;
 import com.chodae.dto.CommentResponse;
 import com.chodae.dto.PagedListResponse;
-import com.chodae.dto.PrivateCounselingCreateRequest;
-import com.chodae.dto.PrivateCounselingResponse;
+import com.chodae.dto.CounselingCreateRequest;
+import com.chodae.dto.CounselingResponse;
 import com.chodae.mapper.CommentMapper;
-import com.chodae.mapper.PrivateCounselingMapper;
+import com.chodae.mapper.CounselingMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,20 +19,20 @@ import java.util.Map;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PrivateCounselingService {
+public class CounselingService {
 
-    private final PrivateCounselingMapper privateCounselingMapper;
+    private final CounselingMapper counselingMapper;
     private final CommentMapper commentMapper;
 
-    public List<PrivateCounselingResponse> findAll() {
-        return privateCounselingMapper.findAll();
+    public List<CounselingResponse> findAll() {
+        return counselingMapper.findAll();
     }
 
-    public PagedListResponse<PrivateCounselingResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sorting) {
-        long itemTotal = privateCounselingMapper.countAll();
+    public PagedListResponse<CounselingResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sorting) {
+        long itemTotal = counselingMapper.countAll();
         int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
 
-        String sortColumn = "reg_dt";
+        String sortColumn = "create_date";
         String sortOrder = "DESC";
         if (sorting != null && !sorting.isBlank()) {
             String[] parts = sorting.split("_");
@@ -40,7 +40,7 @@ public class PrivateCounselingService {
                 switch (parts[0].toLowerCase()) {
                     case "title" -> sortColumn = "title";
                     case "commentcount" -> sortColumn = "comment_count";
-                    case "regdt" -> sortColumn = "reg_dt";
+                    case "regdt" -> sortColumn = "create_date";
                     default -> { /* keep default */ }
                 }
                 sortOrder = "asc".equalsIgnoreCase(parts[1]) ? "ASC" : "DESC";
@@ -48,50 +48,50 @@ public class PrivateCounselingService {
         }
 
         int offset = Math.max(0, (pageNumber - 1) * itemCount);
-        List<PrivateCounselingResponse> items = privateCounselingMapper.findAllWithPaging(offset, itemCount, sortColumn, sortOrder);
+        List<CounselingResponse> items = counselingMapper.findAllWithPaging(offset, itemCount, sortColumn, sortOrder);
 
-        return PagedListResponse.<PrivateCounselingResponse>builder()
+        return PagedListResponse.<CounselingResponse>builder()
                 .items(items)
                 .pageNumber(pageNumber)
                 .pageSize(pageSize)
                 .itemTotal(itemTotal)
-                .sorting(sorting != null ? sorting : "regDt_desc")
+                .sorting(sorting != null ? sorting : "createDate_desc")
                 .itemCount(itemCount)
                 .totalPages(totalPages)
                 .build();
     }
 
-    public List<PrivateCounselingResponse> findByAuthorId(String authorId) {
-        return privateCounselingMapper.findByAuthorId(authorId);
+    public List<CounselingResponse> findByUserId(String userId) {
+        return counselingMapper.findByUserId(userId);
     }
 
-    public PrivateCounselingResponse findById(Integer id) {
-        return privateCounselingMapper.findById(id);
+    public CounselingResponse findById(Integer id) {
+        return counselingMapper.findById(id);
     }
 
-    public PrivateCounselingResponse findByIdAndAuthorId(Integer id, String authorId) {
-        return privateCounselingMapper.findByIdAndAuthorId(id, authorId);
+    public CounselingResponse findByIdAndUserId(Integer id, String userId) {
+        return counselingMapper.findByIdAndUserId(id, userId);
     }
 
     @Transactional
-    public PrivateCounselingResponse create(PrivateCounselingCreateRequest request) {
+    public CounselingResponse create(CounselingCreateRequest request) {
         Map<String, Object> params = new HashMap<>();
         params.put("title", request.getTitle());
         params.put("content", request.getContent());
-        params.put("authorId", request.getAuthorId());
-        params.put("authorName", request.getAuthorName());
+        params.put("userId", request.getUserId());
+        params.put("userName", request.getUserName());
         params.put("phone", request.getPhone());
         params.put("counselType", request.getCounselType());
-        params.put("privateNum", 0);
+        params.put("isPrivate", 0);
 
-        privateCounselingMapper.insert(params);
+        counselingMapper.insert(params);
         Object idObj = params.get("id");
         Integer id = idObj instanceof Number ? ((Number) idObj).intValue() : null;
         if (id == null) {
             throw new IllegalStateException("상담 글 등록 후 ID를 가져오지 못했습니다.");
         }
-        privateCounselingMapper.updatePrivateNum(id, id);
-        PrivateCounselingResponse created = privateCounselingMapper.findById(id);
+        counselingMapper.updateIsPrivate(id, id);
+        CounselingResponse created = counselingMapper.findById(id);
         if (created == null) {
             throw new IllegalStateException("등록된 상담 글을 조회할 수 없습니다.");
         }
@@ -99,28 +99,28 @@ public class PrivateCounselingService {
     }
 
     public List<CommentResponse> findCommentsByPostId(Integer postId) {
-        return commentMapper.findByPrivateNum(postId);
+        return commentMapper.findByIsPrivate(postId);
     }
 
     @Transactional
     public CommentResponse addComment(Integer postId, CommentCreateRequest request) {
-        PrivateCounselingResponse post = privateCounselingMapper.findById(postId);
+        CounselingResponse post = counselingMapper.findById(postId);
         if (post == null) {
             throw new IllegalArgumentException("상담 글이 존재하지 않습니다.");
         }
 
         Map<String, Object> params = new HashMap<>();
-        params.put("authorId", request.getAuthorId());
-        params.put("authorName", request.getAuthorName() != null ? request.getAuthorName() : "익명");
+        params.put("userId", request.getUserId());
+        params.put("userName", request.getUserName() != null ? request.getUserName() : "익명");
         params.put("content", request.getContent());
-        params.put("privateNum", postId);
+        params.put("isPrivate", postId);
         params.put("confirm", "N");
 
         commentMapper.insert(params);
         Integer commentId = (Integer) params.get("id");
 
-        int count = commentMapper.countByPrivateNum(postId);
-        privateCounselingMapper.updateCommentCount(postId, count);
+        int count = commentMapper.countByIsPrivate(postId);
+        counselingMapper.updateCommentCount(postId, count);
 
         return commentMapper.findById(commentId);
     }

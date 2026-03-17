@@ -1,5 +1,6 @@
 package com.chodae.config;
 
+import com.chodae.service.TokenSessionService;
 import com.chodae.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,6 +25,7 @@ import java.util.Collections;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+    private final TokenSessionService tokenSessionService;
 
     @Override
     protected void doFilterInternal(
@@ -34,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
-            if (jwtUtil.validateToken(token)) {
+            if (tokenSessionService.isCurrentSession(token)) {
                 String userId = jwtUtil.getUserIdFromToken(token);
                 var auth = new UsernamePasswordAuthenticationToken(
                         userId,

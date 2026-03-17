@@ -5,11 +5,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PrivateCounselingCreateRequest {
+public class CounselingCreateRequest {
     private String title;
     private String content;
-    private String authorId;
-    private String authorName;
+    private String userId;
+    private String userName;
     private String phone;
     private String counselType;
 }

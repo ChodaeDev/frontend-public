@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface FreeBoardCommentRepository extends JpaRepository<FreeBoardComment, Integer> {
 
-    List<FreeBoardComment> findByPrivateNumOrderByRegDtAsc(Integer privateNum);
+    List<FreeBoardComment> findByIsPrivateOrderByCreateDateAsc(Integer isPrivate);
 
-    int countByPrivateNum(Integer privateNum);
+    int countByIsPrivate(Integer isPrivate);
 }

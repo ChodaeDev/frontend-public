@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 public class FreeBoardCreateRequest {
     private String title;
     private String content;
-    private String authorId;
-    private String authorName;
+    private String userId;
+    private String userName;
     private String phone;
     private String counselType;
 }

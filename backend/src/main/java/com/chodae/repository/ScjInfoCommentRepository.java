@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ScjInfoCommentRepository extends JpaRepository<ScjInfoComment, Integer> {
 
-    List<ScjInfoComment> findByPrivateNumOrderByRegDtAsc(Integer privateNum);
+    List<ScjInfoComment> findByIsPrivateOrderByCreateDateAsc(Integer isPrivate);
 
-    int countByPrivateNum(Integer privateNum);
+    int countByIsPrivate(Integer isPrivate);
 }

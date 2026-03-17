@@ -33,13 +33,13 @@ public class FreeBoardService {
      * @param pageNumber 현재 페이지 (1부터 시작)
      * @param itemCount 한 페이지당 표시할 데이터 개수
      * @param pageSize 페이지네이션 UI에 표시할 페이지 번호 개수
-     * @param sorting 정렬 (예: "regDt_desc", "regDt_asc", "title_asc", "title_desc", "commentCount_desc")
+     * @param sorting 정렬 (예: "createDate_desc", "createDate_asc", "title_asc", "title_desc", "commentCount_desc")
      */
     public PagedListResponse<FreeBoardResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sorting) {
         long itemTotal = freeBoardPostMapper.countAll();
         int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
 
-        String sortColumn = "reg_dt";
+        String sortColumn = "create_date";
         String sortOrder = "DESC";
         if (sorting != null && !sorting.isBlank()) {
             String[] parts = sorting.split("_");
@@ -47,7 +47,7 @@ public class FreeBoardService {
                 switch (parts[0].toLowerCase()) {
                     case "title" -> sortColumn = "title";
                     case "commentcount" -> sortColumn = "comment_count";
-                    case "regdt" -> sortColumn = "reg_dt";
+                    case "regdt" -> sortColumn = "create_date";
                     default -> { /* keep default */ }
                 }
                 sortOrder = "asc".equalsIgnoreCase(parts[1]) ? "ASC" : "DESC";
@@ -62,7 +62,7 @@ public class FreeBoardService {
                 .pageNumber(pageNumber)
                 .pageSize(pageSize)
                 .itemTotal(itemTotal)
-                .sorting(sorting != null ? sorting : "regDt_desc")
+                .sorting(sorting != null ? sorting : "createDate_desc")
                 .itemCount(itemCount)
                 .totalPages(totalPages)
                 .build();
@@ -72,8 +72,8 @@ public class FreeBoardService {
         return freeBoardPostMapper.findById(id);
     }
 
-    public FreeBoardResponse findByIdAndAuthorId(Integer id, String authorId) {
-        return freeBoardPostMapper.findByIdAndAuthorId(id, authorId);
+    public FreeBoardResponse findByIdAndUserId(Integer id, String userId) {
+        return freeBoardPostMapper.findByIdAndUserId(id, userId);
     }
 
     @Transactional
@@ -81,11 +81,11 @@ public class FreeBoardService {
         Map<String, Object> params = new HashMap<>();
         params.put("title", request.getTitle());
         params.put("content", request.getContent());
-        params.put("authorId", request.getAuthorId());
-        params.put("authorName", request.getAuthorName());
+        params.put("userId", request.getUserId());
+        params.put("userName", request.getUserName());
         params.put("phone", request.getPhone());
         params.put("counselType", request.getCounselType());
-        params.put("privateNum", 0);
+        params.put("isPrivate", 0);
 
         freeBoardPostMapper.insert(params);
         Object idObj = params.get("id");
@@ -93,7 +93,7 @@ public class FreeBoardService {
         if (id == null) {
             throw new IllegalStateException("글 등록 후 ID를 가져오지 못했습니다.");
         }
-        freeBoardPostMapper.updatePrivateNum(id, id);
+        freeBoardPostMapper.updateIsPrivate(id, id);
         FreeBoardResponse created = freeBoardPostMapper.findById(id);
         if (created == null) {
             throw new IllegalStateException("등록된 글을 조회할 수 없습니다.");
@@ -102,7 +102,7 @@ public class FreeBoardService {
     }
 
     public List<FreeBoardCommentResponse> findCommentsByPostId(Integer postId) {
-        return freeBoardCommentMapper.findByPrivateNum(postId);
+        return freeBoardCommentMapper.findByIsPrivate(postId);
     }
 
     @Transactional
@@ -113,16 +113,16 @@ public class FreeBoardService {
         }
 
         Map<String, Object> params = new HashMap<>();
-        params.put("authorId", request.getAuthorId());
-        params.put("authorName", request.getAuthorName() != null ? request.getAuthorName() : "익명");
+        params.put("userId", request.getUserId());
+        params.put("userName", request.getUserName() != null ? request.getUserName() : "익명");
         params.put("content", request.getContent());
-        params.put("privateNum", postId);
+        params.put("isPrivate", postId);
         params.put("confirm", "N");
 
         freeBoardCommentMapper.insert(params);
         Integer commentId = (Integer) params.get("id");
 
-        int count = freeBoardCommentMapper.countByPrivateNum(postId);
+        int count = freeBoardCommentMapper.countByIsPrivate(postId);
         freeBoardPostMapper.updateCommentCount(postId, count);
 
         return freeBoardCommentMapper.findById(commentId);

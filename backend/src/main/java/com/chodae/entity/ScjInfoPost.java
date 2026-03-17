@@ -17,11 +17,11 @@ public class ScjInfoPost {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "author_id", length = 100)
-    private String authorId;
+    @Column(name = "user_id", length = 100)
+    private String userId;
 
-    @Column(name = "author_name", nullable = false, length = 100)
-    private String authorName;
+    @Column(name = "user_name", nullable = false, length = 100)
+    private String userName;
 
     @Column(length = 50)
     private String phone;
@@ -32,24 +32,24 @@ public class ScjInfoPost {
     @Column(name = "comment_count", nullable = false)
     private Integer commentCount = 0;
 
-    @Column(name = "private_num", nullable = false)
-    private Integer privateNum;
+    @Column(name = "is_private", nullable = false)
+    private Integer isPrivate;
 
-    @Column(name = "reg_dt")
-    private LocalDateTime regDt;
+    @Column(name = "create_date")
+    private LocalDateTime createDate;
 
-    @Column(name = "upd_dt")
-    private LocalDateTime updDt;
+    @Column(name = "modified_date")
+    private LocalDateTime modifiedDate;
 
     @PrePersist
     protected void onCreate() {
-        regDt = LocalDateTime.now();
-        updDt = LocalDateTime.now();
+        createDate = LocalDateTime.now();
+        modifiedDate = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updDt = LocalDateTime.now();
+        modifiedDate = LocalDateTime.now();
     }
 
     public Integer getId() { return id; }
@@ -58,20 +58,20 @@ public class ScjInfoPost {
     public void setTitle(String title) { this.title = title; }
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
-    public String getAuthorId() { return authorId; }
-    public void setAuthorId(String authorId) { this.authorId = authorId; }
-    public String getAuthorName() { return authorName; }
-    public void setAuthorName(String authorName) { this.authorName = authorName; }
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
     public String getCounselType() { return counselType; }
     public void setCounselType(String counselType) { this.counselType = counselType; }
     public Integer getCommentCount() { return commentCount; }
     public void setCommentCount(Integer commentCount) { this.commentCount = commentCount; }
-    public Integer getPrivateNum() { return privateNum; }
-    public void setPrivateNum(Integer privateNum) { this.privateNum = privateNum; }
-    public LocalDateTime getRegDt() { return regDt; }
-    public void setRegDt(LocalDateTime regDt) { this.regDt = regDt; }
-    public LocalDateTime getUpdDt() { return updDt; }
-    public void setUpdDt(LocalDateTime updDt) { this.updDt = updDt; }
+    public Integer getIsPrivate() { return isPrivate; }
+    public void setIsPrivate(Integer isPrivate) { this.isPrivate = isPrivate; }
+    public LocalDateTime getCreateDate() { return createDate; }
+    public void setCreateDate(LocalDateTime createDate) { this.createDate = createDate; }
+    public LocalDateTime getModifiedDate() { return modifiedDate; }
+    public void setModifiedDate(LocalDateTime modifiedDate) { this.modifiedDate = modifiedDate; }
 }

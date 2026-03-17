@@ -2,18 +2,21 @@ package com.chodae.controller;
 
 import com.chodae.dto.ApiResponse;
 import com.chodae.dto.CommentCreateRequest;
+import com.chodae.dto.PagedApiResponse;
 import com.chodae.dto.PagedListResponse;
 import com.chodae.dto.CommentResponse;
-import com.chodae.dto.PrivateCounselingCreateRequest;
-import com.chodae.dto.PrivateCounselingResponse;
-import com.chodae.service.PrivateCounselingService;
+import com.chodae.dto.CounselingCreateRequest;
+import com.chodae.dto.CounselingResponse;
+import com.chodae.service.CounselingService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Tag(name = "상담게시판", description = "상담게시판 페이지 관련 API")
@@ -24,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CounselingController {
 
-    private final PrivateCounselingService privateCounselingService;
+    private final CounselingService counselingService;
 
     private String getCurrentUserId(Authentication auth) {
         if (auth == null || !auth.isAuthenticated() || auth.getPrincipal() == null) {
@@ -34,7 +37,8 @@ public class CounselingController {
     }
 
     @GetMapping("/list")
-    public ApiResponse<PagedListResponse<PrivateCounselingResponse>> getList(
+    public PagedApiResponse<CounselingResponse> getList(
+            HttpServletRequest request,
             @Parameter(description = "현재 페이지")
             @RequestParam(defaultValue = "1") int pageNumber,
             @Parameter(description = "한 페이징에서 표출할 데이터 개수")
@@ -42,23 +46,18 @@ public class CounselingController {
             @Parameter(description = "페이지네이션에 넣을 숫자 개수")
             @RequestParam(defaultValue = "10") int pageSize,
             @Parameter(description = "정렬 기준")
-            @RequestParam(required = false) String sorting,
-            Authentication auth) {
-        String userId = getCurrentUserId(auth);
-        if (userId == null) {
-            return ApiResponse.error("로그인이 필요합니다.");
-        }
-        PagedListResponse<PrivateCounselingResponse> list = privateCounselingService.findAllWithPaging(pageNumber, itemCount, pageSize, sorting);
-        return ApiResponse.success(list);
+            @RequestParam(required = false) String sorting) {
+        PagedListResponse<CounselingResponse> list = counselingService.findAllWithPaging(pageNumber, itemCount, pageSize, sorting);
+        return PagedApiResponse.of(HttpStatus.OK.value(), request.getRequestURI(), list);
     }
 
     @GetMapping("/detail/{id}")
-    public ApiResponse<PrivateCounselingResponse> getDetail(@PathVariable Integer id, Authentication auth) {
+    public ApiResponse<CounselingResponse> getDetail(@PathVariable Integer id, Authentication auth) {
         String userId = getCurrentUserId(auth);
         if (userId == null) {
             return ApiResponse.error("로그인이 필요합니다.");
         }
-        PrivateCounselingResponse post = privateCounselingService.findByIdAndAuthorId(id, userId);
+        CounselingResponse post = counselingService.findByIdAndUserId(id, userId);
         if (post == null) {
             return ApiResponse.error("글이 존재하지 않거나 접근 권한이 없습니다.");
         }
@@ -71,15 +70,15 @@ public class CounselingController {
         if (userId == null) {
             return ApiResponse.error("로그인이 필요합니다.");
         }
-        PrivateCounselingResponse post = privateCounselingService.findByIdAndAuthorId(id, userId);
+        CounselingResponse post = counselingService.findByIdAndUserId(id, userId);
         if (post == null) {
             return ApiResponse.error("글이 존재하지 않거나 접근 권한이 없습니다.");
         }
-        return ApiResponse.success(privateCounselingService.findCommentsByPostId(id));
+        return ApiResponse.success(counselingService.findCommentsByPostId(id));
     }
 
     @PostMapping("/form")
-    public ApiResponse<PrivateCounselingResponse> create(@RequestBody PrivateCounselingCreateRequest request, Authentication auth) {
+    public ApiResponse<CounselingResponse> create(@RequestBody CounselingCreateRequest request, Authentication auth) {
         String userId = getCurrentUserId(auth);
         if (userId == null) {
             return ApiResponse.error("로그인이 필요합니다.");
@@ -87,11 +86,11 @@ public class CounselingController {
         if (request.getTitle() == null || request.getTitle().isBlank()) {
             return ApiResponse.error("제목을 입력해주세요.");
         }
-        if (request.getAuthorName() == null || request.getAuthorName().isBlank()) {
+        if (request.getUserName() == null || request.getUserName().isBlank()) {
             return ApiResponse.error("작성자 이름을 입력해주세요.");
         }
-        request.setAuthorId(userId);
-        PrivateCounselingResponse created = privateCounselingService.create(request);
+        request.setUserId(userId);
+        CounselingResponse created = counselingService.create(request);
         return ApiResponse.success("상담 신청이 완료되었습니다.", created);
     }
 
@@ -101,16 +100,16 @@ public class CounselingController {
         if (userId == null) {
             return ApiResponse.error("로그인이 필요합니다.");
         }
-        PrivateCounselingResponse post = privateCounselingService.findByIdAndAuthorId(id, userId);
+        CounselingResponse post = counselingService.findByIdAndUserId(id, userId);
         if (post == null) {
             return ApiResponse.error("글이 존재하지 않거나 접근 권한이 없습니다.");
         }
         if (request.getContent() == null || request.getContent().isBlank()) {
             return ApiResponse.error("댓글 내용을 입력해주세요.");
         }
-        request.setAuthorId(userId);
-        request.setAuthorName(request.getAuthorName() != null ? request.getAuthorName() : "익명");
-        CommentResponse comment = privateCounselingService.addComment(id, request);
+        request.setUserId(userId);
+        request.setUserName(request.getUserName() != null ? request.getUserName() : "익명");
+        CommentResponse comment = counselingService.addComment(id, request);
         return ApiResponse.success("댓글이 등록되었습니다.", comment);
     }
 }

@@ -7,21 +7,21 @@
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
-        <result property="authorId" column="author_id"/>
-        <result property="authorName" column="author_name"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
         <result property="phone" column="phone"/>
         <result property="counselType" column="counsel_type"/>
         <result property="commentCount" column="comment_count"/>
-        <result property="privateNum" column="private_num"/>
-        <result property="regDt" column="reg_dt"/>
-        <result property="updDt" column="upd_dt"/>
+        <result property="isPrivate" column="is_private"/>
+        <result property="createDate" column="create_date"/>
+        <result property="modifiedDate" column="modified_date"/>
     </resultMap>
 
     <select id="findAll" resultMap="PreventionResponseMap">
-        SELECT id, title, content, author_id, author_name, phone, counsel_type,
-               comment_count, private_num, reg_dt, upd_dt
+        SELECT id, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, is_private, create_date, modified_date
         FROM prevention_post
-        ORDER BY reg_dt DESC
+        ORDER BY create_date DESC
     </select>
 
     <select id="countAll" resultType="long">
@@ -29,52 +29,52 @@
     </select>
 
     <select id="findAllWithPaging" resultMap="PreventionResponseMap">
-        SELECT id, title, content, author_id, author_name, phone, counsel_type,
-               comment_count, private_num, reg_dt, upd_dt
+        SELECT id, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, is_private, create_date, modified_date
         FROM prevention_post
         <choose>
             <when test="sortColumn == 'title' and sortOrder == 'ASC'">ORDER BY title ASC</when>
             <when test="sortColumn == 'title' and sortOrder == 'DESC'">ORDER BY title DESC</when>
-            <when test="sortColumn == 'reg_dt' and sortOrder == 'ASC'">ORDER BY reg_dt ASC</when>
+            <when test="sortColumn == 'create_date' and sortOrder == 'ASC'">ORDER BY create_date ASC</when>
             <when test="sortColumn == 'comment_count' and sortOrder == 'ASC'">ORDER BY comment_count ASC</when>
             <when test="sortColumn == 'comment_count' and sortOrder == 'DESC'">ORDER BY comment_count DESC</when>
-            <otherwise>ORDER BY reg_dt DESC</otherwise>
+            <otherwise>ORDER BY create_date DESC</otherwise>
         </choose>
         LIMIT #{offset}, #{limit}
     </select>
 
-    <select id="findByAuthorId" resultMap="PreventionResponseMap">
-        SELECT id, title, content, author_id, author_name, phone, counsel_type,
-               comment_count, private_num, reg_dt, upd_dt
+    <select id="findByUserId" resultMap="PreventionResponseMap">
+        SELECT id, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, is_private, create_date, modified_date
         FROM prevention_post
-        WHERE author_id = #{authorId}
-        ORDER BY reg_dt DESC
+        WHERE user_id = #{userId}
+        ORDER BY create_date DESC
     </select>
 
     <select id="findById" resultMap="PreventionResponseMap">
-        SELECT id, title, content, author_id, author_name, phone, counsel_type,
-               comment_count, private_num, reg_dt, upd_dt
+        SELECT id, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, is_private, create_date, modified_date
         FROM prevention_post
         WHERE id = #{id}
     </select>
 
-    <select id="findByIdAndAuthorId" resultMap="PreventionResponseMap">
-        SELECT id, title, content, author_id, author_name, phone, counsel_type,
-               comment_count, private_num, reg_dt, upd_dt
+    <select id="findByIdAndUserId" resultMap="PreventionResponseMap">
+        SELECT id, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, is_private, create_date, modified_date
         FROM prevention_post
-        WHERE id = #{id} AND author_id = #{authorId}
+        WHERE id = #{id} AND user_id = #{userId}
     </select>
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO prevention_post (title, content, author_id, author_name, phone, counsel_type, comment_count, private_num, reg_dt, upd_dt)
-        VALUES (#{title}, #{content}, #{authorId}, #{authorName}, #{phone}, #{counselType}, 0, #{privateNum}, NOW(), NOW())
+        INSERT INTO prevention_post (title, content, user_id, user_name, phone, counsel_type, comment_count, is_private, create_date, modified_date)
+        VALUES (#{title}, #{content}, #{userId}, #{userName}, #{phone}, #{counselType}, 0, #{isPrivate}, NOW(), NOW())
     </insert>
 
     <update id="updateCommentCount">
-        UPDATE prevention_post SET comment_count = #{commentCount}, upd_dt = NOW() WHERE id = #{id}
+        UPDATE prevention_post SET comment_count = #{commentCount}, modified_date = NOW() WHERE id = #{id}
     </update>
 
-    <update id="updatePrivateNum">
-        UPDATE prevention_post SET private_num = #{privateNum}, upd_dt = NOW() WHERE id = #{id}
+    <update id="updateIsPrivate">
+        UPDATE prevention_post SET is_private = #{isPrivate}, modified_date = NOW() WHERE id = #{id}
     </update>
 </mapper>

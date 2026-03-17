@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface FreeBoardPostRepository extends JpaRepository<FreeBoardPost, Integer> {
 
-    List<FreeBoardPost> findAllByOrderByRegDtDesc();
+    List<FreeBoardPost> findAllByOrderByCreateDateDesc();
 
-    List<FreeBoardPost> findByAuthorIdOrderByRegDtDesc(String authorId);
+    List<FreeBoardPost> findByUserIdOrderByCreateDateDesc(String userId);
 }

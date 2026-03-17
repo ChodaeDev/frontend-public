@@ -44,7 +44,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/counseling/**").authenticated()
+                        // .requestMatchers("/api/counseling/**").authenticated()
+                        .requestMatchers("/api/**").permitAll()  // Swagger UI에서 로그인 없이 API 테스트 가능
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
@@ -108,7 +109,11 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         // 개발 환경: localhost:5173 및 WSL IP:5173 모두 허용 (패턴 사용)
-        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:5173", "http://172.*.*.*:5173", "http://10.*.*.*:5173"));
+        configuration.setAllowedOriginPatterns(Arrays.asList(
+            "http://localhost", "http://localhost:80", "http://localhost:499", "http://localhost:5173",
+            "http://127.0.0.1", "http://127.0.0.1:80", "http://127.0.0.1:499",
+            "http://172.*.*.*:5173", "http://172.*.*.*:499", "http://10.*.*.*:5173", "http://10.*.*.*:499"
+        ));
         // 프로덕션 환경에서는 특정 origin만 허용하도록 설정
         // configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
