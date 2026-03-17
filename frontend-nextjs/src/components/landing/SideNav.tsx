@@ -50,14 +50,14 @@ function NavButton({
 
   if (href) {
     return (
-      <Link href={`/${ locale }${ href }`} className={'flex flex-col items-center gap-1 w-15 py-2 rounded-xl hover:bg-gray8 transition-colors'}>
+      <Link href={`/${ locale }${ href }`} className={'flex flex-col items-center gap-1 w-18 py-2 rounded-xl hover:bg-gray8 transition-colors'}>
         {inner}
       </Link>
     );
   }
 
   return (
-    <button className={'flex flex-col items-center gap-1 w-14 py-2 rounded-xl hover:bg-gray8 transition-colors'}>
+    <button className={'flex flex-col items-center gap-1 w-18 py-2 rounded-xl hover:bg-gray8 transition-colors'}>
       {inner}
     </button>
   );
@@ -75,7 +75,7 @@ export default function SideNav({ dictionary, locale }: SideNavProps) {
         <nav
           className={
             `hidden sm:flex sticky top-32 z-40 flex-col items-center gap-1
-            bg-background/70 backdrop-blur-xs rounded-2xl p-2 shadow-lg border border-gray9 pointer-events-auto`
+            bg-background/70 backdrop-blur-xs rounded-2xl p-1.5 shadow-lg border border-gray9 pointer-events-auto`
           }
         >
           {navItems.map((item) => (
