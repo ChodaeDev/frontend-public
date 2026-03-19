@@ -4,6 +4,7 @@
     "description": "Professional Counseling for Shincheonji-related Issues"
   },
   "common": {
+    "home": "Home",
     "login": "Login",
     "logout": "Logout",
     "signup": "Sign Up",
@@ -293,5 +294,20 @@
         "description": "A space to freely share opinions."
       }
     }
+  },
+  "board": {
+    "requestCounseling": "Request Counseling",
+    "number": "No.",
+    "title": "Title",
+    "author": "Author",
+    "date": "Date",
+    "views": "Views",
+    "notice": "Notice",
+    "emptyMessage": "No posts found.",
+    "itemsPerPage": "per page",
+    "searchByTitle": "Title",
+    "searchByAuthor": "Author",
+    "searchPlaceholder": "Enter search keyword",
+    "search": "Search"
   }
 }
