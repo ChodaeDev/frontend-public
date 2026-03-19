@@ -80,8 +80,7 @@ export default function BoardContent({
         itemCount: String(count),
         pageSize: '10',
       });
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
-      const res = await fetch(`${ baseUrl }/api/board/${ sub }/list?${ params }`);
+      const res = await fetch(`/api/board/${ sub }/list?${ params }`);
       if (!res.ok) throw new Error(`${ res.status }`);
 
       const data: BoardListResponse = await res.json();
