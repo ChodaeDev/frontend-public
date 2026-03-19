@@ -1,4 +1,4 @@
-package com.chodae.controller;
+package com.chodae.controller.about;
 
 import com.chodae.dto.AboutCreateRequest;
 import com.chodae.dto.AboutResponse;

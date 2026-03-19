@@ -1,4 +1,4 @@
-package com.chodae.controller;
+package com.chodae.controller.withdrawal;
 
 import com.chodae.dto.ApiResponse;
 import com.chodae.dto.CommentCreateRequest;
