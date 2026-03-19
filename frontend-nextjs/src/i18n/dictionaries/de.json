@@ -4,6 +4,7 @@
     "description": "Professionelle Beratung zu Shincheonji-Themen"
   },
   "common": {
+    "home": "Startseite",
     "login": "Anmelden",
     "logout": "Abmelden",
     "signup": "Registrieren",
@@ -293,5 +294,20 @@
         "description": "Ein Raum zum freien Austausch von Meinungen."
       }
     }
+  },
+  "board": {
+    "requestCounseling": "Beratung anfordern",
+    "number": "Nr.",
+    "title": "Titel",
+    "author": "Autor",
+    "date": "Datum",
+    "views": "Aufrufe",
+    "notice": "Hinweis",
+    "emptyMessage": "Keine Beiträge gefunden.",
+    "itemsPerPage": "pro Seite",
+    "searchByTitle": "Titel",
+    "searchByAuthor": "Autor",
+    "searchPlaceholder": "Suchbegriff eingeben",
+    "search": "Suche"
   }
 }

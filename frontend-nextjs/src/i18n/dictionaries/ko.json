@@ -4,6 +4,7 @@
     "description": "신천지 관련 전문 상담"
   },
   "common": {
+    "home": "홈",
     "login": "로그인",
     "logout": "로그아웃",
     "signup": "회원가입",
@@ -293,5 +294,20 @@
         "description": "자유롭게 의견을 나눌 수 있는 공간입니다."
       }
     }
+  },
+  "board": {
+    "requestCounseling": "상담 신청",
+    "number": "번호",
+    "title": "제목",
+    "author": "작성자",
+    "date": "작성일",
+    "views": "조회수",
+    "notice": "공지",
+    "emptyMessage": "게시글이 없습니다.",
+    "itemsPerPage": "개씩 보기",
+    "searchByTitle": "제목",
+    "searchByAuthor": "작성자",
+    "searchPlaceholder": "검색어를 입력하세요",
+    "search": "검색"
   }
 }

@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 
-const backendUrl = process.env.BACKEND_URL ?? 'http://localhost:8080';
+const backendUrl = process.env.BACKEND_URL ?? '';
 
 async function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
