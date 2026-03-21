@@ -5,6 +5,7 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import { Plus, Search } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { apiBase } from '@/lib/api';
 import BoardTable, { type BoardPost } from './BoardTable';
 import Pagination from '@/components/ui/Pagination';
 
@@ -80,7 +81,7 @@ export default function BoardContent({
         itemCount: String(count),
         pageSize: '10',
       });
-      const res = await fetch(`/api/board/${ sub }/list?${ params }`);
+      const res = await fetch(`${ apiBase }/api/board/${ sub }/list?${ params }`);
       if (!res.ok) throw new Error(`${ res.status }`);
 
       const data: BoardListResponse = await res.json();

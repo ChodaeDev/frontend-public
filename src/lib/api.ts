@@ -1,3 +1,5 @@
+export const apiBase = process.env.NEXT_PUBLIC_API_URL ?? '';
+
 type ApiResponse<T> = {
   success: boolean;
   message?: string;
@@ -8,7 +10,7 @@ export async function fetchApi<T>(
   endpoint: string,
   options?: RequestInit,
 ): Promise<ApiResponse<T>> {
-  const response = await fetch(endpoint, {
+  const response = await fetch(`${ apiBase }${ endpoint }`, {
     headers: { 'Content-Type': 'application/json' },
     ...options,
   });
