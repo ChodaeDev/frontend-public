@@ -76,14 +76,14 @@ export function getNavItems(locale: Locale, dictionary?: Dictionary): NavItem[] 
     const navSection = navDict[nav.key];
 
     return {
-      label: navSection.label,
+      label: navSection?.label || nav.key,
       slug: nav.slug,
       subMenus: nav.subKeys.map((subKey, index) => {
-        const subSection = navSection[subKey] as { label: string; description?: string };
+        const subSection = navSection?.[subKey] as { label: string; description?: string } | undefined;
         return {
-          label: subSection.label,
+          label: subSection?.label || subKey,
           slug: nav.subSlugs[index],
-          description: subSection.description,
+          description: subSection?.description,
         };
       }),
     };

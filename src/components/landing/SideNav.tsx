@@ -64,6 +64,14 @@ function NavButton({
   );
 }
 
+const quickNavFallback: SideNavDictionary = {
+  counseling: '상담전화',
+  exitMethods: '탈퇴방법',
+  testimonies: '탈퇴후기',
+  falseClaims: '거짓반증',
+  donation: '후원문의',
+};
+
 export default function SideNav({ dictionary, locale }: SideNavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const t = dictionary.home.quickNav;
@@ -83,7 +91,7 @@ export default function SideNav({ dictionary, locale }: SideNavProps) {
             <NavButton
               key={item.key}
               icon={item.icon}
-              label={t[item.key]}
+              label={t[item.key] || quickNavFallback[item.key]}
               href={item.href}
               locale={locale}
             />
@@ -105,7 +113,7 @@ export default function SideNav({ dictionary, locale }: SideNavProps) {
             <NavButton
               key={item.key}
               icon={item.icon}
-              label={t[item.key]}
+              label={t[item.key] || quickNavFallback[item.key]}
               href={item.href}
               locale={locale}
             />

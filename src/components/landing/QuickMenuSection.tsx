@@ -73,6 +73,14 @@ export default function QuickMenuSection({
   locale,
 }: QuickMenuSectionProps) {
   const quickMenu = dictionary.home.quickMenu;
+  const fallback: QuickMenuDictionary = {
+    counseling: '상담 요청',
+    testimonies: '탈퇴 후기',
+    falseClaims: '신천지 거짓 반증',
+    exitMethods: '지혜로운 탈퇴 방법',
+    recruitmentTactics: '신천지 포교 전략',
+    locations: '신천지 위치정보',
+  };
 
   return (
     <section className={'w-full my-6'}>
@@ -89,7 +97,7 @@ export default function QuickMenuSection({
           >
             {item.icon}
             <span className={'text-xs sm:text-sm font-medium text-main text-center leading-tight'}>
-              {quickMenu[item.labelKey]}
+              {quickMenu[item.labelKey] || fallback[item.labelKey]}
             </span>
           </Link>
         ))}

@@ -40,10 +40,10 @@ const Header = () => {
     <header className={cn('h-[89px] fixed w-full top-0 left-0 z-50 bg-background/80 backdrop-blur-sm border-b transition-colors duration-300', isScrolled ? 'border-gray9' : 'border-transparent')}>
       <div className={'flex items-center justify-between max-w-7xl mx-auto px-4 md:px-6 lg:px-10 py-4'}>
         <Link href={`/${ locale }`} className={'flex items-center gap-2'}>
-          <Image src={'/assets/images/logo.png'} alt={t.header.logoAlt} width={56} height={56} />
+          <Image src={'/assets/images/logo.png'} alt={t.header.logoAlt || '로고 이미지'} width={56} height={56} />
           <div className={'flex flex-col'}>
-            <span className={'text-2xl font-black text-main'}>{t.header.siteName}</span>
-            <span className={'text-sub'}>{t.header.siteSubName}</span>
+            <span className={'text-2xl font-black text-main'}>{t.header.siteName || '신천지 전문상담소'}</span>
+            <span className={'text-sub'}>{t.header.siteSubName || '구리이단상담소'}</span>
           </div>
         </Link>
         <div className={'hidden lg:flex'}>
@@ -59,7 +59,7 @@ const Header = () => {
                 className={'flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-sub transition-colors hover:bg-background-secondary hover:text-main'}
               >
                 <LogOut size={16} />
-                {t.common.logout}
+                {t.common.logout || '로그아웃'}
               </button>
             ) : (
               <Link
@@ -67,7 +67,7 @@ const Header = () => {
                 className={'flex items-center gap-1.5 rounded-lg bg-background-secondary px-3.5 py-2 text-sm font-semibold text-main transition-opacity hover:opacity-90'}
               >
                 <LogIn size={16} />
-                {t.common.login}
+                {t.common.login || '로그인'}
               </Link>
             )}
           </div>

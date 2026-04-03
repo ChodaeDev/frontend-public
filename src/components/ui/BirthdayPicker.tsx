@@ -31,7 +31,7 @@ export function BirthdayPicker({
 }: BirthdayPickerProps) {
   const { locale, dictionary } = useTranslation();
   const t = dictionary.common;
-  const displayLabel = label || dictionary.signup.birthday;
+  const displayLabel = label || dictionary.signup.birthday || '생년월일';
 
   const [selected, setSelected] = useState<Date | undefined>(() => {
     if (!defaultValue) return undefined;
@@ -104,7 +104,7 @@ export function BirthdayPicker({
           className={cn(inputStyle, 'flex cursor-pointer items-center justify-between text-left')}
         >
           <span className={cn(selected ? 'text-main' : 'text-gray6')}>
-            {displayValue || t.selectDate}
+            {displayValue || t.selectDate || '날짜를 선택하세요'}
           </span>
           <Calendar className={'size-4 text-gray6'} />
         </button>
@@ -123,7 +123,7 @@ export function BirthdayPicker({
               >
                 {years.map((y) => (
                   <option key={y} value={y}>
-                    {y}{t.year}
+                    {y}{t.year || '년'}
                   </option>
                 ))}
               </select>
@@ -134,7 +134,7 @@ export function BirthdayPicker({
               >
                 {months.map((m) => (
                   <option key={m} value={m}>
-                    {m}{t.month}
+                    {m}{t.month || '월'}
                   </option>
                 ))}
               </select>
@@ -178,7 +178,7 @@ export function BirthdayPicker({
                   'rounded-lg px-3 py-1.5 text-sm text-sub transition-colors hover:bg-background-secondary'
                 }
               >
-                {t.reset}
+                {t.reset || '초기화'}
               </button>
               <button
                 type={'button'}
@@ -187,7 +187,7 @@ export function BirthdayPicker({
                   'rounded-lg bg-accent1 px-3 py-1.5 text-sm text-inverse transition-colors hover:opacity-90'
                 }
               >
-                {t.confirm}
+                {t.confirm || '확인'}
               </button>
             </div>
           </div>

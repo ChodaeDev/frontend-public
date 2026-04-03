@@ -135,7 +135,7 @@ export default function BoardContent({
             className={'inline-flex items-center gap-2 px-5 py-2.5 bg-accent1 text-white rounded-lg hover:bg-accent1/90 transition-colors font-medium'}
           >
             <Plus className={'size-5'} />
-            {boardDict.requestCounseling}
+            {boardDict.requestCounseling || '상담 신청'}
           </Link>
         </div>
       )}
@@ -150,7 +150,7 @@ export default function BoardContent({
             className={'px-3 py-2 border border-gray6 rounded-lg bg-background text-main text-sm focus:outline-none focus:ring-1 focus:ring-accent1'}
           >
             {[10, 20, 30, 50].map((n) => (
-              <option key={n} value={n}>{n}{boardDict.itemsPerPage}</option>
+              <option key={n} value={n}>{n}{boardDict.itemsPerPage || '개씩 보기'}</option>
             ))}
           </select>
         </div>
@@ -162,15 +162,15 @@ export default function BoardContent({
             onChange={(e) => setSearchType(e.target.value as 'title' | 'author')}
             className={'px-3 py-2 border border-gray6 rounded-lg bg-background text-main text-sm focus:outline-none focus:ring-1 focus:ring-accent1'}
           >
-            <option value={'title'}>{boardDict.searchByTitle}</option>
-            <option value={'author'}>{boardDict.searchByAuthor}</option>
+            <option value={'title'}>{boardDict.searchByTitle || '제목'}</option>
+            <option value={'author'}>{boardDict.searchByAuthor || '작성자'}</option>
           </select>
           <input
             type={'text'}
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
             onKeyDown={handleSearchKeyDown}
-            placeholder={boardDict.searchPlaceholder}
+            placeholder={boardDict.searchPlaceholder || '검색어를 입력하세요'}
             className={'px-3 py-2.25 border border-gray6 rounded-lg bg-background text-main text-sm focus:outline-none focus:ring-1 focus:ring-accent1 w-48'}
           />
           <button
@@ -192,14 +192,14 @@ export default function BoardContent({
           itemTotal={itemTotal}
           currentPage={currentPage}
           itemCount={itemCount}
-          emptyMessage={boardDict.emptyMessage}
+          emptyMessage={boardDict.emptyMessage || '게시글이 없습니다.'}
           labels={{
-            number: boardDict.number,
-            title: boardDict.title,
-            author: boardDict.author,
-            date: boardDict.date,
-            views: boardDict.views,
-            notice: boardDict.notice,
+            number: boardDict.number || '번호',
+            title: boardDict.title || '제목',
+            author: boardDict.author || '작성자',
+            date: boardDict.date || '작성일',
+            views: boardDict.views || '조회수',
+            notice: boardDict.notice || '공지',
           }}
         />
       </div>

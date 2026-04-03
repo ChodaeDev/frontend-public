@@ -56,7 +56,7 @@ const mockNews: NewsItem[] = [
 ];
 
 export default function NewsSection({ dictionary, locale }: NewsSectionProps) {
-  const { title, viewAll } = dictionary.home.news;
+  const { title = '주요 뉴스', viewAll = '전체 보기' } = dictionary.home.news;
 
   return (
     <section className={'w-full my-10'}>

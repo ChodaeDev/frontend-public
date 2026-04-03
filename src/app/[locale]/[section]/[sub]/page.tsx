@@ -53,7 +53,7 @@ export default async function SubPage({
         <div className={'flex flex-col sm:flex-row-reverse sm:items-start sm:justify-between gap-4 mb-8'}>
           <Breadcrumb
             locale={locale}
-            homeLabel={commonDict.home}
+            homeLabel={commonDict.home || '홈'}
             items={[
               { label: navItem.label, href: `/${ locale }/${ section }` },
               { label: subItem.label },
