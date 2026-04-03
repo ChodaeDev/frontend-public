@@ -16,6 +16,7 @@ import {
   type SignupInput,
 } from '@/lib/validations/auth';
 import { useTranslation } from '@/i18n/client';
+import { useAppSelector } from '@/store/hooks';
 
 type FormState = {
   error: string | null;
@@ -81,7 +82,14 @@ export default function SignUpPage() {
   const locale = params.locale as string;
   const { dictionary } = useTranslation();
   const t = dictionary.signup;
-  const [state, formAction] = useActionState(signupAction, initialState);
+  const user = useAppSelector((state) => state.auth.user);
+  const [state, formAction, isPending] = useActionState(signupAction, initialState);
+
+  useEffect(() => {
+    if (user) {
+      router.replace(`/${ locale }`);
+    }
+  }, [user, router, locale]);
 
   useEffect(() => {
     if (state.success) {
@@ -96,7 +104,17 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className={'flex min-h-[calc(100vh-89px)] items-center justify-center py-8'}>
+    <div className={'relative flex min-h-[calc(100vh-89px)] items-center justify-center py-8'}>
+      {(isPending || state.success || user) && (
+        <div
+          className={'absolute inset-0 z-10 flex items-center justify-center bg-background backdrop-blur-sm'}
+          aria-live={'polite'}
+          aria-busy={'true'}
+        >
+          <div className={'size-10 animate-spin rounded-full border-4 border-gray8 border-t-accent2'} />
+        </div>
+      )}
+
       <div className={'w-full max-w-2xl rounded-3xl bg-background-secondary p-4 sm:p-10 sm:shadow-2xl'}>
         <h1 className={'mb-2 text-center text-3xl font-bold text-main'}>{t.title}</h1>
         <p className={'mb-8 text-center text-sm text-sub'}>

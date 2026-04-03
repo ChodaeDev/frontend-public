@@ -3,7 +3,7 @@
 import { useActionState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setAuth, setUser } from '@/store/authSlice';
 import { fetchApi } from '@/lib/api';
 import { FormInput } from '@/components/ui/FormInput';
@@ -99,9 +99,16 @@ export default function LoginPage() {
   const params = useParams();
   const locale = params.locale as string;
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
   const { dictionary } = useTranslation();
   const t = dictionary.login;
   const [state, formAction, isPending] = useActionState(loginAction, initialState);
+
+  useEffect(() => {
+    if (user) {
+      router.replace(returnTo ?? `/${ locale }`);
+    }
+  }, [user, router, locale, returnTo]);
 
   useEffect(() => {
     if (!state.success || !state.payload) return;
@@ -112,8 +119,7 @@ export default function LoginPage() {
     } else if (payload.userId) {
       dispatch(setUser(payload));
     }
-    router.push(`/${ locale }`);
-  }, [state.success, state.payload, dispatch, router, locale]);
+  }, [state.success, state.payload, dispatch]);
 
   const getErrorMessage = (errorKey: string | null) => {
     if (!errorKey) return null;
@@ -123,7 +129,7 @@ export default function LoginPage() {
 
   return (
     <div className={'relative flex min-h-[calc(100vh-89px)] items-center justify-center py-8'}>
-      {isPending && (
+      {(isPending || state.success || user) && (
         <div
           className={'absolute inset-0 z-10 flex items-center justify-center bg-background backdrop-blur-sm'}
           aria-live={'polite'}
