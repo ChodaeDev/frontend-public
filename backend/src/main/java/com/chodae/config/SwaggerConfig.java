@@ -26,8 +26,24 @@ public class SwaggerConfig {
                 .version("1.0.0")
                 .description("Chodae Recovery API 문서");
 
-        return new OpenAPI()
-                .info(info)
-                .servers(List.of(devServer));
+        // Swagger UI에서 JWT를 입력하면, Try it out 호출 시
+        // `Authorization: Bearer <token>` 헤더가 자동으로 붙도록 설정합니다.
+        SecurityScheme bearerAuth = new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT");
+
+        Components components = new Components()
+                .addSecuritySchemes("bearerAuth", bearerAuth);
+
+        SecurityRequirement securityRequirement = new SecurityRequirement()
+                .addList("bearerAuth");
+
+        OpenAPI openAPI = new OpenAPI();
+        openAPI.setInfo(info);
+        openAPI.setServers(List.of(devServer));
+        openAPI.setComponents(components);
+        openAPI.setSecurity(List.of(securityRequirement));
+        return openAPI;
     }
 }
