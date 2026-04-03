@@ -11,6 +11,7 @@ import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { logout } from '@/store/authSlice';
 import { useTranslation } from '@/i18n/client';
 import { getNavItems } from '@/config/navigation';
+import { cn } from '@/lib/cn';
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,12 +75,12 @@ const MobileMenu = () => {
       {isOpen && createPortal(
         <div className={'fixed inset-0 z-50 lg:hidden'}>
           <div
-            className={`absolute inset-0 bg-black/50 ${ isClosing ? 'animate-fadeOut' : 'animate-fadeIn' }`}
+            className={cn('absolute inset-0 bg-black/50', isClosing ? 'animate-fadeOut' : 'animate-fadeIn')}
             onClick={close}
           />
 
           <div
-            className={`absolute top-0 right-0 h-full w-3/4 max-w-sm bg-background border-l border-gray9 flex flex-col ${ isClosing ? 'animate-slideOutRight' : 'animate-slideInRight' }`}
+            className={cn('absolute top-0 right-0 h-full w-3/4 max-w-sm bg-background border-l border-gray9 flex flex-col', isClosing ? 'animate-slideOutRight' : 'animate-slideInRight')}
           >
             <div className={'flex items-center justify-between px-4 py-4 border-b border-gray9 min-h-[89px]'}>
               <span className={'text-lg font-bold text-main'}>{t.common.menu}</span>
@@ -97,11 +98,7 @@ const MobileMenu = () => {
                 <div key={item.slug} className={'mb-2'}>
                   <Link
                     href={item.slug === '' ? `/${ locale }` : `/${ locale }/${ item.slug }`}
-                    className={`block px-6 py-2.5 text-base font-bold transition-colors ${
-                      isActive(item.slug)
-                        ? 'text-accent1'
-                        : 'text-main'
-                    }`}
+                    className={cn('block px-6 py-2.5 text-base font-bold transition-colors', isActive(item.slug) ? 'text-accent1' : 'text-main')}
                   >
                     {item.label}
                   </Link>
@@ -111,11 +108,7 @@ const MobileMenu = () => {
                         <Link
                           key={sub.slug}
                           href={`/${ locale }/${ item.slug }/${ sub.slug }`}
-                          className={`block px-6 py-2 text-sm transition-colors ${
-                            pathname === `/${ locale }/${ item.slug }/${ sub.slug }`
-                              ? 'text-accent1 font-semibold'
-                              : 'text-sub hover:text-main'
-                          }`}
+                          className={cn('block px-6 py-2 text-sm transition-colors', pathname === `/${ locale }/${ item.slug }/${ sub.slug }` ? 'text-accent1 font-semibold' : 'text-sub hover:text-main')}
                         >
                           {sub.label}
                         </Link>

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from '@/i18n/client';
 import { getNavItems } from '@/config/navigation';
+import { cn } from '@/lib/cn';
 
 const Navigation = () => {
   const pathname = usePathname();
@@ -22,11 +23,7 @@ const Navigation = () => {
         <Link
           key={item.slug}
           href={item.slug === '' ? `/${ locale }` : `/${ locale }/${ item.slug }`}
-          className={`px-3 py-1.5 rounded-md text-sm transition-colors whitespace-nowrap ${
-            isActive(item.slug)
-              ? 'text-main font-black bg-gray9'
-              : 'text-sub hover:text-main hover:bg-background-secondary'
-          }`}
+          className={cn('px-3 py-1.5 rounded-md text-sm transition-colors whitespace-nowrap', isActive(item.slug) ? 'text-main font-black bg-gray9' : 'text-sub hover:text-main hover:bg-background-secondary')}
         >
           {item.label}
         </Link>

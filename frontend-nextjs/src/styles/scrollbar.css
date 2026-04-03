@@ -1,5 +1,5 @@
 @layer base {
-  html {
+  html.os-windows {
     scrollbar-gutter: stable;
   }
 

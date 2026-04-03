@@ -4,8 +4,7 @@ import { useActionState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { fetchApi } from '@/lib/api';
-import { FormInput, FormTextarea } from '@/components/ui/FormInput';
-import { SubmitButton } from '@/components/ui/SubmitButton';
+import { FormInput, FormTextarea, SubmitButton } from '@/components/ui/form';
 import { BirthdayPicker } from '@/components/ui/BirthdayPicker';
 import { errorStyle } from '@/components/ui/form-styles';
 import {
@@ -17,6 +16,7 @@ import {
 } from '@/lib/validations/auth';
 import { useTranslation } from '@/i18n/client';
 import { useAppSelector } from '@/store/hooks';
+import { cn } from '@/lib/cn';
 
 type FormState = {
   error: string | null;
@@ -191,7 +191,7 @@ export default function SignUpPage() {
           />
 
           {state.error && (
-            <div className={`${ errorStyle } md:col-span-2`}>
+            <div className={cn(errorStyle, 'md:col-span-2')}>
               {getErrorMessage(state.error)}
             </div>
           )}

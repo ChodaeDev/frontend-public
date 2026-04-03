@@ -10,6 +10,9 @@ export const buttonPrimaryStyle
 export const buttonSecondaryStyle
   = 'w-full rounded-full border border-accent1 px-4 py-2.5 text-sm font-semibold text-accent1 transition-colors hover:bg-accent1 hover:text-inverse';
 
+export const cancelButtonStyle
+  = 'w-full rounded-full border border-gray1 px-4 py-2.5 text-sm font-semibold transition-colors hover:bg-gray1 hover:text-inverse';
+
 export const labelStyle = 'mb-1 block text-sm font-medium text-main';
 
 export const errorStyle = 'rounded-lg bg-error/10 px-4 py-3 text-sm text-error';

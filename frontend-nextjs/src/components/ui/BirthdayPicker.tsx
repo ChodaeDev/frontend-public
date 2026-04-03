@@ -8,6 +8,7 @@ import { Calendar } from 'lucide-react';
 import { inputStyle, labelStyle, selectStyle } from './form-styles';
 import { getYears, getMonths, formatBirthday } from '@/lib/date';
 import { useTranslation } from '@/i18n/client';
+import { cn } from '@/lib/cn';
 
 const localeMap = {
   ko,
@@ -100,9 +101,9 @@ export function BirthdayPicker({
         <button
           type={'button'}
           onClick={() => setIsOpen(!isOpen)}
-          className={`${ inputStyle } flex cursor-pointer items-center justify-between text-left`}
+          className={cn(inputStyle, 'flex cursor-pointer items-center justify-between text-left')}
         >
-          <span className={selected ? 'text-main' : 'text-gray6'}>
+          <span className={cn(selected ? 'text-main' : 'text-gray6')}>
             {displayValue || t.selectDate}
           </span>
           <Calendar className={'size-4 text-gray6'} />

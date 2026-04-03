@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormStatus } from 'react-dom';
-import { buttonPrimaryStyle } from './form-styles';
+import { buttonPrimaryStyle } from '../form-styles';
 import { cn } from '@/lib/cn';
 
 type SubmitButtonProps = {

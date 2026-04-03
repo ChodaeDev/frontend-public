@@ -8,6 +8,7 @@ import type { Locale } from '@/i18n/config';
 import { apiBase } from '@/lib/api';
 import BoardTable, { type BoardPost } from './BoardTable';
 import Pagination from '@/components/ui/Pagination';
+import { cn } from '@/lib/cn';
 
 interface CounselingPost {
   id: number;
@@ -182,7 +183,7 @@ export default function BoardContent({
       </div>
 
       {/* 게시판 테이블 */}
-      <div className={`transition-opacity duration-200 ${ loading && posts.length > 0 ? 'opacity-40 pointer-events-none' : '' }`}>
+      <div className={cn('transition-opacity duration-200', loading && posts.length > 0 && 'opacity-40 pointer-events-none')}>
         <BoardTable
           posts={posts}
           loading={loading && posts.length === 0}

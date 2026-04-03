@@ -1,13 +1,12 @@
 'use client';
 
-import { useActionState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { Suspense, useActionState, useEffect } from 'react';
+import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setAuth, setUser } from '@/store/authSlice';
 import { fetchApi } from '@/lib/api';
-import { FormInput } from '@/components/ui/FormInput';
-import { SubmitButton } from '@/components/ui/SubmitButton';
+import { FormInput, SubmitButton } from '@/components/ui/form';
 import { errorStyle } from '@/components/ui/form-styles';
 import {
   loginSchema,
@@ -94,10 +93,12 @@ async function loginAction(prev: FormState, formData: FormData): Promise<FormSta
   }
 }
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const params = useParams();
   const locale = params.locale as string;
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get('returnTo');
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const { dictionary } = useTranslation();
@@ -184,5 +185,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }

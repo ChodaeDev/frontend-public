@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { cn } from '@/lib/cn';
 
 interface PaginationProps {
   currentPage: number;
@@ -66,18 +67,14 @@ export default function Pagination({
 
   const pages = getPageNumbers();
 
-  const buttonBaseClass = `
-    flex items-center justify-center size-9 rounded-lg transition-colors
-    disabled:opacity-40 disabled:cursor-not-allowed
-  `;
+  const buttonBaseClass = 'flex items-center justify-center size-9 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed';
 
-  const pageButtonClass = (isActive: boolean) => `
-    ${ buttonBaseClass }
-    ${ isActive
-        ? 'bg-accent1 text-white font-medium'
-        : 'text-sub hover:bg-gray8 hover:text-main'
-    }
-  `;
+  const pageButtonClass = (isActive: boolean) => cn(
+    buttonBaseClass,
+    isActive
+      ? 'bg-accent1 text-white font-medium'
+      : 'text-sub hover:bg-gray8 hover:text-main',
+  );
 
   return (
     <nav aria-label={'Pagination'} className={'flex items-center justify-center gap-1 mt-8'}>
@@ -85,7 +82,7 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(1)}
         disabled={currentPage === 1}
-        className={`${ buttonBaseClass } text-sub ${ currentPage === 1 ? '' : 'hover:bg-gray8 hover:text-main' }`}
+        className={cn(buttonBaseClass, 'text-sub', currentPage !== 1 && 'hover:bg-gray8 hover:text-main')}
         aria-label={'First page'}
       >
         <ChevronsLeft className={'size-4'} />
@@ -95,7 +92,13 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`${ buttonBaseClass } text-sub ${ currentPage === 1 ? 'bg-background opacity-40 cursor-not-allowed' : 'hover:bg-gray8 hover:text-main' }`}
+        className={cn(
+          buttonBaseClass,
+          'text-sub',
+          currentPage === 1
+            ? 'bg-background opacity-40 cursor-not-allowed'
+            : 'hover:bg-gray8 hover:text-main',
+        )}
         aria-label={'Previous page'}
       >
         <ChevronLeft className={'size-4'} />
@@ -125,7 +128,13 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`${ buttonBaseClass } text-sub ${ currentPage === totalPages ? 'bg-background opacity-40 cursor-not-allowed' : 'hover:bg-gray8 hover:text-main' }`}
+        className={cn(
+          buttonBaseClass,
+          'text-sub',
+          currentPage === totalPages
+            ? 'bg-background opacity-40 cursor-not-allowed'
+            : 'hover:bg-gray8 hover:text-main',
+        )}
         aria-label={'Next page'}
       >
         <ChevronRight className={'size-4'} />
@@ -135,7 +144,13 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(totalPages)}
         disabled={currentPage === totalPages}
-        className={`${ buttonBaseClass } text-sub ${ currentPage === totalPages ? 'bg-background opacity-40 cursor-not-allowed' : 'hover:bg-gray8 hover:text-main' }`}
+        className={cn(
+          buttonBaseClass,
+          'text-sub',
+          currentPage === totalPages
+            ? 'bg-background opacity-40 cursor-not-allowed'
+            : 'hover:bg-gray8 hover:text-main',
+        )}
         aria-label={'Last page'}
       >
         <ChevronsRight className={'size-4'} />

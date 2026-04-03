@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import type { NavItem } from '@/config/navigation';
 import type { Locale } from '@/i18n/config';
+import { cn } from '@/lib/cn';
 
 interface SubSideNavProps {
   navItem: NavItem;
@@ -27,11 +28,7 @@ export default function SubSideNav({ navItem, currentSubSlug, locale }: SubSideN
               <li key={sub.slug}>
                 <Link
                   href={`/${ locale }/${ navItem.slug }/${ sub.slug }`}
-                  className={`block py-2.5 px-3 rounded-lg transition-all duration-300 ${
-                    isActive
-                      ? 'font-bold text-accent1 bg-accent1/5'
-                      : 'text-sub hover:text-main hover:bg-gray9'
-                  }`}
+                  className={cn('block py-2.5 px-3 rounded-lg transition-all duration-300', isActive ? 'font-bold text-accent1 bg-accent1/5' : 'text-sub hover:text-main hover:bg-gray9')}
                 >
                   {sub.label}
                 </Link>

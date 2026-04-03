@@ -308,6 +308,32 @@
     "searchByTitle": "Titel",
     "searchByAuthor": "Autor",
     "searchPlaceholder": "Suchbegriff eingeben",
-    "search": "Suche"
+    "search": "Suche",
+    "counselingForm": "Beratung anfordern",
+    "applicantName": "Antragsteller",
+    "counselType": "Beratungsart",
+    "counselTypeSelf": "Eigenberatung",
+    "counselTypeFamily": "Familienberatung",
+    "counselTypeFriend": "Freundesberatung",
+    "counselTypeEtc": "Sonstige Beratung",
+    "counselTypePlaceholder": "Beratungsart auswählen",
+    "titlePlaceholder": "Beratungstitel eingeben",
+    "content": "Inhalt",
+    "contentPlaceholder": "Bitte beschreiben Sie Ihre Beratungsanfrage ausführlich",
+    "phone": "Telefon",
+    "phonePlaceholder": "Geben Sie Ihre Telefonnummer ein",
+    "isPrivate": "Privat",
+    "submit": "Absenden",
+    "submitting": "Wird gesendet...",
+    "cancel": "Abbrechen",
+    "cancelConfirmTitle": "Abbrechen bestätigen",
+    "cancelConfirmMessage": "Ihre Änderungen gehen verloren. Möchten Sie wirklich abbrechen?",
+    "submitConfirmTitle": "Absenden bestätigen",
+    "submitConfirmMessage": "Möchten Sie Ihre Beratungsanfrage absenden?",
+    "loginRequired": "Anmeldung erforderlich",
+    "errors": {
+      "serverError": "Verbindung zum Server nicht möglich. Bitte überprüfen Sie, ob der Backend-Server läuft.",
+      "generic": "Bei der Beratungsanfrage ist ein Fehler aufgetreten."
+    }
   }
 }
