@@ -1,0 +1,341 @@
+{
+  "metadata": {
+    "title": "九里邪教咨询中心",
+    "description": "新天地相关专业咨询"
+  },
+  "common": {
+    "home": "首页",
+    "login": "登录",
+    "logout": "退出登录",
+    "signup": "注册",
+    "menu": "菜单",
+    "close": "关闭",
+    "confirm": "确认",
+    "cancel": "取消",
+    "reset": "重置",
+    "processing": "处理中...",
+    "selectDate": "请选择日期",
+    "year": "年",
+    "month": "月"
+  },
+  "header": {
+    "siteName": "新天地专业咨询所",
+    "siteSubName": "九里邪教咨询中心",
+    "logoAlt": "Logo图片",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单"
+  },
+  "theme": {
+    "light": "浅色",
+    "dark": "深色",
+    "system": "系统",
+    "selectTheme": "选择主题"
+  },
+  "language": {
+    "select": "选择语言",
+    "korean": "한국어",
+    "english": "English",
+    "japanese": "日本語",
+    "chinese": "中文",
+    "german": "Deutsch"
+  },
+  "home": {
+    "title": "新天地专业 九里邪教咨询中心",
+    "subtitle": "如果您遇到与新天地相关的问题，我们将积极为您提供帮助。",
+    "stats": {
+      "unit": "人",
+      "yearlyAverage": "年均回心",
+      "totalConversions": "累计回心"
+    },
+    "ministry": {
+      "title": "在真理中\n与您一同走向\n恢复与和解之路",
+      "ministers": [
+        {
+          "name": "申铉旭牧师",
+          "role": "#初代教会主任牧师 #九里邪教咨询所长\n#韩国教会媒体专业委员 #大韩耶稳教长老会(合同)总会异端对策专业委员"
+        },
+        {
+          "name": "金降临牧师",
+          "role": "#初代教会副牧师"
+        }
+      ]
+    },
+    "news": {
+      "title": "重要新闻",
+      "viewAll": "查看全部"
+    },
+    "testimony": {
+      "title": "感言与见证采访",
+      "viewAll": "查看全部"
+    },
+    "quickMenu": {
+      "counseling": "咨询请求",
+      "testimonies": "退出经历",
+      "falseClaims": "新天地虚假反证",
+      "exitMethods": "明智的退出方法",
+      "recruitmentTactics": "新天地传教策略",
+      "locations": "新天地位置信息"
+    },
+    "boardPreview": {
+      "counselingTitle": "咨询公告板",
+      "damageCasesTitle": "新天地受害案例",
+      "viewAll": "查看全部"
+    },
+    "quickNav": {
+      "counseling": "咨询电话",
+      "exitMethods": "退出方法",
+      "testimonies": "退出经历",
+      "falseClaims": "虚假反证",
+      "donation": "捐赠咨询"
+    }
+  },
+  "login": {
+    "title": "登录",
+    "description": "如果没有会员信息，请通过下方链接进行注册。",
+    "userId": "用户名",
+    "userIdPlaceholder": "请输入用户名",
+    "password": "密码",
+    "passwordPlaceholder": "请输入密码",
+    "submit": "登录",
+    "submitting": "登录中...",
+    "noAccount": "还不是会员？",
+    "signupLink": "注册",
+    "errors": {
+      "invalidResponse": "登录响应格式不正确。",
+      "serverError": "无法连接服务器。请确认后端服务器是否正在运行。",
+      "generic": "登录过程中发生错误。"
+    }
+  },
+  "signup": {
+    "title": "注册",
+    "description": "请填写以下信息完成注册。",
+    "userId": "用户名",
+    "userIdPlaceholder": "请输入要使用的用户名",
+    "password": "密码",
+    "passwordPlaceholder": "请输入密码",
+    "username": "姓名",
+    "usernamePlaceholder": "请输入姓名",
+    "nickname": "昵称",
+    "nicknamePlaceholder": "请输入昵称",
+    "phone": "电话号码",
+    "phonePlaceholder": "例：01012345678",
+    "church": "教会名称",
+    "churchPlaceholder": "请输入所在教会名称",
+    "birthday": "出生日期",
+    "bio": "简介及备注",
+    "bioPlaceholder": "请输入咨询原因等附加信息",
+    "submit": "完成注册",
+    "submitting": "注册中...",
+    "hasAccount": "已有账号？",
+    "loginLink": "登录",
+    "errors": {
+      "serverError": "无法连接服务器。请确认后端服务器是否正在运行。",
+      "generic": "注册过程中发生错误。"
+    }
+  },
+  "validation": {
+    "userId": {
+      "required": "请输入用户名",
+      "min": "用户名至少需要4个字符",
+      "max": "用户名不能超过20个字符",
+      "pattern": "只能使用英文字母、数字和下划线"
+    },
+    "password": {
+      "required": "请输入密码",
+      "min": "密码至少需要8个字符",
+      "letterRequired": "必须包含英文字母",
+      "numberRequired": "必须包含数字"
+    },
+    "username": {
+      "required": "请输入姓名",
+      "min": "姓名至少需要2个字符",
+      "max": "姓名不能超过20个字符"
+    },
+    "nickname": {
+      "max": "昵称不能超过20个字符"
+    },
+    "phone": {
+      "required": "请输入电话号码",
+      "pattern": "请只输入数字",
+      "min": "电话号码至少需要10位",
+      "max": "电话号码不能超过11位"
+    },
+    "church": {
+      "max": "教会名称不能超过50个字符"
+    },
+    "description": {
+      "max": "简介不能超过500个字符"
+    }
+  },
+  "footer": {
+    "copyright": "© 2015 九里邪教咨询中心. All rights reserved.",
+    "terms": "使用条款",
+    "privacy": "隐私政策",
+    "emailPolicy": "反垃圾邮件政策",
+    "directions": "交通指南",
+    "organizationName": "大韩耶稳教长老会(合同) 初代教会 附设 九里邪教咨询中心",
+    "minister": "主任牧师",
+    "ministerName": "申铉旭",
+    "addressLabel": "地址",
+    "addressValue": "京畿道 九里市 峨嵯山路499(校门洞, 中央Heights Tium B栋404号)",
+    "phone": "咨询电话",
+    "phoneNumber": "T. 0505-369-3391",
+    "donation": "捐赠账户",
+    "donationAccount": "农协 301-0176-8864-21(户名：初代教会)",
+    "registrationNumber": "固有编号",
+    "registrationNumberValue": "132-82-81271"
+  },
+  "nav": {
+    "about": {
+      "label": "咨询所介绍",
+      "introduction": {
+        "label": "咨询所简介",
+        "description": "为您介绍咨询所的信息和交通指南。"
+      },
+      "familyTips": {
+        "label": "受害家属注意事项",
+        "description": "受害家属必须了解的注意事项。"
+      },
+      "centers": {
+        "label": "全国咨询所指南",
+        "description": "全国咨询所的位置和联系方式。"
+      },
+      "minister": {
+        "label": "牧师介绍",
+        "description": "介绍咨询所代表申铉旭牧师和金降临牧师。"
+      },
+      "interviews": {
+        "label": "采访及媒体报道",
+        "description": "咨询所相关的采访和媒体报道资料。"
+      },
+      "videos": {
+        "label": "视频资料",
+        "description": "提供新天地相关视频资料。"
+      }
+    },
+    "scjInfo": {
+      "label": "新天地信息",
+      "history": {
+        "label": "新天地历史",
+        "description": "了解新天地的创立背景和历史。"
+      },
+      "details": {
+        "label": "新天地信息",
+        "description": "介绍新天地的组织结构和运营方式。"
+      },
+      "strategy": {
+        "label": "新天地传教策略",
+        "description": "揭露新天地的各种传教手段。"
+      },
+      "illegalCases": {
+        "label": "新天地违法案例",
+        "description": "整理新天地的违法活动案例。"
+      },
+      "press": {
+        "label": "新天地媒体报道",
+        "description": "新天地相关媒体报道资料汇总。"
+      }
+    },
+    "doctrine": {
+      "label": "新天地教义反证",
+      "falseClaims": {
+        "label": "虚假反证",
+        "description": "反驳新天地教义中的虚假主张。"
+      },
+      "references": {
+        "label": "新天地实态参考资料",
+        "description": "了解新天地实态的参考资料。"
+      },
+      "legal": {
+        "label": "法律资料汇编",
+        "description": "提供新天地相关判例及法律资料。"
+      }
+    },
+    "prevention": {
+      "label": "新天地受害预防",
+      "measures": {
+        "label": "预防措施",
+        "description": "介绍预防新天地受害的方法。"
+      },
+      "resources": {
+        "label": "预防资料",
+        "description": "提供受害预防教育资料。"
+      },
+      "locations": {
+        "label": "新天地位置信息",
+        "description": "共享全国新天地设施位置信息。"
+      }
+    },
+    "withdrawal": {
+      "label": "退出案例",
+      "methods": {
+        "label": "明智的退出方法",
+        "description": "介绍安全且明智的退出方法。"
+      },
+      "testimonies": {
+        "label": "退出者手记及见证",
+        "description": "分享实际退出者的手记和见证。"
+      },
+      "damageCases": {
+        "label": "新天地受害案例",
+        "description": "整理新天地造成的受害案例。"
+      },
+      "toMembers": {
+        "label": "致新天地成员",
+        "description": "给目前在新天地的人的信息。"
+      }
+    },
+    "board": {
+      "label": "公告板",
+      "counseling": {
+        "label": "咨询公告板",
+        "description": "可以请求新天地相关咨询。"
+      },
+      "free": {
+        "label": "自由公告板",
+        "description": "自由交流意见的空间。"
+      }
+    }
+  },
+  "board": {
+    "requestCounseling": "申请咨询",
+    "number": "编号",
+    "title": "标题",
+    "author": "作者",
+    "date": "日期",
+    "views": "浏览量",
+    "notice": "公告",
+    "emptyMessage": "暂无帖子。",
+    "itemsPerPage": "条/页",
+    "searchByTitle": "标题",
+    "searchByAuthor": "作者",
+    "searchPlaceholder": "请输入搜索关键词",
+    "search": "搜索",
+    "counselingForm": "申请咨询",
+    "applicantName": "申请人",
+    "counselType": "咨询类型",
+    "counselTypeSelf": "本人咨询",
+    "counselTypeFamily": "家庭咨询",
+    "counselTypeFriend": "熟人咨询",
+    "counselTypeEtc": "其他咨询",
+    "counselTypePlaceholder": "请选择咨询类型",
+    "titlePlaceholder": "请输入咨询标题",
+    "content": "内容",
+    "contentPlaceholder": "请详细描述咨询内容",
+    "phone": "联系方式",
+    "phonePlaceholder": "请输入可联系的电话号码",
+    "isPrivate": "设为私密",
+    "submit": "提交申请",
+    "submitting": "提交中...",
+    "cancel": "取消",
+    "cancelConfirmTitle": "取消确认",
+    "cancelConfirmMessage": "正在编写的内容将会丢失。确定要取消吗？",
+    "submitConfirmTitle": "提交确认",
+    "submitConfirmMessage": "确定要提交咨询申请吗？",
+    "loginRequired": "需要登录",
+    "errors": {
+      "serverError": "无法连接服务器。请确认后端服务器是否正在运行。",
+      "generic": "提交咨询申请时发生错误。"
+    }
+  }
+}

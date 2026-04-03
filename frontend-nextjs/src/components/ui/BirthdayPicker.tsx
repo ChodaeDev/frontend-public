@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { DayPicker } from 'react-day-picker';
-import { ko, enUS, de } from 'react-day-picker/locale';
+import { ko, enUS, ja, zhCN, de } from 'react-day-picker/locale';
 import dayjs from 'dayjs';
 import { Calendar } from 'lucide-react';
 import { inputStyle, labelStyle, selectStyle } from './form-styles';
@@ -13,6 +13,8 @@ import { cn } from '@/lib/cn';
 const localeMap = {
   ko,
   en: enUS,
+  ja,
+  zh: zhCN,
   de,
 } as const;
 
@@ -87,6 +89,12 @@ export function BirthdayPicker({
   const formatDate = (date: Date) => {
     if (locale === 'ko') {
       return dayjs(date).format('YYYY년 MM월 DD일');
+    }
+    if (locale === 'ja') {
+      return dayjs(date).format('YYYY年MM月DD日');
+    }
+    if (locale === 'zh') {
+      return dayjs(date).format('YYYY年MM月DD日');
     }
     return dayjs(date).format('MMMM D, YYYY');
   };

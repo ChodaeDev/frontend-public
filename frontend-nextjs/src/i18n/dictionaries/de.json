@@ -35,6 +35,8 @@
     "select": "Sprache auswählen",
     "korean": "한국어",
     "english": "English",
+    "japanese": "日本語",
+    "chinese": "中文",
     "german": "Deutsch"
   },
   "home": {

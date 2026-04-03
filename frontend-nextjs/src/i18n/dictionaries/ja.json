@@ -1,0 +1,341 @@
+{
+  "metadata": {
+    "title": "九里異端相談所",
+    "description": "新天地に関する専門相談"
+  },
+  "common": {
+    "home": "ホーム",
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "signup": "会員登録",
+    "menu": "メニュー",
+    "close": "閉じる",
+    "confirm": "確認",
+    "cancel": "キャンセル",
+    "reset": "リセット",
+    "processing": "処理中...",
+    "selectDate": "日付を選択してください",
+    "year": "年",
+    "month": "月"
+  },
+  "header": {
+    "siteName": "新天地専門相談所",
+    "siteSubName": "九里異端相談所",
+    "logoAlt": "ロゴ画像",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる"
+  },
+  "theme": {
+    "light": "ライト",
+    "dark": "ダーク",
+    "system": "システム",
+    "selectTheme": "テーマ選択"
+  },
+  "language": {
+    "select": "言語選択",
+    "korean": "한국어",
+    "english": "English",
+    "japanese": "日本語",
+    "chinese": "中文",
+    "german": "Deutsch"
+  },
+  "home": {
+    "title": "新天地専門 九里異端相談所",
+    "subtitle": "新天地に関する問題がある場合、積極的にサポートいたします。",
+    "stats": {
+      "unit": "名",
+      "yearlyAverage": "年間平均回心",
+      "totalConversions": "累計回心"
+    },
+    "ministry": {
+      "title": "真理の中で\n回復と和解の歩みを\n共にいたします",
+      "ministers": [
+        {
+          "name": "シン・ヒョンウク牧師",
+          "role": "#初代教会担任牧師 #九里異端相談所長\n#韓国教会言論会専門委員 #イェジャン(合同)総会異端対策専門委員"
+        },
+        {
+          "name": "キム・ガンリム牧師",
+          "role": "#初代教会副牧師"
+        }
+      ]
+    },
+    "news": {
+      "title": "主要ニュース",
+      "viewAll": "すべて見る"
+    },
+    "testimony": {
+      "title": "体験談・証言インタビュー",
+      "viewAll": "すべて見る"
+    },
+    "quickMenu": {
+      "counseling": "相談依頼",
+      "testimonies": "脱退体験記",
+      "falseClaims": "新天地の虚偽反証",
+      "exitMethods": "賢い脱退方法",
+      "recruitmentTactics": "新天地の布教戦略",
+      "locations": "新天地の位置情報"
+    },
+    "boardPreview": {
+      "counselingTitle": "相談掲示板",
+      "damageCasesTitle": "新天地被害事例",
+      "viewAll": "すべて見る"
+    },
+    "quickNav": {
+      "counseling": "相談電話",
+      "exitMethods": "脱退方法",
+      "testimonies": "脱退体験",
+      "falseClaims": "虚偽反証",
+      "donation": "後援問合せ"
+    }
+  },
+  "login": {
+    "title": "ログイン",
+    "description": "会員情報がない場合は、下記リンクから会員登録を行ってください。",
+    "userId": "ユーザーID",
+    "userIdPlaceholder": "ユーザーIDを入力してください",
+    "password": "パスワード",
+    "passwordPlaceholder": "パスワードを入力してください",
+    "submit": "ログイン",
+    "submitting": "ログイン中...",
+    "noAccount": "まだ会員ではありませんか？",
+    "signupLink": "会員登録",
+    "errors": {
+      "invalidResponse": "ログイン応答の形式が正しくありません。",
+      "serverError": "サーバーに接続できません。バックエンドサーバーが稼働中か確認してください。",
+      "generic": "ログイン中にエラーが発生しました。"
+    }
+  },
+  "signup": {
+    "title": "会員登録",
+    "description": "以下の情報を入力して会員登録を完了してください。",
+    "userId": "ユーザーID",
+    "userIdPlaceholder": "使用するユーザーIDを入力してください",
+    "password": "パスワード",
+    "passwordPlaceholder": "パスワードを入力してください",
+    "username": "氏名",
+    "usernamePlaceholder": "氏名を入力してください",
+    "nickname": "ニックネーム",
+    "nicknamePlaceholder": "ニックネームを入力してください",
+    "phone": "電話番号",
+    "phonePlaceholder": "例：01012345678",
+    "church": "教会名",
+    "churchPlaceholder": "通っている教会名を入力してください",
+    "birthday": "生年月日",
+    "bio": "紹介・備考",
+    "bioPlaceholder": "相談依頼の理由など追加情報を入力してください",
+    "submit": "会員登録完了",
+    "submitting": "会員登録中...",
+    "hasAccount": "既に登録済みですか？",
+    "loginLink": "ログイン",
+    "errors": {
+      "serverError": "サーバーに接続できません。バックエンドサーバーが稼働中か確認してください。",
+      "generic": "会員登録中にエラーが発生しました。"
+    }
+  },
+  "validation": {
+    "userId": {
+      "required": "ユーザーIDを入力してください",
+      "min": "ユーザーIDは4文字以上である必要があります",
+      "max": "ユーザーIDは20文字以下である必要があります",
+      "pattern": "英字、数字、アンダースコアのみ使用可能です"
+    },
+    "password": {
+      "required": "パスワードを入力してください",
+      "min": "パスワードは8文字以上である必要があります",
+      "letterRequired": "英字を含む必要があります",
+      "numberRequired": "数字を含む必要があります"
+    },
+    "username": {
+      "required": "氏名を入力してください",
+      "min": "氏名は2文字以上である必要があります",
+      "max": "氏名は20文字以下である必要があります"
+    },
+    "nickname": {
+      "max": "ニックネームは20文字以下である必要があります"
+    },
+    "phone": {
+      "required": "電話番号を入力してください",
+      "pattern": "数字のみ入力してください",
+      "min": "電話番号は10桁以上である必要があります",
+      "max": "電話番号は11桁以下である必要があります"
+    },
+    "church": {
+      "max": "教会名は50文字以下である必要があります"
+    },
+    "description": {
+      "max": "紹介は500文字以下である必要があります"
+    }
+  },
+  "footer": {
+    "copyright": "© 2015 九里異端相談所. All rights reserved.",
+    "terms": "利用規約",
+    "privacy": "個人情報保護方針",
+    "emailPolicy": "迷惑メール対策",
+    "directions": "アクセス",
+    "organizationName": "大韓イエス教長老会(合同) 初代教会 付設 九里異端相談所",
+    "minister": "担任牧師",
+    "ministerName": "シン・ヒョンウク",
+    "addressLabel": "住所",
+    "addressValue": "京畿道 九里市 峨嵯山路499(校門洞、中央ハイツティウム B棟404号)",
+    "phone": "相談電話",
+    "phoneNumber": "T. 0505-369-3391",
+    "donation": "後援口座",
+    "donationAccount": "農協 301-0176-8864-21(名義：初代教会)",
+    "registrationNumber": "固有番号",
+    "registrationNumberValue": "132-82-81271"
+  },
+  "nav": {
+    "about": {
+      "label": "相談所案内",
+      "introduction": {
+        "label": "相談所紹介",
+        "description": "相談所の情報とアクセス方法をご案内します。"
+      },
+      "familyTips": {
+        "label": "被害家族の注意事項",
+        "description": "被害家族の方々が知っておくべき注意事項をご案内します。"
+      },
+      "centers": {
+        "label": "全国相談所案内",
+        "description": "全国の相談所の位置と連絡先をご案内します。"
+      },
+      "minister": {
+        "label": "牧会者紹介",
+        "description": "相談所代表のシン・ヒョンウク牧師とキム・ガンリム牧師をご紹介します。"
+      },
+      "interviews": {
+        "label": "インタビュー・報道",
+        "description": "相談所関連のインタビューと報道資料です。"
+      },
+      "videos": {
+        "label": "動画資料",
+        "description": "新天地関連の動画資料を提供します。"
+      }
+    },
+    "scjInfo": {
+      "label": "新天地情報",
+      "history": {
+        "label": "新天地の沿革",
+        "description": "新天地の設立背景と歴史を知ることができます。"
+      },
+      "details": {
+        "label": "新天地情報",
+        "description": "新天地の組織構造と運営方式をご案内します。"
+      },
+      "strategy": {
+        "label": "新天地の布教戦略",
+        "description": "新天地の様々な布教手法を公開します。"
+      },
+      "illegalCases": {
+        "label": "新天地の違法事例",
+        "description": "新天地の違法活動事例をまとめました。"
+      },
+      "press": {
+        "label": "新天地の報道",
+        "description": "新天地関連の報道資料集です。"
+      }
+    },
+    "doctrine": {
+      "label": "新天地教理反証",
+      "falseClaims": {
+        "label": "虚偽反証",
+        "description": "新天地教理の虚偽の主張を反証します。"
+      },
+      "references": {
+        "label": "新天地の実態参考資料",
+        "description": "新天地の実態を把握できる参考資料です。"
+      },
+      "legal": {
+        "label": "法的資料集",
+        "description": "新天地関連の判例及び法的資料を提供します。"
+      }
+    },
+    "prevention": {
+      "label": "新天地被害予防",
+      "measures": {
+        "label": "予防策",
+        "description": "新天地被害を予防するための方法をご案内します。"
+      },
+      "resources": {
+        "label": "予防資料",
+        "description": "被害予防のための教育資料を提供します。"
+      },
+      "locations": {
+        "label": "新天地の位置情報",
+        "description": "全国の新天地施設の位置情報を共有します。"
+      }
+    },
+    "withdrawal": {
+      "label": "脱退事例",
+      "methods": {
+        "label": "賢い脱退方法",
+        "description": "安全で賢明な脱退方法をご案内します。"
+      },
+      "testimonies": {
+        "label": "脱退者の手記・証言",
+        "description": "実際の脱退者の手記と証言を共有します。"
+      },
+      "damageCases": {
+        "label": "新天地被害事例",
+        "description": "新天地による被害事例をまとめました。"
+      },
+      "toMembers": {
+        "label": "新天地の方々へ",
+        "description": "現在新天地にいる方々へのメッセージです。"
+      }
+    },
+    "board": {
+      "label": "掲示板",
+      "counseling": {
+        "label": "相談掲示板",
+        "description": "新天地関連の相談を依頼できます。"
+      },
+      "free": {
+        "label": "自由掲示板",
+        "description": "自由に意見を交わせる場です。"
+      }
+    }
+  },
+  "board": {
+    "requestCounseling": "相談申請",
+    "number": "番号",
+    "title": "タイトル",
+    "author": "作成者",
+    "date": "作成日",
+    "views": "閲覧数",
+    "notice": "お知らせ",
+    "emptyMessage": "投稿がありません。",
+    "itemsPerPage": "件ずつ表示",
+    "searchByTitle": "タイトル",
+    "searchByAuthor": "作成者",
+    "searchPlaceholder": "検索キーワードを入力してください",
+    "search": "検索",
+    "counselingForm": "相談申請",
+    "applicantName": "申請者",
+    "counselType": "相談タイプ",
+    "counselTypeSelf": "本人相談",
+    "counselTypeFamily": "家族相談",
+    "counselTypeFriend": "知人相談",
+    "counselTypeEtc": "その他相談",
+    "counselTypePlaceholder": "相談タイプを選択してください",
+    "titlePlaceholder": "相談タイトルを入力してください",
+    "content": "内容",
+    "contentPlaceholder": "相談内容を詳しくご記入ください",
+    "phone": "連絡先",
+    "phonePlaceholder": "連絡可能な電話番号を入力してください",
+    "isPrivate": "非公開",
+    "submit": "申請する",
+    "submitting": "申請中...",
+    "cancel": "キャンセル",
+    "cancelConfirmTitle": "キャンセル確認",
+    "cancelConfirmMessage": "作成中の内容が失われます。本当にキャンセルしますか？",
+    "submitConfirmTitle": "申請確認",
+    "submitConfirmMessage": "相談を申請しますか？",
+    "loginRequired": "ログインが必要です",
+    "errors": {
+      "serverError": "サーバーに接続できません。バックエンドサーバーが稼働中か確認してください。",
+      "generic": "相談申請中にエラーが発生しました。"
+    }
+  }
+}
