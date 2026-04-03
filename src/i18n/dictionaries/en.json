@@ -308,6 +308,32 @@
     "searchByTitle": "Title",
     "searchByAuthor": "Author",
     "searchPlaceholder": "Enter search keyword",
-    "search": "Search"
+    "search": "Search",
+    "counselingForm": "Request Counseling",
+    "applicantName": "Applicant",
+    "counselType": "Counseling Type",
+    "counselTypeSelf": "Self Counseling",
+    "counselTypeFamily": "Family Counseling",
+    "counselTypeFriend": "Friend Counseling",
+    "counselTypeEtc": "Other Counseling",
+    "counselTypePlaceholder": "Select counseling type",
+    "titlePlaceholder": "Enter counseling title",
+    "content": "Content",
+    "contentPlaceholder": "Please describe your counseling request in detail",
+    "phone": "Phone",
+    "phonePlaceholder": "Enter your phone number",
+    "isPrivate": "Private",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "cancel": "Cancel",
+    "cancelConfirmTitle": "Cancel Confirmation",
+    "cancelConfirmMessage": "Your changes will be lost. Are you sure you want to cancel?",
+    "submitConfirmTitle": "Submit Confirmation",
+    "submitConfirmMessage": "Would you like to submit your counseling request?",
+    "loginRequired": "Login required",
+    "errors": {
+      "serverError": "Cannot connect to server. Please check if the backend server is running.",
+      "generic": "An error occurred while submitting the counseling request."
+    }
   }
 }

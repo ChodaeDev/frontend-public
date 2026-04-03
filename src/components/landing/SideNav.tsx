@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Phone, DoorOpen, MessageSquareText, ShieldAlert, Heart, Plus } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { cn } from '@/lib/cn';
 
 interface SideNavDictionary {
   counseling: string;
@@ -95,9 +96,9 @@ export default function SideNav({ dictionary, locale }: SideNavProps) {
         {/* 확장 메뉴 */}
         <nav
           className={
-            `flex flex-col items-center gap-1 bg-background/70 backdrop-blur-xs rounded-2xl p-2 shadow-lg
-            transition-all duration-300 origin-bottom border border-gray9
-            ${ isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none' }`
+            cn('flex flex-col items-center gap-1 bg-background/70 backdrop-blur-xs rounded-2xl p-2 shadow-lg',
+              'transition-all duration-300 origin-bottom border border-gray9',
+              isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none')
           }
         >
           {navItems.map((item) => (
@@ -115,11 +116,11 @@ export default function SideNav({ dictionary, locale }: SideNavProps) {
         <button
           onClick={() => setIsOpen((prev) => !prev)}
           className={
-            `flex items-center justify-center size-14 rounded-full shadow-lg
-            bg-accent1 text-white transition-transform duration-300
-            ${ isOpen ? 'rotate-45' : '' }`
+            cn('flex items-center justify-center size-14 rounded-full shadow-lg',
+              'bg-accent1 text-white transition-transform duration-300',
+              isOpen ? 'rotate-45' : '')
           }
-          aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          aria-label={`${ isOpen ? 'Close menu' : 'Open menu' }`}
         >
           <Plus className={'size-6'} />
         </button>

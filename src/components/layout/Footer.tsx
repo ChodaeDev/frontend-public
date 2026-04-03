@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { useTranslation } from '@/i18n/client';
 import { getNavItems } from '@/config/navigation';
 import Image from 'next/image';
+import { cn } from '@/lib/cn';
 
 // 수직 구분선 컴포넌트
-const VerticalDivider = ({ className = '' }: { className?: string }) => (
-  <div className={`w-px h-2.5 bg-gray3 mt-1 ${ className }`} />
+const VerticalDivider = ({ className }: { className?: string }) => (
+  <div className={cn('w-px h-2.5 bg-gray3 mt-1', className)} />
 );
 
 // 정보 항목 컴포넌트 (레이블 | 값 형태)

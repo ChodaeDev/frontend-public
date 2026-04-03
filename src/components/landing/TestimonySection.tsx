@@ -6,6 +6,7 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { cn } from '@/lib/cn';
 
 interface TestimonyItem {
   id: string;
@@ -264,7 +265,7 @@ export default function TestimonySection({ dictionary, locale }: TestimonySectio
         >
           <div
             ref={trackRef}
-            className={`flex pl-[max(1rem,calc((100vw-80rem)/2+1rem))] ${ isDragging ? 'select-none' : '' }`}
+            className={cn('flex pl-[max(1rem,calc((100vw-80rem)/2+1rem))]', isDragging && 'select-none')}
             style={{ gap: `${ gap }px` }}
           >
             {displayItems.map((item, index) => (

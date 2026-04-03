@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Lock } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { cn } from '@/lib/cn';
 
 export interface BoardPost {
   id: number;
@@ -87,9 +88,7 @@ export default function BoardTable({
             posts.map((post, index) => (
               <tr
                 key={post.id}
-                className={`border-b border-gray7 hover:bg-gray9/50 transition-colors ${
-                  post.isNotice ? 'bg-accent1/5' : ''
-                }`}
+                className={cn('border-b border-gray7 hover:bg-gray9/50 transition-colors', post.isNotice && 'bg-accent1/5')}
               >
                 <td className={'py-3.5 px-2 text-center text-sm'}>
                   {post.isNotice ? (

@@ -5,6 +5,7 @@ import {
   DropdownContext,
   DropdownProvider,
 } from '@/components/ui/DropdownProvider';
+import { cn } from '@/lib/cn';
 
 const Dropdown = ({ children }: { children: ReactNode }) => {
   return <DropdownProvider>{children}</DropdownProvider>;
@@ -62,14 +63,14 @@ const DropdownList = ({
   const getDirectionClasses = () => {
     switch (direction) {
       case 'top':
-        return `bottom-full mb-2 ${ align === 'end' ? 'right-0' : 'left-0' }`;
+        return cn('bottom-full mb-2', align === 'end' ? 'right-0' : 'left-0');
       case 'left':
-        return `right-full mr-2 ${ align === 'end' ? 'bottom-0' : 'top-0' }`;
+        return cn('right-full mr-2', align === 'end' ? 'bottom-0' : 'top-0');
       case 'right':
-        return `left-full ml-2 ${ align === 'end' ? 'bottom-0' : 'top-0' }`;
+        return cn('left-full ml-2', align === 'end' ? 'bottom-0' : 'top-0');
       case 'bottom':
       default:
-        return `top-full mt-2 ${ align === 'end' ? 'right-0' : 'left-0' }`;
+        return cn('top-full mt-2', align === 'end' ? 'right-0' : 'left-0');
     }
   };
 
@@ -90,7 +91,7 @@ const DropdownList = ({
   return isOpen ? (
     <div
       ref={contentRef}
-      className={`${ getAnimationClass() } absolute flex flex-col p-1 z-40 min-w-36 rounded-lg bg-background border border-accent2 shadow-lg ring-1 ring-black/5 transition duration-200 ease-out ${ getDirectionClasses() }`}
+      className={cn(getAnimationClass(), 'absolute flex flex-col p-1 z-40 min-w-36 rounded-lg bg-background border border-accent2 shadow-lg ring-1 ring-black/5 transition duration-200 ease-out', getDirectionClasses())}
       onClick={handleMenuClick}
     >
       {children}
@@ -118,7 +119,7 @@ const DropdownItem = ({
 
   return (
     <div
-      className={`w-full rounded-md transition-colors duration-150 ease-in-out text-sm hover:bg-background-secondary cursor-pointer ${ className }`}
+      className={cn('w-full rounded-md transition-colors duration-150 ease-in-out text-sm hover:bg-background-secondary cursor-pointer', className)}
       onClick={handleItemClick}
       aria-label={ariaLabel}
     >

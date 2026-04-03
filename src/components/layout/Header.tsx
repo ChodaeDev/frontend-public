@@ -12,6 +12,7 @@ import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { logout } from '@/store/authSlice';
 import Image from 'next/image';
 import { useTranslation } from '@/i18n/client';
+import { cn } from '@/lib/cn';
 
 const Header = () => {
   const router = useRouter();
@@ -36,7 +37,7 @@ const Header = () => {
   };
 
   return (
-    <header className={`h-[89px] fixed w-full top-0 left-0 z-50 bg-background/80 backdrop-blur-sm border-b transition-colors duration-300 ${ isScrolled ? 'border-gray9' : 'border-transparent' }`}>
+    <header className={cn('h-[89px] fixed w-full top-0 left-0 z-50 bg-background/80 backdrop-blur-sm border-b transition-colors duration-300', isScrolled ? 'border-gray9' : 'border-transparent')}>
       <div className={'flex items-center justify-between max-w-7xl mx-auto px-4 md:px-6 lg:px-10 py-4'}>
         <Link href={`/${ locale }`} className={'flex items-center gap-2'}>
           <Image src={'/assets/images/logo.png'} alt={t.header.logoAlt} width={56} height={56} />
