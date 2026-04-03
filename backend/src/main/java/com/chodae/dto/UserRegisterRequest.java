@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class UserRegisterRequest {
     private String userId;
-    private String username;
+    private String userName;
     private String password;
-    private String nickname;
+    private String nickName;
     private String phone;
     private String church;
     private String birthday; // ISO-8601 (yyyy-MM-dd)

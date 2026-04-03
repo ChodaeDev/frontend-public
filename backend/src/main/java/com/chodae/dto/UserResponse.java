@@ -10,8 +10,8 @@ import java.time.LocalDate;
 public class UserResponse {
     Integer id;
     String userId;
-    String username;
-    String nickname;
+    String userName;
+    String nickName;
     String phone;
     String church;
     LocalDate birthday;

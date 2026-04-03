@@ -55,11 +55,12 @@ public class CounselingController {
 
     @GetMapping("/detail/{id}")
     public ApiResponse<CounselingResponse> getDetail(@PathVariable Integer id, Authentication auth) {
-        String userId = getCurrentUserId(auth);
-        if (userId == null) {
-            return ApiResponse.error("로그인이 필요합니다.");
-        }
-        CounselingResponse post = counselingService.findByIdAndUserId(id, userId);
+        // String userId = getCurrentUserId(auth);
+        // if (userId == null) {
+        //     return ApiResponse.error("로그인이 필요합니다.");
+        // }
+        CounselingResponse post = counselingService.findById(id);
+        // CounselingResponse post = counselingService.findByIdAndUserId(id, userId);
         if (post == null) {
             return ApiResponse.error("글이 존재하지 않거나 접근 권한이 없습니다.");
         }
@@ -68,11 +69,12 @@ public class CounselingController {
 
     @GetMapping("/detail/{id}/comments")
     public ApiResponse<List<CommentResponse>> getComments(@PathVariable Integer id, Authentication auth) {
-        String userId = getCurrentUserId(auth);
-        if (userId == null) {
-            return ApiResponse.error("로그인이 필요합니다.");
-        }
-        CounselingResponse post = counselingService.findByIdAndUserId(id, userId);
+        // String userId = getCurrentUserId(auth);
+        // if (userId == null) {
+        //     return ApiResponse.error("로그인이 필요합니다.");
+        // }
+        CounselingResponse post = counselingService.findById(id);
+        // CounselingResponse post = counselingService.findByIdAndUserId(id, userId);
         if (post == null) {
             return ApiResponse.error("글이 존재하지 않거나 접근 권한이 없습니다.");
         }
@@ -82,9 +84,9 @@ public class CounselingController {
     @PostMapping("/form")
     public ApiResponse<CounselingResponse> create(@RequestBody CounselingCreateRequest request, Authentication auth) {
         String userId = getCurrentUserId(auth);
-        if (userId == null) {
-            return ApiResponse.error("로그인이 필요합니다.");
-        }
+        // if (userId == null) {
+        //     return ApiResponse.error("로그인이 필요합니다.");
+        // }
         if (request.getTitle() == null || request.getTitle().isBlank()) {
             return ApiResponse.error("제목을 입력해주세요.");
         }
@@ -99,10 +101,11 @@ public class CounselingController {
     @PostMapping("/edit/{id}")
     public ApiResponse<CounselingResponse> edit(@PathVariable Integer id, @RequestBody CounselingCreateRequest request, Authentication auth) {
         String userId = getCurrentUserId(auth);
-        if (userId == null) {
-            return ApiResponse.error("로그인이 필요합니다.");
-        }
-        CounselingResponse post = counselingService.findByIdAndUserId(id, userId);
+        // if (userId == null) {
+        //     return ApiResponse.error("로그인이 필요합니다.");
+        // }
+        CounselingResponse post = counselingService.findById(id);
+        // CounselingResponse post = counselingService.findByIdAndUserId(id, userId);
         if (post == null) {
             return ApiResponse.error("글이 존재하지 않거나 접근 권한이 없습니다.");
         }
@@ -142,17 +145,17 @@ public class CounselingController {
     public ApiResponse<CounselingDeleteResponse> deletePost(
             @Parameter(description = "상담 글 ID") @PathVariable Integer id,
             Authentication auth) {
-        String userId = getCurrentUserId(auth);
-        if (userId == null) {
-            return ApiResponse.error("로그인이 필요합니다.");
-        }
+        // String userId = getCurrentUserId(auth);
+        // if (userId == null) {
+        //     return ApiResponse.error("로그인이 필요합니다.");
+        // }
         try {
-            CounselingDeleteResponse result = counselingService.deleteByIdAndUserId(id, userId);
+            CounselingDeleteResponse result = counselingService.deleteById(id);
             return ApiResponse.success("상담 글이 삭제되었습니다.", result);
         } catch (IllegalArgumentException e) {
             return ApiResponse.error(e.getMessage());
         } catch (IllegalStateException e) {
-            log.error("상담 글 삭제 실패 - id: {}, userId: {}, {}", id, userId, e.getMessage());
+            log.error("상담 글 삭제 실패 - id: {}, userId: {}, {}", id, "test", e.getMessage());
             return ApiResponse.error(e.getMessage());
         }
     }

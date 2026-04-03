@@ -6,9 +6,9 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
     `id` int NOT NULL AUTO_INCREMENT,
     `user_id` varchar(100) NOT NULL,
-    `username` varchar(100) NOT NULL,
+    `userName` varchar(100) NOT NULL,
     `password` varchar(255) NOT NULL,
-    `nickname` varchar(100) DEFAULT NULL,
+    `nickName` varchar(100) DEFAULT NULL,
     `phone` varchar(50) DEFAULT NULL,
     `church` varchar(150) DEFAULT NULL,
     `birthday` date DEFAULT NULL,
@@ -20,14 +20,14 @@ CREATE TABLE `users` (
     UNIQUE KEY `uk_user_user_id` (`user_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
-INSERT INTO `users` (`user_id`, `username`, `password`, `nickname`, `phone`, `church`,
+INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
  `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('admin', 'admin', '$2a$10$MjfDnfKo/zcteaotzJNx2.
 61v.vK1ktw5WDyzb50qTYm5W8AzwwF.','admin', '01012345678', 'admin', '2026-01-26', 'admin',
 'superadmin', '2026-01-26', '2026-01-26');
-INSERT INTO `users` (`user_id`, `username`, `password`, `nickname`, `phone`, `church`,
+INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
  `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('sdhan', '한상대', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'admin',
 'superadmin', '2026-01-26', '2026-01-26');
-INSERT INTO `users` (`user_id`, `username`, `password`, `nickname`, `phone`, `church`,
+INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
  `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('judahwon', '주다훤', '$2a$10$2jm/TC3qqdyxdjFAVeVULOHGqUFmnOht0sx1lnjJLXLX8EYKLxqIG','admin', '01012345678', 'admin', '2026-01-26', 'admin',
 'superadmin', '2026-01-26', '2026-01-26');
 

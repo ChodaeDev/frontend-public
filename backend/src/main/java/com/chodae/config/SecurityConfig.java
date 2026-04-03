@@ -112,7 +112,8 @@ public class SecurityConfig {
         configuration.setAllowedOriginPatterns(Arrays.asList(
             "http://localhost", "http://localhost:80", "http://localhost:499", "http://localhost:5173",
             "http://127.0.0.1", "http://127.0.0.1:80", "http://127.0.0.1:499",
-            "http://172.*.*.*:5173", "http://172.*.*.*:499", "http://10.*.*.*:5173", "http://10.*.*.*:499"
+            "http://172.*.*.*:5173", "http://172.*.*.*:499", "http://10.*.*.*:5173", "http://10.*.*.*:499",
+            "http://182.*.*.*:5173", "http://182.*.*.*:499", "http://182.*.*.*:4998"
         ));
         // 프로덕션 환경에서는 특정 origin만 허용하도록 설정
         // configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));

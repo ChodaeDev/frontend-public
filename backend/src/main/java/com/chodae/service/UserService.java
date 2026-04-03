@@ -47,9 +47,9 @@ public class UserService {
         // Map으로 사용자 정보 구성
         Map<String, Object> userMap = new HashMap<>();
         userMap.put("userId", request.getUserId());
-        userMap.put("username", request.getUsername());
+        userMap.put("userName", request.getUserName());
         userMap.put("password", passwordEncoder.encode(request.getPassword()));
-        userMap.put("nickname", request.getNickname());
+        userMap.put("nickName", request.getNickName());
         userMap.put("phone", request.getPhone());
         userMap.put("church", request.getChurch());
         userMap.put("birthday", parseDateOrNull(request.getBirthday()));
@@ -78,8 +78,8 @@ public class UserService {
         return UserResponse.builder()
                 .id(id)
                 .userId(request.getUserId())
-                .username(request.getUsername())
-                .nickname(request.getNickname())
+                .userName(request.getUserName())
+                .nickName(request.getNickName())
                 .phone(request.getPhone())
                 .church(request.getChurch())
                 .birthday(parseDateOrNull(request.getBirthday()))
@@ -119,8 +119,8 @@ public class UserService {
         UserResponse user = UserResponse.builder()
                 .id((Integer) userMap.get("id"))
                 .userId((String) userMap.get("userId"))
-                .username((String) userMap.get("username"))
-                .nickname((String) userMap.get("nickname"))
+                .userName((String) userMap.get("userName"))
+                .nickName((String) userMap.get("nickName"))
                 .phone((String) userMap.get("phone"))
                 .church((String) userMap.get("church"))
                 .birthday(birthday)
@@ -136,7 +136,7 @@ public class UserService {
         if (request.getUserId() == null || request.getUserId().isBlank()) {
             throw new IllegalArgumentException("아이디를 입력해주세요.");
         }
-        if (request.getUsername() == null || request.getUsername().isBlank()) {
+        if (request.getUserName() == null || request.getUserName().isBlank()) {
             throw new IllegalArgumentException("이름을 입력해주세요.");
         }
         if (request.getPassword() == null || request.getPassword().isBlank()) {

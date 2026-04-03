@@ -106,7 +106,6 @@ public class CounselingService {
         params.put("title", request.getTitle());
         params.put("content", request.getContent());
         params.put("phone", request.getPhone());
-        params.put("email", request.getEmail());
         params.put("counselType", request.getCounselType());
 
         counselingMapper.updateById(id, params);
@@ -144,8 +143,8 @@ public class CounselingService {
      * 상담 글 삭제 (작성자 본인만). 연관 댓글(comments.is_private = 글 ID) 선삭제 후 글 삭제.
      */
     @Transactional
-    public CounselingDeleteResponse deleteByIdAndUserId(Integer id, String userId) {
-        CounselingResponse post = counselingMapper.findByIdAndUserId(id, userId);
+    public CounselingDeleteResponse deleteById(Integer id) {
+        CounselingResponse post = counselingMapper.findById(id);
         if (post == null) {
             throw new IllegalArgumentException("글이 존재하지 않거나 삭제 권한이 없습니다.");
         }
