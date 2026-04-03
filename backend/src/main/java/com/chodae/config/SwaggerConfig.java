@@ -1,7 +1,9 @@
 package com.chodae.config;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,9 +14,40 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@OpenAPIDefinition(tags = {
+        @Tag(name = "사용자 정보", description = "사용자 정보 관련 API")
+})
+
 @Configuration
 public class SwaggerConfig {
- 
+
+    @Bean
+    public OpenApiCustomizer counselingBoardTagFirst() {
+        return openApi -> {
+            List<io.swagger.v3.oas.models.tags.Tag> tags = openApi.getTags();
+            if (tags == null || tags.isEmpty()) {
+                return;
+            }
+            int idx = -1;
+            for (int i = 0; i < tags.size(); i++) {
+                if ("사용자 정보".equals(tags.get(i).getName())) {
+                    idx = i;
+                    break;
+                }
+            }
+            if (idx <= 0) {
+                return;
+            }
+            List<io.swagger.v3.oas.models.tags.Tag> reordered = new ArrayList<>(tags);
+            io.swagger.v3.oas.models.tags.Tag counseling = reordered.remove(idx);
+            reordered.add(0, counseling);
+            openApi.setTags(reordered);
+        };
+    }
+
     @Bean
     public OpenAPI openAPI() {
         Server devServer = new Server();
