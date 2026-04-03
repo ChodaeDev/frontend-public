@@ -2,6 +2,7 @@ package com.chodae.service;
 
 import com.chodae.dto.CommentCreateRequest;
 import com.chodae.dto.CounselingDeleteResponse;
+import com.chodae.dto.CommentDeleteResponse;
 import com.chodae.dto.CommentResponse;
 import com.chodae.dto.PagedListResponse;
 import com.chodae.dto.CounselingCreateRequest;
@@ -112,8 +113,8 @@ public class CounselingService {
         return counselingMapper.findById(id);
     }
 
-    public List<CommentResponse> findCommentsByPostId(Integer postId) {
-        return commentMapper.findByIsPrivate(postId);
+    public List<CommentResponse> findCommentsByPostId(Integer id) {
+        return commentMapper.findByIsPrivate(id);
     }
 
     @Transactional
@@ -137,6 +138,72 @@ public class CounselingService {
         counselingMapper.updateCommentCount(postId, count);
 
         return commentMapper.findById(commentId);
+    }
+
+    @Transactional
+    public CommentResponse updateComment(Integer postId, Integer commentId, CommentCreateRequest request) {
+        String userId = request.getUserId();
+        if (userId == null || userId.isBlank()) {
+            throw new IllegalArgumentException("로그인이 필요합니다.");
+        }
+        if (request.getContent() == null || request.getContent().isBlank()) {
+            throw new IllegalArgumentException("댓글 내용을 입력해주세요.");
+        }
+
+        CounselingResponse post = counselingMapper.findById(postId);
+        if (post == null) {
+            throw new IllegalArgumentException("상담 글이 존재하지 않습니다.");
+        }
+
+        CommentResponse comment = commentMapper.findById(commentId);
+        if (comment == null || comment.getIsPrivate() == null || !comment.getIsPrivate().equals(postId)) {
+            throw new IllegalArgumentException("댓글이 존재하지 않거나 접근 권한이 없습니다.");
+        }
+        if (!userId.equals(comment.getUserId())) {
+            throw new IllegalArgumentException("댓글 수정 권한이 없습니다.");
+        }
+
+        int updated = commentMapper.updateContentByIdAndUserIdAndIsPrivate(
+                commentId, userId, postId, request.getContent());
+        if (updated == 0) {
+            throw new IllegalStateException("댓글 수정에 실패했습니다.");
+        }
+
+        CommentResponse updatedComment = commentMapper.findById(commentId);
+        if (updatedComment == null) {
+            throw new IllegalStateException("수정된 댓글을 조회할 수 없습니다.");
+        }
+        return updatedComment;
+    }
+
+    @Transactional
+    public CommentDeleteResponse deleteComment(Integer postId, Integer commentId, String userId) {
+        if (userId == null || userId.isBlank()) {
+            throw new IllegalArgumentException("로그인이 필요합니다.");
+        }
+
+        CounselingResponse post = counselingMapper.findById(postId);
+        if (post == null) {
+            throw new IllegalArgumentException("상담 글이 존재하지 않습니다.");
+        }
+
+        CommentResponse comment = commentMapper.findById(commentId);
+        if (comment == null || comment.getIsPrivate() == null || !comment.getIsPrivate().equals(postId)) {
+            throw new IllegalArgumentException("댓글이 존재하지 않거나 접근 권한이 없습니다.");
+        }
+        if (!userId.equals(comment.getUserId())) {
+            throw new IllegalArgumentException("댓글 삭제 권한이 없습니다.");
+        }
+
+        int deleted = commentMapper.deleteByIdAndUserIdAndIsPrivate(commentId, userId, postId);
+        if (deleted == 0) {
+            throw new IllegalStateException("댓글 삭제에 실패했습니다.");
+        }
+
+        int count = commentMapper.countByIsPrivate(postId);
+        counselingMapper.updateCommentCount(postId, count);
+
+        return new CommentDeleteResponse(commentId);
     }
 
     /**

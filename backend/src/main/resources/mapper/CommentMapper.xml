@@ -15,26 +15,41 @@
 
     <select id="findByIsPrivate" resultMap="CommentResponseMap">
         SELECT id, user_id, user_name, content, is_private, confirm, create_date
-        FROM comments
-        WHERE is_private = #{isPrivate}
+        FROM counseling_comment
+        WHERE id = #{id}
         ORDER BY create_date ASC
     </select>
 
     <select id="findById" resultMap="CommentResponseMap">
         SELECT id, user_id, user_name, content, is_private, confirm, create_date
-        FROM comments WHERE id = #{id}
+        FROM counseling_comment WHERE id = #{id}
     </select>
 
     <select id="countByIsPrivate" resultType="int">
-        SELECT COUNT(*) FROM comments WHERE is_private = #{isPrivate}
+        SELECT COUNT(*) FROM counseling_comment WHERE is_private = #{isPrivate}
     </select>
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO comments (user_id, user_name, content, is_private, confirm, create_date)
+        INSERT INTO counseling_comment (user_id, user_name, content, is_private, confirm, create_date)
         VALUES (#{userId}, #{userName}, #{content}, #{isPrivate}, #{confirm}, NOW())
     </insert>
 
     <delete id="deleteByIsPrivate">
-        DELETE FROM comments WHERE id = #{id}
+        DELETE FROM counseling_comment WHERE id = #{id}
+    </delete>
+    
+    <update id="updateContentByIdAndUserIdAndIsPrivate">
+        UPDATE counseling_comment
+        SET content = #{content}
+        WHERE id = #{id}
+          AND user_id = #{userId}
+          AND is_private = #{isPrivate}
+    </update>
+
+    <delete id="deleteByIdAndUserIdAndIsPrivate">
+        DELETE FROM counseling_comment
+        WHERE id = #{id}
+          AND user_id = #{userId}
+          AND is_private = #{isPrivate}
     </delete>
 </mapper>

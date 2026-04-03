@@ -2,6 +2,7 @@ package com.chodae.controller.board;
 
 import com.chodae.dto.ApiResponse;
 import com.chodae.dto.CommentCreateRequest;
+import com.chodae.dto.CommentDeleteResponse;
 import com.chodae.dto.CounselingDeleteResponse;
 import com.chodae.dto.PagedApiResponse;
 import com.chodae.dto.PagedListResponse;
@@ -55,10 +56,10 @@ public class CounselingController {
 
     @GetMapping("/detail/{id}")
     public ApiResponse<CounselingResponse> getDetail(@PathVariable Integer id, Authentication auth) {
-        // String userId = getCurrentUserId(auth);
-        // if (userId == null) {
-        //     return ApiResponse.error("로그인이 필요합니다.");
-        // }
+        String userId = getCurrentUserId(auth);
+        if (userId == null) {
+            return ApiResponse.error("로그인이 필요합니다.");
+        }
         CounselingResponse post = counselingService.findById(id);
         // CounselingResponse post = counselingService.findByIdAndUserId(id, userId);
         if (post == null) {
@@ -85,7 +86,7 @@ public class CounselingController {
     public ApiResponse<CounselingResponse> create(@RequestBody CounselingCreateRequest request, Authentication auth) {
         String userId = getCurrentUserId(auth);
         // if (userId == null) {
-        //     return ApiResponse.error("로그인이 필요합니다.");
+        // return ApiResponse.error("로그인이 필요합니다.");
         // }
         if (request.getTitle() == null || request.getTitle().isBlank()) {
             return ApiResponse.error("제목을 입력해주세요.");
@@ -99,7 +100,8 @@ public class CounselingController {
     }
 
     @PostMapping("/edit/{id}")
-    public ApiResponse<CounselingResponse> edit(@PathVariable Integer id, @RequestBody CounselingCreateRequest request, Authentication auth) {
+    public ApiResponse<CounselingResponse> edit(@PathVariable Integer id, @RequestBody CounselingCreateRequest request,
+            Authentication auth) {
         String userId = getCurrentUserId(auth);
         // if (userId == null) {
         //     return ApiResponse.error("로그인이 필요합니다.");
@@ -119,6 +121,26 @@ public class CounselingController {
         CounselingResponse edited = counselingService.edit(id, request);
         return ApiResponse.success("상담 신청 내용이 수정되었습니다.", edited);
     }
+    
+    @Operation(summary = "상담 글 삭제", description = "로그인한 작성자 본인의 상담 글을 삭제합니다. 연관 댓글도 함께 삭제됩니다.")
+    @DeleteMapping("/delete/{id}")
+    public ApiResponse<CounselingDeleteResponse> deletePost(
+            @Parameter(description = "상담 글 ID") @PathVariable Integer id,
+            Authentication auth) {
+        // String userId = getCurrentUserId(auth);
+        // if (userId == null) {
+        // return ApiResponse.error("로그인이 필요합니다.");
+        // }
+        try {
+            CounselingDeleteResponse result = counselingService.deleteById(id);
+            return ApiResponse.success("상담 글이 삭제되었습니다.", result);
+        } catch (IllegalArgumentException e) {
+            return ApiResponse.error(e.getMessage());
+        } catch (IllegalStateException e) {
+            log.error("상담 글 삭제 실패 - id: {}, userId: {}, {}", id, "test", e.getMessage());
+            return ApiResponse.error(e.getMessage());
+        }
+    }
 
     @PostMapping("/detail/{id}/comments")
     public ApiResponse<CommentResponse> addComment(@PathVariable Integer id, @RequestBody CommentCreateRequest request,
@@ -127,7 +149,7 @@ public class CounselingController {
         if (userId == null) {
             return ApiResponse.error("로그인이 필요합니다.");
         }
-        CounselingResponse post = counselingService.findByIdAndUserId(id, userId);
+        CounselingResponse post = counselingService.findById(id);
         if (post == null) {
             return ApiResponse.error("글이 존재하지 않거나 접근 권한이 없습니다.");
         }
@@ -139,23 +161,52 @@ public class CounselingController {
         CommentResponse comment = counselingService.addComment(id, request);
         return ApiResponse.success("댓글이 등록되었습니다.", comment);
     }
-    
-    @Operation(summary = "상담 글 삭제", description = "로그인한 작성자 본인의 상담 글을 삭제합니다. 연관 댓글도 함께 삭제됩니다.")
-    @DeleteMapping("/delete/{id}")
-    public ApiResponse<CounselingDeleteResponse> deletePost(
-            @Parameter(description = "상담 글 ID") @PathVariable Integer id,
+
+    @Operation(summary = "댓글 수정", description = "로그인한 작성자 본인의 댓글을 수정합니다.")
+    @PutMapping("/detail/{postId}/comments/{commentId}")
+    public ApiResponse<CommentResponse> updateComment(
+            @Parameter(description = "상담 글 ID") @PathVariable Integer postId,
+            @Parameter(description = "댓글 ID") @PathVariable Integer commentId,
+            @RequestBody CommentCreateRequest request,
             Authentication auth) {
-        // String userId = getCurrentUserId(auth);
-        // if (userId == null) {
-        //     return ApiResponse.error("로그인이 필요합니다.");
-        // }
+        String userId = getCurrentUserId(auth);
+        if (userId == null) {
+            return ApiResponse.error("로그인이 필요합니다.");
+        }
+        if (request.getContent() == null || request.getContent().isBlank()) {
+            return ApiResponse.error("댓글 내용을 입력해주세요.");
+        }
+
+        request.setUserId(userId);
         try {
-            CounselingDeleteResponse result = counselingService.deleteById(id);
-            return ApiResponse.success("상담 글이 삭제되었습니다.", result);
+            CommentResponse updated = counselingService.updateComment(postId, commentId, request);
+            return ApiResponse.success("댓글이 수정되었습니다.", updated);
         } catch (IllegalArgumentException e) {
             return ApiResponse.error(e.getMessage());
         } catch (IllegalStateException e) {
-            log.error("상담 글 삭제 실패 - id: {}, userId: {}, {}", id, "test", e.getMessage());
+            log.error("상담 댓글 수정 실패 - postId: {}, commentId: {}, userId: {}, error: {}", postId, commentId, userId, e.getMessage());
+            return ApiResponse.error(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "댓글 삭제", description = "로그인한 작성자 본인의 댓글을 삭제합니다.")
+    @DeleteMapping("/detail/{postId}/comments/{commentId}")
+    public ApiResponse<CommentDeleteResponse> deleteComment(
+            @Parameter(description = "상담 글 ID") @PathVariable Integer postId,
+            @Parameter(description = "댓글 ID") @PathVariable Integer commentId,
+            Authentication auth) {
+        String userId = getCurrentUserId(auth);
+        if (userId == null) {
+            return ApiResponse.error("로그인이 필요합니다.");
+        }
+
+        try {
+            CommentDeleteResponse result = counselingService.deleteComment(postId, commentId, userId);
+            return ApiResponse.success("댓글이 삭제되었습니다.", result);
+        } catch (IllegalArgumentException e) {
+            return ApiResponse.error(e.getMessage());
+        } catch (IllegalStateException e) {
+            log.error("상담 댓글 삭제 실패 - postId: {}, commentId: {}, userId: {}, error: {}", postId, commentId, userId, e.getMessage());
             return ApiResponse.error(e.getMessage());
         }
     }
