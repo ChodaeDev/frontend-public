@@ -18,32 +18,41 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @OpenAPIDefinition(tags = {
-        @Tag(name = "사용자 정보", description = "사용자 정보 관련 API")
+        @Tag(name = "사용자 정보", description = "사용자 정보 관련 API"),
+        @Tag(name = "상담게시판", description = "상담게시판 페이지 관련 API")
 })
 
 @Configuration
 public class SwaggerConfig {
 
     @Bean
-    public OpenApiCustomizer counselingBoardTagFirst() {
+    public OpenApiCustomizer userInfoThenCounselingBoardTagOrder() {
         return openApi -> {
             List<io.swagger.v3.oas.models.tags.Tag> tags = openApi.getTags();
             if (tags == null || tags.isEmpty()) {
                 return;
             }
-            int idx = -1;
-            for (int i = 0; i < tags.size(); i++) {
-                if ("사용자 정보".equals(tags.get(i).getName())) {
-                    idx = i;
-                    break;
+            io.swagger.v3.oas.models.tags.Tag userInfo = null;
+            io.swagger.v3.oas.models.tags.Tag counseling = null;
+            List<io.swagger.v3.oas.models.tags.Tag> rest = new ArrayList<>();
+            for (io.swagger.v3.oas.models.tags.Tag t : tags) {
+                String name = t.getName();
+                if ("사용자 정보".equals(name)) {
+                    userInfo = t;
+                } else if ("상담게시판".equals(name)) {
+                    counseling = t;
+                } else {
+                    rest.add(t);
                 }
             }
-            if (idx <= 0) {
-                return;
+            List<io.swagger.v3.oas.models.tags.Tag> reordered = new ArrayList<>();
+            if (userInfo != null) {
+                reordered.add(userInfo);
             }
-            List<io.swagger.v3.oas.models.tags.Tag> reordered = new ArrayList<>(tags);
-            io.swagger.v3.oas.models.tags.Tag counseling = reordered.remove(idx);
-            reordered.add(0, counseling);
+            if (counseling != null) {
+                reordered.add(counseling);
+            }
+            reordered.addAll(rest);
             openApi.setTags(reordered);
         };
     }
