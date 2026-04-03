@@ -27,4 +27,8 @@ public interface CounselingMapper {
     int updateCommentCount(@Param("id") Integer id, @Param("commentCount") Integer commentCount);
 
     int updateIsPrivate(@Param("id") Integer id, @Param("isPrivate") Integer isPrivate);
+
+    int deleteById(@Param("id") Integer id);
+
+    int updateById(@Param("id") Integer id, @Param("params") Map<String, Object> params);
 }

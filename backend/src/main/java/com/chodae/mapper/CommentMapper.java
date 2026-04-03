@@ -17,4 +17,6 @@ public interface CommentMapper {
     int countByIsPrivate(@Param("isPrivate") Integer isPrivate);
 
     int insert(Map<String, Object> params);
+
+    int deleteByIsPrivate(@Param("id") Integer id);
 }

@@ -1,6 +1,7 @@
 package com.chodae.service;
 
 import com.chodae.dto.CommentCreateRequest;
+import com.chodae.dto.CounselingDeleteResponse;
 import com.chodae.dto.CommentResponse;
 import com.chodae.dto.PagedListResponse;
 import com.chodae.dto.CounselingCreateRequest;
@@ -98,6 +99,20 @@ public class CounselingService {
         return created;
     }
 
+    @Transactional
+    public CounselingResponse edit(Integer id, CounselingCreateRequest request) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("title", request.getTitle());
+        params.put("content", request.getContent());
+        params.put("phone", request.getPhone());
+        params.put("email", request.getEmail());
+        params.put("counselType", request.getCounselType());
+
+        counselingMapper.updateById(id, params);
+        return counselingMapper.findById(id);
+    }
+
     public List<CommentResponse> findCommentsByPostId(Integer postId) {
         return commentMapper.findByIsPrivate(postId);
     }
@@ -123,5 +138,22 @@ public class CounselingService {
         counselingMapper.updateCommentCount(postId, count);
 
         return commentMapper.findById(commentId);
+    }
+
+    /**
+     * 상담 글 삭제 (작성자 본인만). 연관 댓글(comments.is_private = 글 ID) 선삭제 후 글 삭제.
+     */
+    @Transactional
+    public CounselingDeleteResponse deleteByIdAndUserId(Integer id, String userId) {
+        CounselingResponse post = counselingMapper.findByIdAndUserId(id, userId);
+        if (post == null) {
+            throw new IllegalArgumentException("글이 존재하지 않거나 삭제 권한이 없습니다.");
+        }
+        commentMapper.deleteByIsPrivate(id);
+        int deleted = counselingMapper.deleteById(id);
+        if (deleted == 0) {
+            throw new IllegalStateException("상담 글 삭제에 실패했습니다.");
+        }
+        return new CounselingDeleteResponse(id);
     }
 }

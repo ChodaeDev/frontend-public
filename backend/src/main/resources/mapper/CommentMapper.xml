@@ -33,4 +33,8 @@
         INSERT INTO comments (user_id, user_name, content, is_private, confirm, create_date)
         VALUES (#{userId}, #{userName}, #{content}, #{isPrivate}, #{confirm}, NOW())
     </insert>
+
+    <delete id="deleteByIsPrivate">
+        DELETE FROM comments WHERE id = #{id}
+    </delete>
 </mapper>
