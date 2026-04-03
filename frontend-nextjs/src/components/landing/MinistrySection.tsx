@@ -28,7 +28,7 @@ const ministerImages = [
 ];
 
 export default function MinistrySection({ dictionary, locale }: MinistrySectionProps) {
-  const { title, ministers } = dictionary.home.ministry;
+  const { title = '진리 안에서\n회복과 화해의 걸음을\n함께하겠습니다', ministers } = dictionary.home.ministry;
 
   return (
     <section className={'w-full my-10'}>

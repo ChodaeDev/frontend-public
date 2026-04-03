@@ -67,7 +67,7 @@ const MobileMenu = () => {
       <button
         onClick={open}
         className={'lg:hidden p-2 rounded-md text-sub hover:text-main hover:bg-background-secondary transition-colors'}
-        aria-label={t.header.openMenu}
+        aria-label={t.header.openMenu || '메뉴 열기'}
       >
         <Menu size={24} />
       </button>
@@ -83,11 +83,11 @@ const MobileMenu = () => {
             className={cn('absolute top-0 right-0 h-full w-3/4 max-w-sm bg-background border-l border-gray9 flex flex-col', isClosing ? 'animate-slideOutRight' : 'animate-slideInRight')}
           >
             <div className={'flex items-center justify-between px-4 py-4 border-b border-gray9 min-h-[89px]'}>
-              <span className={'text-lg font-bold text-main'}>{t.common.menu}</span>
+              <span className={'text-lg font-bold text-main'}>{t.common.menu || '메뉴'}</span>
               <button
                 onClick={close}
                 className={'p-2 rounded-md text-sub hover:text-main hover:bg-background-secondary transition-colors'}
-                aria-label={t.header.closeMenu}
+                aria-label={t.header.closeMenu || '메뉴 닫기'}
               >
                 <X size={24} />
               </button>
@@ -126,7 +126,7 @@ const MobileMenu = () => {
                   className={'flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-sub transition-colors hover:bg-background-secondary hover:text-main'}
                 >
                   <LogOut size={16} />
-                  {t.common.logout}
+                  {t.common.logout || '로그아웃'}
                 </button>
               ) : (
                 <Link
@@ -134,7 +134,7 @@ const MobileMenu = () => {
                   className={'flex items-center gap-1.5 rounded-lg bg-accent1 px-3.5 py-2 text-sm font-semibold text-inverse transition-opacity hover:opacity-90'}
                 >
                   <LogIn size={16} />
-                  {t.common.login}
+                  {t.common.login || '로그인'}
                 </Link>
               )}
               <div className={'flex items-center gap-2'}>

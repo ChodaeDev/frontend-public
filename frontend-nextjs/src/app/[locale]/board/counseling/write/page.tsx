@@ -43,16 +43,16 @@ export default async function CounselingWritePage({
         <div className={'flex flex-col sm:flex-row-reverse sm:items-start sm:justify-between gap-4 mb-8'}>
           <Breadcrumb
             locale={locale}
-            homeLabel={commonDict.home}
+            homeLabel={commonDict.home || '홈'}
             items={[
               { label: boardNav.label, href: `/${ locale }/board` },
               { label: counselingSub.label, href: `/${ locale }/board/counseling` },
-              { label: boardDict.counselingForm },
+              { label: boardDict.counselingForm || '상담 신청' },
             ]}
           />
 
           <div>
-            <h1 className={'text-2xl font-bold text-main'}>{boardDict.counselingForm}</h1>
+            <h1 className={'text-2xl font-bold text-main'}>{boardDict.counselingForm || '상담 신청'}</h1>
             <p className={'text-sm text-gray1 mt-1'}>{counselingSub.description}</p>
           </div>
         </div>

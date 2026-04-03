@@ -116,75 +116,75 @@ export default function SignUpPage() {
       )}
 
       <div className={'w-full max-w-2xl rounded-3xl bg-background-secondary p-4 sm:p-10 sm:shadow-2xl'}>
-        <h1 className={'mb-2 text-center text-3xl font-bold text-main'}>{t.title}</h1>
+        <h1 className={'mb-2 text-center text-3xl font-bold text-main'}>{t.title || '회원가입'}</h1>
         <p className={'mb-8 text-center text-sm text-sub'}>
-          {t.description}
+          {t.description || '아래 정보를 입력하여 회원가입을 완료해주세요.'}
         </p>
 
         <form action={formAction} className={'grid grid-cols-1 gap-2 md:gap-6 md:grid-cols-2'}>
           <FormInput
-            label={t.userId}
+            label={t.userId || '아이디'}
             name={'userId'}
-            placeholder={t.userIdPlaceholder}
+            placeholder={t.userIdPlaceholder || '사용할 아이디를 입력하세요'}
             required
             error={state.fieldErrors.userId}
             defaultValue={state.previousInput.userId}
           />
 
           <FormInput
-            label={t.password}
+            label={t.password || '비밀번호'}
             name={'password'}
             type={'password'}
-            placeholder={t.passwordPlaceholder}
+            placeholder={t.passwordPlaceholder || '비밀번호를 입력하세요'}
             required
             error={state.fieldErrors.password}
             defaultValue={state.previousInput.password}
           />
 
           <FormInput
-            label={t.username}
+            label={t.username || '이름'}
             name={'username'}
-            placeholder={t.usernamePlaceholder}
+            placeholder={t.usernamePlaceholder || '이름을 입력하세요'}
             required
             error={state.fieldErrors.username}
             defaultValue={state.previousInput.username}
           />
 
           <FormInput
-            label={t.nickname}
+            label={t.nickname || '닉네임'}
             name={'nickname'}
-            placeholder={t.nicknamePlaceholder}
+            placeholder={t.nicknamePlaceholder || '닉네임을 입력하세요'}
             error={state.fieldErrors.nickname}
             defaultValue={state.previousInput.nickname}
           />
 
           <FormInput
-            label={t.phone}
+            label={t.phone || '전화번호'}
             name={'phone'}
             type={'tel'}
-            placeholder={t.phonePlaceholder}
+            placeholder={t.phonePlaceholder || '예: 01012345678'}
             required
             error={state.fieldErrors.phone}
             defaultValue={state.previousInput.phone}
           />
 
           <FormInput
-            label={t.church}
+            label={t.church || '교회명'}
             name={'church'}
-            placeholder={t.churchPlaceholder}
+            placeholder={t.churchPlaceholder || '출석 중인 교회명을 입력하세요'}
             error={state.fieldErrors.church}
             defaultValue={state.previousInput.church}
           />
 
           <BirthdayPicker
-            label={t.birthday}
+            label={t.birthday || '생년월일'}
             defaultValue={state.previousInput.birthday}
           />
 
           <FormTextarea
-            label={t.bio}
+            label={t.bio || '소개 및 비고'}
             name={'description'}
-            placeholder={t.bioPlaceholder}
+            placeholder={t.bioPlaceholder || '상담 요청 사유 등 추가 정보를 입력하세요'}
             className={'md:col-span-2'}
             error={state.fieldErrors.description}
             defaultValue={state.previousInput.description}
@@ -197,16 +197,16 @@ export default function SignUpPage() {
           )}
 
           <div className={'md:col-span-2'}>
-            <SubmitButton pendingText={t.submitting}>
-              {t.submit}
+            <SubmitButton pendingText={t.submitting || '회원가입 중...'}>
+              {t.submit || '회원가입 완료'}
             </SubmitButton>
           </div>
         </form>
 
         <div className={'mt-6 text-center text-sm text-sub'}>
-          {t.hasAccount}{' '}
+          {t.hasAccount || '이미 가입하셨나요?'}{' '}
           <Link href={`/${ locale }/login`} className={'cursor-pointer font-semibold text-accent1 hover:underline underline-offset-4'}>
-            {t.loginLink}
+            {t.loginLink || '로그인'}
           </Link>
         </div>
       </div>

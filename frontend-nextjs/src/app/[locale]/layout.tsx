@@ -35,8 +35,8 @@ export async function generateMetadata({
   const dictionary = await getDictionary(locale);
 
   return {
-    title: dictionary.metadata.title,
-    description: dictionary.metadata.description,
+    title: dictionary.metadata.title || '구리이단상담소',
+    description: dictionary.metadata.description || '신천지 관련 전문 상담',
     icons: {
       icon: [
         { url: '/favicon/favicon-16*16.png', sizes: '16x16', type: 'image/png' },

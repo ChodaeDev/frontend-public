@@ -86,7 +86,11 @@ function BoardList({
 }
 
 export default function BoardPreviewSection({ dictionary, locale }: BoardPreviewSectionProps) {
-  const { counselingTitle, damageCasesTitle, viewAll } = dictionary.home.boardPreview;
+  const {
+    counselingTitle = '상담 게시판',
+    damageCasesTitle = '신천지 피해사례',
+    viewAll = '전체 보기',
+  } = dictionary.home.boardPreview;
 
   return (
     <section className={'w-full mt-10 mb-20'}>

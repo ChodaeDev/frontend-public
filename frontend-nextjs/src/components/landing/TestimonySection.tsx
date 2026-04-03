@@ -45,7 +45,7 @@ const smBreakpoint = 640;
 const scrollSpeed = 0.4;
 
 export default function TestimonySection({ dictionary, locale }: TestimonySectionProps) {
-  const { title, viewAll } = dictionary.home.testimony;
+  const { title = '후기 및 간증 인터뷰', viewAll = '전체 보기' } = dictionary.home.testimony;
   const items = mockTestimonies;
   const totalItems = items.length;
   const displayItems = [...items, ...items];

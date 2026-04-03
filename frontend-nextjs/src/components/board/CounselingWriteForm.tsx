@@ -132,9 +132,9 @@ export default function CounselingWriteForm() {
         <input type={'hidden'} name={'userName'} value={user.username} />
 
         <FormInput
-          label={t.title}
+          label={t.title || '제목'}
           name={'title'}
-          placeholder={t.titlePlaceholder}
+          placeholder={t.titlePlaceholder || '상담 제목을 입력하세요'}
           required
           error={state.fieldErrors.title}
           defaultValue={state.previousInput.title}
@@ -142,7 +142,7 @@ export default function CounselingWriteForm() {
 
         <div>
           <label htmlFor={'counselType'} className={labelStyle}>
-            {t.counselType}
+            {t.counselType || '상담 유형'}
             <span className={'text-error'}>{' *'}</span>
           </label>
           <select
@@ -153,11 +153,11 @@ export default function CounselingWriteForm() {
             defaultValue={state.previousInput.counselType ?? ''}
             className={cn(selectStyle, state.fieldErrors.counselType && 'border-error')}
           >
-            <option value={''}>{t.counselTypePlaceholder}</option>
-            <option value={'self'}>{t.counselTypeSelf}</option>
-            <option value={'family'}>{t.counselTypeFamily}</option>
-            <option value={'friend'}>{t.counselTypeFriend}</option>
-            <option value={'etc'}>{t.counselTypeEtc}</option>
+            <option value={''}>{t.counselTypePlaceholder || '상담 유형을 선택하세요'}</option>
+            <option value={'self'}>{t.counselTypeSelf || '본인 상담'}</option>
+            <option value={'family'}>{t.counselTypeFamily || '가족 상담'}</option>
+            <option value={'friend'}>{t.counselTypeFriend || '지인 상담'}</option>
+            <option value={'etc'}>{t.counselTypeEtc || '기타 상담'}</option>
           </select>
           {state.fieldErrors.counselType && (
             <p className={'mt-1 text-xs text-error'}>
@@ -167,9 +167,9 @@ export default function CounselingWriteForm() {
         </div>
 
         <FormTextarea
-          label={t.content}
+          label={t.content || '내용'}
           name={'content'}
-          placeholder={t.contentPlaceholder}
+          placeholder={t.contentPlaceholder || '상담 내용을 자세히 작성해주세요'}
           rows={8}
           required
           error={state.fieldErrors.content}
@@ -178,7 +178,7 @@ export default function CounselingWriteForm() {
 
         <div>
           <label htmlFor={'applicantName'} className={labelStyle}>
-            {t.applicantName}
+            {t.applicantName || '신청자'}
           </label>
           <input
             id={'applicantName'}
@@ -189,10 +189,10 @@ export default function CounselingWriteForm() {
         </div>
 
         <FormInput
-          label={t.phone}
+          label={t.phone || '연락처'}
           name={'phone'}
           type={'tel'}
-          placeholder={t.phonePlaceholder}
+          placeholder={t.phonePlaceholder || '연락 가능한 전화번호를 입력하세요'}
           required
           error={state.fieldErrors.phone}
           defaultValue={state.previousInput.phone ?? user.phone}
@@ -206,7 +206,7 @@ export default function CounselingWriteForm() {
             className={'h-4 w-4 rounded border-gray7 accent-accent1'}
           />
           <label htmlFor={'isPrivate'} className={'text-sm text-main'}>
-            {t.isPrivate}
+            {t.isPrivate || '비공개'}
           </label>
         </div>
 
@@ -222,14 +222,14 @@ export default function CounselingWriteForm() {
             onClick={() => setShowCancelModal(true)}
             className={cn(cancelButtonStyle, 'cursor-pointer text-center')}
           >
-            {t.cancel}
+            {t.cancel || '취소'}
           </button>
           <button
             type={'button'}
             onClick={() => setShowSubmitModal(true)}
             className={cn(buttonPrimaryStyle, 'cursor-pointer')}
           >
-            {t.submit}
+            {t.submit || '신청하기'}
           </button>
         </div>
       </form>
@@ -238,10 +238,10 @@ export default function CounselingWriteForm() {
         isOpen={showCancelModal}
         onClose={() => setShowCancelModal(false)}
         onConfirm={() => router.push(`/${ locale }/board/counseling`)}
-        title={t.cancelConfirmTitle}
-        message={t.cancelConfirmMessage}
-        confirmText={dictionary.common.confirm}
-        cancelText={dictionary.common.cancel}
+        title={t.cancelConfirmTitle || '취소 확인'}
+        message={t.cancelConfirmMessage || '작성 중인 내용이 사라집니다. 정말 취소하시겠습니까?'}
+        confirmText={dictionary.common.confirm || '확인'}
+        cancelText={dictionary.common.cancel || '취소'}
       />
 
       <ConfirmModal
@@ -251,10 +251,10 @@ export default function CounselingWriteForm() {
           setShowSubmitModal(false);
           formRef.current?.requestSubmit();
         }}
-        title={t.submitConfirmTitle}
-        message={t.submitConfirmMessage}
-        confirmText={t.submit}
-        cancelText={dictionary.common.cancel}
+        title={t.submitConfirmTitle || '신청 확인'}
+        message={t.submitConfirmMessage || '상담을 신청하시겠습니까?'}
+        confirmText={t.submit || '신청하기'}
+        cancelText={dictionary.common.cancel || '취소'}
       />
     </>
   );

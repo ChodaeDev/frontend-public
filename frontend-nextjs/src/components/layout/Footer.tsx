@@ -31,10 +31,10 @@ const Footer = () => {
 
   // 하단 링크 버튼들
   const footerLinks = [
-    { key: 'terms', label: t.footer.terms },
-    { key: 'privacy', label: t.footer.privacy },
-    { key: 'emailPolicy', label: t.footer.emailPolicy },
-    { key: 'directions', label: t.footer.directions },
+    { key: 'terms', label: t.footer.terms || '이용약관' },
+    { key: 'privacy', label: t.footer.privacy || '개인정보처리방침' },
+    { key: 'emailPolicy', label: t.footer.emailPolicy || '이메일집단수집거부' },
+    { key: 'directions', label: t.footer.directions || '오시는길' },
   ];
 
   const handleFooterLinkClick = (key: string) => {
@@ -79,12 +79,12 @@ const Footer = () => {
             {/* 좌측: siteName + 링크 버튼들 */}
             <div className={'w-full lg:w-2/5 flex flex-col gap-0.5 sm:gap-1.5'}>
               <p className={'flex items-center gap-1 text-2xl font-black text-main'}>
-                <Image src={'/assets/images/logo.png'} alt={t.header.logoAlt} width={36} height={36} />
+                <Image src={'/assets/images/logo.png'} alt={t.header.logoAlt || '로고 이미지'} width={36} height={36} />
 
-                {t.header.siteName}
+                {t.header.siteName || '신천지 전문상담소'}
               </p>
               {/* 조직명 */}
-              <p className={'text-sub'}>{t.footer.organizationName}</p>
+              <p className={'text-sub'}>{t.footer.organizationName || '대한예수교장로회(합동) 초대교회 부설 구리이단상담소'}</p>
 
               {/* 링크 버튼들 */}
               <div className={'flex items-center gap-2 flex-wrap'}>
@@ -107,23 +107,23 @@ const Footer = () => {
             {/* 우측: 교회 정보 + Copyright */}
             <div className={'w-full lg:w-3/5 flex flex-col gap-1 lg:gap-2 text-xs flex-1'}>
               {/* 주소 */}
-              <InfoItem label={t.footer.addressLabel} value={t.footer.addressValue} />
+              <InfoItem label={t.footer.addressLabel || '주소'} value={t.footer.addressValue || '경기도 구리시 아차산로 499(교문동, 중앙하이츠티움 B동 404호)'} />
 
               {/* 담임목사 + 고유번호 (데스크탑: 한 줄, 모바일: 세로) */}
               <div className={'flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6'}>
-                <InfoItem label={t.footer.minister} value={t.footer.ministerName} />
-                <InfoItem label={t.footer.registrationNumber} value={t.footer.registrationNumberValue} />
+                <InfoItem label={t.footer.minister || '담임목사'} value={t.footer.ministerName || '신현욱'} />
+                <InfoItem label={t.footer.registrationNumber || '고유번호'} value={t.footer.registrationNumberValue || '132-82-81271'} />
               </div>
 
               {/* 상담전화 + 후원계좌 (데스크탑: 한 줄, 모바일: 세로) */}
               <div className={'flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6'}>
-                <InfoItem label={t.footer.phone} value={t.footer.phoneNumber} />
-                <InfoItem label={t.footer.donation} value={t.footer.donationAccount} />
+                <InfoItem label={t.footer.phone || '상담전화'} value={t.footer.phoneNumber || 'T. 0505-369-3391'} />
+                <InfoItem label={t.footer.donation || '후원계좌'} value={t.footer.donationAccount || '농협 301-0176-8864-21(예금주: 초대교회)'} />
               </div>
 
               {/* Copyright */}
               <p className={'text-main/50 mt-4 sm:mt-0'}>
-                {t.footer.copyright}
+                {t.footer.copyright || '© 2015 구리이단상담소. All rights reserved.'}
               </p>
             </div>
           </div>

@@ -141,26 +141,26 @@ function LoginForm() {
       )}
 
       <div className={'w-full max-w-md rounded-3xl bg-background-secondary p-4 sm:p-10 sm:shadow-2xl'}>
-        <h1 className={'mb-2 text-center text-3xl font-bold text-main'}>{t.title}</h1>
+        <h1 className={'mb-2 text-center text-3xl font-bold text-main'}>{t.title || '로그인'}</h1>
         <p className={'mb-8 text-center text-sm text-sub'}>
-          {t.description}
+          {t.description || '회원정보가 없다면 아래 링크에서 회원가입을 진행해주세요.'}
         </p>
 
         <form action={formAction} className={'space-y-6'}>
           <FormInput
-            label={t.userId}
+            label={t.userId || '아이디'}
             name={'userId'}
-            placeholder={t.userIdPlaceholder}
+            placeholder={t.userIdPlaceholder || '아이디를 입력하세요'}
             required
             error={state.fieldErrors.userId}
             defaultValue={state.previousInput.userId}
           />
 
           <FormInput
-            label={t.password}
+            label={t.password || '비밀번호'}
             name={'password'}
             type={'password'}
-            placeholder={t.passwordPlaceholder}
+            placeholder={t.passwordPlaceholder || '비밀번호를 입력하세요'}
             required
             error={state.fieldErrors.password}
             defaultValue={state.previousInput.password}
@@ -172,15 +172,15 @@ function LoginForm() {
             </div>
           )}
 
-          <SubmitButton pendingText={t.submitting}>
-            {t.submit}
+          <SubmitButton pendingText={t.submitting || '로그인 중...'}>
+            {t.submit || '로그인'}
           </SubmitButton>
         </form>
 
         <div className={'mt-6 text-center text-sm text-sub'}>
-          {t.noAccount}{' '}
+          {t.noAccount || '아직 회원이 아니신가요?'}{' '}
           <Link href={`/${ locale }/signup`} className={'cursor-pointer font-semibold text-accent1 hover:underline underline-offset-4'}>
-            {t.signupLink}
+            {t.signupLink || '회원가입'}
           </Link>
         </div>
       </div>
