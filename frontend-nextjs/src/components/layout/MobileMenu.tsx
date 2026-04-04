@@ -41,8 +41,8 @@ const MobileMenu = () => {
   const handleLogout = useCallback(() => {
     dispatch(logout());
     close();
-    router.push(`/${ locale }`);
-  }, [dispatch, close, router, locale]);
+    router.refresh();
+  }, [dispatch, close, router]);
 
   // pathname 변경 시 메뉴 닫기
   useEffect(() => {

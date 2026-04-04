@@ -34,7 +34,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    router.push(`/${ locale }`);
+    router.refresh();
   };
 
   return (
