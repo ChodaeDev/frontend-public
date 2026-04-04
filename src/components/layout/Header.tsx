@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { LogIn, LogOut } from 'lucide-react';
 import ThemeSwitch from '@/components/theme/ThemeSwitch';
 import LanguageSwitch from '@/components/ui/LanguageSwitch';
@@ -16,6 +16,7 @@ import { cn } from '@/lib/cn';
 
 const Header = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const { dictionary, locale } = useTranslation();
@@ -63,7 +64,7 @@ const Header = () => {
               </button>
             ) : (
               <Link
-                href={`/${ locale }/login`}
+                href={`/${ locale }/login?returnTo=${ encodeURIComponent(pathname) }`}
                 className={'flex items-center gap-1.5 rounded-lg bg-background-secondary px-3.5 py-2 text-sm font-semibold text-main transition-opacity hover:opacity-90'}
               >
                 <LogIn size={16} />
