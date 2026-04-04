@@ -82,9 +82,10 @@ public class CounselingService {
         params.put("content", request.getContent());
         params.put("userId", request.getUserId());
         params.put("userName", request.getUserName());
+        params.put("isPrivate", request.getIsPrivate());
         params.put("phone", request.getPhone());
         params.put("counselType", request.getCounselType());
-        params.put("isPrivate", 0);
+        params.put("isPrivate", request.getIsPrivate());
 
         counselingMapper.insert(params);
         Object idObj = params.get("id");
@@ -92,7 +93,12 @@ public class CounselingService {
         if (id == null) {
             throw new IllegalStateException("상담 글 등록 후 ID를 가져오지 못했습니다.");
         }
-        counselingMapper.updateIsPrivate(id, id);
+        Object isPrivateObj = params.get("isPrivate");
+        Boolean isPrivate = isPrivateObj instanceof Boolean ? (Boolean) isPrivateObj : null;
+        if (isPrivate == null) {
+            throw new IllegalStateException("상담 글 등록 후 isPrivate를 가져오지 못했습니다.");
+        }
+        counselingMapper.updateIsPrivate(id, isPrivate);
         CounselingResponse created = counselingMapper.findById(id);
         if (created == null) {
             throw new IllegalStateException("등록된 상담 글을 조회할 수 없습니다.");
@@ -113,8 +119,8 @@ public class CounselingService {
         return counselingMapper.findById(id);
     }
 
-    public List<CommentResponse> findCommentsByPostId(Integer id) {
-        return commentMapper.findByIsPrivate(id);
+    public List<CommentResponse> findCommentsByPostId(Integer postId) {
+        return commentMapper.findByPostId(postId);
     }
 
     @Transactional
@@ -160,15 +166,15 @@ public class CounselingService {
         }
 
         CommentResponse comment = commentMapper.findById(commentId);
-        if (comment == null || comment.getIsPrivate() == null || !comment.getIsPrivate().equals(postId)) {
+        if (comment == null) {
             throw new IllegalArgumentException("댓글이 존재하지 않거나 접근 권한이 없습니다.");
         }
         if (!userId.equals(comment.getUserId())) {
             throw new IllegalArgumentException("댓글 수정 권한이 없습니다.");
         }
 
-        int updated = commentMapper.updateContentByIdAndUserIdAndIsPrivate(
-                commentId, userId, postId, request.getContent());
+        int updated = commentMapper.updateComment(
+                commentId, userId, request.getContent());
         if (updated == 0) {
             throw new IllegalStateException("댓글 수정에 실패했습니다.");
         }
@@ -192,14 +198,14 @@ public class CounselingService {
         }
 
         CommentResponse comment = commentMapper.findById(commentId);
-        if (comment == null || comment.getIsPrivate() == null || !comment.getIsPrivate().equals(postId)) {
-            throw new IllegalArgumentException("댓글이 존재하지 않거나 접근 권한이 없습니다.");
+        if (comment == null) {
+            throw new IllegalArgumentException("댓글이 존재하지 않습니다.");
         }
         if (!userId.equals(comment.getUserId())) {
             throw new IllegalArgumentException("댓글 삭제 권한이 없습니다.");
         }
 
-        int deleted = commentMapper.deleteByIdAndUserId(commentId, userId, postId);
+        int deleted = commentMapper.deleteComment(commentId, userId, postId);
         if (deleted == 0) {
             throw new IllegalStateException("댓글 삭제에 실패했습니다.");
         }

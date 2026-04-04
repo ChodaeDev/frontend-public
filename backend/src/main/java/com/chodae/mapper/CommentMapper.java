@@ -10,9 +10,9 @@ import java.util.Map;
 @Mapper
 public interface CommentMapper {
 
-    List<CommentResponse> findByIsPrivate(@Param("id") Integer id);
+    List<CommentResponse> findByPostId(@Param("postId") Integer postId);
 
-    CommentResponse findById(@Param("id") Integer id);
+    CommentResponse findById(@Param("commentId") Integer commentId);
 
     int countCommentsByPostId(@Param("postId") Integer postId);
 
@@ -20,12 +20,11 @@ public interface CommentMapper {
 
     int deleteCommentsByPostId(@Param("postId") Integer postId);
 
-    int updateContentByIdAndUserIdAndIsPrivate(@Param("id") Integer id,
+    int deleteComment(@Param("commentId") Integer commentId,
             @Param("userId") String userId,
-            @Param("isPrivate") Integer isPrivate,
-            @Param("content") String content);
+            @Param("postId") Integer postId);
 
-    int deleteByIdAndUserId(@Param("id") Integer id,
+    int updateComment(@Param("commentId") Integer commentId,
             @Param("userId") String userId,
-            @Param("isPrivate") Integer isPrivate);
+            @Param("content") String content);
 }

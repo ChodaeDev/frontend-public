@@ -13,16 +13,16 @@
         <result property="createDate" column="create_date"/>
     </resultMap>
 
-    <select id="findByIsPrivate" resultMap="CommentResponseMap">
+    <select id="findByPostId" resultMap="CommentResponseMap">
         SELECT id, user_id, user_name, content, is_private, confirm, create_date
         FROM counseling_comment
-        WHERE id = #{id}
+        WHERE post_id = #{postId}
         ORDER BY create_date ASC
     </select>
 
     <select id="findById" resultMap="CommentResponseMap">
         SELECT id, user_id, user_name, content, is_private, confirm, create_date
-        FROM counseling_comment WHERE id = #{id}
+        FROM counseling_comment WHERE id = #{commentId}
     </select>
 
     <select id="countCommentsByPostId" resultType="int">
@@ -34,22 +34,22 @@
         VALUES (#{userId}, #{userName}, #{content}, #{postId}, #{confirm}, NOW())
     </insert>
 
-    <delete id="deleteCommentsByPostId">
-        DELETE FROM counseling_comment WHERE id = #{postId}
-    </delete>
-    
-    <update id="updateContentByIdAndUserIdAndIsPrivate">
+    <update id="updateComment">
         UPDATE counseling_comment
         SET content = #{content}
-        WHERE id = #{id}
+        WHERE id = #{commentId}
           AND user_id = #{userId}
-          AND is_private = #{isPrivate}
     </update>
 
-    <delete id="deleteByIdAndUserIdAndIsPrivate">
+    <delete id="deleteComment">
         DELETE FROM counseling_comment
-        WHERE id = #{id}
+        WHERE post_id = #{postId}
           AND user_id = #{userId}
-          AND is_private = #{isPrivate}
+          AND id = #{commentId}
     </delete>
+
+    <delete id="deleteCommentsByPostId">
+        DELETE FROM counseling_comment WHERE post_id = #{postId}
+    </delete>
+
 </mapper>
