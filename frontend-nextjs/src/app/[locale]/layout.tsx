@@ -39,10 +39,10 @@ export async function generateMetadata({
     description: dictionary.metadata.description || '신천지 관련 전문 상담',
     icons: {
       icon: [
-        { url: '/favicon/favicon-16*16.png', sizes: '16x16', type: 'image/png' },
-        { url: '/favicon/favicon-32*32.png', sizes: '32x32', type: 'image/png' },
-        { url: '/favicon/favicon-64*64.png', sizes: '64x64', type: 'image/png' },
-        { url: '/favicon/favicon-256*256.png', sizes: '256x256', type: 'image/png' },
+        { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/favicon/favicon-64x64.png', sizes: '64x64', type: 'image/png' },
+        { url: '/favicon/favicon-256x256.png', sizes: '256x256', type: 'image/png' },
       ],
     },
   };
