@@ -194,10 +194,11 @@ DROP TABLE IF EXISTS `counseling_comment`;
 ;
 CREATE TABLE `counseling_comment` (
     `id` int NOT NULL AUTO_INCREMENT COMMENT '번호',
+    `post_id` int NOT NULL COMMENT '상담 글 id',
     `user_id` varchar(100) DEFAULT NULL COMMENT '작성자id',
     `user_name` varchar(100) NOT NULL COMMENT '작성자 이름',
     `content` text COMMENT '댓글 내용',
-    `is_private` int NOT NULL COMMENT 'is_private (상담 글 참조)',
+    `is_private` int DEFAULT NULL COMMENT 'is_private (상담 글 참조)',
     `confirm` varchar(20) DEFAULT NULL COMMENT 'confirm',
     `create_date` datetime DEFAULT NULL COMMENT '작성일자',
     `modified_date` datetime DEFAULT NULL COMMENT '수정일자',
@@ -222,7 +223,7 @@ CREATE TABLE `about_post` (
     phone VARCHAR(50),
     counsel_type VARCHAR(100),
     comment_count INT NOT NULL DEFAULT 0,
-    is_private INT NOT NULL,
+    is_private INT DEFAULT NULL,
     create_date DATETIME,
     modified_date DATETIME
 );
@@ -233,7 +234,7 @@ CREATE TABLE `about_comment` (
     user_id VARCHAR(100),
     user_name VARCHAR(100) NOT NULL,
     content TEXT,
-    is_private INT NOT NULL,
+    is_private INT DEFAULT NULL,
     confirm VARCHAR(20),
     create_date DATETIME
 );
@@ -249,7 +250,7 @@ CREATE TABLE `freeboard_post` (
     phone VARCHAR(50),
     counsel_type VARCHAR(100),
     comment_count INT NOT NULL DEFAULT 0,
-    is_private INT NOT NULL,
+    is_private INT DEFAULT NULL,
     create_date DATETIME,
     modified_date DATETIME
 );
@@ -260,7 +261,7 @@ CREATE TABLE `freeboard_comment` (
     user_id VARCHAR(100),
     user_name VARCHAR(100) NOT NULL,
     content TEXT,
-    is_private INT NOT NULL,
+    is_private INT DEFAULT NULL,
     confirm VARCHAR(20),
     create_date DATETIME
 );
@@ -276,7 +277,7 @@ CREATE TABLE `withdrawal_post` (
     phone VARCHAR(50),
     counsel_type VARCHAR(100),
     comment_count INT NOT NULL DEFAULT 0,
-    is_private INT NOT NULL,
+    is_private INT DEFAULT NULL,
     create_date DATETIME,
     modified_date DATETIME
 );
@@ -287,7 +288,7 @@ CREATE TABLE `withdrawal_comment` (
     user_id VARCHAR(100),
     user_name VARCHAR(100) NOT NULL,
     content TEXT,
-    is_private INT NOT NULL,
+    is_private INT DEFAULT NULL,
     confirm VARCHAR(20),
     create_date DATETIME
 );
@@ -303,7 +304,7 @@ CREATE TABLE `prevention_post` (
     phone VARCHAR(50),
     counsel_type VARCHAR(100),
     comment_count INT NOT NULL DEFAULT 0,
-    is_private INT NOT NULL,
+    is_private INT DEFAULT NULL,
     create_date DATETIME,
     modified_date DATETIME
 );
@@ -314,7 +315,7 @@ CREATE TABLE `prevention_comment` (
     user_id VARCHAR(100),
     user_name VARCHAR(100) NOT NULL,
     content TEXT,
-    is_private INT NOT NULL,
+    is_private INT DEFAULT NULL,
     confirm VARCHAR(20),
     create_date DATETIME
 );
@@ -330,7 +331,7 @@ CREATE TABLE `doctrine_post` (
     phone VARCHAR(50),
     counsel_type VARCHAR(100),
     comment_count INT NOT NULL DEFAULT 0,
-    is_private INT NOT NULL,
+    is_private INT DEFAULT NULL,
     create_date DATETIME,
     modified_date DATETIME
 );
@@ -341,7 +342,7 @@ CREATE TABLE `doctrine_comment` (
     user_id VARCHAR(100),
     user_name VARCHAR(100) NOT NULL,
     content TEXT,
-    is_private INT NOT NULL,
+    is_private INT DEFAULT NULL,
     confirm VARCHAR(20),
     create_date DATETIME
 );
@@ -357,7 +358,7 @@ CREATE TABLE `scj_info_post` (
     phone VARCHAR(50),
     counsel_type VARCHAR(100),
     comment_count INT NOT NULL DEFAULT 0,
-    is_private INT NOT NULL,
+    is_private INT DEFAULT NULL,
     create_date DATETIME,
     modified_date DATETIME
 );
@@ -368,7 +369,7 @@ CREATE TABLE `scj_info_comment` (
     user_id VARCHAR(100),
     user_name VARCHAR(100) NOT NULL,
     content TEXT,
-    is_private INT NOT NULL,
+    is_private INT DEFAULT NULL,
     confirm VARCHAR(20),
     create_date DATETIME
 );
