@@ -113,7 +113,7 @@
     "userIdPlaceholder": "使用するユーザーIDを入力してください",
     "password": "パスワード",
     "passwordPlaceholder": "パスワードを入力してください",
-    "username": "氏名",
+    "userName": "氏名",
     "usernamePlaceholder": "氏名を入力してください",
     "nickname": "ニックネーム",
     "nicknamePlaceholder": "ニックネームを入力してください",
@@ -146,7 +146,7 @@
       "letterRequired": "英字を含む必要があります",
       "numberRequired": "数字を含む必要があります"
     },
-    "username": {
+    "userName": {
       "required": "氏名を入力してください",
       "min": "氏名は2文字以上である必要があります",
       "max": "氏名は20文字以下である必要があります"
@@ -336,6 +336,25 @@
     "errors": {
       "serverError": "サーバーに接続できません。バックエンドサーバーが稼働中か確認してください。",
       "generic": "相談申請中にエラーが発生しました。"
-    }
+    },
+    "counselingPost": "相談投稿",
+    "backToList": "一覧に戻る",
+    "edit": "編集",
+    "delete": "削除",
+    "deleteConfirmTitle": "削除確認",
+    "deleteConfirmMessage": "本当に削除しますか？削除された投稿は復元できません。",
+    "save": "保存",
+    "saving": "保存中...",
+    "comments": "コメント",
+    "commentPlaceholder": "コメントを入力してください",
+    "commentSubmit": "投稿",
+    "commentSubmitting": "投稿中...",
+    "commentEmpty": "コメントがありません。",
+    "loginToComment": "コメントを書くにはログインしてください。",
+    "privateNoAccess": "非公開の投稿です。作成者のみ閲覧できます。",
+    "loading": "読み込み中...",
+    "postNotFound": "投稿が見つかりません。",
+    "createdDate": "作成日",
+    "modifiedDate": "修正日"
   }
 }

@@ -113,7 +113,7 @@
     "userIdPlaceholder": "Geben Sie Ihre gewünschte Benutzer-ID ein",
     "password": "Passwort",
     "passwordPlaceholder": "Geben Sie Ihr Passwort ein",
-    "username": "Name",
+    "userName": "Name",
     "usernamePlaceholder": "Geben Sie Ihren Namen ein",
     "nickname": "Spitzname",
     "nicknamePlaceholder": "Geben Sie Ihren Spitznamen ein",
@@ -146,7 +146,7 @@
       "letterRequired": "Muss mindestens einen Buchstaben enthalten",
       "numberRequired": "Muss mindestens eine Zahl enthalten"
     },
-    "username": {
+    "userName": {
       "required": "Bitte geben Sie Ihren Namen ein",
       "min": "Name muss mindestens 2 Zeichen lang sein",
       "max": "Name darf maximal 20 Zeichen lang sein"
@@ -336,6 +336,25 @@
     "errors": {
       "serverError": "Verbindung zum Server nicht möglich. Bitte überprüfen Sie, ob der Backend-Server läuft.",
       "generic": "Bei der Beratungsanfrage ist ein Fehler aufgetreten."
-    }
+    },
+    "counselingPost": "Beratungsbeitrag",
+    "backToList": "Zurück zur Liste",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "deleteConfirmTitle": "Löschen bestätigen",
+    "deleteConfirmMessage": "Möchten Sie wirklich löschen? Gelöschte Beiträge können nicht wiederhergestellt werden.",
+    "save": "Speichern",
+    "saving": "Wird gespeichert...",
+    "comments": "Kommentare",
+    "commentPlaceholder": "Kommentar eingeben",
+    "commentSubmit": "Veröffentlichen",
+    "commentSubmitting": "Wird veröffentlicht...",
+    "commentEmpty": "Keine Kommentare vorhanden.",
+    "loginToComment": "Bitte melden Sie sich an, um einen Kommentar zu schreiben.",
+    "privateNoAccess": "Dies ist ein privater Beitrag. Nur der Autor kann ihn einsehen.",
+    "loading": "Wird geladen...",
+    "postNotFound": "Beitrag nicht gefunden.",
+    "createdDate": "Erstellt am",
+    "modifiedDate": "Geändert am"
   }
 }

@@ -3,8 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export type UserInfo = {
   id: number;
   userId: string;
-  username: string;
-  nickname?: string;
+  userName: string;
+  nickName?: string;
   phone?: string;
   church?: string;
   birthday?: string;

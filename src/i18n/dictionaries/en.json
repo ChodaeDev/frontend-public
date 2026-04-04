@@ -113,7 +113,7 @@
     "userIdPlaceholder": "Enter your desired user ID",
     "password": "Password",
     "passwordPlaceholder": "Enter your password",
-    "username": "Name",
+    "userName": "Name",
     "usernamePlaceholder": "Enter your name",
     "nickname": "Nickname",
     "nicknamePlaceholder": "Enter your nickname",
@@ -146,7 +146,7 @@
       "letterRequired": "Must contain at least one letter",
       "numberRequired": "Must contain at least one number"
     },
-    "username": {
+    "userName": {
       "required": "Please enter your name",
       "min": "Name must be at least 2 characters",
       "max": "Name must be 20 characters or less"
@@ -336,6 +336,25 @@
     "errors": {
       "serverError": "Cannot connect to server. Please check if the backend server is running.",
       "generic": "An error occurred while submitting the counseling request."
-    }
+    },
+    "counselingPost": "Counseling Post",
+    "backToList": "Back to list",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirmTitle": "Delete Confirmation",
+    "deleteConfirmMessage": "Are you sure you want to delete? Deleted posts cannot be recovered.",
+    "save": "Save",
+    "saving": "Saving...",
+    "comments": "Comments",
+    "commentPlaceholder": "Write a comment",
+    "commentSubmit": "Post",
+    "commentSubmitting": "Posting...",
+    "commentEmpty": "No comments yet.",
+    "loginToComment": "Please log in to write a comment.",
+    "privateNoAccess": "This is a private post. Only the author can view it.",
+    "loading": "Loading...",
+    "postNotFound": "Post not found.",
+    "createdDate": "Created",
+    "modifiedDate": "Modified"
   }
 }

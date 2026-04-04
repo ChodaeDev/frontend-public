@@ -25,11 +25,11 @@ export const signupSchema = z.object({
     .min(8, '비밀번호는 8자 이상이어야 합니다')
     .regex(/[A-Za-z]/, '영문자를 포함해야 합니다')
     .regex(/[0-9]/, '숫자를 포함해야 합니다'),
-  username: z.string()
+  userName: z.string()
     .min(1, '이름을 입력해주세요')
     .min(2, '이름은 2자 이상이어야 합니다')
     .max(20, '이름은 20자 이하여야 합니다'),
-  nickname: z.string()
+  nickName: z.string()
     .max(20, '닉네임은 20자 이하여야 합니다')
     .optional()
     .or(z.literal('')),
