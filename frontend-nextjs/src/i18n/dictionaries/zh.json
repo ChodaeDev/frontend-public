@@ -113,7 +113,7 @@
     "userIdPlaceholder": "请输入要使用的用户名",
     "password": "密码",
     "passwordPlaceholder": "请输入密码",
-    "username": "姓名",
+    "userName": "姓名",
     "usernamePlaceholder": "请输入姓名",
     "nickname": "昵称",
     "nicknamePlaceholder": "请输入昵称",
@@ -146,7 +146,7 @@
       "letterRequired": "必须包含英文字母",
       "numberRequired": "必须包含数字"
     },
-    "username": {
+    "userName": {
       "required": "请输入姓名",
       "min": "姓名至少需要2个字符",
       "max": "姓名不能超过20个字符"
@@ -336,6 +336,25 @@
     "errors": {
       "serverError": "无法连接服务器。请确认后端服务器是否正在运行。",
       "generic": "提交咨询申请时发生错误。"
-    }
+    },
+    "counselingPost": "咨询帖子",
+    "backToList": "返回列表",
+    "edit": "编辑",
+    "delete": "删除",
+    "deleteConfirmTitle": "删除确认",
+    "deleteConfirmMessage": "确定要删除吗？删除后的帖子无法恢复。",
+    "save": "保存",
+    "saving": "保存中...",
+    "comments": "评论",
+    "commentPlaceholder": "请输入评论",
+    "commentSubmit": "发布",
+    "commentSubmitting": "发布中...",
+    "commentEmpty": "暂无评论。",
+    "loginToComment": "请登录后发表评论。",
+    "privateNoAccess": "这是私密帖子，只有作者可以查看。",
+    "loading": "加载中...",
+    "postNotFound": "未找到帖子。",
+    "createdDate": "创建日期",
+    "modifiedDate": "修改日期"
   }
 }

@@ -142,20 +142,20 @@ export default function SignUpPage() {
           />
 
           <FormInput
-            label={t.username || '이름'}
-            name={'username'}
+            label={t.userName || '이름'}
+            name={'userName'}
             placeholder={t.usernamePlaceholder || '이름을 입력하세요'}
             required
-            error={state.fieldErrors.username}
-            defaultValue={state.previousInput.username}
+            error={state.fieldErrors.userName}
+            defaultValue={state.previousInput.userName}
           />
 
           <FormInput
             label={t.nickname || '닉네임'}
-            name={'nickname'}
+            name={'nickName'}
             placeholder={t.nicknamePlaceholder || '닉네임을 입력하세요'}
-            error={state.fieldErrors.nickname}
-            defaultValue={state.previousInput.nickname}
+            error={state.fieldErrors.nickName}
+            defaultValue={state.previousInput.nickName}
           />
 
           <FormInput

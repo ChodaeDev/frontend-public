@@ -1,4 +1,6 @@
-import Link from 'next/link';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import { Lock } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import { cn } from '@/lib/cn';
@@ -44,6 +46,8 @@ export default function BoardTable({
   emptyMessage = '게시글이 없습니다.',
   labels,
 }: BoardTableProps) {
+  const router = useRouter();
+
   // 내림차순 번호 계산: 전체 개수 - ((현재 페이지 - 1) * 페이지당 개수) - index
   const getRowNumber = (index: number) => {
     return itemTotal - ((currentPage - 1) * itemCount) - index;
@@ -88,7 +92,12 @@ export default function BoardTable({
             posts.map((post, index) => (
               <tr
                 key={post.id}
-                className={cn('border-b border-gray7 hover:bg-gray9/50 transition-colors', post.isNotice && 'bg-accent1/5')}
+                onClick={() => router.push(`/${ locale }${ basePath }/${ post.id }`)}
+                className={cn(
+                  'border-b border-gray7 transition-colors cursor-pointer',
+                  'hover:bg-accent1/5',
+                  post.isNotice && 'bg-accent1/5 hover:bg-accent1/10',
+                )}
               >
                 <td className={'py-3.5 px-2 text-center text-sm'}>
                   {post.isNotice ? (
@@ -100,16 +109,13 @@ export default function BoardTable({
                   )}
                 </td>
                 <td className={'py-3.5 px-4'}>
-                  <Link
-                    href={`/${ locale }${ basePath }/${ post.id }`}
-                    className={'text-main hover:text-accent1 transition-colors line-clamp-1 inline-flex items-center gap-1.5'}
-                  >
+                  <span className={'text-main transition-colors line-clamp-1 inline-flex items-center gap-1.5'}>
                     {post.isPrivate && <Lock className={'size-3.5 text-gray3 shrink-0'} />}
                     {post.title}
                     <span className={'text-xs text-accent1 font-medium'}>
                       {'['}{post.commentCount ?? 0}{']'}
                     </span>
-                  </Link>
+                  </span>
                 </td>
                 <td className={'py-3.5 px-2 text-center text-sm text-sub'}>
                   {post.author}

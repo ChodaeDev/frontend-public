@@ -53,7 +53,7 @@ async function counselingAction(prev: FormState, formData: FormData): Promise<Fo
     };
   }
 
-  const isPrivate = formData.get('isPrivate') === 'on';
+  const isPrivate = formData.get('isPrivate') === 'on' ? 1 : 0;
   const userId = formData.get('userId') as string;
   const userName = formData.get('userName') as string;
 
@@ -129,7 +129,7 @@ export default function CounselingWriteForm() {
     <>
       <form ref={formRef} action={action} className={'grid grid-cols-1 gap-6'}>
         <input type={'hidden'} name={'userId'} value={user.userId} />
-        <input type={'hidden'} name={'userName'} value={user.username} />
+        <input type={'hidden'} name={'userName'} value={user.userName} />
 
         <FormInput
           label={t.title || '제목'}
@@ -182,7 +182,7 @@ export default function CounselingWriteForm() {
           </label>
           <input
             id={'applicantName'}
-            value={user.username}
+            value={user.userName}
             disabled
             className={cn(inputStyle, 'bg-gray7 cursor-not-allowed')}
           />
