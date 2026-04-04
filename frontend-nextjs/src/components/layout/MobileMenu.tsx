@@ -130,7 +130,7 @@ const MobileMenu = () => {
                 </button>
               ) : (
                 <Link
-                  href={`/${ locale }/login`}
+                  href={`/${ locale }/login?returnTo=${ encodeURIComponent(pathname) }`}
                   className={'flex items-center gap-1.5 rounded-lg bg-accent1 px-3.5 py-2 text-sm font-semibold text-inverse transition-opacity hover:opacity-90'}
                 >
                   <LogIn size={16} />
