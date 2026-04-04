@@ -56,9 +56,12 @@ export default function BoardTable({
     return itemTotal - ((currentPage - 1) * itemCount) - index;
   };
 
-  // 내가 쓴 글이 아니고, 비공개이면 잠금
+  const isAdmin = user?.userId === 'admin';
+
+  // 관리자이거나 내 글이면 잠금 해제, 그 외 비공개 글은 잠금
   const isLocked = (post: BoardPost) => {
-    return post.userId !== user?.userId && post.isPrivate !== 0;
+    if (isAdmin || post.userId === user?.userId) return false;
+    return post.isPrivate !== 0;
   };
 
   const handleRowClick = (post: BoardPost) => {

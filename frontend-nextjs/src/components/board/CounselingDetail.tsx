@@ -67,7 +67,8 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   const [commentText, setCommentText] = useState('');
   const [commentSubmitting, setCommentSubmitting] = useState(false);
 
-  const isOwner = user && post && (user.userId === post.userId);
+  const isAdmin = user?.userId === 'admin';
+  const isOwner = user && post && (isAdmin || user.userId === post.userId);
 
   const counselTypeMap: Record<string, string> = {
     self: t.counselTypeSelf || '본인 상담',
@@ -111,7 +112,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   // 비공개 글 접근 권한 확인
   useEffect(() => {
     if (!post) return;
-    if (post.isPrivate === 1 && (!user || user.userId !== post.userId)) {
+    if (post.isPrivate === 1 && (!user || (user.userId !== 'admin' && user.userId !== post.userId))) {
       setNoAccess(true);
     } else {
       setNoAccess(false);
