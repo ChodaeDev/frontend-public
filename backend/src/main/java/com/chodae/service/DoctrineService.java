@@ -113,7 +113,11 @@ public class DoctrineService {
         params.put("confirm", "N");
 
         doctrineCommentMapper.insert(params);
-        Integer commentId = (Integer) params.get("id");
+        Object commentIdObj = params.get("id");
+        Integer commentId = commentIdObj instanceof Number ? ((Number) commentIdObj).intValue() : null;
+        if (commentId == null) {
+            throw new IllegalStateException("댓글 등록 후 ID를 가져오지 못했습니다.");
+        }
 
         int count = doctrineCommentMapper.countByIsPrivate(postId);
         doctrinePostMapper.updateCommentCount(postId, count);
