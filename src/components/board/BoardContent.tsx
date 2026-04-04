@@ -13,6 +13,7 @@ import { cn } from '@/lib/cn';
 interface CounselingPost {
   id: number;
   title: string;
+  userId: string;
   userName: string;
   commentCount: number;
   isPrivate: number;
@@ -90,9 +91,10 @@ export default function BoardContent({
         id: item.id,
         title: item.title,
         author: item.userName,
+        userId: item.userId,
         date: dayjs(item.createDate).format('YYYY-MM-DD'),
         commentCount: item.commentCount,
-        isPrivate: item.isPrivate === 1,
+        isPrivate: item.isPrivate,
       }));
       setPosts(mapped);
       setTotalPages(data.paging.totalPages);
