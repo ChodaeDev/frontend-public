@@ -3,16 +3,18 @@
 import { useRouter } from 'next/navigation';
 import { Lock } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { useAppSelector } from '@/store/hooks';
 import { cn } from '@/lib/cn';
 
 export interface BoardPost {
   id: number;
   title: string;
   author: string;
+  userId?: string;
   date: string;
   views?: number;
   commentCount?: number;
-  isPrivate?: boolean;
+  isPrivate?: number;
   isNotice?: boolean;
 }
 
@@ -47,10 +49,24 @@ export default function BoardTable({
   labels,
 }: BoardTableProps) {
   const router = useRouter();
+  const user = useAppSelector((state) => state.auth.user);
 
   // 내림차순 번호 계산: 전체 개수 - ((현재 페이지 - 1) * 페이지당 개수) - index
   const getRowNumber = (index: number) => {
     return itemTotal - ((currentPage - 1) * itemCount) - index;
+  };
+
+  // 내가 쓴 글이 아니고, 비공개이면 잠금
+  const isLocked = (post: BoardPost) => {
+    return post.userId !== user?.userId && post.isPrivate !== 0;
+  };
+
+  const handleRowClick = (post: BoardPost) => {
+    if (isLocked(post)) {
+      alert('비공개 글입니다. 작성자만 확인할 수 있습니다.');
+      return;
+    }
+    router.push(`/${ locale }${ basePath }/${ post.id }`);
   };
 
   return (
@@ -92,7 +108,7 @@ export default function BoardTable({
             posts.map((post, index) => (
               <tr
                 key={post.id}
-                onClick={() => router.push(`/${ locale }${ basePath }/${ post.id }`)}
+                onClick={() => handleRowClick(post)}
                 className={cn(
                   'border-b border-gray7 transition-colors cursor-pointer',
                   'hover:bg-accent1/5',
@@ -110,7 +126,7 @@ export default function BoardTable({
                 </td>
                 <td className={'py-3.5 px-4'}>
                   <span className={'text-main transition-colors line-clamp-1 inline-flex items-center gap-1.5'}>
-                    {post.isPrivate && <Lock className={'size-3.5 text-gray3 shrink-0'} />}
+                    {isLocked(post) && <Lock className={'size-3.5 text-gray3 shrink-0'} />}
                     {post.title}
                     <span className={'text-xs text-accent1 font-medium'}>
                       {'['}{post.commentCount ?? 0}{']'}
