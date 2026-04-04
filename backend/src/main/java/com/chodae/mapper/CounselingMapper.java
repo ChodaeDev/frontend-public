@@ -18,7 +18,7 @@ public interface CounselingMapper {
 
     List<CounselingResponse> findByUserId(@Param("userId") String userId);
 
-    CounselingResponse findById(@Param("id") Integer id);
+    CounselingResponse findById(@Param("postId") Integer postId);
 
     CounselingResponse findByIdAndUserId(@Param("id") Integer id, @Param("userId") String userId);
 
@@ -28,7 +28,7 @@ public interface CounselingMapper {
 
     int updateIsPrivate(@Param("id") Integer id, @Param("isPrivate") Integer isPrivate);
 
-    int deleteById(@Param("id") Integer id);
+    int deletePostById(@Param("postId") Integer postId);
 
     int updateById(@Param("id") Integer id, @Param("params") Map<String, Object> params);
 }

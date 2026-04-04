@@ -14,18 +14,18 @@ public interface CommentMapper {
 
     CommentResponse findById(@Param("id") Integer id);
 
-    int countByIsPrivate(@Param("isPrivate") Integer isPrivate);
+    int countCommentsByPostId(@Param("postId") Integer postId);
 
     int insert(Map<String, Object> params);
 
-    int deleteByIsPrivate(@Param("id") Integer id);
+    int deleteCommentsByPostId(@Param("postId") Integer postId);
 
     int updateContentByIdAndUserIdAndIsPrivate(@Param("id") Integer id,
             @Param("userId") String userId,
             @Param("isPrivate") Integer isPrivate,
             @Param("content") String content);
 
-    int deleteByIdAndUserIdAndIsPrivate(@Param("id") Integer id,
+    int deleteByIdAndUserId(@Param("id") Integer id,
             @Param("userId") String userId,
             @Param("isPrivate") Integer isPrivate);
 }

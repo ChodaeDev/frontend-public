@@ -25,17 +25,17 @@
         FROM counseling_comment WHERE id = #{id}
     </select>
 
-    <select id="countByIsPrivate" resultType="int">
-        SELECT COUNT(*) FROM counseling_comment WHERE is_private = #{isPrivate}
+    <select id="countCommentsByPostId" resultType="int">
+        SELECT COUNT(*) FROM counseling_comment WHERE post_id = #{postId}
     </select>
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO counseling_comment (user_id, user_name, content, is_private, confirm, create_date)
-        VALUES (#{userId}, #{userName}, #{content}, #{isPrivate}, #{confirm}, NOW())
+        INSERT INTO counseling_comment (user_id, user_name, content, post_id, confirm, create_date)
+        VALUES (#{userId}, #{userName}, #{content}, #{postId}, #{confirm}, NOW())
     </insert>
 
-    <delete id="deleteByIsPrivate">
-        DELETE FROM counseling_comment WHERE id = #{id}
+    <delete id="deleteCommentsByPostId">
+        DELETE FROM counseling_comment WHERE id = #{postId}
     </delete>
     
     <update id="updateContentByIdAndUserIdAndIsPrivate">

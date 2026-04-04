@@ -128,13 +128,17 @@ public class CounselingService {
         params.put("userId", request.getUserId());
         params.put("userName", request.getUserName() != null ? request.getUserName() : "익명");
         params.put("content", request.getContent());
-        params.put("isPrivate", postId);
+        params.put("postId", postId);
         params.put("confirm", "N");
 
         commentMapper.insert(params);
-        Integer commentId = (Integer) params.get("id");
+        Object commentIdObj = params.get("id");
+        Integer commentId = commentIdObj instanceof Number ? ((Number) commentIdObj).intValue() : null;
+        if (commentId == null) {
+            throw new IllegalStateException("댓글 등록 후 ID를 가져오지 못했습니다.");
+        }
 
-        int count = commentMapper.countByIsPrivate(postId);
+        int count = commentMapper.countCommentsByPostId(postId);
         counselingMapper.updateCommentCount(postId, count);
 
         return commentMapper.findById(commentId);
@@ -195,12 +199,12 @@ public class CounselingService {
             throw new IllegalArgumentException("댓글 삭제 권한이 없습니다.");
         }
 
-        int deleted = commentMapper.deleteByIdAndUserIdAndIsPrivate(commentId, userId, postId);
+        int deleted = commentMapper.deleteByIdAndUserId(commentId, userId, postId);
         if (deleted == 0) {
             throw new IllegalStateException("댓글 삭제에 실패했습니다.");
         }
 
-        int count = commentMapper.countByIsPrivate(postId);
+        int count = commentMapper.countCommentsByPostId(postId);
         counselingMapper.updateCommentCount(postId, count);
 
         return new CommentDeleteResponse(commentId);
@@ -210,16 +214,16 @@ public class CounselingService {
      * 상담 글 삭제 (작성자 본인만). 연관 댓글(comments.is_private = 글 ID) 선삭제 후 글 삭제.
      */
     @Transactional
-    public CounselingDeleteResponse deleteById(Integer id) {
-        CounselingResponse post = counselingMapper.findById(id);
+    public CounselingDeleteResponse deletePostById(Integer postId) {
+        CounselingResponse post = counselingMapper.findById(postId);
         if (post == null) {
             throw new IllegalArgumentException("글이 존재하지 않거나 삭제 권한이 없습니다.");
         }
-        commentMapper.deleteByIsPrivate(id);
-        int deleted = counselingMapper.deleteById(id);
+        commentMapper.deleteCommentsByPostId(postId);
+        int deleted = counselingMapper.deletePostById(postId);
         if (deleted == 0) {
             throw new IllegalStateException("상담 글 삭제에 실패했습니다.");
         }
-        return new CounselingDeleteResponse(id);
+        return new CounselingDeleteResponse(postId);
     }
 }

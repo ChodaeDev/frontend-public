@@ -55,7 +55,7 @@
         SELECT id, title, content, user_id, user_name, phone, counsel_type,
                comment_count, is_private, create_date, modified_date
         FROM counseling_post
-        WHERE id = #{id}
+        WHERE id = #{postId}
     </select>
 
     <select id="findByIdAndUserId" resultMap="CounselingResponseMap">
@@ -78,8 +78,8 @@
         UPDATE counseling_post SET is_private = #{isPrivate}, modified_date = NOW() WHERE id = #{id}
     </update>
 
-    <delete id="deleteById">
-        DELETE FROM counseling_post WHERE id = #{id}
+    <delete id="deletePostById">
+        DELETE FROM counseling_post WHERE id = #{postId}
     </delete>
 
     <update id="updateById">
