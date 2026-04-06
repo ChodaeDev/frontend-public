@@ -23,6 +23,7 @@ public class FreeBoardService {
 
     private final FreeBoardPostMapper freeBoardPostMapper;
     private final FreeBoardCommentMapper freeBoardCommentMapper;
+    private final AccessControlService accessControlService;
 
     public List<FreeBoardResponse> findAll() {
         return freeBoardPostMapper.findAll();
@@ -73,6 +74,9 @@ public class FreeBoardService {
     }
 
     public FreeBoardResponse findByIdAndUserId(Integer id, String userId) {
+        if (accessControlService.isSuperAdmin(userId)) {
+            return freeBoardPostMapper.findById(id);
+        }
         return freeBoardPostMapper.findByIdAndUserId(id, userId);
     }
 

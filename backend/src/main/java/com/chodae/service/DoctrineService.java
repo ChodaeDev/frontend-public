@@ -23,6 +23,7 @@ public class DoctrineService {
 
     private final DoctrinePostMapper doctrinePostMapper;
     private final DoctrineCommentMapper doctrineCommentMapper;
+    private final AccessControlService accessControlService;
 
     public List<DoctrineResponse> findAll() {
         return doctrinePostMapper.findAll();
@@ -66,6 +67,9 @@ public class DoctrineService {
     }
 
     public DoctrineResponse findByIdAndUserId(Integer id, String userId) {
+        if (accessControlService.isSuperAdmin(userId)) {
+            return doctrinePostMapper.findById(id);
+        }
         return doctrinePostMapper.findByIdAndUserId(id, userId);
     }
 

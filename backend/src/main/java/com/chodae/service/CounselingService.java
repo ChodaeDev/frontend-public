@@ -25,6 +25,7 @@ public class CounselingService {
 
     private final CounselingMapper counselingMapper;
     private final CommentMapper commentMapper;
+    private final AccessControlService accessControlService;
 
     public List<CounselingResponse> findAll() {
         return counselingMapper.findAll();
@@ -72,6 +73,9 @@ public class CounselingService {
     }
 
     public CounselingResponse findByIdAndUserId(Integer id, String userId) {
+        if (accessControlService.isSuperAdmin(userId)) {
+            return counselingMapper.findById(id);
+        }
         return counselingMapper.findByIdAndUserId(id, userId);
     }
 

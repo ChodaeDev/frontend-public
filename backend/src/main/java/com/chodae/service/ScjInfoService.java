@@ -23,6 +23,7 @@ public class ScjInfoService {
 
     private final ScjInfoPostMapper scjInfoPostMapper;
     private final ScjInfoCommentMapper scjInfoCommentMapper;
+    private final AccessControlService accessControlService;
 
     public List<ScjInfoResponse> findAll() {
         return scjInfoPostMapper.findAll();
@@ -66,6 +67,9 @@ public class ScjInfoService {
     }
 
     public ScjInfoResponse findByIdAndUserId(Integer id, String userId) {
+        if (accessControlService.isSuperAdmin(userId)) {
+            return scjInfoPostMapper.findById(id);
+        }
         return scjInfoPostMapper.findByIdAndUserId(id, userId);
     }
 

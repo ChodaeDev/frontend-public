@@ -23,6 +23,7 @@ public class WithdrawalService {
 
     private final WithdrawalPostMapper withdrawalPostMapper;
     private final WithdrawalCommentMapper withdrawalCommentMapper;
+    private final AccessControlService accessControlService;
 
     public List<WithdrawalResponse> findAll() {
         return withdrawalPostMapper.findAll();
@@ -66,6 +67,9 @@ public class WithdrawalService {
     }
 
     public WithdrawalResponse findByIdAndUserId(Integer id, String userId) {
+        if (accessControlService.isSuperAdmin(userId)) {
+            return withdrawalPostMapper.findById(id);
+        }
         return withdrawalPostMapper.findByIdAndUserId(id, userId);
     }
 

@@ -25,6 +25,11 @@ public interface UserMapper {
     boolean existsByUserId(String userId);
 
     /**
+     * 사용자 ID의 슈퍼관리자 여부 확인
+     */
+    boolean isSuperAdminByUserId(@Param("userId") String userId);
+
+    /**
      * 사용자 등록
      */
     int insertUser(Map<String, Object> userMap);

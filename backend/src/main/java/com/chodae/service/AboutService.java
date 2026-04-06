@@ -23,6 +23,7 @@ public class AboutService {
 
     private final AboutPostMapper aboutPostMapper;
     private final AboutCommentMapper aboutCommentMapper;
+    private final AccessControlService accessControlService;
 
     public List<AboutResponse> findAll() {
         return aboutPostMapper.findAll();
@@ -70,6 +71,9 @@ public class AboutService {
     }
 
     public AboutResponse findByIdAndUserId(Integer id, String userId) {
+        if (accessControlService.isSuperAdmin(userId)) {
+            return aboutPostMapper.findById(id);
+        }
         return aboutPostMapper.findByIdAndUserId(id, userId);
     }
 

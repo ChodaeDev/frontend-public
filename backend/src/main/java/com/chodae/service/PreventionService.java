@@ -23,6 +23,7 @@ public class PreventionService {
 
     private final PreventionPostMapper preventionPostMapper;
     private final PreventionCommentMapper preventionCommentMapper;
+    private final AccessControlService accessControlService;
 
     public List<PreventionResponse> findAll() {
         return preventionPostMapper.findAll();
@@ -66,6 +67,9 @@ public class PreventionService {
     }
 
     public PreventionResponse findByIdAndUserId(Integer id, String userId) {
+        if (accessControlService.isSuperAdmin(userId)) {
+            return preventionPostMapper.findById(id);
+        }
         return preventionPostMapper.findByIdAndUserId(id, userId);
     }
 
