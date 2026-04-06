@@ -47,7 +47,7 @@ export default function SectionContent({
     default:
       return (
         <div className={'text-sub'}>
-          <p>{'페이지 콘텐츠가 여기에 표시됩니다.'}</p>
+          <p>{'서비스 준비중입니다.'}</p>
         </div>
       );
   }
