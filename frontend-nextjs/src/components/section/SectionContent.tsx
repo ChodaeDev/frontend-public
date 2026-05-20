@@ -2,7 +2,7 @@
 
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
-import BoardContent from '@/components/board/BoardContent';
+import CounselingBoardContent from '@/components/board/CounselingBoardContent';
 
 interface SectionContentProps {
   locale: Locale;
@@ -14,7 +14,6 @@ interface SectionContentProps {
 export default function SectionContent({
   locale,
   section,
-  sub,
   dictionary,
 }: SectionContentProps) {
   const boardDict = dictionary.board as {
@@ -36,11 +35,8 @@ export default function SectionContent({
   switch (section) {
     case 'board':
       return (
-        <BoardContent
-          isCounselingBoard={sub === 'counseling'}
+        <CounselingBoardContent
           locale={locale}
-          section={section}
-          sub={sub}
           boardDict={boardDict}
         />
       );

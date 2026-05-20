@@ -355,6 +355,12 @@
     "loading": "Wird geladen...",
     "postNotFound": "Beitrag nicht gefunden.",
     "createdDate": "Erstellt am",
-    "modifiedDate": "Geändert am"
+    "modifiedDate": "Geändert am",
+    "commentEditTitle": "Kommentar bearbeiten",
+    "commentEditSave": "Speichern",
+    "commentEditSaving": "Wird gespeichert...",
+    "commentDeleteTitle": "Kommentar löschen",
+    "commentDeleteMessage": "Möchten Sie diesen Kommentar wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "commentDeleting": "Wird gelöscht..."
   }
 }

@@ -4,7 +4,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import dayjs from 'dayjs';
-import { ArrowLeft, Pencil, Trash2, Lock, Send } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { ArrowLeft, Pencil, Trash2, Lock, Send, X } from 'lucide-react';
 import { fetchApi } from '@/lib/api';
 import { useTranslation } from '@/i18n/client';
 import { useAppSelector } from '@/store/hooks';
@@ -52,12 +53,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   const [error, setError] = useState<string | null>(null);
   const [noAccess, setNoAccess] = useState(false);
 
-  // 연락처 수정 상태
-  const [isEditingPhone, setIsEditingPhone] = useState(false);
-  const [editPhone, setEditPhone] = useState('');
-  const [phoneSaving, setPhoneSaving] = useState(false);
-
-  // 삭제 상태
+  // 게시글 삭제 상태
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
@@ -66,6 +62,15 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   const [commentsLoading, setCommentsLoading] = useState(true);
   const [commentText, setCommentText] = useState('');
   const [commentSubmitting, setCommentSubmitting] = useState(false);
+
+  // 댓글 수정 상태
+  const [editingComment, setEditingComment] = useState<Comment | null>(null);
+  const [editCommentText, setEditCommentText] = useState('');
+  const [editSubmitting, setEditSubmitting] = useState(false);
+
+  // 댓글 삭제 상태
+  const [deletingCommentId, setDeletingCommentId] = useState<number | null>(null);
+  const [commentDeleting, setCommentDeleting] = useState(false);
 
   const isAdmin = user?.userId === 'admin';
   const isOwner = user && post && (isAdmin || user.userId === post.userId);
@@ -109,6 +114,15 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
     fetchComments();
   }, [fetchPost, fetchComments]);
 
+  // error 또는 post 없을 때 이전 페이지로 이동
+  useEffect(() => {
+    if(!user || user.userId !== 'admin') return;
+    if (!loading && (error || !post)) {
+      alert(error || t.postNotFound || '게시글을 찾을 수 없습니다.');
+      router.replace(`/${ locale }/board/counseling`);
+    }
+  }, [loading, error, post, router, t.postNotFound, locale, user]);
+
   // 비공개 글 접근 권한 확인
   useEffect(() => {
     if (!post) return;
@@ -123,29 +137,11 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   const handleDelete = async () => {
     setDeleting(true);
     try {
-      await fetchApi(`/api/board/counseling/detail/${ postId }`, { method: 'DELETE' });
+      await fetchApi(`/api/board/counseling/delete/${ postId }`, { method: 'DELETE' });
       router.push(`/${ locale }/board/counseling`);
     } catch {
       setDeleting(false);
       setShowDeleteModal(false);
-    }
-  };
-
-  // 연락처 저장
-  const handlePhoneSave = async () => {
-    if (!post) return;
-    setPhoneSaving(true);
-    try {
-      await fetchApi(`/api/board/counseling/detail/${ postId }`, {
-        method: 'PUT',
-        body: JSON.stringify({ ...post, phone: editPhone }),
-      });
-      setPost({ ...post, phone: editPhone });
-      setIsEditingPhone(false);
-    } catch {
-      // 수정 상태 유지
-    } finally {
-      setPhoneSaving(false);
     }
   };
 
@@ -171,6 +167,52 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
     }
   };
 
+  // 댓글 수정 모달 열기
+  const handleOpenEditModal = (comment: Comment) => {
+    setEditingComment(comment);
+    setEditCommentText(comment.content);
+  };
+
+  // 댓글 수정 제출
+  const handleCommentEditSubmit = async () => {
+    if (!editingComment || !editCommentText.trim()) return;
+    setEditSubmitting(true);
+    try {
+      await fetchApi(`/api/board/counseling/detail/${ postId }/comments/${ editingComment.id }`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          userId: user!.userId,
+          userName: user!.userName,
+          content: editCommentText.trim(),
+        }),
+      });
+      setEditingComment(null);
+      setEditCommentText('');
+      fetchComments();
+    } catch {
+      // 에러 처리
+    } finally {
+      setEditSubmitting(false);
+    }
+  };
+
+  // 댓글 삭제 확인
+  const handleCommentDeleteConfirm = async () => {
+    if (deletingCommentId === null) return;
+    setCommentDeleting(true);
+    try {
+      await fetchApi(`/api/board/counseling/detail/${ postId }/comments/${ deletingCommentId }`, {
+        method: 'DELETE',
+      });
+      setDeletingCommentId(null);
+      fetchComments();
+    } catch {
+      // 에러 처리
+    } finally {
+      setCommentDeleting(false);
+    }
+  };
+
   // 로딩 상태
   if (loading) {
     return (
@@ -181,20 +223,9 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
     );
   }
 
-  // 에러 상태
-  if (error || !post) {
-    return (
-      <div className={'py-20 text-center'}>
-        <p className={'text-sub mb-4'}>{error || t.postNotFound || '게시글을 찾을 수 없습니다.'}</p>
-        <Link
-          href={`/${ locale }/board/counseling`}
-          className={'inline-flex items-center gap-1.5 text-accent1 hover:underline text-sm'}
-        >
-          <ArrowLeft className={'size-4'} />
-          {t.backToList || '목록으로'}
-        </Link>
-      </div>
-    );
+  // error/!post는 useEffect에서 alert + router.back() 처리
+  if (!post) {
+    return null;
   }
 
   // 비공개 글 접근 불가
@@ -245,48 +276,10 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
             <span>{t.author || '작성자'}{': '}<span className={'text-main font-medium'}>{post.userName}</span></span>
             <div className={'flex items-center gap-2'}>
               <span className={'text-sub'}>{t.phone || '연락처'}{': '}</span>
-              {isEditingPhone ? (
-                <span className={'inline-flex items-center gap-1.5'}>
-                  <input
-                    type={'tel'}
-                    value={editPhone}
-                    onChange={(e) => setEditPhone(e.target.value)}
-                    className={'px-2 py-1 border border-gray6 rounded text-sm bg-background text-main w-36 focus:outline-none focus:ring-1 focus:ring-accent1'}
-                  />
-                  <button
-                    onClick={handlePhoneSave}
-                    disabled={phoneSaving}
-                    className={'px-2.5 py-1 text-xs bg-accent1 text-white rounded hover:bg-accent1/90 transition-colors disabled:opacity-50'}
-                  >
-                    {phoneSaving ? (t.saving || '저장 중...') : (t.save || '저장')}
-                  </button>
-                  <button
-                    onClick={() => setIsEditingPhone(false)}
-                    className={'px-2.5 py-1 text-xs border border-gray5 rounded hover:bg-gray8 transition-colors'}
-                  >
-                    {t.cancel || '취소'}
-                  </button>
-                </span>
-              ) : (
-                <span className={'inline-flex items-center gap-1.5'}>
-                  <span className={'text-main font-medium'}>{post.phone}</span>
-                  {isOwner && (
-                    <button
-                      onClick={() => { setEditPhone(post.phone); setIsEditingPhone(true); }}
-                      className={'text-accent1 hover:underline text-xs'}
-                    >
-                      {t.edit || '수정'}
-                    </button>
-                  )}
-                </span>
-              )}
-            </div>
-            {post.isPrivate === 1 && (
-              <span className={'inline-flex items-center gap-1 text-gray3'}>
-                <Lock className={'size-3.5'} />
-                {t.isPrivate || '비공개'}
+              <span className={'inline-flex items-center gap-1.5'}>
+                <span className={'text-main font-medium'}>{post.phone}</span>
               </span>
-            )}
+            </div>
           </div>
         </div>
 
@@ -310,52 +303,71 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
         )}
 
         {/* 게시글 본문 */}
-        <div className={'p-4 min-h-[calc(100vh-600px)] border-b border-gray7'}>
+        <div className={'p-4 min-h-[calc(100vh-600px)]'}>
           <div className={'text-main whitespace-pre-wrap leading-relaxed'}>{post.content}</div>
-        </div>
-
-        {/* 액션 버튼 */}
-        <div className={'flex items-center justify-between px-4 py-4 border-b border-gray7'}>
-          <Link
-            href={`/${ locale }/board/counseling`}
-            className={'inline-flex items-center gap-1.5 text-sm text-sub hover:text-main transition-colors'}
-          >
-            <ArrowLeft className={'size-4'} />
-            {t.backToList || '목록으로'}
-          </Link>
         </div>
       </div>
 
       {/* 댓글 영역 */}
-      <div className={'mt-8'}>
-        <h3 className={'text-lg font-bold text-main mb-4'}>
+      <div className={'pt-8 border-t border-gray7'}>
+        <h3 className={'text-lg font-bold text-gray3 mb-4'}>
           {t.comments || '댓글'} <span className={'text-accent1'}>{'['}{comments.length}{']'}</span>
         </h3>
 
         {/* 댓글 목록 */}
         {commentsLoading ? (
           <div className={'py-8 text-center text-sub'}>
-            <span className={'inline-block size-5 border-2 border-gray5 border-t-accent1 rounded-full animate-spin'} />
+            <span className={'inline-block size-5 border-2 border-gray9 border-t-accent1 rounded-full animate-spin'} />
           </div>
         ) : comments.length === 0 ? (
           <p className={'py-8 text-center text-sm text-sub'}>{t.commentEmpty || '댓글이 없습니다.'}</p>
         ) : (
-          <ul className={'divide-y divide-gray7 border-t border-gray7'}>
-            {comments.map((comment) => (
-              <li key={comment.id} className={'px-4 py-4'}>
-                <div className={'flex items-center gap-2 mb-1.5'}>
-                  <span className={'text-sm font-medium text-main'}>{comment.userName}</span>
-                  <span className={'text-xs text-sub'}>{dayjs(comment.createDate).format('YYYY-MM-DD HH:mm')}</span>
-                </div>
-                <p className={'text-sm text-main whitespace-pre-wrap'}>{comment.content}</p>
-              </li>
-            ))}
+          <ul className={'divide-y divide-gray9 border-t border-gray9'}>
+            {comments.map((comment) => {
+              const canEdit = user?.userId === comment.userId;
+              const canDelete = isAdmin || user?.userId === comment.userId;
+              return (
+                <li key={comment.id} className={'px-4 py-4'}>
+                  <div className={'flex items-start justify-between gap-2'}>
+                    <div className={'flex-1 min-w-0'}>
+                      <div className={'flex items-center gap-2 mb-1.5'}>
+                        <span className={'text-sm font-medium text-main'}>{comment.userName}</span>
+                        <span className={'text-xs text-gray5'}>{dayjs(comment.createDate).format('YYYY-MM-DD HH:mm')}</span>
+                      </div>
+                      <p className={'text-sm text-main whitespace-pre-wrap'}>{comment.content}</p>
+                    </div>
+                    {(canEdit || canDelete) && (
+                      <div className={'flex items-center gap-1 shrink-0'}>
+                        {canEdit && (
+                          <button
+                            onClick={() => handleOpenEditModal(comment)}
+                            className={'p-1.5 text-sub hover:text-main hover:bg-gray8 rounded-md transition-colors cursor-pointer'}
+                            aria-label={t.commentEditTitle || '댓글 수정'}
+                          >
+                            <Pencil className={'size-3.5'} />
+                          </button>
+                        )}
+                        {canDelete && (
+                          <button
+                            onClick={() => setDeletingCommentId(comment.id)}
+                            className={'p-1.5 text-sub hover:text-error hover:bg-error/5 rounded-md transition-colors cursor-pointer'}
+                            aria-label={t.commentDeleteTitle || '댓글 삭제'}
+                          >
+                            <Trash2 className={'size-3.5'} />
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         )}
 
         {/* 댓글 작성 */}
         {user ? (
-          <div className={'mt-4 border border-gray7 rounded-lg overflow-hidden'}>
+          <div className={'mt-4 border border-gray8 rounded-lg overflow-hidden'}>
             <div className={'flex items-center gap-2 px-4 py-2 bg-gray9/50 border-b border-gray7'}>
               <span className={'text-sm font-medium text-main'}>{user.userName}</span>
             </div>
@@ -388,7 +400,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
         )}
       </div>
 
-      {/* 삭제 확인 모달 */}
+      {/* 게시글 삭제 확인 모달 */}
       <ConfirmModal
         isOpen={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
@@ -398,6 +410,62 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
         confirmText={deleting ? (t.loading || '불러오는 중...') : (t.delete || '삭제')}
         cancelText={t.cancel || '취소'}
       />
+
+      {/* 댓글 삭제 확인 모달 */}
+      <ConfirmModal
+        isOpen={deletingCommentId !== null}
+        onClose={() => setDeletingCommentId(null)}
+        onConfirm={handleCommentDeleteConfirm}
+        title={t.commentDeleteTitle || '댓글 삭제'}
+        message={t.commentDeleteMessage || '댓글을 삭제하시겠습니까? 삭제된 댓글은 복구할 수 없습니다.'}
+        confirmText={commentDeleting ? (t.commentDeleting || '삭제 중...') : (t.delete || '삭제')}
+        cancelText={t.cancel || '취소'}
+      />
+
+      {/* 댓글 수정 모달 */}
+      {editingComment && createPortal(
+        <div className={'fixed inset-0 z-50 flex items-center justify-center'}>
+          <div
+            className={'absolute inset-0 bg-black/50 animate-fadeIn'}
+            onClick={() => setEditingComment(null)}
+          />
+          <div className={'relative w-full max-w-md rounded-xl bg-background shadow-xl animate-slideDown'}>
+            <div className={'flex items-center justify-between p-4 border-b border-gray8'}>
+              <h3 className={'text-lg font-bold text-main'}>{t.commentEditTitle || '댓글 수정'}</h3>
+              <button
+                onClick={() => setEditingComment(null)}
+                className={'p-1 rounded-md text-sub hover:text-main hover:bg-gray8 transition-colors'}
+              >
+                <X className={'size-5'} />
+              </button>
+            </div>
+            <div className={'p-4'}>
+              <textarea
+                value={editCommentText}
+                onChange={(e) => setEditCommentText(e.target.value)}
+                rows={4}
+                className={'w-full px-3 py-2.5 text-sm bg-background text-main border border-gray7 rounded-lg resize-none focus:outline-none focus:ring-1 focus:ring-accent1'}
+              />
+            </div>
+            <div className={'flex gap-3 p-4 pt-0'}>
+              <button
+                onClick={() => setEditingComment(null)}
+                className={'w-full rounded-full border border-gray1 px-4 py-2.5 text-sm font-semibold transition-colors hover:bg-gray1 hover:text-inverse cursor-pointer'}
+              >
+                {t.cancel || '취소'}
+              </button>
+              <button
+                onClick={handleCommentEditSubmit}
+                disabled={editSubmitting || !editCommentText.trim()}
+                className={'w-full rounded-full bg-accent1 px-4 py-2.5 text-sm font-semibold text-inverse transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'}
+              >
+                {editSubmitting ? (t.commentEditSaving || '저장 중...') : (t.commentEditSave || '저장')}
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body,
+      )}
     </div>
   );
 }

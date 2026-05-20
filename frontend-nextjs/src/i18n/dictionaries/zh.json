@@ -355,6 +355,12 @@
     "loading": "加载中...",
     "postNotFound": "未找到帖子。",
     "createdDate": "创建日期",
-    "modifiedDate": "修改日期"
+    "modifiedDate": "修改日期",
+    "commentEditTitle": "编辑评论",
+    "commentEditSave": "保存",
+    "commentEditSaving": "保存中...",
+    "commentDeleteTitle": "删除评论",
+    "commentDeleteMessage": "确定要删除此评论吗？删除后无法恢复。",
+    "commentDeleting": "删除中..."
   }
 }
