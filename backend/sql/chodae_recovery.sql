@@ -21,8 +21,7 @@ CREATE TABLE `users` (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
- `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('admin', 'admin', '$2a$10$MjfDnfKo/zcteaotzJNx2.
-61v.vK1ktw5WDyzb50qTYm5W8AzwwF.','admin', '01012345678', 'admin', '2026-01-26', 'admin',
+ `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('admin', 'admin', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'admin',
 'superadmin', '2026-01-26', '2026-01-26');
 INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
  `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('sdhan', '한상대', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'admin',
