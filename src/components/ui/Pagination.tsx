@@ -77,7 +77,8 @@ export default function Pagination({
   );
 
   return (
-    <nav aria-label={'Pagination'} className={'flex items-center justify-center gap-1 mt-8'}>
+    // TODO: 임시 줄바꿈 조치. UI 수정 필요.
+    <nav aria-label={'Pagination'} className={'flex flex-wrap items-center justify-center gap-1 mt-8'}>
       {/* 처음으로 */}
       <button
         onClick={() => onPageChange(1)}
@@ -105,7 +106,7 @@ export default function Pagination({
       </button>
 
       {/* 페이지 번호 */}
-      <div className={'flex items-center gap-1 mx-2'}>
+      <div className={'flex flex-wrap items-center justify-center gap-1 mx-2'}>
         {pages.map((page, index) =>
           page === 'ellipsis' ? (
             <span key={`ellipsis-${ index }`} className={'px-2 text-sub'}>

@@ -355,6 +355,12 @@
     "loading": "読み込み中...",
     "postNotFound": "投稿が見つかりません。",
     "createdDate": "作成日",
-    "modifiedDate": "修正日"
+    "modifiedDate": "修正日",
+    "commentEditTitle": "コメントを編集",
+    "commentEditSave": "保存",
+    "commentEditSaving": "保存中...",
+    "commentDeleteTitle": "コメントを削除",
+    "commentDeleteMessage": "このコメントを削除しますか？削除したコメントは復元できません。",
+    "commentDeleting": "削除中..."
   }
 }

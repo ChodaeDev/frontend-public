@@ -1,13 +1,16 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dayjs from 'dayjs';
-import { Plus, Search } from 'lucide-react';
+import { Plus, Search, Lock } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import { apiBase, fetchWithAuth } from '@/lib/api';
-import BoardTable, { type BoardPost } from './BoardTable';
+import { useAppSelector } from '@/store/hooks';
+import BoardTable, { type Column } from '@/components/ui/BoardTable';
 import Pagination from '@/components/ui/Pagination';
+import type { Paging } from '@/types/paging';
 import { cn } from '@/lib/cn';
 
 interface CounselingPost {
@@ -20,17 +23,27 @@ interface CounselingPost {
   createDate: string;
 }
 
-interface PagingInfo {
-  pageNumber: number;
-  totalPages: number;
-  itemTotal: number;
-  itemCount: number;
-}
-
 interface BoardListResponse {
   status: number;
-  paging: PagingInfo;
+  paging: {
+    pageNumber: number;
+    totalPages: number;
+    itemTotal: number;
+    itemCount: number;
+  };
   payload: CounselingPost[];
+}
+
+interface BoardPost {
+  id: number;
+  title: string;
+  author: string;
+  userId?: string;
+  date: string;
+  views?: number;
+  commentCount?: number;
+  isPrivate?: number;
+  isNotice?: boolean;
 }
 
 interface BoardDict {
@@ -49,41 +62,54 @@ interface BoardDict {
   search: string;
 }
 
-export interface BoardContentProps {
-  isCounselingBoard: boolean;
+export interface CounselingBoardContentProps {
   locale: Locale;
-  section: string;
-  sub: string;
   boardDict: BoardDict;
 }
 
-export default function BoardContent({
-  isCounselingBoard,
+export default function CounselingBoardContent({
   locale,
-  section,
-  sub,
   boardDict,
-}: BoardContentProps) {
+}: CounselingBoardContentProps) {
+  const router = useRouter();
+  const user = useAppSelector((state) => state.auth.user);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemCount, setItemCount] = useState(10);
   const [posts, setPosts] = useState<BoardPost[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [itemTotal, setItemTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
-  // 검색 상태
   const [searchType, setSearchType] = useState<'title' | 'author'>('title');
   const [searchKeyword, setSearchKeyword] = useState('');
 
+  const isAdmin = user?.userId === 'admin';
+
+  const isLocked = (post: BoardPost) => {
+    if (isAdmin || post.userId === user?.userId) return false;
+    return true;
+  };
+
+  const handleRowClick = (post: BoardPost) => {
+    if (isLocked(post)) {
+      alert('비공개 글입니다. 작성자만 확인할 수 있습니다.');
+      return;
+    }
+    router.push(`/${ locale }/board/counseling/${ post.id }`);
+  };
+
   const fetchPosts = useCallback(async (page: number, count: number) => {
     setLoading(true);
+    setIsError(false);
     try {
       const params = new URLSearchParams({
         pageNumber: String(page),
         itemCount: String(count),
         pageSize: '10',
       });
-      const res = await fetchWithAuth(`${ apiBase }/api/board/${ sub }/list?${ params }`);
+      const res = await fetchWithAuth(`${ apiBase }/api/board/counseling/list?${ params }`);
       if (!res.ok) throw new Error(`${ res.status }`);
 
       const data: BoardListResponse = await res.json();
@@ -103,10 +129,11 @@ export default function BoardContent({
       setPosts([]);
       setTotalPages(1);
       setItemTotal(0);
+      setIsError(true);
     } finally {
       setLoading(false);
     }
-  }, [sub]);
+  }, []);
 
   useEffect(() => {
     fetchPosts(currentPage, itemCount);
@@ -127,24 +154,88 @@ export default function BoardContent({
     if (e.key === 'Enter') handleSearch();
   };
 
+  const paging: Paging = {
+    pageNumber: currentPage,
+    totalPages,
+    itemTotal,
+    itemCount,
+  };
+
+  const columns: Column<BoardPost>[] = [
+    {
+      id: 'number',
+      label: boardDict.number || '번호',
+      className: 'justify-center',
+      accessor: (post, index, paging) => {
+        if (post.isNotice) {
+          return (
+            <span className={'inline-block px-2 py-0.5 text-xs font-medium text-white bg-accent1 rounded'}>
+              {boardDict.notice || '공지'}
+            </span>
+          );
+        }
+        if (paging) {
+          const rowNumber = paging.itemTotal - ((paging.pageNumber - 1) * paging.itemCount) - (index ?? 0);
+          return <span className={'text-sub'}>{rowNumber}</span>;
+        }
+        return null;
+      },
+    },
+    {
+      id: 'title',
+      label: boardDict.title || '제목',
+      accessor: (post) => {
+        const locked = isLocked(post);
+        return (
+          <span className={'text-main flex items-center gap-1.5'}>
+            {locked && <Lock className={'size-3.5 text-gray3 shrink-0'} />}
+            <div className={'truncate max-w-[100px] sm:max-w-full'}>
+              {post.title}
+            </div>
+            <span className={'text-xs text-accent1 font-medium'}>
+              {'['}{post.commentCount ?? 0}{']'}
+            </span>
+          </span>
+        );
+      },
+    },
+    {
+      id: 'author',
+      label: boardDict.author || '작성자',
+      className: 'justify-center',
+      accessor: (post) => <span className={'text-sm text-sub'}>{post.author}</span>,
+    },
+    {
+      id: 'date',
+      label: boardDict.date || '작성일',
+      className: 'justify-center',
+      hideOnMobile: true,
+      accessor: (post) => <span className={'text-sm text-sub'}>{post.date}</span>,
+    },
+    {
+      id: 'views',
+      label: boardDict.views || '조회수',
+      className: 'justify-center',
+      hideOnMobile: true,
+      accessor: (post) => <span className={'text-sm text-sub'}>{post.views ?? 0}</span>,
+    },
+  ];
+
   return (
     <div>
-      {/* 상담 신청 버튼 (상담게시판인 경우) */}
-      {isCounselingBoard && (
-        <div className={'mb-6'}>
-          <Link
-            href={`/${ locale }/board/counseling/write`}
-            className={'inline-flex items-center gap-2 px-5 py-2.5 bg-accent1 text-white rounded-lg hover:bg-accent1/90 transition-colors font-medium'}
-          >
-            <Plus className={'size-5'} />
-            {boardDict.requestCounseling || '상담 신청'}
-          </Link>
-        </div>
-      )}
+      {/* 상담 신청 버튼 */}
+      <div className={'mb-6'}>
+        <Link
+          href={`/${ locale }/board/counseling/write`}
+          className={'inline-flex items-center gap-2 px-5 py-2.5 bg-accent1 text-white rounded-lg hover:bg-accent1/90 transition-colors font-medium'}
+        >
+          <Plus className={'size-5'} />
+          {boardDict.requestCounseling || '상담 신청'}
+        </Link>
+      </div>
 
       {/* 게시글 노출 개수 + 검색 */}
       <div className={'flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4'}>
-        {/* 게시글 노출 개수 드롭다운 */}
         <div className={'flex items-center gap-2'}>
           <select
             value={itemCount}
@@ -157,7 +248,6 @@ export default function BoardContent({
           </select>
         </div>
 
-        {/* 검색 */}
         <div className={'flex items-center gap-2'}>
           <select
             value={searchType}
@@ -187,22 +277,15 @@ export default function BoardContent({
       {/* 게시판 테이블 */}
       <div className={cn('transition-opacity duration-200', loading && posts.length > 0 && 'opacity-40 pointer-events-none')}>
         <BoardTable
-          posts={posts}
-          loading={loading && posts.length === 0}
-          locale={locale}
-          basePath={`/${ section }/${ sub }`}
-          itemTotal={itemTotal}
-          currentPage={currentPage}
-          itemCount={itemCount}
+          gridClass={'grid-cols-[64px_1fr_96px] sm:grid-cols-[64px_1fr_96px_112px_64px]'}
+          data={posts}
+          columns={columns}
+          isLoading={loading && posts.length === 0}
+          isError={isError}
+          paging={paging}
+          keyExtractor={(post) => String(post.id)}
+          onRowClick={handleRowClick}
           emptyMessage={boardDict.emptyMessage || '게시글이 없습니다.'}
-          labels={{
-            number: boardDict.number || '번호',
-            title: boardDict.title || '제목',
-            author: boardDict.author || '작성자',
-            date: boardDict.date || '작성일',
-            views: boardDict.views || '조회수',
-            notice: boardDict.notice || '공지',
-          }}
         />
       </div>
 
