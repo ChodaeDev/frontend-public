@@ -43,6 +43,8 @@ export function middleware(request: NextRequest) {
   if (
     pathname.startsWith('/_next')
     || pathname.startsWith('/api')
+    || pathname.startsWith('/swagger-ui')
+    || pathname.startsWith('/v3/api-docs')
     || publicFile.test(pathname)
   ) {
     return NextResponse.next();
@@ -84,6 +86,6 @@ export const config = {
     // Skip all internal paths (_next)
     // Skip all api routes
     // Skip all static files
-    '/((?!_next|api|favicon.ico|assets).*)',
+    '/((?!_next|api|swagger-ui|v3/api-docs|favicon.ico|assets).*)',
   ],
 };
