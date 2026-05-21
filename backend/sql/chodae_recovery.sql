@@ -1,3 +1,8 @@
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */
 ;
@@ -21,14 +26,17 @@ CREATE TABLE `users` (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
- `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('admin', 'admin', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'admin',
-'superadmin', '2026-01-26', '2026-01-26');
+ `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('admin', 'admin', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'admin','superadmin', NOW(), NOW());
 INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
  `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('sdhan', '한상대', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'admin',
-'superadmin', '2026-01-26', '2026-01-26');
+'superadmin', NOW(), NOW());
+INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
+ `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('sdhan2', '한상대2', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'admin',
+'superadmin', NOW(), NOW());
 INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
  `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('judahwon', '주다훤', '$2a$10$2jm/TC3qqdyxdjFAVeVULOHGqUFmnOht0sx1lnjJLXLX8EYKLxqIG','admin', '01012345678', 'admin', '2026-01-26', 'admin',
-'superadmin', '2026-01-26', '2026-01-26');
+'superadmin', NOW(), NOW());
+
 
 -- 접속자 수 테이블 (일별 누계)
 DROP TABLE IF EXISTS `visitor_count`;
@@ -225,7 +233,7 @@ CREATE TABLE `about_post` (
     is_private INT DEFAULT NULL,
     create_date DATETIME,
     modified_date DATETIME
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `about_comment`;
 CREATE TABLE `about_comment` (
@@ -236,7 +244,7 @@ CREATE TABLE `about_comment` (
     is_private INT DEFAULT NULL,
     confirm VARCHAR(20),
     create_date DATETIME
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- Board
 DROP TABLE IF EXISTS `freeboard_post`;
@@ -252,7 +260,7 @@ CREATE TABLE `freeboard_post` (
     is_private INT DEFAULT NULL,
     create_date DATETIME,
     modified_date DATETIME
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `freeboard_comment`;
 CREATE TABLE `freeboard_comment` (
@@ -263,7 +271,7 @@ CREATE TABLE `freeboard_comment` (
     is_private INT DEFAULT NULL,
     confirm VARCHAR(20),
     create_date DATETIME
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- Withdrawal
 DROP TABLE IF EXISTS `withdrawal_post`;
@@ -279,7 +287,7 @@ CREATE TABLE `withdrawal_post` (
     is_private INT DEFAULT NULL,
     create_date DATETIME,
     modified_date DATETIME
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `withdrawal_comment`;
 CREATE TABLE `withdrawal_comment` (
@@ -290,7 +298,7 @@ CREATE TABLE `withdrawal_comment` (
     is_private INT DEFAULT NULL,
     confirm VARCHAR(20),
     create_date DATETIME
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- Prevention
 DROP TABLE IF EXISTS `prevention_post`;
@@ -306,7 +314,7 @@ CREATE TABLE `prevention_post` (
     is_private INT DEFAULT NULL,
     create_date DATETIME,
     modified_date DATETIME
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `prevention_comment`;
 CREATE TABLE `prevention_comment` (
@@ -317,7 +325,7 @@ CREATE TABLE `prevention_comment` (
     is_private INT DEFAULT NULL,
     confirm VARCHAR(20),
     create_date DATETIME
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- Doctrine
 DROP TABLE IF EXISTS `doctrine_post`;
@@ -333,7 +341,7 @@ CREATE TABLE `doctrine_post` (
     is_private INT DEFAULT NULL,
     create_date DATETIME,
     modified_date DATETIME
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `doctrine_comment`;
 CREATE TABLE `doctrine_comment` (
@@ -344,7 +352,7 @@ CREATE TABLE `doctrine_comment` (
     is_private INT DEFAULT NULL,
     confirm VARCHAR(20),
     create_date DATETIME
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- ScjInfo
 DROP TABLE IF EXISTS `scj_info_post`;
@@ -360,7 +368,7 @@ CREATE TABLE `scj_info_post` (
     is_private INT DEFAULT NULL,
     create_date DATETIME,
     modified_date DATETIME
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `scj_info_comment`;
 CREATE TABLE `scj_info_comment` (
@@ -371,4 +379,8 @@ CREATE TABLE `scj_info_comment` (
     is_private INT DEFAULT NULL,
     confirm VARCHAR(20),
     create_date DATETIME
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
