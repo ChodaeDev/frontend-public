@@ -84,7 +84,7 @@ public class CounselingController {
         return ApiResponse.success("상담 신청이 완료되었습니다.", created);
     }
 
-    @PostMapping("/edit/{id}")
+    @PutMapping("/edit/{id}")
     public ApiResponse<CounselingResponse> edit(@PathVariable Integer id, @RequestBody CounselingCreateRequest request,
             Authentication auth) {
         String userId = getCurrentUserId(auth);
