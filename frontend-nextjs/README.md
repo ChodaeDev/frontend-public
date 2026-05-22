@@ -62,6 +62,22 @@ npm run build
 npm run start
 ```
 
+### Docker 실행
+
+프론트엔드 이미지만 빌드할 때:
+
+```bash
+docker compose -f ../backend/docker-compose.yml build frontend
+```
+
+백엔드, DB, Redis, Nginx와 함께 실행할 때:
+
+```bash
+docker compose -f ../backend/docker-compose.yml up --build
+```
+
+Next.js 컨테이너는 [http://localhost:4998](http://localhost:4998), Nginx 프록시는 [http://localhost](http://localhost)에서 접근할 수 있습니다.
+
 ### 테스트 실행
 
 ```bash

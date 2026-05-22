@@ -42,30 +42,44 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 ## 프로젝트 실행
 
-### 1. Docker 이미지 빌드
+### 1. Docker Compose로 전체 스택 실행
+
+`backend/docker-compose.yml`은 Frontend(Next.js), Backend(Spring Boot), MariaDB, Redis, Nginx를 함께 실행합니다.
 
 ```bash
 cd backend
-docker build -t chodae-recovery-api .
-```
-
-### 2. Docker Compose로 실행
-
-```bash
 # 개발 환경 실행
-docker-compose up --build
+docker compose up --build
 
 # 백그라운드 실행
-docker-compose up -d --build
+docker compose up -d --build
 
 # 로그 확인
-docker-compose logs -f
+docker compose logs -f
 
 # 중지
-docker-compose down
+docker compose down
 ```
 
-### 3. 개별 컨테이너 실행
+접속 포트:
+
+- Frontend 직접 접속: http://localhost:4998
+- Nginx 프록시: http://localhost
+- Backend API: http://localhost:8080
+
+### 2. 개별 이미지 빌드
+
+```bash
+# 백엔드 이미지
+cd backend
+docker build -t chodae-recovery-api .
+
+# 프론트엔드 이미지
+cd ../frontend-nextjs
+docker build -t chodae-recovery-frontend .
+```
+
+### 3. 백엔드 컨테이너 단독 실행
 
 ```bash
 # 컨테이너 실행
