@@ -2,6 +2,7 @@ package com.chodae.service;
 
 import com.chodae.dto.CommentCreateRequest;
 import com.chodae.dto.CounselingDeleteResponse;
+import com.chodae.dto.CounselingListResponse;
 import com.chodae.dto.CommentDeleteResponse;
 import com.chodae.dto.CommentResponse;
 import com.chodae.dto.PagedListResponse;
@@ -27,41 +28,80 @@ public class CounselingService {
     private final CommentMapper commentMapper;
     private final AccessControlService accessControlService;
 
-    public List<CounselingResponse> findAll() {
+    public List<CounselingListResponse> findAll() {
         return counselingMapper.findAll();
     }
 
-    public PagedListResponse<CounselingResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sorting) {
+    public PagedListResponse<CounselingListResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sortBy, String sortDirection) {
         long itemTotal = counselingMapper.countAll();
         int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
 
-        String sortColumn = "create_date";
-        String sortOrder = "DESC";
-        if (sorting != null && !sorting.isBlank()) {
-            String[] parts = sorting.split("_");
-            if (parts.length == 2) {
-                switch (parts[0].toLowerCase()) {
-                    case "title" -> sortColumn = "title";
-                    case "commentcount" -> sortColumn = "comment_count";
-                    case "regdt" -> sortColumn = "create_date";
-                    default -> { /* keep default */ }
-                }
-                sortOrder = "asc".equalsIgnoreCase(parts[1]) ? "ASC" : "DESC";
-            }
-        }
+        SortOption sortOption = resolveSort(sortBy, sortDirection);
 
         int offset = Math.max(0, (pageNumber - 1) * itemCount);
-        List<CounselingResponse> items = counselingMapper.findAllWithPaging(offset, itemCount, sortColumn, sortOrder);
+        List<CounselingListResponse> items = counselingMapper.findAllWithPaging(offset, itemCount, sortOption.column(), sortOption.order());
 
-        return PagedListResponse.<CounselingResponse>builder()
+        return PagedListResponse.<CounselingListResponse>builder()
                 .items(items)
                 .pageNumber(pageNumber)
                 .pageSize(pageSize)
                 .itemTotal(itemTotal)
-                .sorting(sorting != null ? sorting : "createDate_desc")
+                .sorting(sortOption.requestValue())
+                .sortBy(sortOption.field())
+                .sortDirection(sortOption.direction())
                 .itemCount(itemCount)
                 .totalPages(totalPages)
                 .build();
+    }
+
+    public PagedListResponse<CounselingListResponse> searchWithPaging(int pageNumber, int itemCount, int pageSize, String keyword, String sortBy, String sortDirection) {
+        SortOption sortOption = resolveSort(sortBy, sortDirection);
+        String keywordPattern = keyword == null || keyword.isBlank() ? null : "%" + keyword.trim() + "%";
+
+        long itemTotal = counselingMapper.countSearch(keywordPattern);
+        int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
+        int offset = Math.max(0, (pageNumber - 1) * itemCount);
+        List<CounselingListResponse> items = counselingMapper.search(keywordPattern, offset, itemCount, sortOption.column(), sortOption.order());
+
+        return PagedListResponse.<CounselingListResponse>builder()
+                .items(items)
+                .pageNumber(pageNumber)
+                .pageSize(pageSize)
+                .itemTotal(itemTotal)
+                .sorting(sortOption.requestValue())
+                .sortBy(sortOption.field())
+                .sortDirection(sortOption.direction())
+                .itemCount(itemCount)
+                .totalPages(totalPages)
+                .build();
+    }
+
+    private SortOption resolveSort(String sortBy, String sortDirection) {
+        String column = resolveSortColumn(sortBy);
+        String order = resolveSortOrder(sortDirection);
+        String field = sortBy == null || sortBy.isBlank() ? "createDate" : sortBy;
+        String direction = order.toLowerCase();
+        return new SortOption(column, order, field, direction, field + "_" + direction);
+    }
+
+    private String resolveSortColumn(String sortBy) {
+        if (sortBy == null || sortBy.isBlank()) {
+            return "create_date";
+        }
+        return switch (sortBy.toLowerCase()) {
+            case "id", "number", "no" -> "id";
+            case "title" -> "title";
+            case "counseltype" -> "counsel_type";
+            case "regdt", "createdate" -> "create_date";
+            default -> "create_date";
+        };
+    }
+
+    private String resolveSortOrder(String sortDirection) {
+        return "asc".equalsIgnoreCase(sortDirection) ? "ASC" : "DESC";
+    }
+
+    private record SortOption(String column, String order, String field, String direction, String requestValue) {
     }
 
     public List<CounselingResponse> findByUserId(String userId) {

@@ -1,5 +1,6 @@
 package com.chodae.mapper;
 
+import com.chodae.dto.CounselingListResponse;
 import com.chodae.dto.CounselingResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -10,11 +11,15 @@ import java.util.Map;
 @Mapper
 public interface CounselingMapper {
 
-    List<CounselingResponse> findAll();
+    List<CounselingListResponse> findAll();
 
     long countAll();
 
-    List<CounselingResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
+    List<CounselingListResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
+
+    long countSearch(@Param("keyword") String keyword);
+
+    List<CounselingListResponse> search(@Param("keyword") String keyword, @Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
 
     List<CounselingResponse> findByUserId(@Param("userId") String userId);
 

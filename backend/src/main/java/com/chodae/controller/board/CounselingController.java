@@ -8,6 +8,7 @@ import com.chodae.dto.PagedApiResponse;
 import com.chodae.dto.PagedListResponse;
 import com.chodae.dto.CommentResponse;
 import com.chodae.dto.CounselingCreateRequest;
+import com.chodae.dto.CounselingListResponse;
 import com.chodae.dto.CounselingResponse;
 import com.chodae.service.CounselingService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,8 +40,20 @@ public class CounselingController {
         return (String) auth.getPrincipal();
     }
 
+    private CounselingListResponse toListResponse(CounselingResponse response) {
+        return CounselingListResponse.builder()
+                .id(response.getId())
+                .title(response.getTitle())
+                .counselType(response.getCounselType())
+                .commentCount(response.getCommentCount())
+                .isPrivate(response.getIsPrivate())
+                .createDate(response.getCreateDate())
+                .modifiedDate(response.getModifiedDate())
+                .build();
+    }
+
     @GetMapping("/list")
-    public PagedApiResponse<CounselingResponse> getList(
+    public PagedApiResponse<CounselingListResponse> getList(
             HttpServletRequest request,
             @Parameter(description = "현재 페이지")
             @RequestParam(defaultValue = "1") int pageNumber,
@@ -48,9 +61,31 @@ public class CounselingController {
             @RequestParam(defaultValue = "10") int itemCount,
             @Parameter(description = "페이지네이션에 넣을 숫자 개수")
             @RequestParam(defaultValue = "10") int pageSize,
-            @Parameter(description = "정렬 기준")
-            @RequestParam(required = false) String sorting) {
-        PagedListResponse<CounselingResponse> list = counselingService.findAllWithPaging(pageNumber, itemCount, pageSize, sorting);
+            @Parameter(description = "정렬 필드")
+            @RequestParam(required = false) String sortBy,
+            @Parameter(description = "정렬 방향")
+            @RequestParam(required = false) String sortDirection) {
+        PagedListResponse<CounselingListResponse> list = counselingService.findAllWithPaging(pageNumber, itemCount, pageSize, sortBy, sortDirection);
+        return PagedApiResponse.of(HttpStatus.OK.value(), request.getRequestURI(), list);
+    }
+
+    @Operation(summary = "상담 글 검색", description = "상담 글 제목에서 검색어를 포함하는 글 목록을 조회합니다.")
+    @GetMapping("/search")
+    public PagedApiResponse<CounselingListResponse> search(
+            HttpServletRequest request,
+            @Parameter(description = "현재 페이지")
+            @RequestParam(defaultValue = "1") int pageNumber,
+            @Parameter(description = "한 페이징에서 표출할 데이터 개수")
+            @RequestParam(defaultValue = "10") int itemCount,
+            @Parameter(description = "페이지네이션에 넣을 숫자 개수")
+            @RequestParam(defaultValue = "10") int pageSize,
+            @Parameter(description = "검색어")
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @Parameter(description = "정렬 필드")
+            @RequestParam(required = false) String sortBy,
+            @Parameter(description = "정렬 방향")
+            @RequestParam(required = false) String sortDirection) {
+        PagedListResponse<CounselingListResponse> list = counselingService.searchWithPaging(pageNumber, itemCount, pageSize, keyword, sortBy, sortDirection);
         return PagedApiResponse.of(HttpStatus.OK.value(), request.getRequestURI(), list);
     }
 
@@ -68,7 +103,7 @@ public class CounselingController {
     }
 
     @PostMapping("/form")
-    public ApiResponse<CounselingResponse> create(@RequestBody CounselingCreateRequest request, Authentication auth) {
+    public ApiResponse<CounselingListResponse> create(@RequestBody CounselingCreateRequest request, Authentication auth) {
         String userId = getCurrentUserId(auth);
         if (userId == null) {
         return ApiResponse.error("로그인이 필요합니다.");
@@ -81,11 +116,11 @@ public class CounselingController {
         }
         request.setUserId(userId);
         CounselingResponse created = counselingService.create(request);
-        return ApiResponse.success("상담 신청이 완료되었습니다.", created);
+        return ApiResponse.success("상담 신청이 완료되었습니다.", toListResponse(created));
     }
 
     @PutMapping("/edit/{id}")
-    public ApiResponse<CounselingResponse> edit(@PathVariable Integer id, @RequestBody CounselingCreateRequest request,
+    public ApiResponse<CounselingListResponse> edit(@PathVariable Integer id, @RequestBody CounselingCreateRequest request,
             Authentication auth) {
         String userId = getCurrentUserId(auth);
         if (userId == null) {
@@ -103,9 +138,9 @@ public class CounselingController {
         }
         request.setUserId(userId);
         CounselingResponse edited = counselingService.edit(id, request);
-        return ApiResponse.success("상담 신청 내용이 수정되었습니다.", edited);
+        return ApiResponse.success("상담 신청 내용이 수정되었습니다.", toListResponse(edited));
     }
-    
+
     @Operation(summary = "상담 글 삭제", description = "로그인한 작성자 본인의 상담 글을 삭제합니다. 연관 댓글도 함께 삭제됩니다.")
     @DeleteMapping("/delete/{id}")
     public ApiResponse<CounselingDeleteResponse> deletePost(
@@ -125,7 +160,7 @@ public class CounselingController {
             return ApiResponse.error(e.getMessage());
         }
     }
-    
+
     @GetMapping("/detail/{id}/comments")
     public ApiResponse<List<CommentResponse>> getComments(@PathVariable Integer id, Authentication auth) {
         String userId = getCurrentUserId(auth);
