@@ -1,19 +1,12 @@
 'use client';
 
-import { ReactNode } from 'react';
 import { ArrowDownNarrowWide, ArrowDownWideNarrow } from 'lucide-react';
-import type { Paging } from '@/types/paging';
-import type { SortState } from '@/types/sort';
+import type { Paging } from '@/types/ui/paging';
+import type { SortState } from '@/types/common/sort';
+import type { Column } from '@/types/ui/boardTable';
 import Loading from '@/components/ui/Loading';
 
-export interface Column<T> {
-  id: string;
-  label: string;
-  accessor: (item: T, index?: number, paging?: Paging)=> ReactNode;
-  className?: string;
-  sortable?: boolean;
-  hideOnMobile?: boolean;
-}
+export type { Column };
 
 interface BoardTableProps<T> {
   gridClass?: string;
@@ -73,7 +66,7 @@ function BoardTable<T>({
 
   if (isLoading) {
     return (
-      <div className={'flex min-h-[300px] items-center justify-center border-t-2 border-main py-10'}>
+      <div className={'flex min-h-[300px] items-center justify-center border-t-2 border-gray5 py-10'}>
         <Loading />
       </div>
     );
@@ -89,29 +82,31 @@ function BoardTable<T>({
 
   if (data.length === 0) {
     return (
-      <div className={'flex min-h-[300px] items-center justify-center border-t-2 border-main py-10'}>
+      <div className={'flex min-h-[300px] items-center justify-center border-t-2 border-gray5 py-10'}>
         <p className={'text-sm text-sub'}>{emptyMessage}</p>
       </div>
     );
   }
 
   return (
-    <div className={'sm:overflow-x-auto border-t-2 border-main'}>
+    <div className={'sm:overflow-x-auto border-t-2 border-gray5'}>
       <div className={`min-w-full grid ${ gridClass }`}>
         {/* 헤더 */}
         <div className={'contents'}>
           {columns.map((column) => (
             <div
               key={column.id}
-              className={`${ column.hideOnMobile ? 'hidden sm:flex' : 'flex' } items-center justify-center bg-gray9 border-b border-gray7 py-3 px-2 text-sm font-semibold text-main ${ column.sortable ? 'cursor-pointer select-none' : '' }`}
+              className={`${ column.className ?? 'justify-center' } ${ column.hideOnMobile ? 'hidden sm:flex' : 'flex' } items-center bg-gray9 border-b border-gray7 py-3 px-2 text-sm font-semibold text-main whitespace-nowrap ${ column.sortable ? 'cursor-pointer select-none' : '' }`}
               onClick={() => column.sortable && handleSort(column.id)}
             >
               {column.id === 'select' ? (
                 <input
+                  id={'select-all'}
                   type={'checkbox'}
                   onChange={handleSelectAll}
                   checked={data.length > 0 && !!selectedIds && selectedIds.length === data.length}
                   className={'size-4'}
+                  aria-label={'전체 선택'}
                 />
               ) : (
                 <div className={'flex items-center gap-1'}>
@@ -147,11 +142,13 @@ function BoardTable<T>({
               >
                 {column.id === 'select' && selectedIds && onSelectItem ? (
                   <input
+                    id={`row-select-${ keyExtractor(item) }`}
                     type={'checkbox'}
                     checked={selectedIds.includes(keyExtractor(item))}
                     onChange={(e) => e.stopPropagation()}
                     onClick={(e) => handleSelectItem(e, keyExtractor(item))}
                     className={'size-4'}
+                    aria-label={'행 선택'}
                   />
                 ) : (
                   column.accessor(item, index, paging)

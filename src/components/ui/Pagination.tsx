@@ -67,7 +67,7 @@ export default function Pagination({
 
   const pages = getPageNumbers();
 
-  const buttonBaseClass = 'flex items-center justify-center size-9 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed';
+  const buttonBaseClass = 'flex items-center justify-center size-9 rounded-lg transition-colors cursor-pointer disabled:opacity-40';
 
   const pageButtonClass = (isActive: boolean) => cn(
     buttonBaseClass,
@@ -78,7 +78,7 @@ export default function Pagination({
 
   return (
     // TODO: 임시 줄바꿈 조치. UI 수정 필요.
-    <nav aria-label={'Pagination'} className={'flex flex-wrap items-center justify-center gap-1 mt-8'}>
+    <nav aria-label={'Pagination'} className={'flex flex-wrap items-center justify-center gap-1 my-8'}>
       {/* 처음으로 */}
       <button
         onClick={() => onPageChange(1)}
@@ -93,13 +93,7 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={cn(
-          buttonBaseClass,
-          'text-sub',
-          currentPage === 1
-            ? 'bg-background opacity-40 cursor-not-allowed'
-            : 'hover:bg-gray8 hover:text-main',
-        )}
+        className={cn(buttonBaseClass, 'text-sub', currentPage !== 1 && 'hover:bg-gray8 hover:text-main')}
         aria-label={'Previous page'}
       >
         <ChevronLeft className={'size-4'} />
@@ -129,13 +123,7 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={cn(
-          buttonBaseClass,
-          'text-sub',
-          currentPage === totalPages
-            ? 'bg-background opacity-40 cursor-not-allowed'
-            : 'hover:bg-gray8 hover:text-main',
-        )}
+        className={cn(buttonBaseClass, 'text-sub', currentPage !== totalPages && 'hover:bg-gray8 hover:text-main')}
         aria-label={'Next page'}
       >
         <ChevronRight className={'size-4'} />
@@ -145,13 +133,7 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(totalPages)}
         disabled={currentPage === totalPages}
-        className={cn(
-          buttonBaseClass,
-          'text-sub',
-          currentPage === totalPages
-            ? 'bg-background opacity-40 cursor-not-allowed'
-            : 'hover:bg-gray8 hover:text-main',
-        )}
+        className={cn(buttonBaseClass, 'text-sub', currentPage !== totalPages && 'hover:bg-gray8 hover:text-main')}
         aria-label={'Last page'}
       >
         <ChevronsRight className={'size-4'} />

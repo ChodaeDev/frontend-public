@@ -3,7 +3,7 @@
 import { useRef, useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { makeStore, AppStore, setupStoreListeners } from './index';
-import { initAuth } from './authSlice';
+import { initAuth, logout } from './authSlice';
 
 export function ReduxProvider({ children }: { children: React.ReactNode }) {
   const storeRef = useRef<AppStore | null>(null);
@@ -17,6 +17,12 @@ export function ReduxProvider({ children }: { children: React.ReactNode }) {
       setupStoreListeners(storeRef.current);
       storeRef.current.dispatch(initAuth());
     }
+
+    const handleAuthLogout = () => {
+      storeRef.current?.dispatch(logout());
+    };
+    window.addEventListener('auth:logout', handleAuthLogout);
+    return () => window.removeEventListener('auth:logout', handleAuthLogout);
   }, []);
 
   return <Provider store={storeRef.current}>{children}</Provider>;

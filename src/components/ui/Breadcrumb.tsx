@@ -1,11 +1,7 @@
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
-
-interface BreadcrumbItem {
-  label: string;
-  href?: string;
-}
+import type { BreadcrumbItem } from '@/types/ui/breadcrumb';
 
 interface BreadcrumbProps {
   items: BreadcrumbItem[];

@@ -5,62 +5,24 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import { Plus, Search, Lock } from 'lucide-react';
+import FormSelect from '@/components/ui/FormSelect';
 import type { Locale } from '@/i18n/config';
-import { apiBase, fetchWithAuth } from '@/lib/api';
+import { fetchWithAuth } from '@/lib/api';
 import { useAppSelector } from '@/store/hooks';
-import BoardTable, { type Column } from '@/components/ui/BoardTable';
+import BoardTable from '@/components/ui/BoardTable';
 import Pagination from '@/components/ui/Pagination';
-import type { Paging } from '@/types/paging';
+import type { Paging } from '@/types/ui/paging';
+import type { Column } from '@/types/ui/boardTable';
+import type { BoardListResponse, BoardPost, BoardDict, CounselingPost } from '@/types/board';
+import type { SortState } from '@/types/common/sort';
 import { cn } from '@/lib/cn';
 
-interface CounselingPost {
-  id: number;
-  title: string;
-  userId: string;
-  userName: string;
-  commentCount: number;
-  isPrivate: number;
-  createDate: string;
-}
-
-interface BoardListResponse {
-  status: number;
-  paging: {
-    pageNumber: number;
-    totalPages: number;
-    itemTotal: number;
-    itemCount: number;
-  };
-  payload: CounselingPost[];
-}
-
-interface BoardPost {
-  id: number;
-  title: string;
-  author: string;
-  userId?: string;
-  date: string;
-  views?: number;
-  commentCount?: number;
-  isPrivate?: number;
-  isNotice?: boolean;
-}
-
-interface BoardDict {
-  requestCounseling: string;
-  number: string;
-  title: string;
-  author: string;
-  date: string;
-  views: string;
-  notice: string;
-  emptyMessage: string;
-  itemsPerPage: string;
-  searchByTitle: string;
-  searchByAuthor: string;
-  searchPlaceholder: string;
-  search: string;
-}
+const sortFieldMap: Record<string, string> = {
+  title: 'title',
+  counselType: 'counselType',
+  date: 'createDate',
+  views: 'views',
+};
 
 export interface CounselingBoardContentProps {
   locale: Locale;
@@ -82,8 +44,9 @@ export default function CounselingBoardContent({
   const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
-  const [searchType, setSearchType] = useState<'title' | 'author'>('title');
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [activeQuery, setActiveQuery] = useState('');
+  const [sortState, setSortState] = useState<SortState>({ fieldId: 'date', direction: 'desc' });
 
   const isAdmin = user?.userId === 'admin';
 
@@ -100,7 +63,18 @@ export default function CounselingBoardContent({
     router.push(`/${ locale }/board/counseling/${ post.id }`);
   };
 
-  const fetchPosts = useCallback(async (page: number, count: number) => {
+  const mapPost = (item: CounselingPost): BoardPost => ({
+    id: item.id,
+    title: item.title,
+    author: item.userName,
+    userId: item.userId,
+    date: dayjs(item.createDate).format('YYYY-MM-DD'),
+    commentCount: item.commentCount,
+    isPrivate: item.isPrivate,
+    counselType: item.counselType,
+  });
+
+  const fetchPosts = useCallback(async (page: number, count: number, sortBy: string, sortDirection: string) => {
     setLoading(true);
     setIsError(false);
     try {
@@ -108,21 +82,41 @@ export default function CounselingBoardContent({
         pageNumber: String(page),
         itemCount: String(count),
         pageSize: '10',
+        sortBy,
+        sortDirection,
       });
-      const res = await fetchWithAuth(`${ apiBase }/api/board/counseling/list?${ params }`);
+      const res = await fetchWithAuth(`/api/board/counseling/list?${ params }`);
       if (!res.ok) throw new Error(`${ res.status }`);
-
       const data: BoardListResponse = await res.json();
-      const mapped: BoardPost[] = data.payload.map((item) => ({
-        id: item.id,
-        title: item.title,
-        author: item.userName,
-        userId: item.userId,
-        date: dayjs(item.createDate).format('YYYY-MM-DD'),
-        commentCount: item.commentCount,
-        isPrivate: item.isPrivate,
-      }));
-      setPosts(mapped);
+      setPosts(data.payload.map(mapPost));
+      setTotalPages(data.paging.totalPages);
+      setItemTotal(data.paging.itemTotal);
+    } catch {
+      setPosts([]);
+      setTotalPages(1);
+      setItemTotal(0);
+      setIsError(true);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const fetchSearchPosts = useCallback(async (page: number, count: number, query: string, sortBy: string, sortDirection: string) => {
+    setLoading(true);
+    setIsError(false);
+    try {
+      const params = new URLSearchParams({
+        pageNumber: String(page),
+        itemCount: String(count),
+        pageSize: '10',
+        query,
+        sortBy,
+        sortDirection,
+      });
+      const res = await fetchWithAuth(`/api/board/counseling/search?${ params }`);
+      if (!res.ok) throw new Error(`${ res.status }`);
+      const data: BoardListResponse = await res.json();
+      setPosts(data.payload.map(mapPost));
       setTotalPages(data.paging.totalPages);
       setItemTotal(data.paging.itemTotal);
     } catch {
@@ -136,8 +130,14 @@ export default function CounselingBoardContent({
   }, []);
 
   useEffect(() => {
-    fetchPosts(currentPage, itemCount);
-  }, [currentPage, itemCount, fetchPosts]);
+    const sortBy = sortFieldMap[sortState.fieldId] ?? 'createDate';
+    const { direction } = sortState;
+    if (activeQuery) {
+      fetchSearchPosts(currentPage, itemCount, activeQuery, sortBy, direction);
+    } else {
+      fetchPosts(currentPage, itemCount, sortBy, direction);
+    }
+  }, [currentPage, itemCount, activeQuery, sortState, fetchPosts, fetchSearchPosts]);
 
   const handleItemCountChange = (count: number) => {
     setItemCount(count);
@@ -145,9 +145,14 @@ export default function CounselingBoardContent({
   };
 
   const handleSearch = () => {
+    const keyword = searchKeyword.trim();
+    setActiveQuery(keyword);
     setCurrentPage(1);
-    // TODO: API에 검색 파라미터 추가
-    fetchPosts(1, itemCount);
+  };
+
+  const handleSortChange = (sort: SortState) => {
+    setSortState(sort);
+    setCurrentPage(1);
   };
 
   const handleSearchKeyDown = (e: React.KeyboardEvent) => {
@@ -184,6 +189,8 @@ export default function CounselingBoardContent({
     {
       id: 'title',
       label: boardDict.title || '제목',
+      className: 'justify-start',
+      sortable: true,
       accessor: (post) => {
         const locked = isLocked(post);
         return (
@@ -200,25 +207,48 @@ export default function CounselingBoardContent({
       },
     },
     {
-      id: 'author',
-      label: boardDict.author || '작성자',
+      id: 'counselType',
+      label: boardDict.counselType || '상담유형',
       className: 'justify-center',
-      accessor: (post) => <span className={'text-sm text-sub'}>{post.author}</span>,
+      hideOnMobile: true,
+      sortable: true,
+      accessor: (post) => {
+        const counselTypeMap: Record<string, string> = {
+          self: boardDict.counselTypeSelf?.split(' ')[0] || '본인',
+          family: boardDict.counselTypeFamily?.split(' ')[0] || '가족',
+          friend: boardDict.counselTypeFriend?.split(' ')[0] || '지인',
+          etc: boardDict.counselTypeEtc?.split(' ')[0] || '기타',
+        };
+        return (
+          <span className={'text-sm text-sub'}>
+            {post.counselType ? (counselTypeMap[post.counselType] ?? post.counselType) : '-'}
+          </span>
+        );
+      },
     },
+    // {
+    //   id: 'author',
+    //   label: boardDict.author || '작성자',
+    //   className: 'justify-center',
+    //   accessor: (post) => <span className={'text-sm text-sub'}>{post.author}</span>,
+    // },
     {
       id: 'date',
       label: boardDict.date || '작성일',
       className: 'justify-center',
       hideOnMobile: true,
+      sortable: true,
       accessor: (post) => <span className={'text-sm text-sub'}>{post.date}</span>,
     },
-    {
-      id: 'views',
-      label: boardDict.views || '조회수',
-      className: 'justify-center',
-      hideOnMobile: true,
-      accessor: (post) => <span className={'text-sm text-sub'}>{post.views ?? 0}</span>,
-    },
+    // TODO: 조회수 기능 구현 후 복구
+    // {
+    //   id: 'views',
+    //   label: boardDict.views || '조회수',
+    //   className: 'justify-center',
+    //   hideOnMobile: true,
+    //   sortable: true,
+    //   accessor: (post) => <span className={'text-sm text-sub'}>{post.views ?? 0}</span>,
+    // },
   ];
 
   return (
@@ -237,26 +267,15 @@ export default function CounselingBoardContent({
       {/* 게시글 노출 개수 + 검색 */}
       <div className={'flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4'}>
         <div className={'flex items-center gap-2'}>
-          <select
-            value={itemCount}
-            onChange={(e) => handleItemCountChange(Number(e.target.value))}
-            className={'px-3 py-2 border border-gray6 rounded-lg bg-background text-main text-sm focus:outline-none focus:ring-1 focus:ring-accent1'}
-          >
-            {[10, 20, 30, 50].map((n) => (
-              <option key={n} value={n}>{n}{boardDict.itemsPerPage || '개씩 보기'}</option>
-            ))}
-          </select>
+          <FormSelect
+            value={String(itemCount)}
+            onChange={(val) => handleItemCountChange(Number(val))}
+            options={[10, 20, 30, 50].map((n) => ({ value: String(n), label: `${ n }${ boardDict.itemsPerPage || '개씩 보기' }` }))}
+            className={'py-2 text-sm'}
+          />
         </div>
 
         <div className={'flex items-center gap-2'}>
-          <select
-            value={searchType}
-            onChange={(e) => setSearchType(e.target.value as 'title' | 'author')}
-            className={'px-3 py-2 border border-gray6 rounded-lg bg-background text-main text-sm focus:outline-none focus:ring-1 focus:ring-accent1'}
-          >
-            <option value={'title'}>{boardDict.searchByTitle || '제목'}</option>
-            <option value={'author'}>{boardDict.searchByAuthor || '작성자'}</option>
-          </select>
           <input
             type={'text'}
             value={searchKeyword}
@@ -275,9 +294,10 @@ export default function CounselingBoardContent({
       </div>
 
       {/* 게시판 테이블 */}
-      <div className={cn('transition-opacity duration-200', loading && posts.length > 0 && 'opacity-40 pointer-events-none')}>
+      {/* TODO: 조회수 기능 구현 후 gridClass를 sm:grid-cols-[64px_1fr_96px_96px_112px_64px] 으로 변경 */}
+      <div className={cn('transition-opacity duration-200 min-h-[600px]', loading && posts.length > 0 && 'opacity-40 pointer-events-non')}>
         <BoardTable
-          gridClass={'grid-cols-[64px_1fr_96px] sm:grid-cols-[64px_1fr_96px_112px_64px]'}
+          gridClass={'grid-cols-[64px_1fr_96px] sm:grid-cols-[64px_1fr_96px_112px]'}
           data={posts}
           columns={columns}
           isLoading={loading && posts.length === 0}
@@ -286,6 +306,8 @@ export default function CounselingBoardContent({
           keyExtractor={(post) => String(post.id)}
           onRowClick={handleRowClick}
           emptyMessage={boardDict.emptyMessage || '게시글이 없습니다.'}
+          currentSort={sortState}
+          onSortChange={handleSortChange}
         />
       </div>
 

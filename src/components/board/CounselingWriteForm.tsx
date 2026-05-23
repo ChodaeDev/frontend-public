@@ -2,12 +2,12 @@
 
 import { useActionState, useEffect, useRef, useState } from 'react';
 import { useRouter, useParams, usePathname } from 'next/navigation';
+import FormSelect from '@/components/ui/FormSelect';
 import { fetchApi } from '@/lib/api';
 import { FormInput, FormTextarea } from '@/components/ui/form';
 import {
   inputStyle,
   errorStyle,
-  selectStyle,
   labelStyle,
   cancelButtonStyle,
   buttonPrimaryStyle,
@@ -145,20 +145,21 @@ export default function CounselingWriteForm() {
             {t.counselType || '상담 유형'}
             <span className={'text-error'}>{' *'}</span>
           </label>
-          <select
+          <FormSelect
             key={state.previousInput.counselType}
             id={'counselType'}
             name={'counselType'}
             required
             defaultValue={state.previousInput.counselType ?? ''}
-            className={cn(selectStyle, state.fieldErrors.counselType && 'border-error')}
-          >
-            <option value={''}>{t.counselTypePlaceholder || '상담 유형을 선택하세요'}</option>
-            <option value={'self'}>{t.counselTypeSelf || '본인 상담'}</option>
-            <option value={'family'}>{t.counselTypeFamily || '가족 상담'}</option>
-            <option value={'friend'}>{t.counselTypeFriend || '지인 상담'}</option>
-            <option value={'etc'}>{t.counselTypeEtc || '기타 상담'}</option>
-          </select>
+            placeholder={t.counselTypePlaceholder || '상담 유형을 선택하세요'}
+            error={!!state.fieldErrors.counselType}
+            options={[
+              { value: 'self', label: t.counselTypeSelf || '본인 상담' },
+              { value: 'family', label: t.counselTypeFamily || '가족 상담' },
+              { value: 'friend', label: t.counselTypeFriend || '지인 상담' },
+              { value: 'etc', label: t.counselTypeEtc || '기타 상담' },
+            ]}
+          />
           {state.fieldErrors.counselType && (
             <p className={'mt-1 text-xs text-error'}>
               {state.fieldErrors.counselType}
@@ -196,6 +197,7 @@ export default function CounselingWriteForm() {
           required
           error={state.fieldErrors.phone}
           defaultValue={state.previousInput.phone ?? user.phone}
+          autoComplete={'tel'}
         />
 
         <div className={'flex items-center gap-2'}>

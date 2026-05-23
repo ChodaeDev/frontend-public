@@ -1,13 +1,7 @@
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import type { Locale } from '@/i18n/config';
-
-interface BoardItem {
-  id: string;
-  title: string;
-  author: string;
-  date: string;
-}
+import type { BoardItem } from '@/types/common/landing';
 
 interface BoardPreviewSectionProps {
   dictionary: {

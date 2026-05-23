@@ -2,16 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Locale } from '@/i18n/config';
 import { ChevronRight } from 'lucide-react';
-
-interface Minister {
-  name: string;
-  role: string;
-}
-
-interface MinistryDictionary {
-  title: string;
-  ministers: Minister[];
-}
+import type { MinistryDictionary } from '@/types/common/landing';
 
 interface MinistrySectionProps {
   dictionary: {

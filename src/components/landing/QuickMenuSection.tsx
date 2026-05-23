@@ -8,21 +8,7 @@ import {
   MapPin,
 } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
-
-interface QuickMenuItem {
-  icon: React.ReactNode;
-  labelKey: keyof QuickMenuDictionary;
-  href: string;
-}
-
-interface QuickMenuDictionary {
-  counseling: string;
-  testimonies: string;
-  falseClaims: string;
-  exitMethods: string;
-  recruitmentTactics: string;
-  locations: string;
-}
+import type { QuickMenuItem, QuickMenuDictionary } from '@/types/common/landing';
 
 interface QuickMenuSectionProps {
   dictionary: {

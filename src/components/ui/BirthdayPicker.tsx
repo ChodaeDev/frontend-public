@@ -5,7 +5,8 @@ import { DayPicker } from 'react-day-picker';
 import { ko, enUS, ja, zhCN, de } from 'react-day-picker/locale';
 import dayjs from 'dayjs';
 import { Calendar } from 'lucide-react';
-import { inputStyle, labelStyle, selectStyle } from './form-styles';
+import { inputStyle, labelStyle } from './form-styles';
+import FormSelect from './FormSelect';
 import { getYears, getMonths, formatBirthday } from '@/lib/date';
 import { useTranslation } from '@/i18n/client';
 import { cn } from '@/lib/cn';
@@ -63,17 +64,15 @@ export function BirthdayPicker({
     };
   }, [isOpen]);
 
-  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newYear = parseInt(e.target.value, 10);
+  const handleYearChange = (val: string) => {
     const newMonth = new Date(month);
-    newMonth.setFullYear(newYear);
+    newMonth.setFullYear(parseInt(val, 10));
     setMonth(newMonth);
   };
 
-  const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newMonthIndex = parseInt(e.target.value, 10) - 1;
+  const handleMonthChange = (val: string) => {
     const newMonth = new Date(month);
-    newMonth.setMonth(newMonthIndex);
+    newMonth.setMonth(parseInt(val, 10) - 1);
     setMonth(newMonth);
   };
 
@@ -124,28 +123,18 @@ export function BirthdayPicker({
             }
           >
             <div className={'mb-3 flex gap-2'}>
-              <select
-                value={month.getFullYear()}
+              <FormSelect
+                value={String(month.getFullYear())}
                 onChange={handleYearChange}
-                className={selectStyle}
-              >
-                {years.map((y) => (
-                  <option key={y} value={y}>
-                    {y}{t.year || '년'}
-                  </option>
-                ))}
-              </select>
-              <select
-                value={month.getMonth() + 1}
+                options={years.map((y) => ({ value: String(y), label: `${ y }${ t.year || '년' }` }))}
+                className={'flex-1'}
+              />
+              <FormSelect
+                value={String(month.getMonth() + 1)}
                 onChange={handleMonthChange}
-                className={selectStyle}
-              >
-                {months.map((m) => (
-                  <option key={m} value={m}>
-                    {m}{t.month || '월'}
-                  </option>
-                ))}
-              </select>
+                options={months.map((m) => ({ value: String(m), label: `${ m }${ t.month || '월' }` }))}
+                className={'flex-1'}
+              />
             </div>
 
             <DayPicker

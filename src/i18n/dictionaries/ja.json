@@ -361,6 +361,10 @@
     "commentEditSaving": "保存中...",
     "commentDeleteTitle": "コメントを削除",
     "commentDeleteMessage": "このコメントを削除しますか？削除したコメントは復元できません。",
-    "commentDeleting": "削除中..."
+    "commentDeleting": "削除中...",
+    "counselingEditForm": "相談を編集",
+    "editConfirmTitle": "編集確認",
+    "editConfirmMessage": "相談内容を修正しますか？",
+    "cancelEditMessage": "編集中の内容が失われます。本当にキャンセルしますか？"
   }
 }

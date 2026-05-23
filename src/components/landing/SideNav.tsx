@@ -5,14 +5,7 @@ import Link from 'next/link';
 import { Phone, DoorOpen, MessageSquareText, ShieldAlert, Heart, Plus } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import { cn } from '@/lib/cn';
-
-interface SideNavDictionary {
-  counseling: string;
-  exitMethods: string;
-  testimonies: string;
-  falseClaims: string;
-  donation: string;
-}
+import type { SideNavDictionary } from '@/types/common/landing';
 
 interface SideNavProps {
   dictionary: {

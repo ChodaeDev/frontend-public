@@ -1,3 +1,7 @@
+import type { ApiResponse } from '@/types/common/api';
+
+export type { ApiResponse };
+
 export const apiBase = process.env.NEXT_PUBLIC_API_URL ?? '';
 
 function getAuthHeaders(): Record<string, string> {
@@ -7,22 +11,28 @@ function getAuthHeaders(): Record<string, string> {
   return token ? { Authorization: `Bearer ${ token }` } : {};
 }
 
+function clearAuthStorage() {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('chodae_token');
+    localStorage.removeItem('chodae_user');
+    window.dispatchEvent(new Event('auth:logout'));
+  }
+}
+
 // 응답 구조와 관계없이 토큰만 자동 포함하는 fetch 래퍼
-export function fetchWithAuth(url: string, options?: RequestInit): Promise<Response> {
-  return fetch(url, {
+export async function fetchWithAuth(url: string, options?: RequestInit): Promise<Response> {
+  const res = await fetch(url, {
     ...options,
     headers: {
       ...getAuthHeaders(),
       ...options?.headers,
     },
   });
+  if (res.status === 401) {
+    clearAuthStorage();
+  }
+  return res;
 }
-
-type ApiResponse<T> = {
-  success: boolean;
-  message?: string;
-  data?: T;
-};
 
 // { success, data } 형태의 API 응답용
 export async function fetchApi<T>(
@@ -52,6 +62,10 @@ export async function fetchApi<T>(
     data = JSON.parse(text);
   } catch {
     throw new Error(`서버 응답을 파싱할 수 없습니다: ${ text.slice(0, 100) }`);
+  }
+
+  if (response.status === 401) {
+    clearAuthStorage();
   }
 
   if (!response.ok || !data.success) {

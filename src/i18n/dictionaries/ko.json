@@ -361,6 +361,10 @@
     "commentEditSaving": "저장 중...",
     "commentDeleteTitle": "댓글 삭제",
     "commentDeleteMessage": "댓글을 삭제하시겠습니까? 삭제된 댓글은 복구할 수 없습니다.",
-    "commentDeleting": "삭제 중..."
+    "commentDeleting": "삭제 중...",
+    "counselingEditForm": "상담 수정",
+    "editConfirmTitle": "수정 확인",
+    "editConfirmMessage": "상담 내용을 수정하시겠습니까?",
+    "cancelEditMessage": "수정 중인 내용이 사라집니다. 정말 취소하시겠습니까?"
   }
 }
