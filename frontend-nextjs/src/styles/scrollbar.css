@@ -1,6 +1,11 @@
 @layer base {
-  html.os-windows {
+  html {
     scrollbar-gutter: stable;
+    overflow-y: scroll;
+  }
+
+  html>body {
+    margin-right: 0 !important;
   }
 
   ::-webkit-scrollbar {

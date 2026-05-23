@@ -361,6 +361,10 @@
     "commentEditSaving": "Wird gespeichert...",
     "commentDeleteTitle": "Kommentar löschen",
     "commentDeleteMessage": "Möchten Sie diesen Kommentar wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
-    "commentDeleting": "Wird gelöscht..."
+    "commentDeleting": "Wird gelöscht...",
+    "counselingEditForm": "Beratung bearbeiten",
+    "editConfirmTitle": "Bearbeitung bestätigen",
+    "editConfirmMessage": "Möchten Sie die Beratung speichern?",
+    "cancelEditMessage": "Ihre Änderungen gehen verloren. Möchten Sie wirklich abbrechen?"
   }
 }

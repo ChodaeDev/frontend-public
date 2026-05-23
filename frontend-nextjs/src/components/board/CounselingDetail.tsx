@@ -11,30 +11,7 @@ import { useTranslation } from '@/i18n/client';
 import { useAppSelector } from '@/store/hooks';
 import { cn } from '@/lib/cn';
 import ConfirmModal from '@/components/ui/ConfirmModal';
-
-interface CounselingDetailData {
-  id: number;
-  title: string;
-  content: string;
-  userId: string;
-  userName: string;
-  phone: string;
-  counselType: string;
-  commentCount: number;
-  isPrivate: number;
-  createDate: string;
-  modifiedDate: string;
-}
-
-interface Comment {
-  id: number;
-  userId: string;
-  userName: string;
-  content: string;
-  isPrivate: number;
-  confirm: string;
-  createDate: string;
-}
+import type { CounselingDetailData, Comment } from '@/types/board';
 
 interface CounselingDetailProps {
   postId: number;
@@ -248,7 +225,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   return (
     <div>
       {/* 게시글 헤더 */}
-      <div className={'border-t-2 border-gray3'}>
+      <div className={'border-t border-gray5'}>
         <div className={'border-b border-gray7 px-4 py-5'}>
           <div className={'flex items-start justify-between gap-4'}>
             <h2 className={'text-xl font-bold text-main flex items-center gap-2'}>
@@ -373,10 +350,12 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
             </div>
             <div className={'flex'}>
               <textarea
+                id={'commentText'}
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder={t.commentPlaceholder || '댓글을 입력하세요'}
                 rows={3}
+                aria-label={t.commentPlaceholder || '댓글을 입력하세요'}
                 className={'flex-1 px-4 py-3 text-sm bg-background text-main resize-none focus:outline-none placeholder:text-gray4'}
               />
               <button
@@ -441,9 +420,11 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
             </div>
             <div className={'p-4'}>
               <textarea
+                id={'editCommentText'}
                 value={editCommentText}
                 onChange={(e) => setEditCommentText(e.target.value)}
                 rows={4}
+                aria-label={t.commentEditTitle || '댓글 수정'}
                 className={'w-full px-3 py-2.5 text-sm bg-background text-main border border-gray7 rounded-lg resize-none focus:outline-none focus:ring-1 focus:ring-accent1'}
               />
             </div>

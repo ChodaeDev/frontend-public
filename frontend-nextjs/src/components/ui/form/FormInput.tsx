@@ -9,6 +9,7 @@ type FormInputProps = {
   className?: string;
   error?: string;
   defaultValue?: string;
+  autoComplete?: string;
 };
 
 export function FormInput({
@@ -20,6 +21,7 @@ export function FormInput({
   className,
   error,
   defaultValue,
+  autoComplete,
 }: FormInputProps) {
   const inputClassName = error
     ? inputStyle.replace('border-gray7', 'border-error')
@@ -38,6 +40,7 @@ export function FormInput({
         placeholder={placeholder}
         required={required}
         defaultValue={defaultValue}
+        autoComplete={autoComplete}
         className={inputClassName}
         aria-invalid={!!error}
         aria-describedby={error ? `${ name }-error` : undefined}

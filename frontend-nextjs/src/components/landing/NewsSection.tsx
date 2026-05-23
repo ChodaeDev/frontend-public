@@ -2,14 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import type { Locale } from '@/i18n/config';
-
-interface NewsItem {
-  title: string;
-  image: string;
-  source: string;
-  date: string;
-  href: string;
-}
+import type { NewsItem } from '@/types/common/landing';
 
 interface NewsSectionProps {
   dictionary: {

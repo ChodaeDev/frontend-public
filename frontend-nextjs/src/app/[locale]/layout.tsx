@@ -71,11 +71,11 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: '(function(){if(navigator.platform.indexOf(\'Win\')>-1)document.documentElement.classList.add(\'os-windows\')})()',
           }}
-        />
+        /> */}
       </head>
       <body className={`${ notoSansKr.variable } font-sans antialiased`}>
         <ReduxProvider>

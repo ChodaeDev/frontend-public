@@ -7,13 +7,7 @@ import dayjs from 'dayjs';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import { cn } from '@/lib/cn';
-
-interface TestimonyItem {
-  id: string;
-  title: string;
-  image: string;
-  date: string;
-}
+import type { TestimonyItem } from '@/types/common/landing';
 
 interface TestimonySectionProps {
   dictionary: {

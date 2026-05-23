@@ -361,6 +361,10 @@
     "commentEditSaving": "保存中...",
     "commentDeleteTitle": "删除评论",
     "commentDeleteMessage": "确定要删除此评论吗？删除后无法恢复。",
-    "commentDeleting": "删除中..."
+    "commentDeleting": "删除中...",
+    "counselingEditForm": "修改咨询",
+    "editConfirmTitle": "确认修改",
+    "editConfirmMessage": "确定要修改咨询内容吗？",
+    "cancelEditMessage": "修改内容将会丢失。确定要取消吗？"
   }
 }
