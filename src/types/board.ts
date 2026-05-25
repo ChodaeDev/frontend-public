@@ -1,8 +1,8 @@
 export interface CounselingPost {
   id: number;
   title: string;
-  userId: string;
   userName: string;
+  isOwner: boolean;
   commentCount: number;
   isPrivate: number;
   counselType: string;
@@ -24,7 +24,7 @@ export interface BoardPost {
   id: number;
   title: string;
   author: string;
-  userId?: string;
+  isOwner?: boolean;
   date: string;
   views?: number;
   commentCount?: number;
