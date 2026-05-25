@@ -45,6 +45,13 @@ public class VisitorController {
         return ApiResponse.success("오늘 접속자 수를 조회했습니다.", visitorCount);
     }
 
+    @Operation(summary = "당일 실시간 접속 현황", description = "오늘 누적 접속자 수와 현재 접속자 수를 함께 조회")
+    @GetMapping("/realtime")
+    public ApiResponse<Map<String, Object>> getTodayRealtimeVisitorStats() {
+        Map<String, Object> stats = visitorCountService.getTodayRealtimeStats();
+        return ApiResponse.success("당일 실시간 접속 현황을 조회했습니다.", stats);
+    }
+
     @Operation(summary = "접속 통계", description = "현재 접속자 수, 오늘 누계, 국가/지역별 통계")
     @GetMapping("/stats")
     public ApiResponse<Map<String, Object>> getVisitorStats() {

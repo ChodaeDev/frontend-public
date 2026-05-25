@@ -7,7 +7,6 @@ import com.chodae.repository.VisitorLogRepository;
 import com.chodae.util.ClientIpUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,11 +34,17 @@ public class VisitorCountService {
     public void recordVisit(HttpServletRequest request, String sessionId) {
         String ip = ClientIpUtils.getClientIp(request);
         LocalDate today = LocalDate.now();
+        LocalDateTime startOfToday = today.atStartOfDay();
+        LocalDateTime startOfTomorrow = startOfToday.plusDays(1);
 
-        // 1) visitor_log: 세션별 기록 (신규 또는 활동 갱신)
-        Optional<VisitorLog> existing = visitorLogRepository.findBySessionId(sessionId);
-        if (existing.isPresent()) {
-            VisitorLog log = existing.get();
+        // 1) visitor_log: 날짜별 세션 기록 (같은 세션도 날짜가 바뀌면 신규 방문으로 기록)
+        List<VisitorLog> todayLogs = visitorLogRepository.findBySessionIdAndVisitAtBetween(
+                sessionId,
+                startOfToday,
+                startOfTomorrow
+        );
+        if (!todayLogs.isEmpty()) {
+            VisitorLog log = todayLogs.get(0);
             log.updateLastActivity();
             visitorLogRepository.save(log);
         } else {
@@ -48,8 +53,8 @@ public class VisitorCountService {
             visitorLogRepository.save(log);
         }
 
-        // 2) visitor_count: 일별 누계 증가 (세션당 1회만 카운트 - 신규 세션일 때만)
-        if (existing.isEmpty()) {
+        // 2) visitor_count: 일별 누계 증가 (세션당 하루 1회만 카운트)
+        if (todayLogs.isEmpty()) {
             VisitorCount vc = visitorCountRepository.findByVisitDate(today)
                     .orElse(new VisitorCount(today, 0));
             vc.setCount(vc.getCount() + 1);
@@ -61,6 +66,15 @@ public class VisitorCountService {
     public long getCurrentVisitorCount() {
         LocalDateTime since = LocalDateTime.now().minusMinutes(ACTIVE_MINUTES);
         return visitorLogRepository.countActiveSessionsSince(since);
+    }
+
+    /** 당일 현재 접속자 수 (오늘 날짜 중 최근 ACTIVE_MINUTES 분 이내 활동한 세션 수) */
+    public long getTodayCurrentVisitorCount() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime since = now.minusMinutes(ACTIVE_MINUTES);
+        LocalDateTime startOfToday = LocalDate.now().atStartOfDay();
+        LocalDateTime startOfTomorrow = startOfToday.plusDays(1);
+        return visitorLogRepository.countActiveSessionsSinceBetween(since, startOfToday, startOfTomorrow);
     }
 
     /** 오늘 접속자 누계 */
@@ -103,10 +117,22 @@ public class VisitorCountService {
     /** 통합 통계 (현재 접속자, 오늘 누계, 지역별) */
     public Map<String, Object> getVisitorStats() {
         Map<String, Object> result = new HashMap<>();
-        result.put("currentCount", getCurrentVisitorCount());
+        result.put("currentCount", getTodayCurrentVisitorCount());
         result.put("todayCount", getTodayVisitorCount());
         result.put("todayDate", LocalDate.now().toString());
+        result.put("activeMinutes", ACTIVE_MINUTES);
         result.put("byRegion", getTodayVisitorByRegion());
+        return result;
+    }
+
+    /** 홈/관리 화면에서 쓰기 좋은 당일 실시간 접속 현황 */
+    public Map<String, Object> getTodayRealtimeStats() {
+        LocalDate today = LocalDate.now();
+        Map<String, Object> result = new HashMap<>();
+        result.put("date", today.toString());
+        result.put("todayCount", getTodayVisitorCount());
+        result.put("currentCount", getTodayCurrentVisitorCount());
+        result.put("activeMinutes", ACTIVE_MINUTES);
         return result;
     }
 }

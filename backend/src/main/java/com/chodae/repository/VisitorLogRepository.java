@@ -8,15 +8,24 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface VisitorLogRepository extends JpaRepository<VisitorLog, Long> {
 
-    Optional<VisitorLog> findBySessionId(String sessionId);
+    @Query("SELECT v FROM VisitorLog v WHERE v.sessionId = :sessionId AND v.visitAt >= :start AND v.visitAt < :end ORDER BY v.visitAt ASC")
+    List<VisitorLog> findBySessionIdAndVisitAtBetween(
+            @Param("sessionId") String sessionId,
+            @Param("start") LocalDateTime start,
+            @Param("end") LocalDateTime end);
 
     @Query("SELECT COUNT(DISTINCT v.sessionId) FROM VisitorLog v WHERE v.lastActivityAt >= :since")
     long countActiveSessionsSince(@Param("since") LocalDateTime since);
+
+    @Query("SELECT COUNT(DISTINCT v.sessionId) FROM VisitorLog v WHERE v.lastActivityAt >= :since AND v.lastActivityAt >= :start AND v.lastActivityAt < :end")
+    long countActiveSessionsSinceBetween(
+            @Param("since") LocalDateTime since,
+            @Param("start") LocalDateTime start,
+            @Param("end") LocalDateTime end);
 
     @Query("SELECT COUNT(v) FROM VisitorLog v WHERE v.visitAt >= :start AND v.visitAt < :end")
     long countByVisitAtBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
