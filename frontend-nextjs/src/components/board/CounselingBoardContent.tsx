@@ -51,7 +51,7 @@ export default function CounselingBoardContent({
   const isAdmin = user?.userId === 'admin';
 
   const isLocked = (post: BoardPost) => {
-    if (isAdmin || post.userId === user?.userId) return false;
+    if (isAdmin || post.isOwner) return false;
     return true;
   };
 
@@ -67,7 +67,7 @@ export default function CounselingBoardContent({
     id: item.id,
     title: item.title,
     author: item.userName,
-    userId: item.userId,
+    isOwner: item.isOwner,
     date: dayjs(item.createDate).format('YYYY-MM-DD'),
     commentCount: item.commentCount,
     isPrivate: item.isPrivate,

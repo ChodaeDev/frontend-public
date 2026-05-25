@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class CounselingController {
     private final CounselingService counselingService;
 
     private String getCurrentUserId(Authentication auth) {
-        if (auth == null || !auth.isAuthenticated() || auth.getPrincipal() == null) {
+        if (auth == null || !auth.isAuthenticated() || auth instanceof AnonymousAuthenticationToken || !(auth.getPrincipal() instanceof String)) {
             return null;
         }
         return (String) auth.getPrincipal();
@@ -44,6 +45,9 @@ public class CounselingController {
         return CounselingListResponse.builder()
                 .id(response.getId())
                 .title(response.getTitle())
+                .userId(response.getUserId())
+                .userName(response.getUserName())
+                .isOwner(true)
                 .counselType(response.getCounselType())
                 .commentCount(response.getCommentCount())
                 .isPrivate(response.getIsPrivate())
@@ -64,8 +68,10 @@ public class CounselingController {
             @Parameter(description = "정렬 필드")
             @RequestParam(required = false) String sortBy,
             @Parameter(description = "정렬 방향")
-            @RequestParam(required = false) String sortDirection) {
-        PagedListResponse<CounselingListResponse> list = counselingService.findAllWithPaging(pageNumber, itemCount, pageSize, sortBy, sortDirection);
+            @RequestParam(required = false) String sortDirection,
+            Authentication auth) {
+        String userId = getCurrentUserId(auth);
+        PagedListResponse<CounselingListResponse> list = counselingService.findAllWithPaging(pageNumber, itemCount, pageSize, sortBy, sortDirection, userId);
         return PagedApiResponse.of(HttpStatus.OK.value(), request.getRequestURI(), list);
     }
 
@@ -81,11 +87,15 @@ public class CounselingController {
             @RequestParam(defaultValue = "10") int pageSize,
             @Parameter(description = "검색어")
             @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "query", required = false) String query,
             @Parameter(description = "정렬 필드")
             @RequestParam(required = false) String sortBy,
             @Parameter(description = "정렬 방향")
-            @RequestParam(required = false) String sortDirection) {
-        PagedListResponse<CounselingListResponse> list = counselingService.searchWithPaging(pageNumber, itemCount, pageSize, keyword, sortBy, sortDirection);
+            @RequestParam(required = false) String sortDirection,
+            Authentication auth) {
+        String userId = getCurrentUserId(auth);
+        String searchKeyword = keyword != null && !keyword.isBlank() ? keyword : query;
+        PagedListResponse<CounselingListResponse> list = counselingService.searchWithPaging(pageNumber, itemCount, pageSize, searchKeyword, sortBy, sortDirection, userId);
         return PagedApiResponse.of(HttpStatus.OK.value(), request.getRequestURI(), list);
     }
 

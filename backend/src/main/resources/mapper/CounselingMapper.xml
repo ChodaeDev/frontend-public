@@ -20,6 +20,9 @@
     <resultMap id="CounselingListResponseMap" type="com.chodae.dto.CounselingListResponse">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="isOwner" column="is_owner"/>
         <result property="counselType" column="counsel_type"/>
         <result property="commentCount" column="comment_count"/>
         <result property="isPrivate" column="is_private"/>
@@ -28,7 +31,7 @@
     </resultMap>
 
     <select id="findAll" resultMap="CounselingListResponseMap">
-        SELECT id, title, counsel_type, comment_count, is_private, create_date, modified_date
+        SELECT id, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count, is_private, create_date, modified_date
         FROM counseling_post
         ORDER BY create_date DESC
     </select>
@@ -38,7 +41,7 @@
     </select>
 
     <select id="findAllWithPaging" resultMap="CounselingListResponseMap">
-        SELECT id, title, counsel_type, comment_count, is_private, create_date, modified_date
+        SELECT id, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count, is_private, create_date, modified_date
         FROM counseling_post
         <include refid="CounselingOrderBy"/>
         LIMIT #{offset}, #{limit}
@@ -51,7 +54,7 @@
     </select>
 
     <select id="search" resultMap="CounselingListResponseMap">
-        SELECT id, title, counsel_type, comment_count, is_private, create_date, modified_date
+        SELECT id, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count, is_private, create_date, modified_date
         FROM counseling_post
         <include refid="CounselingSearchWhere"/>
         <include refid="CounselingOrderBy"/>

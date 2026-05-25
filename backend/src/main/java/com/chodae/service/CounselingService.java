@@ -29,17 +29,19 @@ public class CounselingService {
     private final AccessControlService accessControlService;
 
     public List<CounselingListResponse> findAll() {
-        return counselingMapper.findAll();
+        return maskUserNames(counselingMapper.findAll(), null);
     }
 
-    public PagedListResponse<CounselingListResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sortBy, String sortDirection) {
+    public PagedListResponse<CounselingListResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sortBy, String sortDirection, String currentUserId) {
         long itemTotal = counselingMapper.countAll();
         int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
 
         SortOption sortOption = resolveSort(sortBy, sortDirection);
 
         int offset = Math.max(0, (pageNumber - 1) * itemCount);
-        List<CounselingListResponse> items = counselingMapper.findAllWithPaging(offset, itemCount, sortOption.column(), sortOption.order());
+        List<CounselingListResponse> items = maskUserNames(
+                counselingMapper.findAllWithPaging(offset, itemCount, sortOption.column(), sortOption.order()),
+                currentUserId);
 
         return PagedListResponse.<CounselingListResponse>builder()
                 .items(items)
@@ -54,14 +56,16 @@ public class CounselingService {
                 .build();
     }
 
-    public PagedListResponse<CounselingListResponse> searchWithPaging(int pageNumber, int itemCount, int pageSize, String keyword, String sortBy, String sortDirection) {
+    public PagedListResponse<CounselingListResponse> searchWithPaging(int pageNumber, int itemCount, int pageSize, String keyword, String sortBy, String sortDirection, String currentUserId) {
         SortOption sortOption = resolveSort(sortBy, sortDirection);
         String keywordPattern = keyword == null || keyword.isBlank() ? null : "%" + keyword.trim() + "%";
 
         long itemTotal = counselingMapper.countSearch(keywordPattern);
         int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
         int offset = Math.max(0, (pageNumber - 1) * itemCount);
-        List<CounselingListResponse> items = counselingMapper.search(keywordPattern, offset, itemCount, sortOption.column(), sortOption.order());
+        List<CounselingListResponse> items = maskUserNames(
+                counselingMapper.search(keywordPattern, offset, itemCount, sortOption.column(), sortOption.order()),
+                currentUserId);
 
         return PagedListResponse.<CounselingListResponse>builder()
                 .items(items)
@@ -74,6 +78,39 @@ public class CounselingService {
                 .itemCount(itemCount)
                 .totalPages(totalPages)
                 .build();
+    }
+
+    private List<CounselingListResponse> maskUserNames(List<CounselingListResponse> items, String currentUserId) {
+        return items.stream()
+                .map(item -> maskUserName(item, currentUserId))
+                .toList();
+    }
+
+    private CounselingListResponse maskUserName(CounselingListResponse item, String currentUserId) {
+        boolean isOwner = currentUserId != null && currentUserId.equals(item.getUserId());
+        return CounselingListResponse.builder()
+                .id(item.getId())
+                .title(item.getTitle())
+                .userId(item.getUserId())
+                .userName(isOwner ? item.getUserName() : maskName(item.getUserName()))
+                .isOwner(isOwner)
+                .counselType(item.getCounselType())
+                .commentCount(item.getCommentCount())
+                .isPrivate(item.getIsPrivate())
+                .createDate(item.getCreateDate())
+                .modifiedDate(item.getModifiedDate())
+                .build();
+    }
+
+    private String maskName(String userName) {
+        if (userName == null || userName.isBlank()) {
+            return userName;
+        }
+        int firstCharEnd = userName.offsetByCodePoints(0, 1);
+        if (firstCharEnd >= userName.length()) {
+            return userName;
+        }
+        return userName.substring(0, firstCharEnd) + "***";
     }
 
     private SortOption resolveSort(String sortBy, String sortDirection) {
