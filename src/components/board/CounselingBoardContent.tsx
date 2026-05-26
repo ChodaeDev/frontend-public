@@ -196,7 +196,7 @@ export default function CounselingBoardContent({
         return (
           <span className={'text-main flex items-center gap-1.5'}>
             {locked && <Lock className={'size-3.5 text-gray3 shrink-0'} />}
-            <div className={'truncate max-w-[100px] sm:max-w-full'}>
+            <div className={'truncate max-w-[120px] sm:max-w-full'}>
               {post.title}
             </div>
             <span className={'text-xs text-accent1 font-medium'}>
@@ -226,12 +226,12 @@ export default function CounselingBoardContent({
         );
       },
     },
-    // {
-    //   id: 'author',
-    //   label: boardDict.author || '작성자',
-    //   className: 'justify-center',
-    //   accessor: (post) => <span className={'text-sm text-sub'}>{post.author}</span>,
-    // },
+    {
+      id: 'author',
+      label: boardDict.author || '작성자',
+      className: 'justify-center',
+      accessor: (post) => <span className={'text-sm text-sub'}>{post.author}</span>,
+    },
     {
       id: 'date',
       label: boardDict.date || '작성일',
@@ -297,7 +297,7 @@ export default function CounselingBoardContent({
       {/* TODO: 조회수 기능 구현 후 gridClass를 sm:grid-cols-[64px_1fr_96px_96px_112px_64px] 으로 변경 */}
       <div className={cn('transition-opacity duration-200 min-h-[600px]', loading && posts.length > 0 && 'opacity-40 pointer-events-non')}>
         <BoardTable
-          gridClass={'grid-cols-[64px_1fr_96px] sm:grid-cols-[64px_1fr_96px_112px]'}
+          gridClass={'grid-cols-[1fr_8fr_96px] sm:grid-cols-[1fr_6fr_1fr_1fr_96px]'}
           data={posts}
           columns={columns}
           isLoading={loading && posts.length === 0}

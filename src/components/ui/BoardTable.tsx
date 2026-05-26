@@ -89,75 +89,64 @@ function BoardTable<T>({
   }
 
   return (
-    <div className={'sm:overflow-x-auto border-t-2 border-gray5'}>
-      <div className={`min-w-full grid ${ gridClass }`}>
-        {/* 헤더 */}
-        <div className={'contents'}>
+    <div className={`min-w-full grid ${ gridClass } border-t-2 border-gray5`}>
+      {/* 헤더 */}
+      <div className={'contents'}>
+        {columns.map((column) => (
+          <div
+            key={column.id}
+            className={`${ column.className ?? 'justify-center' } ${ column.hideOnMobile ? 'hidden sm:flex' : 'flex' } 
+              items-center bg-gray9 border-b border-gray7 py-3 px-2 text-sm font-semibold text-main whitespace-nowrap 
+              ${ column.sortable ? 'cursor-pointer select-none' : '' }`}
+            onClick={() => column.sortable && handleSort(column.id)}
+          >
+            <div className={'flex items-center gap-1'}>
+              {column.label}
+              {column.sortable && (
+                <span className={'ml-1'}>
+                  {currentSort?.fieldId === column.id ? (
+                    currentSort.direction === 'asc'
+                      ? <ArrowDownNarrowWide className={'size-3.5'} />
+                      : <ArrowDownWideNarrow className={'size-3.5'} />
+                  ) : (
+                    <ArrowDownWideNarrow className={'size-3.5 text-gray4'} />
+                  )}
+                </span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* 데이터 행 */}
+      {data.map((item, index) => (
+        <div
+          key={keyExtractor(item)}
+          className={`group contents ${ onRowClick ? 'cursor-pointer' : '' }`}
+          onClick={() => onRowClick?.(item)}
+        >
           {columns.map((column) => (
             <div
-              key={column.id}
-              className={`${ column.className ?? 'justify-center' } ${ column.hideOnMobile ? 'hidden sm:flex' : 'flex' } items-center bg-gray9 border-b border-gray7 py-3 px-2 text-sm font-semibold text-main whitespace-nowrap ${ column.sortable ? 'cursor-pointer select-none' : '' }`}
-              onClick={() => column.sortable && handleSort(column.id)}
+              key={`${ keyExtractor(item) }-${ column.id }`}
+              className={`${ column.className ?? '' } ${ column.hideOnMobile ? 'hidden sm:flex' : 'flex' } items-center border-b border-gray7 py-3.5 px-2 group-hover:bg-accent1/5 transition-colors`}
             >
-              {column.id === 'select' ? (
+              {column.id === 'select' && selectedIds && onSelectItem ? (
                 <input
-                  id={'select-all'}
+                  id={`row-select-${ keyExtractor(item) }`}
                   type={'checkbox'}
-                  onChange={handleSelectAll}
-                  checked={data.length > 0 && !!selectedIds && selectedIds.length === data.length}
+                  checked={selectedIds.includes(keyExtractor(item))}
+                  onChange={(e) => e.stopPropagation()}
+                  onClick={(e) => handleSelectItem(e, keyExtractor(item))}
                   className={'size-4'}
-                  aria-label={'전체 선택'}
+                  aria-label={'행 선택'}
                 />
               ) : (
-                <div className={'flex items-center gap-1'}>
-                  {column.label}
-                  {column.sortable && (
-                    <span className={'ml-1'}>
-                      {currentSort?.fieldId === column.id ? (
-                        currentSort.direction === 'asc'
-                          ? <ArrowDownNarrowWide className={'size-3.5'} />
-                          : <ArrowDownWideNarrow className={'size-3.5'} />
-                      ) : (
-                        <ArrowDownWideNarrow className={'size-3.5 text-gray4'} />
-                      )}
-                    </span>
-                  )}
-                </div>
+                column.accessor(item, index, paging)
               )}
             </div>
           ))}
         </div>
-
-        {/* 데이터 행 */}
-        {data.map((item, index) => (
-          <div
-            key={keyExtractor(item)}
-            className={`group contents ${ onRowClick ? 'cursor-pointer' : '' }`}
-            onClick={() => onRowClick?.(item)}
-          >
-            {columns.map((column) => (
-              <div
-                key={`${ keyExtractor(item) }-${ column.id }`}
-                className={`${ column.className ?? '' } ${ column.hideOnMobile ? 'hidden sm:flex' : 'flex' } items-center border-b border-gray7 py-3.5 px-2 group-hover:bg-accent1/5 transition-colors`}
-              >
-                {column.id === 'select' && selectedIds && onSelectItem ? (
-                  <input
-                    id={`row-select-${ keyExtractor(item) }`}
-                    type={'checkbox'}
-                    checked={selectedIds.includes(keyExtractor(item))}
-                    onChange={(e) => e.stopPropagation()}
-                    onClick={(e) => handleSelectItem(e, keyExtractor(item))}
-                    className={'size-4'}
-                    aria-label={'행 선택'}
-                  />
-                ) : (
-                  column.accessor(item, index, paging)
-                )}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
+      ))}
     </div>
   );
 }
