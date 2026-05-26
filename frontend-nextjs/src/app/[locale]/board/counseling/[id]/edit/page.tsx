@@ -54,8 +54,8 @@ export default async function CounselingEditPage({
           />
 
           <div>
-            <h1 className={'text-2xl font-bold text-main'}>{boardDict.counselingEditForm || '상담 수정'}</h1>
-            <p className={'text-sm text-gray1 mt-1'}>{counselingSub.description}</p>
+            <h1 className={'text-2xl font-bold text-gray1'}>{boardDict.counselingEditForm || '상담 수정'}</h1>
+            <p className={'text-sm text-gray3 mt-1'}>{counselingSub.description}</p>
           </div>
         </div>
 

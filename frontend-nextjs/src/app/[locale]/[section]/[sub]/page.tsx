@@ -61,9 +61,9 @@ export default async function SubPage({
           />
 
           <div>
-            <h1 className={'text-2xl font-bold text-main'}>{subItem.label}</h1>
+            <h1 className={'text-2xl font-bold text-gray1'}>{subItem.label}</h1>
             {subItem.description && (
-              <p className={'text-sm text-gray1 mt-1'}>{subItem.description}</p>
+              <p className={'text-sm text-gray3 mt-1'}>{subItem.description}</p>
             )}
           </div>
         </div>

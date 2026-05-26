@@ -226,22 +226,22 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
     <div>
       {/* 게시글 헤더 */}
       <div className={'border-t border-gray5'}>
-        <div className={'border-b border-gray7 px-4 py-5'}>
+        <div className={'border-b border-gray7 mt-8 px-2 pb-2'}>
           <div className={'flex items-start justify-between gap-4'}>
             <h2 className={'text-xl font-bold text-main flex items-center gap-2'}>
               {post.isPrivate === 1 && <Lock className={'size-4 text-gray3 shrink-0'} />}
               {post.title}
             </h2>
           </div>
-          <div className={'flex flex-wrap items-center justify-between gap-x-4 gap-y-1 mt-3 text-sm text-sub'}>
+          <div className={'flex flex-col sm:flex-row sm:items-center sm:justify-between mt-3 text-sm gap-1'}>
             <div>
-              <span className={'text-sub'}>{t.counselType || '상담 유형'}{': '}</span>
+              <span className={'text-gray1'}>{t.counselType || '상담 유형'}{': '}</span>
               <span className={'text-main font-medium'}>{counselTypeMap[post.counselType] || post.counselType}</span>
             </div>
-            <div className={'flex items-center gap-2'}>
-              <span>{t.createdDate || '작성일'}{': '}{dayjs(post.createDate).format('YYYY.MM.DD HH:mm')}</span>
+            <div className={'flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-gray1'}>
+              <span>{t.createdDate || '작성'}{': '}{dayjs(post.createDate).format('YYYY.MM.DD HH:mm')}</span>
               {post.modifiedDate && post.modifiedDate !== post.createDate && (
-                <span>{t.modifiedDate || '수정일'}{': '}{dayjs(post.modifiedDate).format('YYYY.MM.DD HH:mm')}</span>
+                <span>{t.modifiedDate || '수정'}{': '}{dayjs(post.modifiedDate).format('YYYY.MM.DD HH:mm')}</span>
               )}
             </div>
           </div>
@@ -261,7 +261,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
         </div>
 
         {isOwner && (
-          <div className={'w-full flex items-center justify-end gap-2 py-3'}>
+          <div className={'w-full flex items-center gap-2 py-3'}>
             <Link
               href={`/${ locale }/board/counseling/${ postId }/edit`}
               className={'inline-flex items-center gap-1.5 px-4 py-2 text-sm border border-gray5 rounded-lg hover:bg-gray8 transition-colors'}

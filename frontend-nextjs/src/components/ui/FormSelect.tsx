@@ -48,7 +48,7 @@ export default function FormSelect({
       <Select.Trigger
         id={id}
         className={cn(
-          'flex w-full items-center justify-between rounded-lg border bg-background pl-3 pr-3 py-3 text-sm shadow-sm',
+          'flex gap-1 w-full items-center justify-between rounded-lg border bg-background pl-3 pr-2 py-3 text-sm shadow-sm',
           'focus:border-accent2 focus:outline-none focus:ring-2 focus:ring-accent2/30',
           'disabled:cursor-not-allowed disabled:opacity-50',
           'data-placeholder:text-gray4',

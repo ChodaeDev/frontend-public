@@ -52,8 +52,8 @@ export default async function CounselingWritePage({
           />
 
           <div>
-            <h1 className={'text-2xl font-bold text-main'}>{boardDict.counselingForm || '상담 신청'}</h1>
-            <p className={'text-sm text-gray1 mt-1'}>{counselingSub.description}</p>
+            <h1 className={'text-2xl font-bold text-gray1'}>{boardDict.counselingForm || '상담 신청'}</h1>
+            <p className={'text-sm text-gray3 mt-1'}>{counselingSub.description}</p>
           </div>
         </div>
 
