@@ -1,21 +1,22 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import { Plus, Search, Lock } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import FormSelect from '@/components/ui/FormSelect';
 import type { Locale } from '@/i18n/config';
-import { fetchWithAuth } from '@/lib/api';
-import { useAppSelector } from '@/store/hooks';
+import { useAuthStore } from '@/store/authStore';
 import BoardTable from '@/components/ui/BoardTable';
 import Pagination from '@/components/ui/Pagination';
 import type { Paging } from '@/types/ui/paging';
 import type { Column } from '@/types/ui/boardTable';
-import type { BoardListResponse, BoardPost, BoardDict, CounselingPost } from '@/types/board';
+import type { BoardPost, BoardDict, CounselingPost } from '@/types/board';
 import type { SortState } from '@/types/common/sort';
 import { cn } from '@/lib/cn';
+import { counselingKeys, fetchCounselingList } from '@/lib/queries/counseling';
 
 const sortFieldMap: Record<string, string> = {
   title: 'title',
@@ -34,21 +35,38 @@ export default function CounselingBoardContent({
   boardDict,
 }: CounselingBoardContentProps) {
   const router = useRouter();
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAuthStore((state) => state.user);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemCount, setItemCount] = useState(10);
-  const [posts, setPosts] = useState<BoardPost[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [itemTotal, setItemTotal] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-
   const [searchKeyword, setSearchKeyword] = useState('');
   const [activeQuery, setActiveQuery] = useState('');
   const [sortState, setSortState] = useState<SortState>({ fieldId: 'date', direction: 'desc' });
 
   const isAdmin = user?.userId === 'admin';
+
+  const sortBy = sortFieldMap[sortState.fieldId] ?? 'createDate';
+  const { direction } = sortState;
+
+  const { data: listData, isLoading: loading, isError } = useQuery({
+    queryKey: counselingKeys.list({ page: currentPage, size: itemCount, sort: sortBy, direction, query: activeQuery || undefined, userId: user?.userId }),
+    queryFn: () => fetchCounselingList({ page: currentPage, size: itemCount, sort: sortBy, direction, query: activeQuery || undefined }),
+  });
+
+  const mapPost = (item: CounselingPost): BoardPost => ({
+    id: item.id,
+    title: item.title,
+    author: item.userName,
+    isOwner: item.isOwner,
+    date: dayjs(item.createDate).format('YYYY-MM-DD'),
+    commentCount: item.commentCount,
+    isPrivate: item.isPrivate,
+    counselType: item.counselType,
+  });
+
+  const posts: BoardPost[] = listData?.payload.map(mapPost) ?? [];
+  const totalPages = listData?.paging.totalPages ?? 1;
+  const itemTotal = listData?.paging.itemTotal ?? 0;
 
   const isLocked = (post: BoardPost) => {
     if (isAdmin || post.isOwner) return false;
@@ -62,82 +80,6 @@ export default function CounselingBoardContent({
     }
     router.push(`/${ locale }/board/counseling/${ post.id }`);
   };
-
-  const mapPost = (item: CounselingPost): BoardPost => ({
-    id: item.id,
-    title: item.title,
-    author: item.userName,
-    isOwner: item.isOwner,
-    date: dayjs(item.createDate).format('YYYY-MM-DD'),
-    commentCount: item.commentCount,
-    isPrivate: item.isPrivate,
-    counselType: item.counselType,
-  });
-
-  const fetchPosts = useCallback(async (page: number, count: number, sortBy: string, sortDirection: string) => {
-    setLoading(true);
-    setIsError(false);
-    try {
-      const params = new URLSearchParams({
-        pageNumber: String(page),
-        itemCount: String(count),
-        pageSize: '10',
-        sortBy,
-        sortDirection,
-      });
-      const res = await fetchWithAuth(`/api/board/counseling/list?${ params }`);
-      if (!res.ok) throw new Error(`${ res.status }`);
-      const data: BoardListResponse = await res.json();
-      setPosts(data.payload.map(mapPost));
-      setTotalPages(data.paging.totalPages);
-      setItemTotal(data.paging.itemTotal);
-    } catch {
-      setPosts([]);
-      setTotalPages(1);
-      setItemTotal(0);
-      setIsError(true);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  const fetchSearchPosts = useCallback(async (page: number, count: number, query: string, sortBy: string, sortDirection: string) => {
-    setLoading(true);
-    setIsError(false);
-    try {
-      const params = new URLSearchParams({
-        pageNumber: String(page),
-        itemCount: String(count),
-        pageSize: '10',
-        query,
-        sortBy,
-        sortDirection,
-      });
-      const res = await fetchWithAuth(`/api/board/counseling/search?${ params }`);
-      if (!res.ok) throw new Error(`${ res.status }`);
-      const data: BoardListResponse = await res.json();
-      setPosts(data.payload.map(mapPost));
-      setTotalPages(data.paging.totalPages);
-      setItemTotal(data.paging.itemTotal);
-    } catch {
-      setPosts([]);
-      setTotalPages(1);
-      setItemTotal(0);
-      setIsError(true);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    const sortBy = sortFieldMap[sortState.fieldId] ?? 'createDate';
-    const { direction } = sortState;
-    if (activeQuery) {
-      fetchSearchPosts(currentPage, itemCount, activeQuery, sortBy, direction);
-    } else {
-      fetchPosts(currentPage, itemCount, sortBy, direction);
-    }
-  }, [currentPage, itemCount, activeQuery, sortState, fetchPosts, fetchSearchPosts]);
 
   const handleItemCountChange = (count: number) => {
     setItemCount(count);

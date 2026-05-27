@@ -1,22 +1,17 @@
 import type { ApiResponse } from '@/types/common/api';
+import { useAuthStore } from '@/store/authStore';
 
 export type { ApiResponse };
 
 export const apiBase = process.env.NEXT_PUBLIC_API_URL ?? '';
 
 function getAuthHeaders(): Record<string, string> {
-  const token = typeof window !== 'undefined'
-    ? localStorage.getItem('chodae_token')
-    : null;
+  const token = useAuthStore.getState().token;
   return token ? { Authorization: `Bearer ${ token }` } : {};
 }
 
 function clearAuthStorage() {
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('chodae_token');
-    localStorage.removeItem('chodae_user');
-    window.dispatchEvent(new Event('auth:logout'));
-  }
+  useAuthStore.getState().logout();
 }
 
 // 응답 구조와 관계없이 토큰만 자동 포함하는 fetch 래퍼

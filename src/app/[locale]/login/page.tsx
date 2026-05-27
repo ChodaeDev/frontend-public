@@ -3,8 +3,7 @@
 import { Suspense, useActionState, useEffect } from 'react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { setAuth, setUser } from '@/store/authSlice';
+import { useAuthStore } from '@/store/authStore';
 import { fetchApi } from '@/lib/api';
 import { FormInput, SubmitButton } from '@/components/ui/form';
 import { errorStyle } from '@/components/ui/form-styles';
@@ -15,7 +14,7 @@ import {
   type FieldErrors,
   type LoginInput,
 } from '@/lib/validations/auth';
-import type { UserInfo } from '@/store/authSlice';
+import type { UserInfo } from '@/types/user';
 import { useTranslation } from '@/i18n/client';
 
 type LoginPayload = {
@@ -99,8 +98,9 @@ function LoginForm() {
   const locale = params.locale as string;
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAuthStore((state) => state.user);
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const setUser = useAuthStore((state) => state.setUser);
   const { dictionary } = useTranslation();
   const t = dictionary.login;
   const [state, formAction, isPending] = useActionState(loginAction, initialState);
@@ -116,11 +116,11 @@ function LoginForm() {
 
     const payload = state.payload;
     if (payload.user && payload.token) {
-      dispatch(setAuth({ user: payload.user, token: payload.token }));
+      setAuth({ user: payload.user, token: payload.token });
     } else if (payload.userId) {
-      dispatch(setUser(payload));
+      setUser(payload);
     }
-  }, [state.success, state.payload, dispatch]);
+  }, [state.success, state.payload, setAuth, setUser]);
 
   const getErrorMessage = (errorKey: string | null) => {
     if (!errorKey) return null;

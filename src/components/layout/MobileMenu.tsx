@@ -7,8 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, LogIn, LogOut } from 'lucide-react';
 import ThemeSwitch from '@/components/theme/ThemeSwitch';
 import LanguageSwitch from '@/components/ui/LanguageSwitch';
-import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import { logout } from '@/store/authSlice';
+import { useAuthStore } from '@/store/authStore';
 import { useTranslation } from '@/i18n/client';
 import { getNavItems } from '@/config/navigation';
 import { cn } from '@/lib/cn';
@@ -18,8 +17,8 @@ const MobileMenu = () => {
   const [isClosing, setIsClosing] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const user = useAppSelector((state) => state.auth.user);
-  const dispatch = useAppDispatch();
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
   const { locale, dictionary } = useTranslation();
   const navItems = getNavItems(locale, dictionary);
   const t = dictionary;
@@ -39,10 +38,10 @@ const MobileMenu = () => {
   }, []);
 
   const handleLogout = useCallback(() => {
-    dispatch(logout());
+    logout();
     close();
     router.refresh();
-  }, [dispatch, close, router]);
+  }, [logout, close, router]);
 
   // pathname 변경 시 메뉴 닫기
   useEffect(() => {

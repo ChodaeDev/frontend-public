@@ -8,8 +8,7 @@ import ThemeSwitch from '@/components/theme/ThemeSwitch';
 import LanguageSwitch from '@/components/ui/LanguageSwitch';
 import Navigation from '@/components/layout/Navigation';
 import MobileMenu from '@/components/layout/MobileMenu';
-import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import { logout } from '@/store/authSlice';
+import { useAuthStore } from '@/store/authStore';
 import Image from 'next/image';
 import { useTranslation } from '@/i18n/client';
 import { cn } from '@/lib/cn';
@@ -17,8 +16,8 @@ import { cn } from '@/lib/cn';
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const user = useAppSelector((state) => state.auth.user);
-  const dispatch = useAppDispatch();
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
   const { dictionary, locale } = useTranslation();
   const t = dictionary;
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,7 +32,7 @@ const Header = () => {
   }, []);
 
   const handleLogout = () => {
-    dispatch(logout());
+    logout();
     router.refresh();
   };
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams, usePathname } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import FormSelect from '@/components/ui/FormSelect';
 import { fetchApi } from '@/lib/api';
 import {
@@ -20,10 +21,11 @@ import {
   type FieldErrors,
 } from '@/lib/validations/auth';
 import { useTranslation } from '@/i18n/client';
-import { useAppSelector } from '@/store/hooks';
+import { useAuthStore } from '@/store/authStore';
 import { cn } from '@/lib/cn';
 import ConfirmModal from '@/components/ui/ConfirmModal';
 import type { CounselingDetailData } from '@/types/board';
+import { counselingKeys, updateCounselingPost } from '@/lib/queries/counseling';
 
 interface CounselingEditFormProps {
   postId: number;
@@ -36,7 +38,8 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
   const pathname = usePathname();
   const { dictionary } = useTranslation();
   const t = dictionary.board;
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAuthStore((state) => state.user);
+  const queryClient = useQueryClient();
 
   const [postLoading, setPostLoading] = useState(true);
 
@@ -46,8 +49,6 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
   const [phone, setPhone] = useState('');
   const [isPrivate, setIsPrivate] = useState(false);
 
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors<CounselingInput>>({});
 
   const [showCancelModal, setShowCancelModal] = useState(false);
@@ -86,7 +87,15 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
     return errors?.[errorKey] || errorKey;
   };
 
-  const handleSubmit = async () => {
+  const { mutate: submitEdit, isPending, error: mutationError } = useMutation({
+    mutationFn: updateCounselingPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: counselingKeys.all });
+      router.push(`/${ locale }/board/counseling/${ postId }`);
+    },
+  });
+
+  const handleSubmit = () => {
     const raw = { title, counselType, content, phone };
     const result = counselingSchema.safeParse(raw);
     if (!result.success) {
@@ -94,27 +103,19 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
       return;
     }
     setFieldErrors({});
-    setSubmitting(true);
-    setError(null);
-    try {
-      await fetchApi(`/api/board/counseling/edit/${ postId }`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          title: result.data.title,
-          content: result.data.content,
-          userId: user!.userId,
-          userName: user!.userName,
-          isPrivate,
-          phone: result.data.phone,
-          counselType: result.data.counselType,
-        }),
-      });
-      router.push(`/${ locale }/board/counseling/${ postId }`);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'generic');
-    } finally {
-      setSubmitting(false);
-    }
+
+    submitEdit({
+      id: postId,
+      data: {
+        title: result.data.title,
+        content: result.data.content,
+        userId: user!.userId,
+        userName: user!.userName,
+        isPrivate: isPrivate ? 1 : 0,
+        phone: result.data.phone,
+        counselType: result.data.counselType,
+      },
+    });
   };
 
   if (!user || postLoading) {
@@ -235,9 +236,9 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
           </label>
         </div>
 
-        {error && (
+        {mutationError && (
           <div className={errorStyle}>
-            {getErrorMessage(error)}
+            {getErrorMessage(mutationError instanceof Error ? mutationError.message : 'generic')}
           </div>
         )}
 
@@ -252,7 +253,7 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
           <button
             type={'button'}
             onClick={() => setShowEditModal(true)}
-            disabled={submitting}
+            disabled={isPending}
             className={cn(buttonPrimaryStyle, 'cursor-pointer')}
           >
             {t.edit || '수정'}
@@ -279,7 +280,7 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
         }}
         title={t.editConfirmTitle || '수정 확인'}
         message={t.editConfirmMessage || '상담 내용을 수정하시겠습니까?'}
-        confirmText={submitting ? (t.saving || '저장 중...') : (t.save || '저장')}
+        confirmText={isPending ? (t.saving || '저장 중...') : (t.save || '저장')}
         cancelText={dictionary.common.cancel || '취소'}
       />
     </>
