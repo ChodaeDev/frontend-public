@@ -15,7 +15,7 @@ import {
   type SignupInput,
 } from '@/lib/validations/auth';
 import { useTranslation } from '@/i18n/client';
-import { useAppSelector } from '@/store/hooks';
+import { useAuthStore } from '@/store/authStore';
 import { cn } from '@/lib/cn';
 
 type FormState = {
@@ -82,7 +82,7 @@ export default function SignUpPage() {
   const locale = params.locale as string;
   const { dictionary } = useTranslation();
   const t = dictionary.signup;
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAuthStore((state) => state.user);
   const [state, formAction, isPending] = useActionState(signupAction, initialState);
 
   useEffect(() => {

@@ -1,9 +1,9 @@
 'use client';
 
-import { useActionState, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter, useParams, usePathname } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import FormSelect from '@/components/ui/FormSelect';
-import { fetchApi } from '@/lib/api';
 import { FormInput, FormTextarea } from '@/components/ui/form';
 import {
   inputStyle,
@@ -17,77 +17,14 @@ import {
   type CounselingInput,
 } from '@/lib/validations/counseling';
 import {
-  formDataToObject,
   getFieldErrors,
   type FieldErrors,
 } from '@/lib/validations/auth';
 import { useTranslation } from '@/i18n/client';
-import { useAppSelector } from '@/store/hooks';
+import { useAuthStore } from '@/store/authStore';
 import { cn } from '@/lib/cn';
 import ConfirmModal from '@/components/ui/ConfirmModal';
-
-type FormState = {
-  error: string | null;
-  fieldErrors: FieldErrors<CounselingInput>;
-  previousInput: Partial<CounselingInput>;
-  success: boolean;
-};
-
-const initialState: FormState = {
-  error: null,
-  fieldErrors: {},
-  previousInput: {},
-  success: false,
-};
-
-async function counselingAction(prev: FormState, formData: FormData): Promise<FormState> {
-  const rawData = formDataToObject(formData) as Partial<CounselingInput>;
-
-  const result = counselingSchema.safeParse(rawData);
-  if (!result.success) {
-    return {
-      error: null,
-      fieldErrors: getFieldErrors(result.error),
-      previousInput: rawData,
-      success: false,
-    };
-  }
-
-  const isPrivate = formData.get('isPrivate') === 'on' ? 1 : 0;
-  const userId = formData.get('userId') as string;
-  const userName = formData.get('userName') as string;
-
-  const body = {
-    ...result.data,
-    userId,
-    userName,
-    isPrivate,
-  };
-
-  try {
-    await fetchApi('/api/board/counseling/form', {
-      method: 'POST',
-      body: JSON.stringify(body),
-    });
-
-    return { error: null, fieldErrors: {}, previousInput: {}, success: true };
-  } catch (err) {
-    if (err instanceof TypeError && err.message.includes('fetch')) {
-      return {
-        error: 'serverError',
-        fieldErrors: {},
-        previousInput: rawData,
-        success: false,
-      };
-    }
-    return {
-      error: err instanceof Error ? err.message : 'generic',
-      fieldErrors: {},
-      previousInput: rawData,
-      success: false,
-    };
-  }
-}
+import { counselingKeys, createCounselingPost } from '@/lib/queries/counseling';
 
 export default function CounselingWriteForm() {
   const router = useRouter();
@@ -96,10 +33,13 @@ export default function CounselingWriteForm() {
   const pathname = usePathname();
   const { dictionary } = useTranslation();
   const t = dictionary.board;
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAuthStore((state) => state.user);
   const formRef = useRef<HTMLFormElement>(null);
+  const queryClient = useQueryClient();
 
-  const [state, action] = useActionState(counselingAction, initialState);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors<CounselingInput>>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [previousInput, setPreviousInput] = useState<Partial<CounselingInput>>({});
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
 
@@ -109,16 +49,51 @@ export default function CounselingWriteForm() {
     }
   }, [user, router, locale, pathname]);
 
-  useEffect(() => {
-    if (state.success) {
+  const { mutate: submitPost, isPending } = useMutation({
+    mutationFn: createCounselingPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: counselingKeys.all });
       router.push(`/${ locale }/board/counseling`);
-    }
-  }, [state.success, router, locale]);
+    },
+    onError: (err) => {
+      setSubmitError(err instanceof Error ? err.message : 'generic');
+    },
+  });
 
   const getErrorMessage = (errorKey: string | null) => {
     if (!errorKey) return null;
     const errors = t.errors as Record<string, string> | undefined;
     return errors?.[errorKey] || errorKey;
+  };
+
+  const handleFormSubmit = () => {
+    if (!formRef.current || !user) return;
+
+    const formData = new FormData(formRef.current);
+    const rawData: Partial<CounselingInput> = {
+      title: formData.get('title') as string,
+      counselType: formData.get('counselType') as string,
+      content: formData.get('content') as string,
+      phone: formData.get('phone') as string,
+    };
+
+    const result = counselingSchema.safeParse(rawData);
+    if (!result.success) {
+      setFieldErrors(getFieldErrors(result.error));
+      setPreviousInput(rawData);
+      return;
+    }
+
+    setFieldErrors({});
+    setSubmitError(null);
+    const isPrivate = formData.get('isPrivate') === 'on' ? 1 : 0;
+
+    submitPost({
+      ...result.data,
+      userId: user.userId,
+      userName: user.userName,
+      isPrivate,
+    });
   };
 
   if (!user) {
@@ -127,7 +102,7 @@ export default function CounselingWriteForm() {
 
   return (
     <>
-      <form ref={formRef} action={action} className={'grid grid-cols-1 gap-6'}>
+      <form ref={formRef} className={'grid grid-cols-1 gap-6'}>
         <input type={'hidden'} name={'userId'} value={user.userId} />
         <input type={'hidden'} name={'userName'} value={user.userName} />
 
@@ -136,8 +111,8 @@ export default function CounselingWriteForm() {
           name={'title'}
           placeholder={t.titlePlaceholder || '상담 제목을 입력하세요'}
           required
-          error={state.fieldErrors.title}
-          defaultValue={state.previousInput.title}
+          error={fieldErrors.title}
+          defaultValue={previousInput.title}
         />
 
         <div>
@@ -146,13 +121,13 @@ export default function CounselingWriteForm() {
             <span className={'text-error'}>{' *'}</span>
           </label>
           <FormSelect
-            key={state.previousInput.counselType}
+            key={previousInput.counselType}
             id={'counselType'}
             name={'counselType'}
             required
-            defaultValue={state.previousInput.counselType ?? ''}
+            defaultValue={previousInput.counselType ?? ''}
             placeholder={t.counselTypePlaceholder || '상담 유형을 선택하세요'}
-            error={!!state.fieldErrors.counselType}
+            error={!!fieldErrors.counselType}
             options={[
               { value: 'self', label: t.counselTypeSelf || '본인 상담' },
               { value: 'family', label: t.counselTypeFamily || '가족 상담' },
@@ -160,9 +135,9 @@ export default function CounselingWriteForm() {
               { value: 'etc', label: t.counselTypeEtc || '기타 상담' },
             ]}
           />
-          {state.fieldErrors.counselType && (
+          {fieldErrors.counselType && (
             <p className={'mt-1 text-xs text-error'}>
-              {state.fieldErrors.counselType}
+              {fieldErrors.counselType}
             </p>
           )}
         </div>
@@ -173,8 +148,8 @@ export default function CounselingWriteForm() {
           placeholder={t.contentPlaceholder || '상담 내용을 자세히 작성해주세요'}
           rows={8}
           required
-          error={state.fieldErrors.content}
-          defaultValue={state.previousInput.content}
+          error={fieldErrors.content}
+          defaultValue={previousInput.content}
         />
 
         <div>
@@ -195,8 +170,8 @@ export default function CounselingWriteForm() {
           type={'tel'}
           placeholder={t.phonePlaceholder || '연락 가능한 전화번호를 입력하세요'}
           required
-          error={state.fieldErrors.phone}
-          defaultValue={state.previousInput.phone ?? user.phone}
+          error={fieldErrors.phone}
+          defaultValue={previousInput.phone ?? user.phone}
           autoComplete={'tel'}
         />
 
@@ -212,9 +187,9 @@ export default function CounselingWriteForm() {
           </label>
         </div>
 
-        {state.error && (
+        {submitError && (
           <div className={errorStyle}>
-            {getErrorMessage(state.error)}
+            {getErrorMessage(submitError)}
           </div>
         )}
 
@@ -229,9 +204,10 @@ export default function CounselingWriteForm() {
           <button
             type={'button'}
             onClick={() => setShowSubmitModal(true)}
+            disabled={isPending}
             className={cn(buttonPrimaryStyle, 'cursor-pointer')}
           >
-            {t.submit || '신청하기'}
+            {isPending ? (t.loading || '처리 중...') : (t.submit || '신청하기')}
           </button>
         </div>
       </form>
@@ -251,7 +227,7 @@ export default function CounselingWriteForm() {
         onClose={() => setShowSubmitModal(false)}
         onConfirm={() => {
           setShowSubmitModal(false);
-          formRef.current?.requestSubmit();
+          handleFormSubmit();
         }}
         title={t.submitConfirmTitle || '신청 확인'}
         message={t.submitConfirmMessage || '상담을 신청하시겠습니까?'}

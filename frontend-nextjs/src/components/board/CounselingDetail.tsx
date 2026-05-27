@@ -1,17 +1,26 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import { createPortal } from 'react-dom';
 import { ArrowLeft, Pencil, Trash2, Lock, Send, X } from 'lucide-react';
-import { fetchApi } from '@/lib/api';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '@/i18n/client';
-import { useAppSelector } from '@/store/hooks';
+import { useAuthStore } from '@/store/authStore';
 import { cn } from '@/lib/cn';
 import ConfirmModal from '@/components/ui/ConfirmModal';
-import type { CounselingDetailData, Comment } from '@/types/board';
+import type { Comment } from '@/types/board';
+import {
+  counselingKeys,
+  fetchCounselingDetail,
+  fetchCounselingComments,
+  deleteCounselingPost,
+  createComment,
+  updateComment,
+  deleteComment,
+} from '@/lib/queries/counseling';
 
 interface CounselingDetailProps {
   postId: number;
@@ -23,31 +32,36 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   const locale = params.locale as string;
   const { dictionary } = useTranslation();
   const t = dictionary.board;
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAuthStore((state) => state.user);
 
-  const [post, setPost] = useState<CounselingDetailData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+
+  const { data: post, isLoading: loading, error: postError } = useQuery({
+    queryKey: counselingKeys.detail(postId),
+    queryFn: () => fetchCounselingDetail(postId),
+    retry: false,
+  });
+
+  const { data: comments = [], isLoading: commentsLoading } = useQuery({
+    queryKey: counselingKeys.comments(postId),
+    queryFn: () => fetchCounselingComments(postId),
+  });
+
   const [noAccess, setNoAccess] = useState(false);
+  const error = postError ? (postError as Error).message || t.postNotFound || '게시글을 찾을 수 없습니다.' : null;
 
   // 게시글 삭제 상태
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deleting, setDeleting] = useState(false);
 
   // 댓글 상태
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [commentsLoading, setCommentsLoading] = useState(true);
   const [commentText, setCommentText] = useState('');
-  const [commentSubmitting, setCommentSubmitting] = useState(false);
 
   // 댓글 수정 상태
   const [editingComment, setEditingComment] = useState<Comment | null>(null);
   const [editCommentText, setEditCommentText] = useState('');
-  const [editSubmitting, setEditSubmitting] = useState(false);
 
   // 댓글 삭제 상태
   const [deletingCommentId, setDeletingCommentId] = useState<number | null>(null);
-  const [commentDeleting, setCommentDeleting] = useState(false);
 
   const isAdmin = user?.userId === 'admin';
   const isOwner = user && post && (isAdmin || user.userId === post.userId);
@@ -59,41 +73,9 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
     etc: t.counselTypeEtc || '기타 상담',
   };
 
-  // 게시글 상세 조회
-  const fetchPost = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const { data } = await fetchApi<CounselingDetailData>(`/api/board/counseling/detail/${ postId }`);
-      if (data) setPost(data);
-    } catch {
-      setError(t.postNotFound || '게시글을 찾을 수 없습니다.');
-    } finally {
-      setLoading(false);
-    }
-  }, [postId, t.postNotFound]);
-
-  // 댓글 목록 조회
-  const fetchComments = useCallback(async () => {
-    setCommentsLoading(true);
-    try {
-      const { data } = await fetchApi<Comment[]>(`/api/board/counseling/detail/${ postId }/comments`);
-      setComments(data || []);
-    } catch {
-      setComments([]);
-    } finally {
-      setCommentsLoading(false);
-    }
-  }, [postId]);
-
-  useEffect(() => {
-    fetchPost();
-    fetchComments();
-  }, [fetchPost, fetchComments]);
-
   // error 또는 post 없을 때 이전 페이지로 이동
   useEffect(() => {
-    if(!user || user.userId !== 'admin') return;
+    if (!user || user.userId !== 'admin') return;
     if (!loading && (error || !post)) {
       alert(error || t.postNotFound || '게시글을 찾을 수 없습니다.');
       router.replace(`/${ locale }/board/counseling`);
@@ -111,37 +93,37 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   }, [post, user]);
 
   // 게시글 삭제
-  const handleDelete = async () => {
-    setDeleting(true);
-    try {
-      await fetchApi(`/api/board/counseling/delete/${ postId }`, { method: 'DELETE' });
+  const { mutate: handleDelete, isPending: deleting } = useMutation({
+    mutationFn: () => deleteCounselingPost(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: counselingKeys.all });
       router.push(`/${ locale }/board/counseling`);
-    } catch {
-      setDeleting(false);
+    },
+    onError: () => {
       setShowDeleteModal(false);
-    }
-  };
+    },
+  });
 
   // 댓글 등록
-  const handleCommentSubmit = async () => {
-    if (!user || !commentText.trim()) return;
-    setCommentSubmitting(true);
-    try {
-      await fetchApi(`/api/board/counseling/detail/${ postId }/comments`, {
-        method: 'POST',
-        body: JSON.stringify({
-          userId: user.userId,
-          userName: user.userName,
-          content: commentText.trim(),
-        }),
-      });
+  const { mutate: submitComment, isPending: commentSubmitting } = useMutation({
+    mutationFn: (content: string) =>
+      createComment({
+        postId,
+        data: {
+          userId: user!.userId,
+          userName: user!.userName,
+          content,
+        },
+      }),
+    onSuccess: () => {
       setCommentText('');
-      fetchComments();
-    } catch {
-      // 에러 처리
-    } finally {
-      setCommentSubmitting(false);
-    }
+      queryClient.invalidateQueries({ queryKey: counselingKeys.comments(postId) });
+    },
+  });
+
+  const handleCommentSubmit = () => {
+    if (!user || !commentText.trim()) return;
+    submitComment(commentText.trim());
   };
 
   // 댓글 수정 모달 열기
@@ -151,43 +133,41 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   };
 
   // 댓글 수정 제출
-  const handleCommentEditSubmit = async () => {
-    if (!editingComment || !editCommentText.trim()) return;
-    setEditSubmitting(true);
-    try {
-      await fetchApi(`/api/board/counseling/detail/${ postId }/comments/${ editingComment.id }`, {
-        method: 'PUT',
-        body: JSON.stringify({
+  const { mutate: submitCommentEdit, isPending: editSubmitting } = useMutation({
+    mutationFn: ({ commentId, content }: { commentId: number; content: string }) =>
+      updateComment({
+        postId,
+        commentId,
+        data: {
           userId: user!.userId,
           userName: user!.userName,
-          content: editCommentText.trim(),
-        }),
-      });
+          content,
+        },
+      }),
+    onSuccess: () => {
       setEditingComment(null);
       setEditCommentText('');
-      fetchComments();
-    } catch {
-      // 에러 처리
-    } finally {
-      setEditSubmitting(false);
-    }
+      queryClient.invalidateQueries({ queryKey: counselingKeys.comments(postId) });
+    },
+  });
+
+  const handleCommentEditSubmit = () => {
+    if (!editingComment || !editCommentText.trim()) return;
+    submitCommentEdit({ commentId: editingComment.id, content: editCommentText.trim() });
   };
 
-  // 댓글 삭제 확인
-  const handleCommentDeleteConfirm = async () => {
-    if (deletingCommentId === null) return;
-    setCommentDeleting(true);
-    try {
-      await fetchApi(`/api/board/counseling/detail/${ postId }/comments/${ deletingCommentId }`, {
-        method: 'DELETE',
-      });
+  // 댓글 삭제
+  const { mutate: submitCommentDelete, isPending: commentDeleting } = useMutation({
+    mutationFn: (commentId: number) => deleteComment({ postId, commentId }),
+    onSuccess: () => {
       setDeletingCommentId(null);
-      fetchComments();
-    } catch {
-      // 에러 처리
-    } finally {
-      setCommentDeleting(false);
-    }
+      queryClient.invalidateQueries({ queryKey: counselingKeys.comments(postId) });
+    },
+  });
+
+  const handleCommentDeleteConfirm = () => {
+    if (deletingCommentId === null) return;
+    submitCommentDelete(deletingCommentId);
   };
 
   // 로딩 상태

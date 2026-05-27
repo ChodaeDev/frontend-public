@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Noto_Sans_KR } from 'next/font/google';
 import '@/styles/globals.css';
-import { ReduxProvider } from '@/store/provider';
 import ThemeLayout from '@/layouts/ThemeProvider';
+import { QueryProvider } from '@/store/QueryProvider';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { locales, isValidLocale } from '@/i18n/config';
@@ -78,7 +78,7 @@ export default async function LocaleLayout({
         /> */}
       </head>
       <body className={`${ notoSansKr.variable } font-sans antialiased`}>
-        <ReduxProvider>
+        <QueryProvider>
           <ThemeLayout>
             <TranslationProvider dictionary={dictionary} locale={locale}>
               <div className={'relative h-full'}>
@@ -90,7 +90,7 @@ export default async function LocaleLayout({
               </div>
             </TranslationProvider>
           </ThemeLayout>
-        </ReduxProvider>
+        </QueryProvider>
       </body>
     </html>
   );

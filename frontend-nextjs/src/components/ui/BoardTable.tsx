@@ -40,7 +40,6 @@ function BoardTable<T>({
   onRowClick,
   selectedIds,
   onSelectItem,
-  onSelectAll,
   gridClass = 'grid-cols-[repeat(auto-fit,minmax(100px,1fr))]',
 }: BoardTableProps<T>) {
   const handleSort = (fieldId: string) => {
@@ -51,10 +50,6 @@ function BoardTable<T>({
       direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
     }
     onSortChange({ fieldId, direction });
-  };
-
-  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onSelectAll?.(e.target.checked);
   };
 
   const handleSelectItem = (e: React.MouseEvent, id: string) => {
