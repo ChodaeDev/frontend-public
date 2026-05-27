@@ -366,5 +366,11 @@
     "editConfirmTitle": "Edit Confirmation",
     "editConfirmMessage": "Would you like to save your changes?",
     "cancelEditMessage": "Your changes will be lost. Are you sure you want to cancel?"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you requested does not exist or has been moved.",
+    "back": "Go Back",
+    "home": "Go Home"
   }
 }

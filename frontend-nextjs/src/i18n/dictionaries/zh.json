@@ -366,5 +366,11 @@
     "editConfirmTitle": "确认修改",
     "editConfirmMessage": "确定要修改咨询内容吗？",
     "cancelEditMessage": "修改内容将会丢失。确定要取消吗？"
+  },
+  "notFound": {
+    "title": "找不到页面",
+    "description": "您请求的页面不存在或已被移动。",
+    "back": "返回",
+    "home": "回到首页"
   }
 }
