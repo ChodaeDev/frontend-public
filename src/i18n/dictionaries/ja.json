@@ -366,5 +366,11 @@
     "editConfirmTitle": "編集確認",
     "editConfirmMessage": "相談内容を修正しますか？",
     "cancelEditMessage": "編集中の内容が失われます。本当にキャンセルしますか？"
+  },
+  "notFound": {
+    "title": "ページが見つかりません",
+    "description": "お探しのページは存在しないか、移動された可能性があります。",
+    "back": "戻る",
+    "home": "ホームへ"
   }
 }
