@@ -14,19 +14,19 @@ export function generateStaticParams() {
       .flatMap((item) =>
         item.subMenus!.map((sub) => ({
           locale,
-          section: item.slug,
-          sub: sub.slug,
+          mainMenu: item.slug,
+          subMenu: sub.slug,
         })),
       ),
   );
 }
 
-export default async function SubPage({
+export default async function SubMenuPage({
   params,
 }: {
-  params: Promise<{ locale: string; section: string; sub: string }>;
+  params: Promise<{ locale: string; mainMenu: string; subMenu: string }>;
 }) {
-  const { locale, section, sub } = await params;
+  const { locale, mainMenu, subMenu } = await params;
 
   if (!isValidLocale(locale)) {
     notFound();
@@ -34,8 +34,8 @@ export default async function SubPage({
 
   const dictionary = await getDictionary(locale);
   const navItems = getNavItems(locale, dictionary);
-  const navItem = navItems.find((item) => item.slug === section);
-  const subItem = navItem?.subMenus?.find((s) => s.slug === sub);
+  const navItem = navItems.find((item) => item.slug === mainMenu);
+  const subItem = navItem?.subMenus?.find((s) => s.slug === subMenu);
 
   if (!navItem || !subItem) notFound();
 
@@ -45,7 +45,7 @@ export default async function SubPage({
     <div className={'flex py-8 min-h-screen'}>
       <SubSideNav
         navItem={navItem}
-        currentSubSlug={sub}
+        currentSubSlug={subMenu}
         locale={locale}
       />
 
@@ -55,7 +55,7 @@ export default async function SubPage({
             locale={locale}
             homeLabel={commonDict.home || '홈'}
             items={[
-              { label: navItem.label, href: `/${ locale }/${ section }` },
+              { label: navItem.label, href: `/${ locale }/${ mainMenu }` },
               { label: subItem.label },
             ]}
           />
@@ -71,8 +71,8 @@ export default async function SubPage({
         <div className={'flex-1 min-w-0'}>
           <SectionContent
             locale={locale}
-            section={section}
-            sub={sub}
+            mainMenu={mainMenu}
+            subMenu={subMenu}
             dictionary={dictionary}
           />
         </div>
