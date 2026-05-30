@@ -1,5 +1,7 @@
 # chodae_recovery 프로젝트 분석
 
+최종 업데이트: 2026-05-25
+
 ## 1. 개요
 
 `chodae_recovery`는 신천지 관련 상담/정보 제공 사이트를 위한 모노레포 형태의 프로젝트다.
@@ -7,7 +9,7 @@
 - `backend`: Spring Boot 3.5 + MyBatis + Redis + MariaDB 기반 REST API
 - `frontend-nextjs`: Next.js 15 App Router 기반 다국어 프론트엔드
 
-코드 기준으로 보면, 백엔드는 게시판/콘텐츠 API 골격이 넓게 구현되어 있고, 프론트엔드는 다국어 라우팅과 인증, 상담게시판 중심 화면이 먼저 연결된 상태다.
+코드 기준으로 보면, 백엔드는 게시판/콘텐츠 API 골격이 넓게 구현되어 있고, 프론트엔드는 다국어 라우팅과 인증, 상담게시판 중심 화면이 먼저 연결된 상태다. 최근 DB 스키마에는 여러 게시판에서 공통으로 사용할 수 있는 `post_attach` 첨부파일 테이블 설계가 추가되었다.
 
 ## 2. 디렉터리 구조
 
@@ -16,7 +18,7 @@ chodae_recovery/
 ├── backend/           # Spring Boot API 서버
 ├── frontend-nextjs/   # Next.js 프론트엔드
 ├── README.md
-└── PROJECT_ANALYSIS.md
+└── PROJECT_ANALYSYS.md
 ```
 
 ### backend 주요 구성
@@ -32,6 +34,10 @@ chodae_recovery/
   - MyBatis SQL XML
 - `docker-compose.yml`
   - 앱 + MariaDB + Redis + Nginx 구성
+- `sql`
+  - 현재 기준 스키마와 과거/원본 SQL 덤프 보관
+  - `chodae_recovery.sql`: 신규 환경용 기준 스키마
+  - `create_post_attach.sql`: 기존 DB에 첨부파일 테이블만 추가하기 위한 실행용 SQL
 
 ### frontend-nextjs 주요 구성
 
@@ -146,6 +152,50 @@ chodae_recovery/
 - `application.yml`: 로컬 개발용, DB/Redis 모두 `localhost`
 - `application-docker.yml`: Docker 환경용, DB=`db`, Redis=`redis`
 
+### 5-5. DB 스키마 현황
+
+기준 스키마는 `backend/sql/chodae_recovery.sql`에 있다. 주요 테이블은 다음과 같다.
+
+- `users`
+- `visitor_count`, `visitor_log`
+- `counseling_post`, `counseling_comment`
+- `about_post`, `about_comment`
+- `freeboard_post`, `freeboard_comment`
+- `withdrawal_post`, `withdrawal_comment`
+- `prevention_post`, `prevention_comment`
+- `doctrine_post`, `doctrine_comment`
+- `scj_info_post`, `scj_info_comment`
+- `post_attach`
+
+`post_attach`는 여러 게시판에서 공통으로 사용할 첨부파일 메타데이터 테이블이다.
+
+```sql
+CREATE TABLE `post_attach` (
+    `id` int NOT NULL AUTO_INCREMENT COMMENT '첨부파일 ID',
+    `board_table_name` varchar(100) NOT NULL COMMENT '게시판 테이블 이름',
+    `post_id` int NOT NULL COMMENT '게시글 ID',
+    `attach_order` int NOT NULL DEFAULT 0 COMMENT '파일 첨부 순서',
+    `file_path` varchar(1024) NOT NULL COMMENT '파일경로(파일명 포함)',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_post_attach_order` (`board_table_name`, `post_id`, `attach_order`),
+    KEY `idx_post_attach_post` (`board_table_name`, `post_id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+```
+
+설계 의도:
+
+- 게시판별 게시글 테이블이 분리되어 있으므로 `board_table_name`으로 어느 게시판인지 구분한다.
+- 첨부파일은 특정 게시글에 연결되어야 하므로 `post_id`를 둔다.
+- 첨부 순서는 `attach_order`로 관리한다.
+- 실제 파일 저장 위치와 파일명은 `file_path`에 함께 저장한다.
+- 여러 게시판 테이블을 하나의 첨부 테이블이 참조하므로 물리 외래키는 두지 않았다.
+
+현재 상태:
+
+- DB 테이블 설계와 SQL 파일은 추가됨
+- 파일 업로드 API, 저장소 경로 정책, MIME/확장자/용량 검증, 프론트 첨부 UI는 아직 미구현
+- 기존 운영 DB에는 `backend/sql/create_post_attach.sql`을 별도로 실행해야 한다.
+
 ## 6. 프론트엔드 구현 상태
 
 ### 6-1. 라우팅 구조
@@ -171,9 +221,10 @@ chodae_recovery/
 
 - 메인 랜딩 페이지: 구현됨
 - 로그인/회원가입: 구현됨
-- 상담게시판 목록/작성/상세: 구현 진행 중
+- 상담게시판 목록/작성/상세/수정: 구현 진행 중
 - 일반 섹션 페이지: 라우팅과 서브메뉴는 구현됨
 - 일반 섹션 실제 콘텐츠 렌더링: 대부분 미구현
+- 파일 첨부 UI: 아직 미구현
 
 근거:
 
@@ -199,25 +250,27 @@ chodae_recovery/
 
 ### 게시판 UI
 
-- 목록: `BoardContent`
+- 목록: `CounselingBoardContent`
 - 테이블: `BoardTable`
 - 작성: `CounselingWriteForm`
+- 수정: `CounselingEditForm`
+- 상세: `CounselingDetail`
 - 페이지네이션: `Pagination`
 
 ## 8. 코드 기준 주요 관찰 사항
 
 ### 8-1. 프론트/백엔드 라우트 불일치 가능성
 
-`BoardContent.tsx`는 게시판 목록 조회 시 다음 경로를 사용한다.
+현재 프론트 게시판 화면은 `CounselingBoardContent.tsx` 중심으로 구현되어 있어 상담게시판 경로에 강하게 맞춰져 있다.
 
-- `/api/board/${sub}/list`
+상담게시판은 다음 경로를 사용한다.
 
-이 경우:
+- `/api/board/counseling/list`
+- `/api/board/counseling/search`
 
-- `sub === counseling`이면 `/api/board/counseling/list`로 맞음
-- `sub === free`이면 `/api/board/free/list`가 되는데, 백엔드는 `/api/freeboard/list`
+반면 자유게시판 백엔드는 `/api/freeboard/list` 형태다.
 
-즉 자유게시판은 현재 프론트와 백엔드의 엔드포인트가 맞지 않을 가능성이 높다.
+즉 상담게시판 외 게시판을 프론트에서 확장할 때는 API 경로 매핑을 별도로 정리해야 한다.
 
 ### 8-2. 보안 설정이 느슨함
 
@@ -245,11 +298,29 @@ chodae_recovery/
 
 방문자 API가 이미 있으므로 이후 연동 가능성이 높다.
 
-### 8-5. 검색 기능은 UI만 있고 백엔드 연동 미완성
+### 8-5. 검색 기능은 상담게시판 중심으로 구현됨
 
-`BoardContent.tsx`에 제목/작성자 검색 UI가 있으나 코드에 `TODO: API에 검색 파라미터 추가`가 있다.
+상담게시판은 `/api/board/counseling/search`를 호출하는 검색 흐름이 있다. 다만 프론트 전체 게시판 구조에서 게시판별 검색 API와 파라미터 규격이 공통화된 상태는 아니다.
 
-즉 검색 UX는 보이지만 실제 조회 조건 반영은 아직 미완성이다.
+즉 검색은 상담게시판 기준으로 먼저 구현되어 있고, 자유게시판과 다른 섹션까지 확장하려면 API 경로와 검색 조건을 정리해야 한다.
+
+### 8-6. 첨부파일은 DB 설계만 반영됨
+
+`post_attach` 테이블은 추가되었지만, 애플리케이션 레벨 구현은 아직 없다.
+
+남은 구현 항목:
+
+- 업로드 엔드포인트 또는 게시글 작성 API의 `multipart/form-data` 처리
+- 서버 저장 디렉터리 정책
+- 허용 파일 정책
+  - 문서: pdf, doc/docx, xls/xlsx, ppt/pptx, hwp 등
+  - 이미지: jpg/jpeg, png, gif, webp 등
+  - 동영상: mp4, mov, webm 등
+- 확장자와 MIME 타입 이중 검증
+- 파일 크기 제한
+- 다운로드/미리보기 API
+- 게시글 삭제 시 첨부 파일 메타데이터와 실제 파일 정리
+- 프론트 작성/수정 폼의 첨부 UI
 
 ## 9. 현재 프로젝트의 강점
 
@@ -258,6 +329,7 @@ chodae_recovery/
 - JWT + Redis 단일 세션 제어 구조가 구현되어 있음
 - 게시글/댓글 CRUD 패턴이 여러 섹션에 재사용 가능하게 정리되어 있음
 - Docker Compose로 로컬 통합 실행이 가능함
+- 공통 첨부 테이블 설계를 통해 게시판별 파일 첨부 기능을 확장할 수 있는 DB 기반이 생김
 
 ## 10. 현재 프로젝트의 과제
 
@@ -265,7 +337,9 @@ chodae_recovery/
 - 자유게시판 경로 불일치 가능성 정리 필요
 - 보안 정책을 컨트롤러 의존형에서 설정 기반으로 정리할 필요
 - README와 실제 코드 상태 동기화 필요
-- 검색, 랜딩 통계, 상세 페이지 등 일부 기능이 아직 목업/부분 구현 상태
+- 검색, 랜딩 통계, 상세 페이지 등 일부 기능이 게시판/섹션별로 목업 또는 부분 구현 상태
+- 파일 첨부 기능은 DB 테이블까지만 추가되어 있고 백엔드/프론트 구현 필요
+- MariaDB 초기화 SQL은 Docker Compose에서 현재 주석 처리되어 있어 신규 환경 구성 방식 확정 필요
 
 ## 11. 추천 정리 방향
 
@@ -273,10 +347,11 @@ chodae_recovery/
 
 1. 프론트 API 경로와 백엔드 엔드포인트를 전수 대조
 2. `SectionContent`에 각 섹션 실제 API 연동 추가
-3. 인증 필요 API를 `SecurityConfig`에서 명시적으로 보호
-4. 랜딩/게시판의 목업 데이터를 실 API로 대체
-5. README를 현재 구조 기준으로 다시 작성
+3. 게시글 작성/수정 플로우에 첨부파일 업로드 API와 `post_attach` 저장 로직 추가
+4. 인증 필요 API를 `SecurityConfig`에서 명시적으로 보호
+5. 랜딩/게시판의 목업 데이터를 실 API로 대체
+6. README를 현재 구조 기준으로 다시 작성
 
 ## 12. 한 줄 결론
 
-이 프로젝트는 "백엔드 API 골격은 넓게 갖춰졌고, 프론트는 다국어/인증/상담게시판 중심으로 먼저 구축된 상태"이며, 다음 단계는 프론트 실제 콘텐츠 연동과 보안/문서 정리다.
+이 프로젝트는 "백엔드 API 골격은 넓게 갖춰졌고, 프론트는 다국어/인증/상담게시판 중심으로 먼저 구축된 상태"이며, 최근에는 게시판 공통 첨부파일 DB 설계가 추가되었다. 다음 단계는 첨부파일 업로드 구현, 프론트 실제 콘텐츠 연동, 보안/문서 정리다.
