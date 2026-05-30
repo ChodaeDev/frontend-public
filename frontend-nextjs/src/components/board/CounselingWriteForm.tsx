@@ -180,6 +180,7 @@ export default function CounselingWriteForm() {
             id={'visibilityLevel'}
             name={'visibilityLevel'}
             type={'checkbox'}
+            defaultChecked
             className={'h-4 w-4 rounded border-gray7 accent-accent1'}
           />
           <label htmlFor={'visibilityLevel'} className={'text-sm text-main'}>
