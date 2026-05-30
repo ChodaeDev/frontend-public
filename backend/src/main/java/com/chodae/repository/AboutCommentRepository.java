@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface AboutCommentRepository extends JpaRepository<AboutComment, Integer> {
 
-    List<AboutComment> findByIsPrivateOrderByCreateDateAsc(Integer isPrivate);
+    List<AboutComment> findByVisibilityLevelOrderByCreateDateAsc(Integer visibilityLevel);
 
-    int countByIsPrivate(Integer isPrivate);
+    int countByVisibilityLevel(Integer visibilityLevel);
 }

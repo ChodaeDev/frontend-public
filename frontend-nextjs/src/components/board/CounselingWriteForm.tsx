@@ -86,13 +86,13 @@ export default function CounselingWriteForm() {
 
     setFieldErrors({});
     setSubmitError(null);
-    const isPrivate = formData.get('isPrivate') === 'on' ? 1 : 0;
+    const visibilityLevel = formData.get('visibilityLevel') === 'on' ? 'partial' : 'public';
 
     submitPost({
       ...result.data,
       userId: user.userId,
       userName: user.userName,
-      isPrivate,
+      visibilityLevel,
     });
   };
 
@@ -177,13 +177,13 @@ export default function CounselingWriteForm() {
 
         <div className={'flex items-center gap-2'}>
           <input
-            id={'isPrivate'}
-            name={'isPrivate'}
+            id={'visibilityLevel'}
+            name={'visibilityLevel'}
             type={'checkbox'}
             className={'h-4 w-4 rounded border-gray7 accent-accent1'}
           />
-          <label htmlFor={'isPrivate'} className={'text-sm text-main'}>
-            {t.isPrivate || '비공개'}
+          <label htmlFor={'visibilityLevel'} className={'text-sm text-main'}>
+            {t.visibilityLevel || '비공개'}
           </label>
         </div>
 

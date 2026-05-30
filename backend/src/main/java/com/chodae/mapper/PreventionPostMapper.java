@@ -26,5 +26,5 @@ public interface PreventionPostMapper {
 
     int updateCommentCount(@Param("id") Integer id, @Param("commentCount") Integer commentCount);
 
-    int updateIsPrivate(@Param("id") Integer id, @Param("isPrivate") Integer isPrivate);
+    int updateVisibilityLevel(@Param("id") Integer id, @Param("visibilityLevel") Integer visibilityLevel);
 }

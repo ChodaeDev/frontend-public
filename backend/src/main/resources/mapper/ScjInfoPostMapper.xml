@@ -12,14 +12,14 @@
         <result property="phone" column="phone"/>
         <result property="counselType" column="counsel_type"/>
         <result property="commentCount" column="comment_count"/>
-        <result property="isPrivate" column="is_private"/>
+        <result property="visibilityLevel" column="visibility_level"/>
         <result property="createDate" column="create_date"/>
         <result property="modifiedDate" column="modified_date"/>
     </resultMap>
 
     <select id="findAll" resultMap="ScjInfoResponseMap">
         SELECT id, title, content, user_id, user_name, phone, counsel_type,
-               comment_count, is_private, create_date, modified_date
+               comment_count, visibility_level, create_date, modified_date
         FROM scj_info_post
         ORDER BY create_date DESC
     </select>
@@ -30,7 +30,7 @@
 
     <select id="findAllWithPaging" resultMap="ScjInfoResponseMap">
         SELECT id, title, content, user_id, user_name, phone, counsel_type,
-               comment_count, is_private, create_date, modified_date
+               comment_count, visibility_level, create_date, modified_date
         FROM scj_info_post
         <choose>
             <when test="sortColumn == 'title' and sortOrder == 'ASC'">ORDER BY title ASC</when>
@@ -45,7 +45,7 @@
 
     <select id="findByUserId" resultMap="ScjInfoResponseMap">
         SELECT id, title, content, user_id, user_name, phone, counsel_type,
-               comment_count, is_private, create_date, modified_date
+               comment_count, visibility_level, create_date, modified_date
         FROM scj_info_post
         WHERE user_id = #{userId}
         ORDER BY create_date DESC
@@ -53,28 +53,28 @@
 
     <select id="findById" resultMap="ScjInfoResponseMap">
         SELECT id, title, content, user_id, user_name, phone, counsel_type,
-               comment_count, is_private, create_date, modified_date
+               comment_count, visibility_level, create_date, modified_date
         FROM scj_info_post
         WHERE id = #{id}
     </select>
 
     <select id="findByIdAndUserId" resultMap="ScjInfoResponseMap">
         SELECT id, title, content, user_id, user_name, phone, counsel_type,
-               comment_count, is_private, create_date, modified_date
+               comment_count, visibility_level, create_date, modified_date
         FROM scj_info_post
         WHERE id = #{id} AND user_id = #{userId}
     </select>
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO scj_info_post (title, content, user_id, user_name, phone, counsel_type, comment_count, is_private, create_date, modified_date)
-        VALUES (#{title}, #{content}, #{userId}, #{userName}, #{phone}, #{counselType}, 0, #{isPrivate}, NOW(), NOW())
+        INSERT INTO scj_info_post (title, content, user_id, user_name, phone, counsel_type, comment_count, visibility_level, create_date, modified_date)
+        VALUES (#{title}, #{content}, #{userId}, #{userName}, #{phone}, #{counselType}, 0, #{visibilityLevel}, NOW(), NOW())
     </insert>
 
     <update id="updateCommentCount">
         UPDATE scj_info_post SET comment_count = #{commentCount}, modified_date = NOW() WHERE id = #{id}
     </update>
 
-    <update id="updateIsPrivate">
-        UPDATE scj_info_post SET is_private = #{isPrivate}, modified_date = NOW() WHERE id = #{id}
+    <update id="updateVisibilityLevel">
+        UPDATE scj_info_post SET visibility_level = #{visibilityLevel}, modified_date = NOW() WHERE id = #{id}
     </update>
 </mapper>

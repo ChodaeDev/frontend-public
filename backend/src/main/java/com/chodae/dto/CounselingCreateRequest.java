@@ -10,7 +10,7 @@ public class CounselingCreateRequest {
     private String content;
     private String userId;
     private String userName;
-    private Boolean isPrivate;
+    private String visibilityLevel;
     private String phone;
     private String counselType;
 }

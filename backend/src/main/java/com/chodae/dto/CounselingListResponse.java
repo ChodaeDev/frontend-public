@@ -17,7 +17,7 @@ public class CounselingListResponse {
     Boolean isOwner;
     String counselType;
     Integer commentCount;
-    Integer isPrivate;
+    String visibilityLevel;
     LocalDateTime createDate;
     LocalDateTime modifiedDate;
 }

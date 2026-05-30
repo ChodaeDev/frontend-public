@@ -32,8 +32,8 @@ public class DoctrinePost {
     @Column(name = "comment_count", nullable = false)
     private Integer commentCount = 0;
 
-    @Column(name = "is_private", nullable = false)
-    private Integer isPrivate;
+    @Column(name = "visibility_level", nullable = false)
+    private Integer visibilityLevel;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;
@@ -68,8 +68,8 @@ public class DoctrinePost {
     public void setCounselType(String counselType) { this.counselType = counselType; }
     public Integer getCommentCount() { return commentCount; }
     public void setCommentCount(Integer commentCount) { this.commentCount = commentCount; }
-    public Integer getIsPrivate() { return isPrivate; }
-    public void setIsPrivate(Integer isPrivate) { this.isPrivate = isPrivate; }
+    public Integer getVisibilityLevel() { return visibilityLevel; }
+    public void setVisibilityLevel(Integer visibilityLevel) { this.visibilityLevel = visibilityLevel; }
     public LocalDateTime getCreateDate() { return createDate; }
     public void setCreateDate(LocalDateTime createDate) { this.createDate = createDate; }
     public LocalDateTime getModifiedDate() { return modifiedDate; }

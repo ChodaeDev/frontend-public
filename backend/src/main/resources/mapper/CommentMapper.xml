@@ -8,48 +8,56 @@
         <result property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
         <result property="content" column="content"/>
-        <result property="isPrivate" column="is_private"/>
+        <result property="visibilityLevel" column="visibility_level"/>
         <result property="confirm" column="confirm"/>
         <result property="createDate" column="create_date"/>
     </resultMap>
 
     <select id="findByPostId" resultMap="CommentResponseMap">
-        SELECT id, user_id, user_name, content, is_private, confirm, create_date
-        FROM counseling_comment
-        WHERE post_id = #{postId}
+        SELECT id, user_id, user_name, content,
+               visibility_level,
+               confirm, create_date
+        FROM `comment`
+        WHERE post_id = #{postId} AND is_deleted = 0
         ORDER BY create_date ASC
     </select>
 
     <select id="findById" resultMap="CommentResponseMap">
-        SELECT id, user_id, user_name, content, is_private, confirm, create_date
-        FROM counseling_comment WHERE id = #{commentId}
+        SELECT id, user_id, user_name, content,
+               visibility_level,
+               confirm, create_date
+        FROM `comment`
+        WHERE id = #{commentId} AND is_deleted = 0
     </select>
 
     <select id="countCommentsByPostId" resultType="int">
-        SELECT COUNT(*) FROM counseling_comment WHERE post_id = #{postId}
+        SELECT COUNT(*) FROM `comment` WHERE post_id = #{postId} AND is_deleted = 0
     </select>
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO counseling_comment (user_id, user_name, content, post_id, confirm, create_date)
-        VALUES (#{userId}, #{userName}, #{content}, #{postId}, #{confirm}, NOW())
+        INSERT INTO `comment` (post_id, user_id, user_name, content, visibility_level, confirm, is_deleted, create_date, modified_date)
+        VALUES (#{postId}, #{userId}, #{userName}, #{content}, 'partial', #{confirm}, 0, NOW(), NOW())
     </insert>
 
     <update id="updateComment">
-        UPDATE counseling_comment
-        SET content = #{content}
+        UPDATE `comment`
+        SET content = #{content}, modified_date = NOW()
         WHERE id = #{commentId}
           AND user_id = #{userId}
+          AND is_deleted = 0
     </update>
 
     <delete id="deleteComment">
-        DELETE FROM counseling_comment
+        UPDATE `comment`
+        SET is_deleted = 1, modified_date = NOW()
         WHERE post_id = #{postId}
           AND user_id = #{userId}
           AND id = #{commentId}
+          AND is_deleted = 0
     </delete>
 
     <delete id="deleteCommentsByPostId">
-        DELETE FROM counseling_comment WHERE post_id = #{postId}
+        UPDATE `comment` SET is_deleted = 1, modified_date = NOW() WHERE post_id = #{postId}
     </delete>
 
 </mapper>

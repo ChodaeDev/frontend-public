@@ -12,7 +12,7 @@
         <result property="phone" column="phone"/>
         <result property="counselType" column="counsel_type"/>
         <result property="commentCount" column="comment_count"/>
-        <result property="isPrivate" column="is_private"/>
+        <result property="visibilityLevel" column="visibility_level"/>
         <result property="createDate" column="create_date"/>
         <result property="modifiedDate" column="modified_date"/>
     </resultMap>
@@ -25,37 +25,46 @@
         <result property="isOwner" column="is_owner"/>
         <result property="counselType" column="counsel_type"/>
         <result property="commentCount" column="comment_count"/>
-        <result property="isPrivate" column="is_private"/>
+        <result property="visibilityLevel" column="visibility_level"/>
         <result property="createDate" column="create_date"/>
         <result property="modifiedDate" column="modified_date"/>
     </resultMap>
 
     <select id="findAll" resultMap="CounselingListResponseMap">
-        SELECT id, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count, is_private, create_date, modified_date
-        FROM counseling_post
+        SELECT id, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count,
+               visibility_level,
+               create_date, modified_date
+        FROM `post`
+        WHERE main_menu = 'board' AND sub_menu = 'counseling' AND is_deleted = 0
         ORDER BY create_date DESC
     </select>
 
     <select id="countAll" resultType="long">
-        SELECT COUNT(*) FROM counseling_post
+        SELECT COUNT(*) FROM `post`
+        WHERE main_menu = 'board' AND sub_menu = 'counseling' AND is_deleted = 0
     </select>
 
     <select id="findAllWithPaging" resultMap="CounselingListResponseMap">
-        SELECT id, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count, is_private, create_date, modified_date
-        FROM counseling_post
+        SELECT id, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count,
+               visibility_level,
+               create_date, modified_date
+        FROM `post`
+        WHERE main_menu = 'board' AND sub_menu = 'counseling' AND is_deleted = 0
         <include refid="CounselingOrderBy"/>
         LIMIT #{offset}, #{limit}
     </select>
 
     <select id="countSearch" resultType="long">
         SELECT COUNT(*)
-        FROM counseling_post
+        FROM `post`
         <include refid="CounselingSearchWhere"/>
     </select>
 
     <select id="search" resultMap="CounselingListResponseMap">
-        SELECT id, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count, is_private, create_date, modified_date
-        FROM counseling_post
+        SELECT id, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count,
+               visibility_level,
+               create_date, modified_date
+        FROM `post`
         <include refid="CounselingSearchWhere"/>
         <include refid="CounselingOrderBy"/>
         LIMIT #{offset}, #{limit}
@@ -63,12 +72,15 @@
 
     <sql id="CounselingSearchWhere">
         <where>
+            main_menu = 'board'
+            AND sub_menu = 'counseling'
+            AND is_deleted = 0
             <choose>
                 <when test="keyword != null">
-                    title LIKE #{keyword}
+                    AND title LIKE #{keyword}
                 </when>
                 <otherwise>
-                    1 = 0
+                    AND 1 = 0
                 </otherwise>
             </choose>
         </where>
@@ -90,50 +102,61 @@
 
     <select id="findByUserId" resultMap="CounselingResponseMap">
         SELECT id, title, content, user_id, user_name, phone, counsel_type,
-               comment_count, is_private, create_date, modified_date
-        FROM counseling_post
-        WHERE user_id = #{userId}
+               comment_count, visibility_level,
+               create_date, modified_date
+        FROM `post`
+        WHERE main_menu = 'board' AND sub_menu = 'counseling' AND is_deleted = 0 AND user_id = #{userId}
         ORDER BY create_date DESC
     </select>
 
     <select id="findById" resultMap="CounselingResponseMap">
         SELECT id, title, content, user_id, user_name, phone, counsel_type,
-               comment_count, is_private, create_date, modified_date
-        FROM counseling_post
-        WHERE id = #{postId}
+               comment_count, visibility_level,
+               create_date, modified_date
+        FROM `post`
+        WHERE main_menu = 'board' AND sub_menu = 'counseling' AND is_deleted = 0 AND id = #{postId}
     </select>
 
     <select id="findByIdAndUserId" resultMap="CounselingResponseMap">
         SELECT id, title, content, user_id, user_name, phone, counsel_type,
-               comment_count, is_private, create_date, modified_date
-        FROM counseling_post
-        WHERE id = #{id} AND user_id = #{userId}
+               comment_count, visibility_level,
+               create_date, modified_date
+        FROM `post`
+        WHERE main_menu = 'board' AND sub_menu = 'counseling' AND is_deleted = 0
+          AND id = #{id} AND user_id = #{userId}
     </select>
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO counseling_post (title, content, user_id, user_name, phone, counsel_type, comment_count, is_private, create_date, modified_date)
-        VALUES (#{title}, #{content}, #{userId}, #{userName}, #{phone}, #{counselType}, 0, #{isPrivate}, NOW(), NOW())
+        INSERT INTO `post` (main_menu, sub_menu, visibility_level, title, content, user_id, user_name, phone, counsel_type, comment_count, is_notice, is_deleted, create_date, modified_date)
+        VALUES ('board', 'counseling',
+                COALESCE(#{visibilityLevel}, 'public'),
+                #{title}, #{content}, #{userId}, #{userName}, #{phone}, #{counselType}, 0, 0, 0, NOW(), NOW())
     </insert>
 
     <update id="updateCommentCount">
-        UPDATE counseling_post SET comment_count = #{commentCount}, modified_date = NOW() WHERE id = #{id}
+        UPDATE `post` SET comment_count = #{commentCount}, modified_date = NOW()
+        WHERE main_menu = 'board' AND sub_menu = 'counseling' AND id = #{id}
     </update>
 
-    <update id="updateIsPrivate">
-        UPDATE counseling_post SET is_private = #{isPrivate}, modified_date = NOW() WHERE id = #{id}
+    <update id="updateVisibilityLevel">
+        UPDATE `post` SET visibility_level = COALESCE(#{visibilityLevel}, 'public'), modified_date = NOW()
+        WHERE main_menu = 'board' AND sub_menu = 'counseling' AND id = #{id}
     </update>
 
     <delete id="deletePostById">
-        DELETE FROM counseling_post WHERE id = #{postId}
+        UPDATE `post` SET is_deleted = 1, modified_date = NOW()
+        WHERE main_menu = 'board' AND sub_menu = 'counseling' AND id = #{postId}
     </delete>
 
     <update id="updateById">
-        UPDATE counseling_post SET
+        UPDATE `post` SET
         <if test="params.title != null">title = #{params.title},</if>
         <if test="params.content != null">content = #{params.content},</if>
         <if test="params.phone != null">phone = #{params.phone},</if>
         <if test="params.email != null">email = #{params.email},</if>
         <if test="params.counselType != null">counsel_type = #{params.counselType},</if>
-        modified_date = NOW() WHERE id = #{id}
+        <if test="params.visibilityLevel != null">visibility_level = #{params.visibilityLevel},</if>
+        modified_date = NOW()
+        WHERE main_menu = 'board' AND sub_menu = 'counseling' AND id = #{id}
     </update>
 </mapper>

@@ -96,7 +96,7 @@ public class CounselingService {
                 .isOwner(isOwner)
                 .counselType(item.getCounselType())
                 .commentCount(item.getCommentCount())
-                .isPrivate(item.getIsPrivate())
+                .visibilityLevel(item.getVisibilityLevel())
                 .createDate(item.getCreateDate())
                 .modifiedDate(item.getModifiedDate())
                 .build();
@@ -163,10 +163,9 @@ public class CounselingService {
         params.put("content", request.getContent());
         params.put("userId", request.getUserId());
         params.put("userName", request.getUserName());
-        params.put("isPrivate", request.getIsPrivate());
         params.put("phone", request.getPhone());
         params.put("counselType", request.getCounselType());
-        params.put("isPrivate", request.getIsPrivate());
+        params.put("visibilityLevel", request.getVisibilityLevel());
 
         counselingMapper.insert(params);
         Object idObj = params.get("id");
@@ -174,12 +173,6 @@ public class CounselingService {
         if (id == null) {
             throw new IllegalStateException("상담 글 등록 후 ID를 가져오지 못했습니다.");
         }
-        Object isPrivateObj = params.get("isPrivate");
-        Boolean isPrivate = isPrivateObj instanceof Boolean ? (Boolean) isPrivateObj : null;
-        if (isPrivate == null) {
-            throw new IllegalStateException("상담 글 등록 후 isPrivate를 가져오지 못했습니다.");
-        }
-        counselingMapper.updateIsPrivate(id, isPrivate);
         CounselingResponse created = counselingMapper.findById(id);
         if (created == null) {
             throw new IllegalStateException("등록된 상담 글을 조회할 수 없습니다.");
@@ -195,6 +188,7 @@ public class CounselingService {
         params.put("content", request.getContent());
         params.put("phone", request.getPhone());
         params.put("counselType", request.getCounselType());
+        params.put("visibilityLevel", request.getVisibilityLevel());
 
         counselingMapper.updateById(id, params);
         return counselingMapper.findById(id);
@@ -298,7 +292,7 @@ public class CounselingService {
     }
 
     /**
-     * 상담 글 삭제 (작성자 본인만). 연관 댓글(comments.is_private = 글 ID) 선삭제 후 글 삭제.
+     * 상담 글 삭제 (작성자 본인만). 연관 댓글은 post_id 기준으로 함께 삭제 처리한다.
      */
     @Transactional
     public CounselingDeleteResponse deletePostById(Integer postId) {

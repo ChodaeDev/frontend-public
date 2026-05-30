@@ -82,7 +82,7 @@ public class ScjInfoService {
         params.put("userName", request.getUserName());
         params.put("phone", request.getPhone());
         params.put("counselType", request.getCounselType());
-        params.put("isPrivate", 0);
+        params.put("visibilityLevel", 0);
 
         scjInfoPostMapper.insert(params);
         Object idObj = params.get("id");
@@ -90,7 +90,7 @@ public class ScjInfoService {
         if (id == null) {
             throw new IllegalStateException("글 등록 후 ID를 가져오지 못했습니다.");
         }
-        scjInfoPostMapper.updateIsPrivate(id, id);
+        scjInfoPostMapper.updateVisibilityLevel(id, id);
         ScjInfoResponse created = scjInfoPostMapper.findById(id);
         if (created == null) {
             throw new IllegalStateException("등록된 글을 조회할 수 없습니다.");
@@ -99,7 +99,7 @@ public class ScjInfoService {
     }
 
     public List<CommentResponse> findCommentsByPostId(Integer postId) {
-        return scjInfoCommentMapper.findByIsPrivate(postId);
+        return scjInfoCommentMapper.findByVisibilityLevel(postId);
     }
 
     @Transactional
@@ -113,7 +113,7 @@ public class ScjInfoService {
         params.put("userId", request.getUserId());
         params.put("userName", request.getUserName() != null ? request.getUserName() : "익명");
         params.put("content", request.getContent());
-        params.put("isPrivate", postId);
+        params.put("visibilityLevel", postId);
         params.put("confirm", "N");
 
         scjInfoCommentMapper.insert(params);
@@ -123,7 +123,7 @@ public class ScjInfoService {
             throw new IllegalStateException("댓글 등록 후 ID를 가져오지 못했습니다.");
         }
 
-        int count = scjInfoCommentMapper.countByIsPrivate(postId);
+        int count = scjInfoCommentMapper.countByVisibilityLevel(postId);
         scjInfoPostMapper.updateCommentCount(postId, count);
 
         return scjInfoCommentMapper.findById(commentId);

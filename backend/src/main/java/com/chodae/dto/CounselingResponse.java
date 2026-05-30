@@ -16,7 +16,7 @@ public class CounselingResponse {
     String phone;
     String counselType;
     Integer commentCount;
-    Integer isPrivate;
+    String visibilityLevel;
     LocalDateTime createDate;
     LocalDateTime modifiedDate;
 }

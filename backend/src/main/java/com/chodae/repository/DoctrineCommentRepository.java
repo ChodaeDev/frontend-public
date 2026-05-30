@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface DoctrineCommentRepository extends JpaRepository<DoctrineComment, Integer> {
 
-    List<DoctrineComment> findByIsPrivateOrderByCreateDateAsc(Integer isPrivate);
+    List<DoctrineComment> findByVisibilityLevelOrderByCreateDateAsc(Integer visibilityLevel);
 
-    int countByIsPrivate(Integer isPrivate);
+    int countByVisibilityLevel(Integer visibilityLevel);
 }

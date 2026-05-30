@@ -324,7 +324,7 @@
     "contentPlaceholder": "Please describe your counseling request in detail",
     "phone": "Phone",
     "phonePlaceholder": "Enter your phone number",
-    "isPrivate": "Private",
+    "visibilityLevel": "Private",
     "submit": "Submit",
     "submitting": "Submitting...",
     "cancel": "Cancel",

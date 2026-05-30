@@ -10,11 +10,11 @@ import java.util.Map;
 @Mapper
 public interface DoctrineCommentMapper {
 
-    List<CommentResponse> findByIsPrivate(@Param("isPrivate") Integer isPrivate);
+    List<CommentResponse> findByVisibilityLevel(@Param("visibilityLevel") Integer visibilityLevel);
 
     CommentResponse findById(@Param("id") Integer id);
 
-    int countByIsPrivate(@Param("isPrivate") Integer isPrivate);
+    int countByVisibilityLevel(@Param("visibilityLevel") Integer visibilityLevel);
 
     int insert(Map<String, Object> params);
 }

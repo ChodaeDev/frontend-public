@@ -12,7 +12,7 @@ public class CommentResponse {
     String userId;
     String userName;
     String content;
-    Integer isPrivate;
+    String visibilityLevel;
     String confirm;
     LocalDateTime createDate;
 }

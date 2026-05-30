@@ -86,7 +86,7 @@ public class AboutService {
         params.put("userName", request.getUserName());
         params.put("phone", request.getPhone());
         params.put("counselType", request.getCounselType());
-        params.put("isPrivate", 0);
+        params.put("visibilityLevel", 0);
 
         aboutPostMapper.insert(params);
         Object idObj = params.get("id");
@@ -94,7 +94,7 @@ public class AboutService {
         if (id == null) {
             throw new IllegalStateException("글 등록 후 ID를 가져오지 못했습니다.");
         }
-        aboutPostMapper.updateIsPrivate(id, id);
+        aboutPostMapper.updateVisibilityLevel(id, id);
         AboutResponse created = aboutPostMapper.findById(id);
         if (created == null) {
             throw new IllegalStateException("등록된 글을 조회할 수 없습니다.");
@@ -103,7 +103,7 @@ public class AboutService {
     }
 
     public List<CommentResponse> findCommentsByPostId(Integer postId) {
-        return aboutCommentMapper.findByIsPrivate(postId);
+        return aboutCommentMapper.findByVisibilityLevel(postId);
     }
 
     @Transactional
@@ -117,7 +117,7 @@ public class AboutService {
         params.put("userId", request.getUserId());
         params.put("userName", request.getUserName() != null ? request.getUserName() : "익명");
         params.put("content", request.getContent());
-        params.put("isPrivate", postId);
+        params.put("visibilityLevel", postId);
         params.put("confirm", "N");
 
         aboutCommentMapper.insert(params);
@@ -127,7 +127,7 @@ public class AboutService {
             throw new IllegalStateException("댓글 등록 후 ID를 가져오지 못했습니다.");
         }
 
-        int count = aboutCommentMapper.countByIsPrivate(postId);
+        int count = aboutCommentMapper.countByVisibilityLevel(postId);
         aboutPostMapper.updateCommentCount(postId, count);
 
         return aboutCommentMapper.findById(commentId);

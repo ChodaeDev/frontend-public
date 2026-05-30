@@ -324,7 +324,7 @@
     "contentPlaceholder": "Bitte beschreiben Sie Ihre Beratungsanfrage ausführlich",
     "phone": "Telefon",
     "phonePlaceholder": "Geben Sie Ihre Telefonnummer ein",
-    "isPrivate": "Privat",
+    "visibilityLevel": "Privat",
     "submit": "Absenden",
     "submitting": "Wird gesendet...",
     "cancel": "Abbrechen",

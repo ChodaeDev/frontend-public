@@ -16,7 +16,7 @@ public class DoctrineResponse {
     String phone;
     String counselType;
     Integer commentCount;
-    Integer isPrivate;
+    Integer visibilityLevel;
     LocalDateTime createDate;
     LocalDateTime modifiedDate;
 }

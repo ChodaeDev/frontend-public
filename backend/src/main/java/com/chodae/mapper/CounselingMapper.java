@@ -31,7 +31,7 @@ public interface CounselingMapper {
 
     int updateCommentCount(@Param("id") Integer id, @Param("commentCount") Integer commentCount);
 
-    int updateIsPrivate(@Param("id") Integer id, @Param("isPrivate") Boolean isPrivate);
+    int updateVisibilityLevel(@Param("id") Integer id, @Param("visibilityLevel") String visibilityLevel);
 
     int deletePostById(@Param("postId") Integer postId);
 

@@ -16,7 +16,7 @@ public class FreeBoardResponse {
     String phone;
     String counselType;
     Integer commentCount;
-    Integer isPrivate;
+    String visibilityLevel;
     LocalDateTime createDate;
     LocalDateTime modifiedDate;
 }

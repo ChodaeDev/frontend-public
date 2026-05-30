@@ -50,7 +50,7 @@ public class CounselingController {
                 .isOwner(true)
                 .counselType(response.getCounselType())
                 .commentCount(response.getCommentCount())
-                .isPrivate(response.getIsPrivate())
+                .visibilityLevel(response.getVisibilityLevel())
                 .createDate(response.getCreateDate())
                 .modifiedDate(response.getModifiedDate())
                 .build();

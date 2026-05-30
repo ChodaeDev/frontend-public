@@ -20,8 +20,8 @@ public class WithdrawalComment {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "is_private", nullable = false)
-    private Integer isPrivate;
+    @Column(name = "visibility_level", nullable = false)
+    private Integer visibilityLevel;
 
     @Column(length = 20)
     private String confirm;
@@ -42,8 +42,8 @@ public class WithdrawalComment {
     public void setUserName(String userName) { this.userName = userName; }
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
-    public Integer getIsPrivate() { return isPrivate; }
-    public void setIsPrivate(Integer isPrivate) { this.isPrivate = isPrivate; }
+    public Integer getVisibilityLevel() { return visibilityLevel; }
+    public void setVisibilityLevel(Integer visibilityLevel) { this.visibilityLevel = visibilityLevel; }
     public String getConfirm() { return confirm; }
     public void setConfirm(String confirm) { this.confirm = confirm; }
     public LocalDateTime getCreateDate() { return createDate; }

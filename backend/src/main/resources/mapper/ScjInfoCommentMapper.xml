@@ -8,29 +8,29 @@
         <result property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
         <result property="content" column="content"/>
-        <result property="isPrivate" column="is_private"/>
+        <result property="visibilityLevel" column="visibility_level"/>
         <result property="confirm" column="confirm"/>
         <result property="createDate" column="create_date"/>
     </resultMap>
 
-    <select id="findByIsPrivate" resultMap="CommentResponseMap">
-        SELECT id, user_id, user_name, content, is_private, confirm, create_date
+    <select id="findByVisibilityLevel" resultMap="CommentResponseMap">
+        SELECT id, user_id, user_name, content, visibility_level, confirm, create_date
         FROM scj_info_comment
-        WHERE is_private = #{isPrivate}
+        WHERE visibility_level = #{visibilityLevel}
         ORDER BY create_date ASC
     </select>
 
     <select id="findById" resultMap="CommentResponseMap">
-        SELECT id, user_id, user_name, content, is_private, confirm, create_date
+        SELECT id, user_id, user_name, content, visibility_level, confirm, create_date
         FROM scj_info_comment WHERE id = #{id}
     </select>
 
-    <select id="countByIsPrivate" resultType="int">
-        SELECT COUNT(*) FROM scj_info_comment WHERE is_private = #{isPrivate}
+    <select id="countByVisibilityLevel" resultType="int">
+        SELECT COUNT(*) FROM scj_info_comment WHERE visibility_level = #{visibilityLevel}
     </select>
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO scj_info_comment (user_id, user_name, content, is_private, confirm, create_date)
-        VALUES (#{userId}, #{userName}, #{content}, #{isPrivate}, #{confirm}, NOW())
+        INSERT INTO scj_info_comment (user_id, user_name, content, visibility_level, confirm, create_date)
+        VALUES (#{userId}, #{userName}, #{content}, #{visibilityLevel}, #{confirm}, NOW())
     </insert>
 </mapper>

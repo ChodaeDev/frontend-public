@@ -89,7 +89,7 @@ public class FreeBoardService {
         params.put("userName", request.getUserName());
         params.put("phone", request.getPhone());
         params.put("counselType", request.getCounselType());
-        params.put("isPrivate", 0);
+        params.put("visibilityLevel", 0);
 
         freeBoardPostMapper.insert(params);
         Object idObj = params.get("id");
@@ -97,7 +97,7 @@ public class FreeBoardService {
         if (id == null) {
             throw new IllegalStateException("글 등록 후 ID를 가져오지 못했습니다.");
         }
-        freeBoardPostMapper.updateIsPrivate(id, id);
+        freeBoardPostMapper.updateVisibilityLevel(id, id);
         FreeBoardResponse created = freeBoardPostMapper.findById(id);
         if (created == null) {
             throw new IllegalStateException("등록된 글을 조회할 수 없습니다.");
@@ -106,7 +106,7 @@ public class FreeBoardService {
     }
 
     public List<FreeBoardCommentResponse> findCommentsByPostId(Integer postId) {
-        return freeBoardCommentMapper.findByIsPrivate(postId);
+        return freeBoardCommentMapper.findByVisibilityLevel(postId);
     }
 
     @Transactional
@@ -120,7 +120,8 @@ public class FreeBoardService {
         params.put("userId", request.getUserId());
         params.put("userName", request.getUserName() != null ? request.getUserName() : "익명");
         params.put("content", request.getContent());
-        params.put("isPrivate", postId);
+        params.put("postId", postId);
+        params.put("visibilityLevel", postId);
         params.put("confirm", "N");
 
         freeBoardCommentMapper.insert(params);
@@ -130,7 +131,7 @@ public class FreeBoardService {
             throw new IllegalStateException("댓글 등록 후 ID를 가져오지 못했습니다.");
         }
 
-        int count = freeBoardCommentMapper.countByIsPrivate(postId);
+        int count = freeBoardCommentMapper.countByVisibilityLevel(postId);
         freeBoardPostMapper.updateCommentCount(postId, count);
 
         return freeBoardCommentMapper.findById(commentId);
