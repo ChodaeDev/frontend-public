@@ -24,16 +24,23 @@ const MobileMenu = () => {
   const t = dictionary;
 
   const open = useCallback(() => {
+    const scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${ scrollY }px`;
+    document.body.style.width = '100%';
     setIsOpen(true);
-    document.body.classList.add('overflow-hidden');
   }, []);
 
   const close = useCallback(() => {
     setIsClosing(true);
+    const scrollY = Math.abs(parseInt(document.body.style.top || '0', 10));
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, scrollY);
     setTimeout(() => {
       setIsOpen(false);
       setIsClosing(false);
-      document.body.classList.remove('overflow-hidden');
     }, 250);
   }, []);
 
@@ -51,7 +58,9 @@ const MobileMenu = () => {
 
   useEffect(() => {
     return () => {
-      document.body.classList.remove('overflow-hidden');
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
     };
   }, []);
 
