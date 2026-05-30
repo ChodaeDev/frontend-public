@@ -324,7 +324,7 @@
     "contentPlaceholder": "相談内容を詳しくご記入ください",
     "phone": "連絡先",
     "phonePlaceholder": "連絡可能な電話番号を入力してください",
-    "isPrivate": "非公開",
+    "visibilityLevel": "非公開",
     "submit": "申請する",
     "submitting": "申請中...",
     "cancel": "キャンセル",

@@ -1,85 +1,63 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import dayjs from 'dayjs';
-import { Plus, Search, Lock } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import FormSelect from '@/components/ui/FormSelect';
-import type { Locale } from '@/i18n/config';
-import { useAuthStore } from '@/store/authStore';
 import BoardTable from '@/components/ui/BoardTable';
 import Pagination from '@/components/ui/Pagination';
+import type { Locale } from '@/i18n/config';
 import type { Paging } from '@/types/ui/paging';
 import type { Column } from '@/types/ui/boardTable';
-import type { BoardPost, BoardDict, CounselingPost } from '@/types/board';
+import type { BoardDict, BoardPost } from '@/types/board';
 import type { SortState } from '@/types/common/sort';
 import { cn } from '@/lib/cn';
-import { counselingKeys, fetchCounselingList } from '@/lib/queries/counseling';
+import { fetchFreeBoardList, freeBoardKeys, type FreeBoardPost } from '@/lib/queries/freeBoard';
 
 const sortFieldMap: Record<string, string> = {
   title: 'title',
-  counselType: 'counselType',
-  date: 'createDate',
-  views: 'views',
+  date: 'date',
+  commentCount: 'commentCount',
 };
 
-export interface CounselingBoardContentProps {
+interface FreeBoardContentProps {
   locale: Locale;
   boardDict: BoardDict;
 }
 
-export default function CounselingBoardContent({
-  locale,
+export default function FreeBoardContent({
   boardDict,
-}: CounselingBoardContentProps) {
-  const router = useRouter();
-  const user = useAuthStore((state) => state.user);
-
+}: FreeBoardContentProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemCount, setItemCount] = useState(10);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [activeQuery, setActiveQuery] = useState('');
   const [sortState, setSortState] = useState<SortState>({ fieldId: 'date', direction: 'desc' });
 
-  const isAdmin = user?.userId === 'admin';
-
-  const sortBy = sortFieldMap[sortState.fieldId] ?? 'createDate';
+  const sortBy = sortFieldMap[sortState.fieldId] ?? 'date';
   const { direction } = sortState;
 
   const { data: listData, isLoading: loading, isError } = useQuery({
-    queryKey: counselingKeys.list({ page: currentPage, size: itemCount, sort: sortBy, direction, query: activeQuery || undefined, userId: user?.userId }),
-    queryFn: () => fetchCounselingList({ page: currentPage, size: itemCount, sort: sortBy, direction, query: activeQuery || undefined }),
+    queryKey: freeBoardKeys.list({ page: currentPage, size: itemCount, sort: sortBy, direction }),
+    queryFn: () => fetchFreeBoardList({ page: currentPage, size: itemCount, sort: sortBy, direction }),
   });
 
-  const mapPost = (item: CounselingPost): BoardPost => ({
+  const mapPost = (item: FreeBoardPost): BoardPost => ({
     id: item.id,
     title: item.title,
     author: item.userName,
-    isOwner: item.isOwner,
     date: dayjs(item.createDate).format('YYYY-MM-DD'),
     commentCount: item.commentCount,
     visibilityLevel: item.visibilityLevel,
-    counselType: item.counselType,
   });
 
-  const posts: BoardPost[] = listData?.payload.map(mapPost) ?? [];
-  const totalPages = listData?.paging.totalPages ?? 1;
-  const itemTotal = listData?.paging.itemTotal ?? 0;
-
-  const isLocked = (post: BoardPost) => {
-    if (isAdmin || post.isOwner) return false;
-    return post.visibilityLevel !== 'public';
-  };
-
-  const handleRowClick = (post: BoardPost) => {
-    if (isLocked(post)) {
-      alert('비공개 글입니다. 작성자만 확인할 수 있습니다.');
-      return;
-    }
-    router.push(`/${ locale }/board/counseling/${ post.id }`);
-  };
+  const allPosts: BoardPost[] = listData?.items.map(mapPost) ?? [];
+  const posts = activeQuery
+    ? allPosts.filter((post) => post.title.toLowerCase().includes(activeQuery.toLowerCase()))
+    : allPosts;
+  const itemTotal = activeQuery ? posts.length : listData?.itemTotal ?? 0;
+  const totalPages = activeQuery ? 1 : listData?.totalPages ?? 1;
 
   const handleItemCountChange = (count: number) => {
     setItemCount(count);
@@ -87,8 +65,7 @@ export default function CounselingBoardContent({
   };
 
   const handleSearch = () => {
-    const keyword = searchKeyword.trim();
-    setActiveQuery(keyword);
+    setActiveQuery(searchKeyword.trim());
     setCurrentPage(1);
   };
 
@@ -133,40 +110,16 @@ export default function CounselingBoardContent({
       label: boardDict.title || '제목',
       className: 'justify-start',
       sortable: true,
-      accessor: (post) => {
-        const locked = isLocked(post);
-        return (
-          <span className={'text-main flex items-center gap-1.5'}>
-            {locked && <Lock className={'size-3.5 text-gray3 shrink-0'} />}
-            <div className={'truncate max-w-[120px] sm:max-w-full'}>
-              {post.title}
-            </div>
-            <span className={'text-xs text-accent1 font-medium'}>
-              {'['}{post.commentCount ?? 0}{']'}
-            </span>
+      accessor: (post) => (
+        <span className={'text-main flex items-center gap-1.5'}>
+          <div className={'truncate max-w-[160px] sm:max-w-full'}>
+            {post.title}
+          </div>
+          <span className={'text-xs text-accent1 font-medium'}>
+            {'['}{post.commentCount ?? 0}{']'}
           </span>
-        );
-      },
-    },
-    {
-      id: 'counselType',
-      label: boardDict.counselType || '상담유형',
-      className: 'justify-center',
-      hideOnMobile: true,
-      sortable: true,
-      accessor: (post) => {
-        const counselTypeMap: Record<string, string> = {
-          self: boardDict.counselTypeSelf?.split(' ')[0] || '본인',
-          family: boardDict.counselTypeFamily?.split(' ')[0] || '가족',
-          friend: boardDict.counselTypeFriend?.split(' ')[0] || '지인',
-          etc: boardDict.counselTypeEtc?.split(' ')[0] || '기타',
-        };
-        return (
-          <span className={'text-sm text-sub'}>
-            {post.counselType ? (counselTypeMap[post.counselType] ?? post.counselType) : '-'}
-          </span>
-        );
-      },
+        </span>
+      ),
     },
     {
       id: 'author',
@@ -182,31 +135,10 @@ export default function CounselingBoardContent({
       sortable: true,
       accessor: (post) => <span className={'text-sm text-sub'}>{post.date}</span>,
     },
-    // TODO: 조회수 기능 구현 후 복구
-    // {
-    //   id: 'views',
-    //   label: boardDict.views || '조회수',
-    //   className: 'justify-center',
-    //   hideOnMobile: true,
-    //   sortable: true,
-    //   accessor: (post) => <span className={'text-sm text-sub'}>{post.views ?? 0}</span>,
-    // },
   ];
 
   return (
     <div>
-      {/* 상담 신청 버튼 */}
-      <div className={'mb-6'}>
-        <Link
-          href={`/${ locale }/board/counseling/write`}
-          className={'inline-flex items-center gap-2 px-5 py-2.5 bg-accent1 text-white rounded-lg hover:bg-accent1/90 transition-colors font-medium'}
-        >
-          <Plus className={'size-5'} />
-          {boardDict.requestCounseling || '상담 신청'}
-        </Link>
-      </div>
-
-      {/* 게시글 노출 개수 + 검색 */}
       <div className={'flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4'}>
         <div className={'flex items-center gap-2'}>
           <FormSelect
@@ -235,25 +167,21 @@ export default function CounselingBoardContent({
         </div>
       </div>
 
-      {/* 게시판 테이블 */}
-      {/* TODO: 조회수 기능 구현 후 gridClass를 sm:grid-cols-[64px_1fr_96px_96px_112px_64px] 으로 변경 */}
-      <div className={cn('transition-opacity duration-200 min-h-[600px]', loading && posts.length > 0 && 'opacity-40 pointer-events-non')}>
+      <div className={cn('transition-opacity duration-200 min-h-[600px]', loading && posts.length > 0 && 'opacity-40 pointer-events-none')}>
         <BoardTable
-          gridClass={'grid-cols-[1fr_8fr_96px] sm:grid-cols-[1fr_6fr_1fr_1fr_96px]'}
+          gridClass={'grid-cols-[1fr_8fr_96px] sm:grid-cols-[1fr_7fr_1fr_96px]'}
           data={posts}
           columns={columns}
           isLoading={loading && posts.length === 0}
           isError={isError}
           paging={paging}
           keyExtractor={(post) => String(post.id)}
-          onRowClick={handleRowClick}
           emptyMessage={boardDict.emptyMessage || '게시글이 없습니다.'}
           currentSort={sortState}
           onSortChange={handleSortChange}
         />
       </div>
 
-      {/* 페이지네이션 */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

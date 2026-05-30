@@ -1,5 +1,5 @@
 import { fetchWithAuth, fetchApi } from '@/lib/api';
-import type { BoardListResponse, CounselingDetailData, Comment } from '@/types/board';
+import type { BoardListResponse, CounselingDetailData, Comment, VisibilityLevel } from '@/types/board';
 
 export interface CounselingListParams {
   page: number;
@@ -62,7 +62,7 @@ export interface CreatePostInput {
   phone: string;
   userId: string;
   userName: string;
-  isPrivate: number;
+  visibilityLevel: VisibilityLevel;
 }
 
 export interface UpdatePostInput {
@@ -72,7 +72,7 @@ export interface UpdatePostInput {
   phone: string;
   userId: string;
   userName: string;
-  isPrivate: number;
+  visibilityLevel: VisibilityLevel;
 }
 
 export interface CreateCommentInput {

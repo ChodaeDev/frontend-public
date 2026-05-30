@@ -47,7 +47,7 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
   const [counselType, setCounselType] = useState('');
   const [content, setContent] = useState('');
   const [phone, setPhone] = useState('');
-  const [isPrivate, setIsPrivate] = useState(false);
+  const [visibilityLevel, setVisibilityLevel] = useState(false);
 
   const [fieldErrors, setFieldErrors] = useState<FieldErrors<CounselingInput>>({});
 
@@ -70,7 +70,7 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
           setCounselType(data.counselType);
           setContent(data.content);
           setPhone(data.phone);
-          setIsPrivate(data.isPrivate === 1);
+          setVisibilityLevel(data.visibilityLevel !== 'public');
         }
       } catch {
         router.replace(`/${ locale }/board/counseling`);
@@ -111,7 +111,7 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
         content: result.data.content,
         userId: user!.userId,
         userName: user!.userName,
-        isPrivate: isPrivate ? 1 : 0,
+        visibilityLevel: visibilityLevel ? 'partial' : 'public',
         phone: result.data.phone,
         counselType: result.data.counselType,
       },
@@ -225,14 +225,14 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
 
         <div className={'flex items-center gap-2'}>
           <input
-            id={'isPrivate'}
+            id={'visibilityLevel'}
             type={'checkbox'}
-            checked={isPrivate}
-            onChange={(e) => setIsPrivate(e.target.checked)}
+            checked={visibilityLevel}
+            onChange={(e) => setVisibilityLevel(e.target.checked)}
             className={'h-4 w-4 rounded border-gray7 accent-accent1'}
           />
-          <label htmlFor={'isPrivate'} className={'text-sm text-main'}>
-            {t.isPrivate || '비공개'}
+          <label htmlFor={'visibilityLevel'} className={'text-sm text-main'}>
+            {t.visibilityLevel || '비공개'}
           </label>
         </div>
 

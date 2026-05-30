@@ -324,7 +324,7 @@
     "contentPlaceholder": "请详细描述咨询内容",
     "phone": "联系方式",
     "phonePlaceholder": "请输入可联系的电话号码",
-    "isPrivate": "设为私密",
+    "visibilityLevel": "设为私密",
     "submit": "提交申请",
     "submitting": "提交中...",
     "cancel": "取消",

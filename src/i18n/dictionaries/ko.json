@@ -324,7 +324,7 @@
     "contentPlaceholder": "상담 내용을 자세히 작성해주세요",
     "phone": "연락처",
     "phonePlaceholder": "연락 가능한 전화번호를 입력하세요",
-    "isPrivate": "비공개",
+    "visibilityLevel": "비공개",
     "submit": "신청하기",
     "submitting": "신청 중...",
     "cancel": "취소",

@@ -1,10 +1,12 @@
+export type VisibilityLevel = 'public' | 'partial' | 'private';
+
 export interface CounselingPost {
   id: number;
   title: string;
   userName: string;
   isOwner: boolean;
   commentCount: number;
-  isPrivate: number;
+  visibilityLevel: VisibilityLevel;
   counselType: string;
   createDate: string;
 }
@@ -28,7 +30,7 @@ export interface BoardPost {
   date: string;
   views?: number;
   commentCount?: number;
-  isPrivate?: number;
+  visibilityLevel?: VisibilityLevel;
   isNotice?: boolean;
   counselType?: string;
 }
@@ -42,7 +44,7 @@ export interface CounselingDetailData {
   phone: string;
   counselType: string;
   commentCount: number;
-  isPrivate: number;
+  visibilityLevel: VisibilityLevel;
   createDate: string;
   modifiedDate: string;
 }
@@ -52,7 +54,7 @@ export interface Comment {
   userId: string;
   userName: string;
   content: string;
-  isPrivate: number;
+  visibilityLevel: VisibilityLevel;
   confirm: string;
   createDate: string;
 }
@@ -76,4 +78,5 @@ export interface BoardDict {
   counselTypeFamily?: string;
   counselTypeFriend?: string;
   counselTypeEtc?: string;
+  visibilityLevel?: string;
 }

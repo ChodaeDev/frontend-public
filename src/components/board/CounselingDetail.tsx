@@ -85,7 +85,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   // 비공개 글 접근 권한 확인
   useEffect(() => {
     if (!post) return;
-    if (post.isPrivate === 1 && (!user || (user.userId !== 'admin' && user.userId !== post.userId))) {
+    if (post.visibilityLevel !== 'public' && (!user || (user.userId !== 'admin' && user.userId !== post.userId))) {
       setNoAccess(true);
     } else {
       setNoAccess(false);
@@ -209,7 +209,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
         <div className={'border-b border-gray7 mt-8 px-2 pb-2'}>
           <div className={'flex items-start justify-between gap-4'}>
             <h2 className={'text-xl font-bold text-main flex items-center gap-2'}>
-              {post.isPrivate === 1 && <Lock className={'size-4 text-gray3 shrink-0'} />}
+              {post.visibilityLevel !== 'public' && <Lock className={'size-4 text-gray3 shrink-0'} />}
               {post.title}
             </h2>
           </div>
