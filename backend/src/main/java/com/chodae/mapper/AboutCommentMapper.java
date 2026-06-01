@@ -10,11 +10,11 @@ import java.util.Map;
 @Mapper
 public interface AboutCommentMapper {
 
-    List<CommentResponse> findByVisibilityLevel(@Param("visibilityLevel") Integer visibilityLevel);
+    List<CommentResponse> findByVisibilityLevel(@Param("visibilityLevel") Integer postId);
 
     CommentResponse findById(@Param("id") Integer id);
 
-    int countByVisibilityLevel(@Param("visibilityLevel") Integer visibilityLevel);
+    int countByVisibilityLevel(@Param("visibilityLevel") Integer postId);
 
     int insert(Map<String, Object> params);
 }

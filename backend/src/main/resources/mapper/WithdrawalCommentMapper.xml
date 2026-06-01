@@ -5,32 +5,34 @@
 
     <resultMap id="CommentResponseMap" type="com.chodae.dto.CommentResponse">
         <id property="id" column="id"/>
+        <result property="postId" column="post_id"/>
         <result property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
         <result property="content" column="content"/>
         <result property="visibilityLevel" column="visibility_level"/>
         <result property="confirm" column="confirm"/>
         <result property="createDate" column="create_date"/>
+        <result property="modifiedDate" column="modified_date"/>
     </resultMap>
 
     <select id="findByVisibilityLevel" resultMap="CommentResponseMap">
-        SELECT id, user_id, user_name, content, visibility_level, confirm, create_date
-        FROM withdrawal_comment
-        WHERE visibility_level = #{visibilityLevel}
+        SELECT id, post_id, user_id, user_name, content, visibility_level, confirm, create_date, modified_date
+        FROM `comment`
+        WHERE post_id = #{visibilityLevel} AND is_deleted = 0
         ORDER BY create_date ASC
     </select>
 
     <select id="findById" resultMap="CommentResponseMap">
-        SELECT id, user_id, user_name, content, visibility_level, confirm, create_date
-        FROM withdrawal_comment WHERE id = #{id}
+        SELECT id, post_id, user_id, user_name, content, visibility_level, confirm, create_date, modified_date
+        FROM `comment` WHERE id = #{id} AND is_deleted = 0
     </select>
 
     <select id="countByVisibilityLevel" resultType="int">
-        SELECT COUNT(*) FROM withdrawal_comment WHERE visibility_level = #{visibilityLevel}
+        SELECT COUNT(*) FROM `comment` WHERE post_id = #{visibilityLevel} AND is_deleted = 0
     </select>
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO withdrawal_comment (user_id, user_name, content, visibility_level, confirm, create_date)
-        VALUES (#{userId}, #{userName}, #{content}, #{visibilityLevel}, #{confirm}, NOW())
+        INSERT INTO `comment` (post_id, user_id, user_name, content, visibility_level, confirm, is_deleted, create_date, modified_date)
+        VALUES (#{postId}, #{userId}, #{userName}, #{content}, COALESCE(#{visibilityLevel}, 'public'), #{confirm}, 0, NOW(), NOW())
     </insert>
 </mapper>

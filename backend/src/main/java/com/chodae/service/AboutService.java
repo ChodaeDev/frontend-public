@@ -86,7 +86,7 @@ public class AboutService {
         params.put("userName", request.getUserName());
         params.put("phone", request.getPhone());
         params.put("counselType", request.getCounselType());
-        params.put("visibilityLevel", 0);
+        params.put("visibilityLevel", request.getVisibilityLevel());
 
         aboutPostMapper.insert(params);
         Object idObj = params.get("id");
@@ -94,7 +94,6 @@ public class AboutService {
         if (id == null) {
             throw new IllegalStateException("글 등록 후 ID를 가져오지 못했습니다.");
         }
-        aboutPostMapper.updateVisibilityLevel(id, id);
         AboutResponse created = aboutPostMapper.findById(id);
         if (created == null) {
             throw new IllegalStateException("등록된 글을 조회할 수 없습니다.");
@@ -117,7 +116,8 @@ public class AboutService {
         params.put("userId", request.getUserId());
         params.put("userName", request.getUserName() != null ? request.getUserName() : "익명");
         params.put("content", request.getContent());
-        params.put("visibilityLevel", postId);
+        params.put("postId", postId);
+        params.put("visibilityLevel", request.getVisibilityLevel());
         params.put("confirm", "N");
 
         aboutCommentMapper.insert(params);

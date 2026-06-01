@@ -117,6 +117,7 @@ CREATE TABLE `post_attach` (
     `post_id` int unsigned NOT NULL COMMENT '게시글 ID',
     `attach_order` smallint unsigned NOT NULL DEFAULT 0 COMMENT '파일 첨부 순서',
     `file_path` varchar(1024) NOT NULL COMMENT '파일경로(파일명 포함)',
+    `is_deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '삭제 여부',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_post_attach_order` (`post_id`, `attach_order`),
     KEY `idx_post_attach_post` (`post_id`),

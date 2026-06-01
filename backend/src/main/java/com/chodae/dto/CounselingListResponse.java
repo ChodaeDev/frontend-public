@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @Builder
 public class CounselingListResponse {
     Integer id;
+    String mainMenu;
+    String subMenu;
     String title;
     @JsonIgnore
     String userId;
@@ -18,6 +20,7 @@ public class CounselingListResponse {
     String counselType;
     Integer commentCount;
     String visibilityLevel;
+    Boolean isNotice;
     LocalDateTime createDate;
     LocalDateTime modifiedDate;
 }

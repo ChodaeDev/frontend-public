@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface FreeBoardCommentRepository extends JpaRepository<FreeBoardComment, Integer> {
 
-    List<FreeBoardComment> findByVisibilityLevelOrderByCreateDateAsc(Integer visibilityLevel);
+    List<FreeBoardComment> findByPostIdAndIsDeletedFalseOrderByCreateDateAsc(Integer postId);
 
-    int countByVisibilityLevel(Integer visibilityLevel);
+    int countByPostIdAndIsDeletedFalse(Integer postId);
 }

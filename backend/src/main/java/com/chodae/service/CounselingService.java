@@ -10,6 +10,7 @@ import com.chodae.dto.CounselingCreateRequest;
 import com.chodae.dto.CounselingResponse;
 import com.chodae.mapper.CommentMapper;
 import com.chodae.mapper.CounselingMapper;
+import com.chodae.mapper.PostAttachMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class CounselingService {
 
     private final CounselingMapper counselingMapper;
     private final CommentMapper commentMapper;
+    private final PostAttachMapper postAttachMapper;
     private final AccessControlService accessControlService;
 
     public List<CounselingListResponse> findAll() {
@@ -90,6 +92,8 @@ public class CounselingService {
         boolean isOwner = currentUserId != null && currentUserId.equals(item.getUserId());
         return CounselingListResponse.builder()
                 .id(item.getId())
+                .mainMenu(item.getMainMenu())
+                .subMenu(item.getSubMenu())
                 .title(item.getTitle())
                 .userId(item.getUserId())
                 .userName(isOwner ? item.getUserName() : maskName(item.getUserName()))
@@ -97,6 +101,7 @@ public class CounselingService {
                 .counselType(item.getCounselType())
                 .commentCount(item.getCommentCount())
                 .visibilityLevel(item.getVisibilityLevel())
+                .isNotice(item.getIsNotice())
                 .createDate(item.getCreateDate())
                 .modifiedDate(item.getModifiedDate())
                 .build();
@@ -210,6 +215,7 @@ public class CounselingService {
         params.put("userName", request.getUserName() != null ? request.getUserName() : "익명");
         params.put("content", request.getContent());
         params.put("postId", postId);
+        params.put("visibilityLevel", request.getVisibilityLevel());
         params.put("confirm", "N");
 
         commentMapper.insert(params);
@@ -295,11 +301,12 @@ public class CounselingService {
      * 상담 글 삭제 (작성자 본인만). 연관 댓글은 post_id 기준으로 함께 삭제 처리한다.
      */
     @Transactional
-    public CounselingDeleteResponse deletePostById(Integer postId) {
-        CounselingResponse post = counselingMapper.findById(postId);
+    public CounselingDeleteResponse deletePostById(Integer postId, String userId) {
+        CounselingResponse post = findByIdAndUserId(postId, userId);
         if (post == null) {
             throw new IllegalArgumentException("글이 존재하지 않거나 삭제 권한이 없습니다.");
         }
+        postAttachMapper.deleteAttachmentsByPostId(postId);
         commentMapper.deleteCommentsByPostId(postId);
         int deleted = counselingMapper.deletePostById(postId);
         if (deleted == 0) {

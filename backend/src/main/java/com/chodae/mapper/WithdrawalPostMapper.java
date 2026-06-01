@@ -26,5 +26,5 @@ public interface WithdrawalPostMapper {
 
     int updateCommentCount(@Param("id") Integer id, @Param("commentCount") Integer commentCount);
 
-    int updateVisibilityLevel(@Param("id") Integer id, @Param("visibilityLevel") Integer visibilityLevel);
+    int updateVisibilityLevel(@Param("id") Integer id, @Param("visibilityLevel") String visibilityLevel);
 }

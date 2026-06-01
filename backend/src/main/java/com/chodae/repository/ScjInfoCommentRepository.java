@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ScjInfoCommentRepository extends JpaRepository<ScjInfoComment, Integer> {
 
-    List<ScjInfoComment> findByVisibilityLevelOrderByCreateDateAsc(Integer visibilityLevel);
+    List<ScjInfoComment> findByPostIdAndIsDeletedFalseOrderByCreateDateAsc(Integer postId);
 
-    int countByVisibilityLevel(Integer visibilityLevel);
+    int countByPostIdAndIsDeletedFalse(Integer postId);
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface WithdrawalCommentRepository extends JpaRepository<WithdrawalComment, Integer> {
 
-    List<WithdrawalComment> findByVisibilityLevelOrderByCreateDateAsc(Integer visibilityLevel);
+    List<WithdrawalComment> findByPostIdAndIsDeletedFalseOrderByCreateDateAsc(Integer postId);
 
-    int countByVisibilityLevel(Integer visibilityLevel);
+    int countByPostIdAndIsDeletedFalse(Integer postId);
 }

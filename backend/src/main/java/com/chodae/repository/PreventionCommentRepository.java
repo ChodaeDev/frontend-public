@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface PreventionCommentRepository extends JpaRepository<PreventionComment, Integer> {
 
-    List<PreventionComment> findByVisibilityLevelOrderByCreateDateAsc(Integer visibilityLevel);
+    List<PreventionComment> findByPostIdAndIsDeletedFalseOrderByCreateDateAsc(Integer postId);
 
-    int countByVisibilityLevel(Integer visibilityLevel);
+    int countByPostIdAndIsDeletedFalse(Integer postId);
 }

@@ -44,6 +44,8 @@ public class CounselingController {
     private CounselingListResponse toListResponse(CounselingResponse response) {
         return CounselingListResponse.builder()
                 .id(response.getId())
+                .mainMenu(response.getMainMenu())
+                .subMenu(response.getSubMenu())
                 .title(response.getTitle())
                 .userId(response.getUserId())
                 .userName(response.getUserName())
@@ -51,6 +53,7 @@ public class CounselingController {
                 .counselType(response.getCounselType())
                 .commentCount(response.getCommentCount())
                 .visibilityLevel(response.getVisibilityLevel())
+                .isNotice(response.getIsNotice())
                 .createDate(response.getCreateDate())
                 .modifiedDate(response.getModifiedDate())
                 .build();
@@ -161,12 +164,12 @@ public class CounselingController {
             return ApiResponse.error("로그인이 필요합니다.");
         }
         try {
-            CounselingDeleteResponse result = counselingService.deletePostById(id);
+            CounselingDeleteResponse result = counselingService.deletePostById(id, userId);
             return ApiResponse.success("상담 글이 삭제되었습니다.", result);
         } catch (IllegalArgumentException e) {
             return ApiResponse.error(e.getMessage());
         } catch (IllegalStateException e) {
-            log.error("상담 글 삭제 실패 - id: {}, userId: {}, {}", id, "test", e.getMessage());
+            log.error("상담 글 삭제 실패 - id: {}, userId: {}, {}", id, userId, e.getMessage());
             return ApiResponse.error(e.getMessage());
         }
     }

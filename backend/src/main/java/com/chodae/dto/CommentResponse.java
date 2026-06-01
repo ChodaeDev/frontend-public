@@ -9,10 +9,12 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentResponse {
     Integer id;
+    Integer postId;
     String userId;
     String userName;
     String content;
     String visibilityLevel;
     String confirm;
     LocalDateTime createDate;
+    LocalDateTime modifiedDate;
 }

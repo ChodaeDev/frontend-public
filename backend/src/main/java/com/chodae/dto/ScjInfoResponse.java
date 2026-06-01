@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 @Builder
 public class ScjInfoResponse {
     Integer id;
+    String mainMenu;
+    String subMenu;
     String title;
     String content;
     String userId;
@@ -16,7 +18,8 @@ public class ScjInfoResponse {
     String phone;
     String counselType;
     Integer commentCount;
-    Integer visibilityLevel;
+    String visibilityLevel;
+    Boolean isNotice;
     LocalDateTime createDate;
     LocalDateTime modifiedDate;
 }

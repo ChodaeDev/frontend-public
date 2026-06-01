@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 @Builder
 public class CounselingResponse {
     Integer id;
+    String mainMenu;
+    String subMenu;
     String title;
     String content;
     String userId;
@@ -17,6 +19,7 @@ public class CounselingResponse {
     String counselType;
     Integer commentCount;
     String visibilityLevel;
+    Boolean isNotice;
     LocalDateTime createDate;
     LocalDateTime modifiedDate;
 }

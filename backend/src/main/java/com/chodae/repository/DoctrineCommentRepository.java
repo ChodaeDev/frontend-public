@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface DoctrineCommentRepository extends JpaRepository<DoctrineComment, Integer> {
 
-    List<DoctrineComment> findByVisibilityLevelOrderByCreateDateAsc(Integer visibilityLevel);
+    List<DoctrineComment> findByPostIdAndIsDeletedFalseOrderByCreateDateAsc(Integer postId);
 
-    int countByVisibilityLevel(Integer visibilityLevel);
+    int countByPostIdAndIsDeletedFalse(Integer postId);
 }

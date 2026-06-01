@@ -5,6 +5,8 @@
 
     <resultMap id="CounselingResponseMap" type="com.chodae.dto.CounselingResponse">
         <id property="id" column="id"/>
+        <result property="mainMenu" column="main_menu"/>
+        <result property="subMenu" column="sub_menu"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="userId" column="user_id"/>
@@ -13,12 +15,15 @@
         <result property="counselType" column="counsel_type"/>
         <result property="commentCount" column="comment_count"/>
         <result property="visibilityLevel" column="visibility_level"/>
+        <result property="isNotice" column="is_notice"/>
         <result property="createDate" column="create_date"/>
         <result property="modifiedDate" column="modified_date"/>
     </resultMap>
 
     <resultMap id="CounselingListResponseMap" type="com.chodae.dto.CounselingListResponse">
         <id property="id" column="id"/>
+        <result property="mainMenu" column="main_menu"/>
+        <result property="subMenu" column="sub_menu"/>
         <result property="title" column="title"/>
         <result property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
@@ -26,13 +31,14 @@
         <result property="counselType" column="counsel_type"/>
         <result property="commentCount" column="comment_count"/>
         <result property="visibilityLevel" column="visibility_level"/>
+        <result property="isNotice" column="is_notice"/>
         <result property="createDate" column="create_date"/>
         <result property="modifiedDate" column="modified_date"/>
     </resultMap>
 
     <select id="findAll" resultMap="CounselingListResponseMap">
-        SELECT id, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count,
-               visibility_level,
+        SELECT id, main_menu, sub_menu, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count,
+               visibility_level, is_notice,
                create_date, modified_date
         FROM `post`
         WHERE main_menu = 'board' AND sub_menu = 'counseling' AND is_deleted = 0
@@ -45,8 +51,8 @@
     </select>
 
     <select id="findAllWithPaging" resultMap="CounselingListResponseMap">
-        SELECT id, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count,
-               visibility_level,
+        SELECT id, main_menu, sub_menu, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count,
+               visibility_level, is_notice,
                create_date, modified_date
         FROM `post`
         WHERE main_menu = 'board' AND sub_menu = 'counseling' AND is_deleted = 0
@@ -61,8 +67,8 @@
     </select>
 
     <select id="search" resultMap="CounselingListResponseMap">
-        SELECT id, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count,
-               visibility_level,
+        SELECT id, main_menu, sub_menu, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count,
+               visibility_level, is_notice,
                create_date, modified_date
         FROM `post`
         <include refid="CounselingSearchWhere"/>
@@ -101,8 +107,8 @@
     </sql>
 
     <select id="findByUserId" resultMap="CounselingResponseMap">
-        SELECT id, title, content, user_id, user_name, phone, counsel_type,
-               comment_count, visibility_level,
+        SELECT id, main_menu, sub_menu, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, visibility_level, is_notice,
                create_date, modified_date
         FROM `post`
         WHERE main_menu = 'board' AND sub_menu = 'counseling' AND is_deleted = 0 AND user_id = #{userId}
@@ -110,16 +116,16 @@
     </select>
 
     <select id="findById" resultMap="CounselingResponseMap">
-        SELECT id, title, content, user_id, user_name, phone, counsel_type,
-               comment_count, visibility_level,
+        SELECT id, main_menu, sub_menu, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, visibility_level, is_notice,
                create_date, modified_date
         FROM `post`
         WHERE main_menu = 'board' AND sub_menu = 'counseling' AND is_deleted = 0 AND id = #{postId}
     </select>
 
     <select id="findByIdAndUserId" resultMap="CounselingResponseMap">
-        SELECT id, title, content, user_id, user_name, phone, counsel_type,
-               comment_count, visibility_level,
+        SELECT id, main_menu, sub_menu, title, content, user_id, user_name, phone, counsel_type,
+               comment_count, visibility_level, is_notice,
                create_date, modified_date
         FROM `post`
         WHERE main_menu = 'board' AND sub_menu = 'counseling' AND is_deleted = 0
@@ -143,10 +149,10 @@
         WHERE main_menu = 'board' AND sub_menu = 'counseling' AND id = #{id}
     </update>
 
-    <delete id="deletePostById">
+    <update id="deletePostById">
         UPDATE `post` SET is_deleted = 1, modified_date = NOW()
         WHERE main_menu = 'board' AND sub_menu = 'counseling' AND id = #{postId}
-    </delete>
+    </update>
 
     <update id="updateById">
         UPDATE `post` SET

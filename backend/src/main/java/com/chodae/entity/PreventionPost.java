@@ -4,12 +4,18 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "prevention_post")
+@Table(name = "post")
 public class PreventionPost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "main_menu", nullable = false, length = 50)
+    private String mainMenu;
+
+    @Column(name = "sub_menu", nullable = false, length = 50)
+    private String subMenu;
 
     @Column(nullable = false, length = 255)
     private String title;
@@ -32,8 +38,14 @@ public class PreventionPost {
     @Column(name = "comment_count", nullable = false)
     private Integer commentCount = 0;
 
+    @Column(name = "is_notice", nullable = false)
+    private Boolean isNotice = false;
+
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted = false;
+
     @Column(name = "visibility_level", nullable = false)
-    private Integer visibilityLevel;
+    private String visibilityLevel = "public";
 
     @Column(name = "create_date")
     private LocalDateTime createDate;
@@ -54,6 +66,10 @@ public class PreventionPost {
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
+    public String getMainMenu() { return mainMenu; }
+    public void setMainMenu(String mainMenu) { this.mainMenu = mainMenu; }
+    public String getSubMenu() { return subMenu; }
+    public void setSubMenu(String subMenu) { this.subMenu = subMenu; }
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
     public String getContent() { return content; }
@@ -68,8 +84,12 @@ public class PreventionPost {
     public void setCounselType(String counselType) { this.counselType = counselType; }
     public Integer getCommentCount() { return commentCount; }
     public void setCommentCount(Integer commentCount) { this.commentCount = commentCount; }
-    public Integer getVisibilityLevel() { return visibilityLevel; }
-    public void setVisibilityLevel(Integer visibilityLevel) { this.visibilityLevel = visibilityLevel; }
+    public Boolean getIsNotice() { return isNotice; }
+    public void setIsNotice(Boolean isNotice) { this.isNotice = isNotice; }
+    public Boolean getIsDeleted() { return isDeleted; }
+    public void setIsDeleted(Boolean isDeleted) { this.isDeleted = isDeleted; }
+    public String getVisibilityLevel() { return visibilityLevel; }
+    public void setVisibilityLevel(String visibilityLevel) { this.visibilityLevel = visibilityLevel; }
     public LocalDateTime getCreateDate() { return createDate; }
     public void setCreateDate(LocalDateTime createDate) { this.createDate = createDate; }
     public LocalDateTime getModifiedDate() { return modifiedDate; }

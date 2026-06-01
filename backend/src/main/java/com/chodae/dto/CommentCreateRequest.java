@@ -9,4 +9,5 @@ public class CommentCreateRequest {
     private String userId;
     private String userName;
     private String content;
+    private String visibilityLevel;
 }
