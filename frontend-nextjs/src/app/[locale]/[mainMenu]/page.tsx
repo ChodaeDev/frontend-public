@@ -10,16 +10,16 @@ export function generateStaticParams() {
   return locales.flatMap((locale) =>
     navItems
       .filter((item) => item.slug !== '' && item.subMenus)
-      .map((item) => ({ locale, section: item.slug })),
+      .map((item) => ({ locale, mainMenu: item.slug })),
   );
 }
 
-export default async function SectionPage({
+export default async function MainMenuPage({
   params,
 }: {
-  params: Promise<{ locale: string; section: string }>;
+  params: Promise<{ locale: string; mainMenu: string }>;
 }) {
-  const { locale, section } = await params;
+  const { locale, mainMenu } = await params;
 
   if (!isValidLocale(locale)) {
     notFound();
@@ -27,7 +27,7 @@ export default async function SectionPage({
 
   const dictionary = await getDictionary(locale);
   const navItems = getNavItems(locale, dictionary);
-  const navItem = navItems.find((item) => item.slug === section);
+  const navItem = navItems.find((item) => item.slug === mainMenu);
 
   if (!navItem?.subMenus) notFound();
 
@@ -38,7 +38,7 @@ export default async function SectionPage({
         {navItem.subMenus.map((sub) => (
           <Link
             key={sub.slug}
-            href={`/${ locale }/${ section }/${ sub.slug }`}
+            href={`/${ locale }/${ mainMenu }/${ sub.slug }`}
             className={'group flex flex-col'}
           >
             <div className={'flex items-center justify-between text-main group-hover:text-accent1 transition-colors pb-2 border-b-2 border-gray6'}>

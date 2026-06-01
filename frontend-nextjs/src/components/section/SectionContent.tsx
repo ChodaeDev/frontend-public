@@ -7,15 +7,15 @@ import FreeBoardContent from '@/components/board/FreeBoardContent';
 
 interface SectionContentProps {
   locale: Locale;
-  section: string;
-  sub: string;
+  mainMenu: string;
+  subMenu: string;
   dictionary: Dictionary;
 }
 
 export default function SectionContent({
   locale,
-  section,
-  sub,
+  mainMenu,
+  subMenu,
   dictionary,
 }: SectionContentProps) {
   const boardDict = dictionary.board as {
@@ -34,9 +34,9 @@ export default function SectionContent({
     search: string;
   };
 
-  switch (section) {
+  switch (mainMenu) {
     case 'board':
-      if (sub === 'counseling') {
+      if (subMenu === 'counseling') {
         return (
           <CounselingBoardContent
             locale={locale}
@@ -44,7 +44,7 @@ export default function SectionContent({
           />
         );
       }
-      if (sub === 'free') {
+      if (subMenu === 'free') {
         return (
           <FreeBoardContent
             locale={locale}

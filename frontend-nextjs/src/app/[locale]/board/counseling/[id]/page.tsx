@@ -49,8 +49,7 @@ export default async function CounselingDetailPage({
           />
 
           <div>
-            <h1 className={'text-2xl font-bold text-gray1'}>{counselingSub.label}</h1>
-            <p className={'text-sm text-gray3 mt-1'}>{counselingSub.description}</p>
+            <h1 className={'text-2xl font-bold text-gray1'}>{boardDict.counselingPost}</h1>
           </div>
         </div>
 

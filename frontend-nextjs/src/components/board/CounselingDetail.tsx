@@ -228,7 +228,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
         </div>
 
         {/* 게시글 메타 정보 */}
-        <div className={'border-b border-gray7 px-4 py-3 bg-gray9/50'}>
+        <div className={'border-b border-gray7 px-2 py-3 bg-gray9'}>
           <div className={'flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-sm'}>
             <span>{t.author || '작성자'}{': '}<span className={'text-main font-medium'}>{post.userName}</span></span>
             <div className={'flex items-center gap-2'}>
