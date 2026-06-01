@@ -6,6 +6,7 @@
     <resultMap id="CommentResponseMap" type="com.chodae.dto.CommentResponse">
         <id property="id" column="id"/>
         <result property="postId" column="post_id"/>
+        <result property="parentCommentId" column="parent_comment_id"/>
         <result property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
         <result property="content" column="content"/>
@@ -16,16 +17,16 @@
     </resultMap>
 
     <select id="findByPostId" resultMap="CommentResponseMap">
-        SELECT id, post_id, user_id, user_name, content,
+        SELECT id, post_id, parent_comment_id, user_id, user_name, content,
                visibility_level,
                confirm, create_date, modified_date
         FROM `comment`
         WHERE post_id = #{postId} AND is_deleted = 0
-        ORDER BY create_date ASC
+        ORDER BY COALESCE(parent_comment_id, id) ASC, parent_comment_id IS NOT NULL ASC, create_date ASC
     </select>
 
     <select id="findById" resultMap="CommentResponseMap">
-        SELECT id, post_id, user_id, user_name, content,
+        SELECT id, post_id, parent_comment_id, user_id, user_name, content,
                visibility_level,
                confirm, create_date, modified_date
         FROM `comment`
@@ -37,8 +38,8 @@
     </select>
 
     <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `comment` (post_id, user_id, user_name, content, visibility_level, confirm, is_deleted, create_date, modified_date)
-        VALUES (#{postId}, #{userId}, #{userName}, #{content}, COALESCE(#{visibilityLevel}, 'partial'), #{confirm}, 0, NOW(), NOW())
+        INSERT INTO `comment` (post_id, parent_comment_id, user_id, user_name, content, visibility_level, confirm, is_deleted, create_date, modified_date)
+        VALUES (#{postId}, #{parentCommentId}, #{userId}, #{userName}, #{content}, COALESCE(#{visibilityLevel}, 'partial'), #{confirm}, 0, NOW(), NOW())
     </insert>
 
     <update id="updateComment">
@@ -53,8 +54,8 @@
         UPDATE `comment`
         SET is_deleted = 1, modified_date = NOW()
         WHERE post_id = #{postId}
-          AND user_id = #{userId}
-          AND id = #{commentId}
+          AND (id = #{commentId} OR parent_comment_id = #{commentId})
+          AND (#{isAdmin} = TRUE OR user_id = #{userId} OR parent_comment_id = #{commentId})
           AND is_deleted = 0
     </delete>
 

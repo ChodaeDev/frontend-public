@@ -22,7 +22,8 @@ public interface CommentMapper {
 
     int deleteComment(@Param("commentId") Integer commentId,
             @Param("userId") String userId,
-            @Param("postId") Integer postId);
+            @Param("postId") Integer postId,
+            @Param("isAdmin") boolean isAdmin);
 
     int updateComment(@Param("commentId") Integer commentId,
             @Param("userId") String userId,

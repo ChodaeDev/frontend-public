@@ -120,6 +120,8 @@ public class FreeBoardService {
         params.put("userName", request.getUserName() != null ? request.getUserName() : "익명");
         params.put("content", request.getContent());
         params.put("postId", postId);
+        Integer parentCommentId = resolveParentCommentId(postId, request.getParentCommentId());
+        params.put("parentCommentId", parentCommentId);
         params.put("visibilityLevel", request.getVisibilityLevel());
         params.put("confirm", "N");
 
@@ -134,5 +136,19 @@ public class FreeBoardService {
         freeBoardPostMapper.updateCommentCount(postId, count);
 
         return freeBoardCommentMapper.findById(commentId);
+    }
+
+    private Integer resolveParentCommentId(Integer postId, Integer parentCommentId) {
+        if (parentCommentId == null) {
+            return null;
+        }
+        FreeBoardCommentResponse parent = freeBoardCommentMapper.findById(parentCommentId);
+        if (parent == null || !postId.equals(parent.getPostId())) {
+            throw new IllegalArgumentException("부모 댓글이 존재하지 않습니다.");
+        }
+        if (parent.getParentCommentId() != null) {
+            throw new IllegalArgumentException("대댓글에는 답글을 작성할 수 없습니다.");
+        }
+        return parentCommentId;
     }
 }

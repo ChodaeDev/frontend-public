@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class FreeBoardCommentResponse {
     Integer id;
     Integer postId;
+    Integer parentCommentId;
     String userId;
     String userName;
     String content;

@@ -5,7 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import { createPortal } from 'react-dom';
-import { ArrowLeft, Pencil, Trash2, Lock, Send, X } from 'lucide-react';
+import { ArrowLeft, Pencil, Trash2, Lock, Send, X, Reply } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '@/i18n/client';
 import { useAuthStore } from '@/store/authStore';
@@ -55,6 +55,8 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
 
   // 댓글 상태
   const [commentText, setCommentText] = useState('');
+  const [replyingTo, setReplyingTo] = useState<Comment | null>(null);
+  const [replyText, setReplyText] = useState('');
 
   // 댓글 수정 상태
   const [editingComment, setEditingComment] = useState<Comment | null>(null);
@@ -65,6 +67,13 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
 
   const isAdmin = user?.userId === 'admin';
   const isOwner = user && post && (isAdmin || user.userId === post.userId);
+  const rootComments = comments.filter((comment) => !comment.parentCommentId);
+  const repliesByParentId = comments.reduce<Record<number, Comment[]>>((acc, comment) => {
+    if (comment.parentCommentId) {
+      acc[comment.parentCommentId] = [...(acc[comment.parentCommentId] ?? []), comment];
+    }
+    return acc;
+  }, {});
 
   const counselTypeMap: Record<string, string> = {
     self: t.counselTypeSelf || '본인 상담',
@@ -106,24 +115,32 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
 
   // 댓글 등록
   const { mutate: submitComment, isPending: commentSubmitting } = useMutation({
-    mutationFn: (content: string) =>
+    mutationFn: ({ content, parentCommentId }: { content: string; parentCommentId?: number | null }) =>
       createComment({
         postId,
         data: {
           userId: user!.userId,
           userName: user!.userName,
           content,
+          parentCommentId,
         },
       }),
     onSuccess: () => {
       setCommentText('');
+      setReplyingTo(null);
+      setReplyText('');
       queryClient.invalidateQueries({ queryKey: counselingKeys.comments(postId) });
     },
   });
 
   const handleCommentSubmit = () => {
     if (!user || !commentText.trim()) return;
-    submitComment(commentText.trim());
+    submitComment({ content: commentText.trim() });
+  };
+
+  const handleReplySubmit = () => {
+    if (!user || !replyingTo || !replyText.trim()) return;
+    submitComment({ content: replyText.trim(), parentCommentId: replyingTo.id });
   };
 
   // 댓글 수정 모달 열기
@@ -280,9 +297,10 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
           <p className={'py-8 text-center text-sm text-sub'}>{t.commentEmpty || '댓글이 없습니다.'}</p>
         ) : (
           <ul className={'divide-y divide-gray9 border-t border-gray9'}>
-            {comments.map((comment) => {
+            {rootComments.map((comment) => {
               const canEdit = user?.userId === comment.userId;
               const canDelete = isAdmin || user?.userId === comment.userId;
+              const replies = repliesByParentId[comment.id] ?? [];
               return (
                 <li key={comment.id} className={'px-4 py-4'}>
                   <div className={'flex items-start justify-between gap-2'}>
@@ -293,8 +311,20 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
                       </div>
                       <p className={'text-sm text-main whitespace-pre-wrap'}>{comment.content}</p>
                     </div>
-                    {(canEdit || canDelete) && (
+                    {(user || canEdit || canDelete) && (
                       <div className={'flex items-center gap-1 shrink-0'}>
+                        {user && (
+                          <button
+                            onClick={() => {
+                              setReplyingTo(comment);
+                              setReplyText('');
+                            }}
+                            className={'p-1.5 text-sub hover:text-main hover:bg-gray8 rounded-md transition-colors cursor-pointer'}
+                            aria-label={'답글'}
+                          >
+                            <Reply className={'size-3.5'} />
+                          </button>
+                        )}
                         {canEdit && (
                           <button
                             onClick={() => handleOpenEditModal(comment)}
@@ -316,6 +346,88 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
                       </div>
                     )}
                   </div>
+                  {replyingTo?.id === comment.id && user && (
+                    <div className={'mt-3 ml-6 border border-gray8 rounded-lg overflow-hidden'}>
+                      <div className={'flex items-center justify-between gap-2 px-3 py-2 bg-gray9/50 border-b border-gray7'}>
+                        <span className={'text-sm font-medium text-main'}>{user.userName}</span>
+                        <button
+                          onClick={() => {
+                            setReplyingTo(null);
+                            setReplyText('');
+                          }}
+                          className={'p-1 text-sub hover:text-main hover:bg-gray8 rounded-md transition-colors'}
+                          aria-label={t.cancel || '취소'}
+                        >
+                          <X className={'size-4'} />
+                        </button>
+                      </div>
+                      <div className={'flex'}>
+                        <textarea
+                          value={replyText}
+                          onChange={(e) => setReplyText(e.target.value)}
+                          placeholder={'답글을 입력하세요'}
+                          rows={2}
+                          aria-label={'답글을 입력하세요'}
+                          className={'flex-1 px-3 py-2.5 text-sm bg-background text-main resize-none focus:outline-none placeholder:text-gray4'}
+                        />
+                        <button
+                          onClick={handleReplySubmit}
+                          disabled={commentSubmitting || !replyText.trim()}
+                          className={cn(
+                            'self-end m-2 px-3 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer',
+                            'bg-accent1 text-white hover:bg-accent1/90 disabled:opacity-50 disabled:cursor-not-allowed',
+                            'inline-flex items-center gap-1.5',
+                          )}
+                        >
+                          <Send className={'size-3.5'} />
+                          {commentSubmitting ? (t.commentSubmitting || '등록 중...') : (t.commentSubmit || '등록')}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {replies.length > 0 && (
+                    <ul className={'mt-3 ml-6 space-y-3'}>
+                      {replies.map((reply) => {
+                        const canEditReply = user?.userId === reply.userId;
+                        const canDeleteReply = isAdmin || user?.userId === reply.userId;
+                        return (
+                          <li key={reply.id} className={'border-l-2 border-gray8 pl-4 py-1'}>
+                            <div className={'flex items-start justify-between gap-2'}>
+                              <div className={'flex-1 min-w-0'}>
+                                <div className={'flex items-center gap-2 mb-1.5'}>
+                                  <span className={'text-sm font-medium text-main'}>{reply.userName}</span>
+                                  <span className={'text-xs text-gray5'}>{dayjs(reply.createDate).format('YYYY-MM-DD HH:mm')}</span>
+                                </div>
+                                <p className={'text-sm text-main whitespace-pre-wrap'}>{reply.content}</p>
+                              </div>
+                              {(canEditReply || canDeleteReply) && (
+                                <div className={'flex items-center gap-1 shrink-0'}>
+                                  {canEditReply && (
+                                    <button
+                                      onClick={() => handleOpenEditModal(reply)}
+                                      className={'p-1.5 text-sub hover:text-main hover:bg-gray8 rounded-md transition-colors cursor-pointer'}
+                                      aria-label={t.commentEditTitle || '댓글 수정'}
+                                    >
+                                      <Pencil className={'size-3.5'} />
+                                    </button>
+                                  )}
+                                  {canDeleteReply && (
+                                    <button
+                                      onClick={() => setDeletingCommentId(reply.id)}
+                                      className={'p-1.5 text-sub hover:text-error hover:bg-error/5 rounded-md transition-colors cursor-pointer'}
+                                      aria-label={t.commentDeleteTitle || '댓글 삭제'}
+                                    >
+                                      <Trash2 className={'size-3.5'} />
+                                    </button>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
                 </li>
               );
             })}

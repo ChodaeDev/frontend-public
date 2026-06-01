@@ -79,6 +79,7 @@ export interface CreateCommentInput {
   userId: string;
   userName: string;
   content: string;
+  parentCommentId?: number | null;
 }
 
 export interface UpdateCommentInput {

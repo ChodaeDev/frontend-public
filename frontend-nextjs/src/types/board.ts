@@ -51,6 +51,8 @@ export interface CounselingDetailData {
 
 export interface Comment {
   id: number;
+  postId: number;
+  parentCommentId?: number | null;
   userId: string;
   userName: string;
   content: string;

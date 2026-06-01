@@ -93,6 +93,7 @@ DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
     `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '댓글 ID',
     `post_id` int unsigned NOT NULL COMMENT '게시글 ID',
+    `parent_comment_id` int unsigned DEFAULT NULL COMMENT '부모 댓글 ID(1단계 대댓글)',
     `content` text NOT NULL COMMENT '댓글 내용',
     `user_id` varchar(50) DEFAULT NULL COMMENT '작성자 ID',
     `user_name` varchar(50) NOT NULL COMMENT '작성자 이름',
@@ -103,10 +104,14 @@ CREATE TABLE `comment` (
     `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일자',
     PRIMARY KEY (`id`),
     KEY `idx_comment_post` (`post_id`),
+    KEY `idx_comment_parent` (`parent_comment_id`),
     KEY `idx_comment_user` (`user_id`),
     KEY `idx_comment_create_date` (`create_date`),
     CONSTRAINT `fk_comment_post`
         FOREIGN KEY (`post_id`) REFERENCES `post` (`id`)
+        ON DELETE CASCADE,
+    CONSTRAINT `fk_comment_parent`
+        FOREIGN KEY (`parent_comment_id`) REFERENCES `comment` (`id`)
         ON DELETE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 

@@ -215,6 +215,8 @@ public class CounselingService {
         params.put("userName", request.getUserName() != null ? request.getUserName() : "익명");
         params.put("content", request.getContent());
         params.put("postId", postId);
+        Integer parentCommentId = resolveParentCommentId(postId, request.getParentCommentId());
+        params.put("parentCommentId", parentCommentId);
         params.put("visibilityLevel", request.getVisibilityLevel());
         params.put("confirm", "N");
 
@@ -229,6 +231,21 @@ public class CounselingService {
         counselingMapper.updateCommentCount(postId, count);
 
         return commentMapper.findById(commentId);
+    }
+
+    private Integer resolveParentCommentId(Integer postId, Integer parentCommentId) {
+        if (parentCommentId == null) {
+            return null;
+        }
+
+        CommentResponse parent = commentMapper.findById(parentCommentId);
+        if (parent == null || !postId.equals(parent.getPostId())) {
+            throw new IllegalArgumentException("부모 댓글이 존재하지 않습니다.");
+        }
+        if (parent.getParentCommentId() != null) {
+            throw new IllegalArgumentException("대댓글에는 답글을 작성할 수 없습니다.");
+        }
+        return parentCommentId;
     }
 
     @Transactional
@@ -282,11 +299,12 @@ public class CounselingService {
         if (comment == null) {
             throw new IllegalArgumentException("댓글이 존재하지 않습니다.");
         }
-        if (!userId.equals(comment.getUserId())) {
+        boolean isAdmin = accessControlService.isSuperAdmin(userId);
+        if (!isAdmin && !userId.equals(comment.getUserId())) {
             throw new IllegalArgumentException("댓글 삭제 권한이 없습니다.");
         }
 
-        int deleted = commentMapper.deleteComment(commentId, userId, postId);
+        int deleted = commentMapper.deleteComment(commentId, userId, postId, isAdmin);
         if (deleted == 0) {
             throw new IllegalStateException("댓글 삭제에 실패했습니다.");
         }
