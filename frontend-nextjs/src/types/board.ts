@@ -41,6 +41,7 @@ export interface CounselingDetailData {
   content: string;
   userId: string;
   userName: string;
+  isOwner: boolean;
   phone: string;
   counselType: string;
   commentCount: number;

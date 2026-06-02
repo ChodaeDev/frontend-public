@@ -155,10 +155,36 @@ public class CounselingService {
     }
 
     public CounselingResponse findByIdAndUserId(Integer id, String userId) {
+        CounselingResponse post;
         if (accessControlService.isSuperAdmin(userId)) {
-            return counselingMapper.findById(id);
+            post = counselingMapper.findById(id);
+        } else {
+            post = counselingMapper.findByIdAndUserId(id, userId);
         }
-        return counselingMapper.findByIdAndUserId(id, userId);
+        return withOwnership(post, userId);
+    }
+
+    private CounselingResponse withOwnership(CounselingResponse post, String currentUserId) {
+        if (post == null) {
+            return null;
+        }
+        return CounselingResponse.builder()
+                .id(post.getId())
+                .mainMenu(post.getMainMenu())
+                .subMenu(post.getSubMenu())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .userId(post.getUserId())
+                .userName(post.getUserName())
+                .isOwner(currentUserId != null && currentUserId.equals(post.getUserId()))
+                .phone(post.getPhone())
+                .counselType(post.getCounselType())
+                .commentCount(post.getCommentCount())
+                .visibilityLevel(post.getVisibilityLevel())
+                .isNotice(post.getIsNotice())
+                .createDate(post.getCreateDate())
+                .modifiedDate(post.getModifiedDate())
+                .build();
     }
 
     @Transactional

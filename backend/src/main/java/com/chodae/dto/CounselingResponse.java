@@ -15,6 +15,7 @@ public class CounselingResponse {
     String content;
     String userId;
     String userName;
+    Boolean isOwner;
     String phone;
     String counselType;
     Integer commentCount;

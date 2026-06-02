@@ -65,10 +65,8 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   // 댓글 삭제 상태
   const [deletingCommentId, setDeletingCommentId] = useState<number | null>(null);
 
-  // TODO: 백엔드 detail API에 isOwner 필드 추가되면 아래 두 줄을 제거하고
-  //       post.isOwner 로 대체할 것 (CounselingDetailData 타입에도 isOwner: boolean 추가 필요)
   const isAdmin = user?.userId === 'admin';
-  const isOwner = user && post && (isAdmin || user.userId === post.userId);
+  const isOwner = !!post?.isOwner || isAdmin;
   const rootComments = comments.filter((comment) => !comment.parentCommentId);
   const repliesByParentId = comments.reduce<Record<number, Comment[]>>((acc, comment) => {
     if (comment.parentCommentId) {
@@ -94,15 +92,14 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   }, [loading, error, post, router, t.postNotFound, locale, user]);
 
   // 비공개 글 접근 권한 확인
-  // TODO: 백엔드 detail API에 isOwner 추가되면 아래 조건을 post.visibilityLevel !== 'public' && !post.isOwner 로 단순화할 것
   useEffect(() => {
     if (!post) return;
-    if (post.visibilityLevel !== 'public' && (!user || (user.userId !== 'admin' && user.userId !== post.userId))) {
+    if (post.visibilityLevel !== 'public' && !post.isOwner && !isAdmin) {
       setNoAccess(true);
     } else {
       setNoAccess(false);
     }
-  }, [post, user]);
+  }, [post, isAdmin]);
 
   // 게시글 삭제
   const { mutate: handleDelete, isPending: deleting } = useMutation({

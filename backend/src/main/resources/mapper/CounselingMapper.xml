@@ -11,6 +11,7 @@
         <result property="content" column="content"/>
         <result property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
+        <result property="isOwner" column="is_owner"/>
         <result property="phone" column="phone"/>
         <result property="counselType" column="counsel_type"/>
         <result property="commentCount" column="comment_count"/>
@@ -113,7 +114,7 @@
     </sql>
 
     <select id="findByUserId" resultMap="CounselingResponseMap">
-        SELECT id, main_menu, sub_menu, title, content, user_id, user_name, phone, counsel_type,
+        SELECT id, main_menu, sub_menu, title, content, user_id, user_name, FALSE AS is_owner, phone, counsel_type,
                comment_count, visibility_level, is_notice,
                create_date, modified_date
         FROM `post`
@@ -122,7 +123,7 @@
     </select>
 
     <select id="findById" resultMap="CounselingResponseMap">
-        SELECT id, main_menu, sub_menu, title, content, user_id, user_name, phone, counsel_type,
+        SELECT id, main_menu, sub_menu, title, content, user_id, user_name, FALSE AS is_owner, phone, counsel_type,
                comment_count, visibility_level, is_notice,
                create_date, modified_date
         FROM `post`
@@ -130,7 +131,7 @@
     </select>
 
     <select id="findByIdAndUserId" resultMap="CounselingResponseMap">
-        SELECT id, main_menu, sub_menu, title, content, user_id, user_name, phone, counsel_type,
+        SELECT id, main_menu, sub_menu, title, content, user_id, user_name, TRUE AS is_owner, phone, counsel_type,
                comment_count, visibility_level, is_notice,
                create_date, modified_date
         FROM `post`
