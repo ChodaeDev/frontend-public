@@ -31,7 +31,7 @@ public class CounselingService {
     private final AccessControlService accessControlService;
 
     public List<CounselingListResponse> findAll() {
-        return maskUserNames(counselingMapper.findAll(), null);
+        return maskUserNames(counselingMapper.findAll(null), null);
     }
 
     public PagedListResponse<CounselingListResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sortBy, String sortDirection, String currentUserId) {
@@ -42,7 +42,7 @@ public class CounselingService {
 
         int offset = Math.max(0, (pageNumber - 1) * itemCount);
         List<CounselingListResponse> items = maskUserNames(
-                counselingMapper.findAllWithPaging(offset, itemCount, sortOption.column(), sortOption.order()),
+                counselingMapper.findAllWithPaging(offset, itemCount, sortOption.column(), sortOption.order(), currentUserId),
                 currentUserId);
 
         return PagedListResponse.<CounselingListResponse>builder()
@@ -66,7 +66,7 @@ public class CounselingService {
         int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
         int offset = Math.max(0, (pageNumber - 1) * itemCount);
         List<CounselingListResponse> items = maskUserNames(
-                counselingMapper.search(keywordPattern, offset, itemCount, sortOption.column(), sortOption.order()),
+                counselingMapper.search(keywordPattern, offset, itemCount, sortOption.column(), sortOption.order(), currentUserId),
                 currentUserId);
 
         return PagedListResponse.<CounselingListResponse>builder()

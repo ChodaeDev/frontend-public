@@ -37,7 +37,9 @@
     </resultMap>
 
     <select id="findAll" resultMap="CounselingListResponseMap">
-        SELECT id, main_menu, sub_menu, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count,
+        SELECT id, main_menu, sub_menu, title, user_id, user_name,
+               CASE WHEN #{currentUserId} IS NOT NULL AND user_id = #{currentUserId} THEN TRUE ELSE FALSE END AS is_owner,
+               counsel_type, comment_count,
                visibility_level, is_notice,
                create_date, modified_date
         FROM `post`
@@ -51,7 +53,9 @@
     </select>
 
     <select id="findAllWithPaging" resultMap="CounselingListResponseMap">
-        SELECT id, main_menu, sub_menu, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count,
+        SELECT id, main_menu, sub_menu, title, user_id, user_name,
+               CASE WHEN #{currentUserId} IS NOT NULL AND user_id = #{currentUserId} THEN TRUE ELSE FALSE END AS is_owner,
+               counsel_type, comment_count,
                visibility_level, is_notice,
                create_date, modified_date
         FROM `post`
@@ -67,7 +71,9 @@
     </select>
 
     <select id="search" resultMap="CounselingListResponseMap">
-        SELECT id, main_menu, sub_menu, title, user_id, user_name, FALSE AS is_owner, counsel_type, comment_count,
+        SELECT id, main_menu, sub_menu, title, user_id, user_name,
+               CASE WHEN #{currentUserId} IS NOT NULL AND user_id = #{currentUserId} THEN TRUE ELSE FALSE END AS is_owner,
+               counsel_type, comment_count,
                visibility_level, is_notice,
                create_date, modified_date
         FROM `post`

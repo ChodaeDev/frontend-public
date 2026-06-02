@@ -11,15 +11,15 @@ import java.util.Map;
 @Mapper
 public interface CounselingMapper {
 
-    List<CounselingListResponse> findAll();
+    List<CounselingListResponse> findAll(@Param("currentUserId") String currentUserId);
 
     long countAll();
 
-    List<CounselingListResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
+    List<CounselingListResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder, @Param("currentUserId") String currentUserId);
 
     long countSearch(@Param("keyword") String keyword);
 
-    List<CounselingListResponse> search(@Param("keyword") String keyword, @Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
+    List<CounselingListResponse> search(@Param("keyword") String keyword, @Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder, @Param("currentUserId") String currentUserId);
 
     List<CounselingResponse> findByUserId(@Param("userId") String userId);
 
