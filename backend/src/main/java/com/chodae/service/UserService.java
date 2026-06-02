@@ -115,9 +115,14 @@ public class UserService {
 
         Object levelObj = userMap.get("level");
         UserLevel level = UserLevel.fromString(levelObj != null ? levelObj.toString() : null);
+        Object idObj = userMap.get("id");
+        Integer id = idObj instanceof Number ? ((Number) idObj).intValue() : null;
+        if (id == null) {
+            throw new IllegalArgumentException("사용자 ID 정보를 읽을 수 없습니다.");
+        }
 
         UserResponse user = UserResponse.builder()
-                .id((Integer) userMap.get("id"))
+                .id(id)
                 .userId((String) userMap.get("userId"))
                 .userName((String) userMap.get("userName"))
                 .nickName((String) userMap.get("nickName"))

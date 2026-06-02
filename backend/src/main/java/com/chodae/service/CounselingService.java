@@ -123,7 +123,8 @@ public class CounselingService {
         if (firstCharEnd >= userName.length()) {
             return userName;
         }
-        return userName.substring(0, firstCharEnd) + "***";
+        int remainingCharCount = userName.codePointCount(firstCharEnd, userName.length());
+        return userName.substring(0, firstCharEnd) + "*".repeat(remainingCharCount);
     }
 
     private SortOption resolveSort(String sortBy, String sortDirection) {
