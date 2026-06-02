@@ -36,6 +36,8 @@ export default function CounselingBoardContent({
 }: CounselingBoardContentProps) {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
+  const userLevel = user?.level?.toLowerCase();
+  const isAdmin = userLevel === 'admin' || userLevel === 'superadmin';
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemCount, setItemCount] = useState(10);
@@ -70,6 +72,7 @@ export default function CounselingBoardContent({
   // 비공개(partial/private) 게시글은 서버에서 반환한 isOwner로만 판단
   const isLocked = (post: BoardPost) => {
     if (post.visibilityLevel === 'public') return false;
+    if (isAdmin) return false;
     return !post.isOwner;
   };
 

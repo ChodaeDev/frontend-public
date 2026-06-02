@@ -65,7 +65,8 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   // 댓글 삭제 상태
   const [deletingCommentId, setDeletingCommentId] = useState<number | null>(null);
 
-  const isAdmin = user?.userId === 'admin';
+  const userLevel = user?.level?.toLowerCase();
+  const isAdmin = userLevel === 'admin' || userLevel === 'superadmin';
   const isOwner = !!post?.isOwner || isAdmin;
   const rootComments = comments.filter((comment) => !comment.parentCommentId);
   const repliesByParentId = comments.reduce<Record<number, Comment[]>>((acc, comment) => {

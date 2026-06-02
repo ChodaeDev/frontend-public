@@ -37,13 +37,15 @@ public class CounselingService {
     public PagedListResponse<CounselingListResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sortBy, String sortDirection, String currentUserId) {
         long itemTotal = counselingMapper.countAll();
         int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
+        boolean canManageAll = accessControlService.isAdminOrSuperAdmin(currentUserId);
 
         SortOption sortOption = resolveSort(sortBy, sortDirection);
 
         int offset = Math.max(0, (pageNumber - 1) * itemCount);
         List<CounselingListResponse> items = maskUserNames(
                 counselingMapper.findAllWithPaging(offset, itemCount, sortOption.column(), sortOption.order(), currentUserId),
-                currentUserId);
+                currentUserId,
+                canManageAll);
 
         return PagedListResponse.<CounselingListResponse>builder()
                 .items(items)
@@ -61,13 +63,15 @@ public class CounselingService {
     public PagedListResponse<CounselingListResponse> searchWithPaging(int pageNumber, int itemCount, int pageSize, String keyword, String sortBy, String sortDirection, String currentUserId) {
         SortOption sortOption = resolveSort(sortBy, sortDirection);
         String keywordPattern = keyword == null || keyword.isBlank() ? null : "%" + keyword.trim() + "%";
+        boolean canManageAll = accessControlService.isAdminOrSuperAdmin(currentUserId);
 
         long itemTotal = counselingMapper.countSearch(keywordPattern);
         int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
         int offset = Math.max(0, (pageNumber - 1) * itemCount);
         List<CounselingListResponse> items = maskUserNames(
                 counselingMapper.search(keywordPattern, offset, itemCount, sortOption.column(), sortOption.order(), currentUserId),
-                currentUserId);
+                currentUserId,
+                canManageAll);
 
         return PagedListResponse.<CounselingListResponse>builder()
                 .items(items)
@@ -83,12 +87,16 @@ public class CounselingService {
     }
 
     private List<CounselingListResponse> maskUserNames(List<CounselingListResponse> items, String currentUserId) {
+        return maskUserNames(items, currentUserId, false);
+    }
+
+    private List<CounselingListResponse> maskUserNames(List<CounselingListResponse> items, String currentUserId, boolean canViewAllNames) {
         return items.stream()
-                .map(item -> maskUserName(item, currentUserId))
+                .map(item -> maskUserName(item, currentUserId, canViewAllNames))
                 .toList();
     }
 
-    private CounselingListResponse maskUserName(CounselingListResponse item, String currentUserId) {
+    private CounselingListResponse maskUserName(CounselingListResponse item, String currentUserId, boolean canViewAllNames) {
         boolean isOwner = currentUserId != null && currentUserId.equals(item.getUserId());
         return CounselingListResponse.builder()
                 .id(item.getId())
@@ -96,7 +104,7 @@ public class CounselingService {
                 .subMenu(item.getSubMenu())
                 .title(item.getTitle())
                 .userId(item.getUserId())
-                .userName(isOwner ? item.getUserName() : maskName(item.getUserName()))
+                .userName((isOwner || canViewAllNames) ? item.getUserName() : maskName(item.getUserName()))
                 .isOwner(isOwner)
                 .counselType(item.getCounselType())
                 .commentCount(item.getCommentCount())
@@ -156,7 +164,7 @@ public class CounselingService {
 
     public CounselingResponse findByIdAndUserId(Integer id, String userId) {
         CounselingResponse post;
-        if (accessControlService.isSuperAdmin(userId)) {
+        if (accessControlService.isAdminOrSuperAdmin(userId)) {
             post = counselingMapper.findById(id);
         } else {
             post = counselingMapper.findByIdAndUserId(id, userId);
@@ -293,12 +301,16 @@ public class CounselingService {
         if (comment == null) {
             throw new IllegalArgumentException("댓글이 존재하지 않거나 접근 권한이 없습니다.");
         }
-        if (!userId.equals(comment.getUserId())) {
+        if (!postId.equals(comment.getPostId())) {
+            throw new IllegalArgumentException("댓글이 해당 상담 글에 속하지 않습니다.");
+        }
+        boolean isAdmin = accessControlService.isAdminOrSuperAdmin(userId);
+        if (!isAdmin && !userId.equals(comment.getUserId())) {
             throw new IllegalArgumentException("댓글 수정 권한이 없습니다.");
         }
 
         int updated = commentMapper.updateComment(
-                commentId, userId, request.getContent());
+                commentId, userId, request.getContent(), isAdmin);
         if (updated == 0) {
             throw new IllegalStateException("댓글 수정에 실패했습니다.");
         }
@@ -325,7 +337,10 @@ public class CounselingService {
         if (comment == null) {
             throw new IllegalArgumentException("댓글이 존재하지 않습니다.");
         }
-        boolean isAdmin = accessControlService.isSuperAdmin(userId);
+        if (!postId.equals(comment.getPostId())) {
+            throw new IllegalArgumentException("댓글이 해당 상담 글에 속하지 않습니다.");
+        }
+        boolean isAdmin = accessControlService.isAdminOrSuperAdmin(userId);
         if (!isAdmin && !userId.equals(comment.getUserId())) {
             throw new IllegalArgumentException("댓글 삭제 권한이 없습니다.");
         }

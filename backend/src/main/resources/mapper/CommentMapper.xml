@@ -46,7 +46,7 @@
         UPDATE `comment`
         SET content = #{content}, modified_date = NOW()
         WHERE id = #{commentId}
-          AND user_id = #{userId}
+          AND (#{isAdmin} = TRUE OR user_id = #{userId})
           AND is_deleted = 0
     </update>
 

@@ -16,4 +16,11 @@ public class AccessControlService {
         }
         return userMapper.isSuperAdminByUserId(userId);
     }
+
+    public boolean isAdminOrSuperAdmin(String userId) {
+        if (userId == null || userId.isBlank()) {
+            return false;
+        }
+        return userMapper.isAdminOrSuperAdminByUserId(userId);
+    }
 }

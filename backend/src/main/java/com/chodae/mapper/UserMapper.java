@@ -30,6 +30,11 @@ public interface UserMapper {
     boolean isSuperAdminByUserId(@Param("userId") String userId);
 
     /**
+     * 사용자 ID의 관리자 또는 슈퍼관리자 여부 확인
+     */
+    boolean isAdminOrSuperAdminByUserId(@Param("userId") String userId);
+
+    /**
      * 사용자 등록
      */
     int insertUser(Map<String, Object> userMap);
