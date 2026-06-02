@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter, useParams, usePathname } from 'next/navigation';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import FormSelect from '@/components/ui/FormSelect';
-import { fetchApi } from '@/lib/api';
 import {
   inputStyle,
   errorStyle,
@@ -24,8 +23,7 @@ import { useTranslation } from '@/i18n/client';
 import { useAuthStore } from '@/store/authStore';
 import { cn } from '@/lib/cn';
 import ConfirmModal from '@/components/ui/ConfirmModal';
-import type { CounselingDetailData } from '@/types/board';
-import { counselingKeys, updateCounselingPost } from '@/lib/queries/counseling';
+import { counselingKeys, fetchCounselingDetail, updateCounselingPost } from '@/lib/queries/counseling';
 
 interface CounselingEditFormProps {
   postId: number;
@@ -41,8 +39,6 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
 
-  const [postLoading, setPostLoading] = useState(true);
-
   const [title, setTitle] = useState('');
   const [counselType, setCounselType] = useState('');
   const [content, setContent] = useState('');
@@ -54,6 +50,14 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
+  const { data: post, isLoading: postLoading, isError: postError } = useQuery({
+    queryKey: counselingKeys.detail(postId),
+    queryFn: () => fetchCounselingDetail(postId),
+    enabled: !!user,
+  });
+
+  const initialized = useRef(false);
+
   useEffect(() => {
     if (!user) {
       router.replace(`/${ locale }/login?returnTo=${ encodeURIComponent(pathname) }`);
@@ -61,25 +65,21 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
   }, [user, router, locale, pathname]);
 
   useEffect(() => {
-    async function fetchPost() {
-      setPostLoading(true);
-      try {
-        const { data } = await fetchApi<CounselingDetailData>(`/api/board/counseling/detail/${ postId }`);
-        if (data) {
-          setTitle(data.title);
-          setCounselType(data.counselType);
-          setContent(data.content);
-          setPhone(data.phone);
-          setVisibilityLevel(data.visibilityLevel !== 'public');
-        }
-      } catch {
-        router.replace(`/${ locale }/board/counseling`);
-      } finally {
-        setPostLoading(false);
-      }
+    if (postError) {
+      router.replace(`/${ locale }/board/counseling`);
     }
-    fetchPost();
-  }, [postId, locale, router]);
+  }, [postError, locale, router]);
+
+  useEffect(() => {
+    if (post && !initialized.current) {
+      initialized.current = true;
+      setTitle(post.title);
+      setCounselType(post.counselType);
+      setContent(post.content);
+      setPhone(post.phone);
+      setVisibilityLevel(post.visibilityLevel !== 'public');
+    }
+  }, [post]);
 
   const getErrorMessage = (errorKey: string | null) => {
     if (!errorKey) return null;
