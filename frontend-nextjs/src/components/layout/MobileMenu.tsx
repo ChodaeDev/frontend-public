@@ -11,10 +11,12 @@ import { useAuthStore } from '@/store/authStore';
 import { useTranslation } from '@/i18n/client';
 import { getNavItems } from '@/config/navigation';
 import { cn } from '@/lib/cn';
+import ConfirmModal from '@/components/ui/ConfirmModal';
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
@@ -45,6 +47,7 @@ const MobileMenu = () => {
   }, []);
 
   const handleLogout = useCallback(() => {
+    setShowLogoutModal(false);
     logout();
     close();
     router.refresh();
@@ -130,7 +133,7 @@ const MobileMenu = () => {
             <div className={'px-6 py-4 border-t border-gray9 flex items-center justify-between'}>
               {user ? (
                 <button
-                  onClick={handleLogout}
+                  onClick={() => setShowLogoutModal(true)}
                   className={'flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-sub transition-colors hover:bg-background-secondary hover:text-main'}
                 >
                   <LogOut size={16} />
@@ -154,6 +157,16 @@ const MobileMenu = () => {
         </div>,
         document.body,
       )}
+
+      <ConfirmModal
+        isOpen={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+        onConfirm={handleLogout}
+        title={t.common.logoutConfirmTitle || '로그아웃'}
+        message={t.common.logoutConfirmMessage || '정말 로그아웃 하시겠습니까?'}
+        confirmText={t.common.logout || '로그아웃'}
+        cancelText={t.common.cancel || '취소'}
+      />
     </>
   );
 };

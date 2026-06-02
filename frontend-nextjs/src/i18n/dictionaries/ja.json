@@ -16,7 +16,9 @@
     "processing": "処理中...",
     "selectDate": "日付を選択してください",
     "year": "年",
-    "month": "月"
+    "month": "月",
+    "logoutConfirmTitle": "ログアウト",
+    "logoutConfirmMessage": "本当にログアウトしますか？"
   },
   "header": {
     "siteName": "新天地専門相談所",

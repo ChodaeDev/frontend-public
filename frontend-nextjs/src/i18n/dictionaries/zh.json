@@ -16,7 +16,9 @@
     "processing": "处理中...",
     "selectDate": "请选择日期",
     "year": "年",
-    "month": "月"
+    "month": "月",
+    "logoutConfirmTitle": "退出登录",
+    "logoutConfirmMessage": "确定要退出登录吗？"
   },
   "header": {
     "siteName": "新天地专业咨询所",

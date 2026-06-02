@@ -16,7 +16,9 @@
     "processing": "Wird verarbeitet...",
     "selectDate": "Datum auswählen",
     "year": "",
-    "month": ""
+    "month": "",
+    "logoutConfirmTitle": "Abmelden",
+    "logoutConfirmMessage": "Möchten Sie sich wirklich abmelden?"
   },
   "header": {
     "siteName": "SCJ Klinik",

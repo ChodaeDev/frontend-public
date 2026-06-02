@@ -16,7 +16,9 @@
     "processing": "처리 중...",
     "selectDate": "날짜를 선택하세요",
     "year": "년",
-    "month": "월"
+    "month": "월",
+    "logoutConfirmTitle": "로그아웃",
+    "logoutConfirmMessage": "정말 로그아웃 하시겠습니까?"
   },
   "header": {
     "siteName": "신천지 전문상담소",

@@ -16,7 +16,9 @@
     "processing": "Processing...",
     "selectDate": "Select a date",
     "year": "",
-    "month": ""
+    "month": "",
+    "logoutConfirmTitle": "Log Out",
+    "logoutConfirmMessage": "Are you sure you want to log out?"
   },
   "header": {
     "siteName": "Shincheonji Counseling",
