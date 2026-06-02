@@ -1,16 +1,16 @@
 -- 사용자 테이블 테스트 데이터
 INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
  `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES
-('admin', 'admin', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'admin','superadmin', NOW(), NOW());
+('admin', 'admin', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'superadmin','superadmin', NOW(), NOW());
 INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
  `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('sdhan', '한상대', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'admin',
 'superadmin', NOW(), NOW());
 INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
- `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('sdhan2', '한상대2', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'admin',
-'superadmin', NOW(), NOW());
+ `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('sdhan2', '한상대2', '$2a$10$ACg9VFvqJmEox321TPhjyO6Ms3ZA5HAZkN42b85e9QBdt3yaP.1ae','admin', '01012345678', 'admin', '2026-01-26', 'general',
+'general', NOW(), NOW());
 INSERT INTO `users` (`user_id`, `userName`, `password`, `nickName`, `phone`, `church`,
  `birthday`,`description`, `level`, `modified_date`, `create_date`) VALUES ('judahwon', '주다훤', '$2a$10$2jm/TC3qqdyxdjFAVeVULOHGqUFmnOht0sx1lnjJLXLX8EYKLxqIG','admin', '01012345678', 'admin', '2026-01-26', 'admin',
-'superadmin', NOW(), NOW());
+'admin', NOW(), NOW());
 
 -- 통합 게시글 테이블 테스트 데이터
 INSERT INTO `post` (`main_menu`, `sub_menu`, `visibility_level`, `counsel_type`, `title`, `content`, `user_id`, `user_name`, `phone`, `email`, `comment_count`, `is_notice`, `is_deleted`, `create_date`, `modified_date`) VALUES

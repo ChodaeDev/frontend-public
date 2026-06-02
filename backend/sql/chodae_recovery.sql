@@ -19,7 +19,7 @@ CREATE TABLE `users` (
     `church` varchar(100) DEFAULT NULL,
     `birthday` date DEFAULT NULL,
     `description` text,
-    `level` enum('self', 'family', 'friend', 'etc', 'admin', 'superadmin') DEFAULT 'self' COMMENT 'self(스스로), family(가족), friend(친구), etc(기타)',
+    `level` enum('general', 'admin', 'superadmin') DEFAULT 'general' COMMENT 'general(일반사용자), admin(관리자), superadmin(슈퍼관리자)',
     `modified_date` datetime DEFAULT NULL,
     `create_date` datetime DEFAULT NULL,
     PRIMARY KEY (`id`),
