@@ -369,6 +369,15 @@
     "editConfirmMessage": "Would you like to save your changes?",
     "cancelEditMessage": "Your changes will be lost. Are you sure you want to cancel?"
   },
+  "press": {
+    "title": "Shincheonji Press Reports",
+    "emptyMessage": "No press reports available.",
+    "pressName": "Press",
+    "date": "Date",
+    "searchPlaceholder": "Enter search keyword",
+    "itemsPerPage": " per page",
+    "loading": "Loading..."
+  },
   "notFound": {
     "title": "Page Not Found",
     "description": "The page you requested does not exist or has been moved.",

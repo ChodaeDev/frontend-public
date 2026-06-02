@@ -4,6 +4,7 @@ import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
 import CounselingBoardContent from '@/components/board/CounselingBoardContent';
 import FreeBoardContent from '@/components/board/FreeBoardContent';
+import PressContent from '@/components/scj-info/PressContent';
 
 interface SectionContentProps {
   locale: Locale;
@@ -34,6 +35,16 @@ export default function SectionContent({
     search: string;
   };
 
+  const pressDict = dictionary.press as {
+    title: string;
+    emptyMessage: string;
+    pressName: string;
+    date: string;
+    searchPlaceholder: string;
+    itemsPerPage: string;
+    loading: string;
+  };
+
   switch (mainMenu) {
     case 'board':
       if (subMenu === 'counseling') {
@@ -53,6 +64,20 @@ export default function SectionContent({
         );
       }
       return null;
+    case 'scj-info':
+      if (subMenu === 'press') {
+        return (
+          <PressContent
+            locale={locale}
+            pressDict={pressDict}
+          />
+        );
+      }
+      return (
+        <div className={'text-sub'}>
+          <p>{'서비스 준비중입니다.'}</p>
+        </div>
+      );
     default:
       return (
         <div className={'text-sub'}>

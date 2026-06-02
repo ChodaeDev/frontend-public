@@ -369,6 +369,15 @@
     "editConfirmMessage": "Möchten Sie die Beratung speichern?",
     "cancelEditMessage": "Ihre Änderungen gehen verloren. Möchten Sie wirklich abbrechen?"
   },
+  "press": {
+    "title": "Shincheonji Presseberichte",
+    "emptyMessage": "Keine Presseberichte vorhanden.",
+    "pressName": "Presse",
+    "date": "Datum",
+    "searchPlaceholder": "Suchbegriff eingeben",
+    "itemsPerPage": " pro Seite",
+    "loading": "Wird geladen..."
+  },
   "notFound": {
     "title": "Seite nicht gefunden",
     "description": "Die angeforderte Seite existiert nicht oder wurde verschoben.",

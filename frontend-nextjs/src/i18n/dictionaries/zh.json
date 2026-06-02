@@ -369,6 +369,15 @@
     "editConfirmMessage": "确定要修改咨询内容吗？",
     "cancelEditMessage": "修改内容将会丢失。确定要取消吗？"
   },
+  "press": {
+    "title": "新天地新闻报道",
+    "emptyMessage": "暂无新闻报道。",
+    "pressName": "媒体",
+    "date": "报道日期",
+    "searchPlaceholder": "请输入搜索关键词",
+    "itemsPerPage": "条/页",
+    "loading": "加载中..."
+  },
   "notFound": {
     "title": "找不到页面",
     "description": "您请求的页面不存在或已被移动。",

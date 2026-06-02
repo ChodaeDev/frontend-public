@@ -369,6 +369,15 @@
     "editConfirmMessage": "相談内容を修正しますか？",
     "cancelEditMessage": "編集中の内容が失われます。本当にキャンセルしますか？"
   },
+  "press": {
+    "title": "新天地報道記事",
+    "emptyMessage": "報道記事がありません。",
+    "pressName": "報道機関",
+    "date": "報道日",
+    "searchPlaceholder": "検索キーワードを入力",
+    "itemsPerPage": "件ずつ表示",
+    "loading": "読み込み中..."
+  },
   "notFound": {
     "title": "ページが見つかりません",
     "description": "お探しのページは存在しないか、移動された可能性があります。",
