@@ -43,8 +43,6 @@ export default function CounselingBoardContent({
   const [activeQuery, setActiveQuery] = useState('');
   const [sortState, setSortState] = useState<SortState>({ fieldId: 'date', direction: 'desc' });
 
-  const isAdmin = user?.userId === 'admin';
-
   const sortBy = sortFieldMap[sortState.fieldId] ?? 'createDate';
   const { direction } = sortState;
 
@@ -68,9 +66,11 @@ export default function CounselingBoardContent({
   const totalPages = listData?.paging.totalPages ?? 1;
   const itemTotal = listData?.paging.itemTotal ?? 0;
 
+  // public 게시글은 isOwner 무관하게 접근 가능
+  // 비공개(partial/private) 게시글은 서버에서 반환한 isOwner로만 판단
   const isLocked = (post: BoardPost) => {
-    if (isAdmin || post.isOwner) return false;
-    return post.visibilityLevel !== 'public';
+    if (post.visibilityLevel === 'public') return false;
+    return !post.isOwner;
   };
 
   const handleRowClick = (post: BoardPost) => {
