@@ -352,6 +352,7 @@
     "commentSubmit": "등록",
     "commentSubmitting": "등록 중...",
     "commentEmpty": "댓글이 없습니다.",
+    "replyWrite": "답글쓰기",
     "loginToComment": "댓글을 작성하려면 로그인하세요.",
     "privateNoAccess": "비공개 글입니다. 작성자만 확인할 수 있습니다.",
     "loading": "불러오는 중...",
