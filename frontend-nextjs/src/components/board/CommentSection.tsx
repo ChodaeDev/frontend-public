@@ -167,7 +167,10 @@ function CommentItem({
   return (
     <div className={'flex-col gap-2'}>
       <div className={'min-h-7 flex items-center justify-between'}>
-        <span className={'text-sm font-semibold text-main'}>{comment.userName}</span>
+        <span className={'text-sm font-semibold text-main inline-flex items-center gap-1'}>
+          {isReply && <CornerDownRight className={'size-3.5 text-gray3'} />}
+          {comment.userName}
+        </span>
         {(canEdit || canDelete) && (
           <Dropdown>
             <DropdownTrigger>
