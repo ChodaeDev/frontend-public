@@ -22,6 +22,9 @@ import {
 import { useTranslation } from '@/i18n/client';
 import { useAuthStore } from '@/store/authStore';
 import { cn } from '@/lib/cn';
+import { formatPhone, stripNonDigits } from '@/lib/format';
+import PhoneInput from '@/components/ui/PhoneInput';
+import RichTextEditor from '@/components/ui/RichTextEditor';
 import ConfirmModal from '@/components/ui/ConfirmModal';
 import { counselingKeys, fetchCounselingDetail, updateCounselingPost } from '@/lib/queries/counseling';
 
@@ -76,7 +79,7 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
       setTitle(post.title);
       setCounselType(post.counselType);
       setContent(post.content);
-      setPhone(post.phone);
+      setPhone(formatPhone(post.phone));
       setVisibilityLevel(post.visibilityLevel !== 'public');
     }
   }, [post]);
@@ -96,7 +99,7 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
   });
 
   const handleSubmit = () => {
-    const raw = { title, counselType, content, phone };
+    const raw = { title, counselType, content, phone: stripNonDigits(phone) };
     const result = counselingSchema.safeParse(raw);
     if (!result.success) {
       setFieldErrors(getFieldErrors(result.error));
@@ -118,7 +121,7 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
     });
   };
 
-  if (!user || postLoading) {
+  if (!user || postLoading || !initialized.current) {
     return (
       <div className={'py-20 text-center text-sub'}>
         <span className={'inline-block size-6 border-2 border-gray5 border-t-accent1 rounded-full animate-spin'} />
@@ -173,18 +176,15 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
         </div>
 
         <div>
-          <label htmlFor={'content'} className={labelStyle}>
+          <label className={labelStyle}>
             {t.content || '내용'}
             <span className={'text-error'}>{' *'}</span>
           </label>
-          <textarea
-            id={'content'}
-            name={'content'}
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+          <RichTextEditor
+            content={content}
+            onChange={setContent}
             placeholder={t.contentPlaceholder || '상담 내용을 자세히 작성해주세요'}
-            rows={8}
-            className={cn(inputStyle, 'resize-none', fieldErrors.content && 'border-error')}
+            error={!!fieldErrors.content}
           />
           {fieldErrors.content && (
             <p className={'mt-1 text-xs text-error'}>{fieldErrors.content}</p>
@@ -208,12 +208,11 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
             {t.phone || '연락처'}
             <span className={'text-error'}>{' *'}</span>
           </label>
-          <input
+          <PhoneInput
             id={'phone'}
             name={'phone'}
-            type={'tel'}
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={setPhone}
             placeholder={t.phonePlaceholder || '연락 가능한 전화번호를 입력하세요'}
             autoComplete={'tel'}
             className={cn(inputStyle, fieldErrors.phone && 'border-error')}

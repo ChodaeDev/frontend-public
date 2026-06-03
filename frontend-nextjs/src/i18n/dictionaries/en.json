@@ -352,6 +352,7 @@
     "commentSubmit": "Post",
     "commentSubmitting": "Posting...",
     "commentEmpty": "No comments yet.",
+    "replyWrite": "Reply",
     "loginToComment": "Please log in to write a comment.",
     "privateNoAccess": "This is a private post. Only the author can view it.",
     "loading": "Loading...",

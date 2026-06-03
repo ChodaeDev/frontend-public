@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter, useParams, usePathname } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import FormSelect from '@/components/ui/FormSelect';
-import { FormInput, FormTextarea } from '@/components/ui/form';
+import { FormInput } from '@/components/ui/form';
 import {
   inputStyle,
   errorStyle,
@@ -23,6 +23,9 @@ import {
 import { useTranslation } from '@/i18n/client';
 import { useAuthStore } from '@/store/authStore';
 import { cn } from '@/lib/cn';
+import { formatPhone, stripNonDigits } from '@/lib/format';
+import PhoneInput from '@/components/ui/PhoneInput';
+import RichTextEditor from '@/components/ui/RichTextEditor';
 import ConfirmModal from '@/components/ui/ConfirmModal';
 import { counselingKeys, createCounselingPost } from '@/lib/queries/counseling';
 
@@ -40,6 +43,8 @@ export default function CounselingWriteForm() {
   const [fieldErrors, setFieldErrors] = useState<FieldErrors<CounselingInput>>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [previousInput, setPreviousInput] = useState<Partial<CounselingInput>>({});
+  const [phone, setPhone] = useState(user?.phone ? formatPhone(user.phone) : '');
+  const [content, setContent] = useState('');
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
 
@@ -73,8 +78,8 @@ export default function CounselingWriteForm() {
     const rawData: Partial<CounselingInput> = {
       title: formData.get('title') as string,
       counselType: formData.get('counselType') as string,
-      content: formData.get('content') as string,
-      phone: formData.get('phone') as string,
+      content,
+      phone: stripNonDigits(phone),
     };
 
     const result = counselingSchema.safeParse(rawData);
@@ -142,15 +147,21 @@ export default function CounselingWriteForm() {
           )}
         </div>
 
-        <FormTextarea
-          label={t.content || '내용'}
-          name={'content'}
-          placeholder={t.contentPlaceholder || '상담 내용을 자세히 작성해주세요'}
-          rows={8}
-          required
-          error={fieldErrors.content}
-          defaultValue={previousInput.content}
-        />
+        <div>
+          <label className={labelStyle}>
+            {t.content || '내용'}
+            <span className={'text-error'}>{' *'}</span>
+          </label>
+          <RichTextEditor
+            content={previousInput.content ?? ''}
+            onChange={setContent}
+            placeholder={t.contentPlaceholder || '상담 내용을 자세히 작성해주세요'}
+            error={!!fieldErrors.content}
+          />
+          {fieldErrors.content && (
+            <p className={'mt-1 text-xs text-error'}>{fieldErrors.content}</p>
+          )}
+        </div>
 
         <div>
           <label htmlFor={'applicantName'} className={labelStyle}>
@@ -164,16 +175,24 @@ export default function CounselingWriteForm() {
           />
         </div>
 
-        <FormInput
-          label={t.phone || '연락처'}
-          name={'phone'}
-          type={'tel'}
-          placeholder={t.phonePlaceholder || '연락 가능한 전화번호를 입력하세요'}
-          required
-          error={fieldErrors.phone}
-          defaultValue={previousInput.phone ?? user.phone}
-          autoComplete={'tel'}
-        />
+        <div>
+          <label htmlFor={'phone'} className={labelStyle}>
+            {t.phone || '연락처'}
+            <span className={'text-error'}>{' *'}</span>
+          </label>
+          <PhoneInput
+            id={'phone'}
+            name={'phone'}
+            value={phone}
+            onChange={setPhone}
+            placeholder={t.phonePlaceholder || '연락 가능한 전화번호를 입력하세요'}
+            autoComplete={'tel'}
+            className={cn(inputStyle, fieldErrors.phone && 'border-error')}
+          />
+          {fieldErrors.phone && (
+            <p className={'mt-1 text-xs text-error'}>{fieldErrors.phone}</p>
+          )}
+        </div>
 
         <div className={'flex items-center gap-2'}>
           <input

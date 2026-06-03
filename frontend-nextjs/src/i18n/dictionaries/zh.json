@@ -352,6 +352,7 @@
     "commentSubmit": "发布",
     "commentSubmitting": "发布中...",
     "commentEmpty": "暂无评论。",
+    "replyWrite": "回复",
     "loginToComment": "请登录后发表评论。",
     "privateNoAccess": "这是私密帖子，只有作者可以查看。",
     "loading": "加载中...",

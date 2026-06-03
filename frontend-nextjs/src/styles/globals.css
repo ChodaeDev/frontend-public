@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./animations.css";
 @import "./scrollbar.css" layer(base);
+@import "./tiptap.css";
 
 /* Tailwind v4: class 기반 다크모드 활성화 (next-themes와 연동) */
 @custom-variant dark (&:is(.dark *));
