@@ -76,6 +76,7 @@ export interface BoardDict {
   searchByAuthor: string;
   searchPlaceholder: string;
   search: string;
+  write?: string;
   counselType?: string;
   counselTypeSelf?: string;
   counselTypeFamily?: string;

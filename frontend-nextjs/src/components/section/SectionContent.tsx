@@ -4,6 +4,7 @@ import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
 import CounselingBoardContent from '@/components/board/CounselingBoardContent';
 import FreeBoardContent from '@/components/board/FreeBoardContent';
+import SectionBoardContent from '@/components/board/SectionBoardContent';
 import PressContent from '@/components/scj-info/PressContent';
 
 interface SectionContentProps {
@@ -44,6 +45,37 @@ export default function SectionContent({
     itemsPerPage: string;
     loading: string;
   };
+
+  const boardEndpointMap: Record<string, Record<string, string>> = {
+    'scj-info': {
+      history: '/api/scj-info/history/list',
+      details: '/api/scj-info/details/list',
+      strategy: '/api/scj-info/strategy/list',
+      'illegal-cases': '/api/scj-info/illegal-cases/list',
+    },
+    doctrine: {
+      references: '/api/doctrine/references/list',
+      legal: '/api/doctrine/legal/list',
+    },
+    prevention: {
+      resources: '/api/prevention/resources/list',
+    },
+    withdrawal: {
+      'damage-cases': '/api/withdrawal/damage-cases/list',
+    },
+  };
+
+  const boardEndpoint = boardEndpointMap[mainMenu]?.[subMenu];
+  if (boardEndpoint) {
+    return (
+      <SectionBoardContent
+        locale={locale}
+        boardDict={boardDict}
+        endpoint={boardEndpoint}
+        boardPath={`${ mainMenu }/${ subMenu }`}
+      />
+    );
+  }
 
   switch (mainMenu) {
     case 'board':

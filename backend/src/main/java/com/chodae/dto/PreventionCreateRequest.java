@@ -11,6 +11,7 @@ public class PreventionCreateRequest {
     private String userId;
     private String userName;
     private String visibilityLevel;
+    private String subMenu;
     private String phone;
     private String counselType;
 }

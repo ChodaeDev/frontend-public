@@ -6,6 +6,7 @@ export interface FreeBoardListParams {
   size: number;
   sort?: string;
   direction?: string;
+  endpoint?: string;
 }
 
 export interface FreeBoardPost {
@@ -44,7 +45,7 @@ const sortFieldMap: Record<string, string> = {
 };
 
 export async function fetchFreeBoardList(params: FreeBoardListParams): Promise<FreeBoardPagedData> {
-  const { page, size, sort = 'date', direction = 'desc' } = params;
+  const { page, size, sort = 'date', direction = 'desc', endpoint = '/api/freeboard/list' } = params;
   const sorting = `${ sortFieldMap[sort] ?? 'regdt' }_${ direction }`;
   const urlParams = new URLSearchParams({
     pageNumber: String(page),
@@ -53,7 +54,7 @@ export async function fetchFreeBoardList(params: FreeBoardListParams): Promise<F
     sorting,
   });
 
-  const { data } = await fetchApi<FreeBoardPagedData>(`/api/freeboard/list?${ urlParams }`);
+  const { data } = await fetchApi<FreeBoardPagedData>(`${ endpoint }?${ urlParams }`);
   if (!data) throw new Error('게시글을 불러올 수 없습니다.');
   return data;
 }

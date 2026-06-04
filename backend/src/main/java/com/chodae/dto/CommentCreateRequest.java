@@ -10,5 +10,6 @@ public class CommentCreateRequest {
     private String userName;
     private String content;
     private String visibilityLevel;
+    private String subMenu;
     private Integer parentCommentId;
 }

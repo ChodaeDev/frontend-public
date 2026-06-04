@@ -31,6 +31,7 @@
     <select id="countAll" resultType="long">
         SELECT COUNT(*) FROM `post`
         WHERE main_menu = 'prevention' AND is_deleted = 0
+        <if test="subMenu != null">AND sub_menu = #{subMenu}</if>
     </select>
 
     <select id="findAllWithPaging" resultMap="PreventionResponseMap">
@@ -38,6 +39,7 @@
                comment_count, visibility_level, is_notice, create_date, modified_date
         FROM `post`
         WHERE main_menu = 'prevention' AND is_deleted = 0
+        <if test="subMenu != null">AND sub_menu = #{subMenu}</if>
         <choose>
             <when test="sortColumn == 'title' and sortOrder == 'ASC'">ORDER BY title ASC</when>
             <when test="sortColumn == 'title' and sortOrder == 'DESC'">ORDER BY title DESC</when>
@@ -82,5 +84,19 @@
 
     <update id="updateVisibilityLevel">
         UPDATE `post` SET visibility_level = #{visibilityLevel}, modified_date = NOW() WHERE main_menu = 'prevention' AND id = #{id}
+    </update>
+
+    <update id="updateById">
+        UPDATE `post` SET
+        title = #{params.title},
+        content = #{params.content},
+        visibility_level = COALESCE(#{params.visibilityLevel}, 'public'),
+        modified_date = NOW()
+        WHERE main_menu = 'prevention' AND id = #{id} AND is_deleted = 0
+    </update>
+
+    <update id="deletePostById">
+        UPDATE `post` SET is_deleted = 1, modified_date = NOW()
+        WHERE main_menu = 'prevention' AND id = #{id} AND is_deleted = 0
     </update>
 </mapper>

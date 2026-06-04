@@ -1,0 +1,113 @@
+import { notFound } from 'next/navigation';
+import { getDictionary } from '@/i18n/getDictionary';
+import { isValidLocale } from '@/i18n/config';
+import { getNavItems } from '@/config/navigation';
+import SubSideNav from '@/components/ui/SubSideNav';
+import Breadcrumb from '@/components/ui/Breadcrumb';
+import SectionBoardDetail from '@/components/board/SectionBoardDetail';
+import SectionBoardForm from '@/components/board/SectionBoardForm';
+
+const sectionBoardRoutes: Record<string, readonly string[]> = {
+  'scj-info': ['history', 'details', 'strategy', 'illegal-cases'],
+  doctrine: ['references', 'legal'],
+  prevention: ['resources'],
+  withdrawal: ['damage-cases'],
+};
+
+export default async function SectionBoardActionPage({
+  params,
+}: {
+  params: Promise<{ locale: string; mainMenu: string; subMenu: string; boardPath: string[] }>;
+}) {
+  const { locale, mainMenu, subMenu, boardPath } = await params;
+
+  if (!isValidLocale(locale) || !sectionBoardRoutes[mainMenu]?.includes(subMenu)) {
+    notFound();
+  }
+
+  const isWrite = boardPath.length === 1 && boardPath[0] === 'write';
+  const isDetail = boardPath.length === 1 && !Number.isNaN(Number(boardPath[0]));
+  const isEdit = boardPath.length === 2 && !Number.isNaN(Number(boardPath[0])) && boardPath[1] === 'edit';
+
+  if (!isWrite && !isDetail && !isEdit) {
+    notFound();
+  }
+
+  const postId = isDetail || isEdit ? Number(boardPath[0]) : undefined;
+  const dictionary = await getDictionary(locale);
+  const navItems = getNavItems(locale, dictionary);
+  const navItem = navItems.find((item) => item.slug === mainMenu);
+  const subItem = navItem?.subMenus?.find((s) => s.slug === subMenu);
+
+  if (!navItem || !subItem) notFound();
+
+  const commonDict = dictionary.common as { home: string };
+  const boardDict = dictionary.board as {
+    write?: string;
+    edit?: string;
+    post?: string;
+  };
+  const boardHref = `/${ locale }/${ mainMenu }/${ subMenu }`;
+  const title = isWrite
+    ? (boardDict.write || '글쓰기')
+    : isEdit
+      ? (boardDict.edit || '수정')
+      : (boardDict.post || '게시글');
+
+  return (
+    <div className={'flex py-8 min-h-screen'}>
+      <SubSideNav
+        navItem={navItem}
+        currentSubSlug={subMenu}
+        locale={locale}
+      />
+
+      <div className={'w-full flex-col gap-10'}>
+        <div className={'flex flex-col sm:flex-row-reverse sm:items-start sm:justify-between gap-4 mb-8'}>
+          <Breadcrumb
+            locale={locale}
+            homeLabel={commonDict.home || '홈'}
+            items={[
+              { label: navItem.label, href: `/${ locale }/${ mainMenu }` },
+              { label: subItem.label, href: boardHref },
+              ...(isEdit && postId ? [{ label: boardDict.post || '게시글', href: `${ boardHref }/${ postId }` }] : []),
+              { label: title },
+            ]}
+          />
+
+          <div>
+            <h1 className={'text-2xl font-bold text-gray1'}>{title}</h1>
+            {subItem.description && (
+              <p className={'text-sm text-gray3 mt-1'}>{subItem.description}</p>
+            )}
+          </div>
+        </div>
+
+        <div className={'flex-1 min-w-0'}>
+          {isDetail && postId && (
+            <SectionBoardDetail
+              locale={locale}
+              route={{ mainMenu, subMenu }}
+              postId={postId}
+            />
+          )}
+          {isWrite && (
+            <SectionBoardForm
+              locale={locale}
+              route={{ mainMenu, subMenu }}
+              mode={'write'}
+            />
+          )}
+          {isEdit && postId && (
+            <SectionBoardForm
+              locale={locale}
+              route={{ mainMenu, subMenu }}
+              mode={'edit'}
+              postId={postId}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

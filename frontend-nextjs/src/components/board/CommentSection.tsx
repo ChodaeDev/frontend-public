@@ -17,9 +17,20 @@ import {
   deleteComment,
 } from '@/lib/queries/counseling';
 
+interface CommentApi {
+  queryKey: readonly unknown[];
+  fetchComments: ()=> Promise<Comment[]>;
+  createComment: (data: { userId: string; userName: string; content: string; parentCommentId?: number | null })=> Promise<void>;
+  updateComment: (commentId: number, data: { userId: string; userName: string; content: string })=> Promise<void>;
+  deleteComment: (commentId: number)=> Promise<void>;
+}
+
 interface CommentSectionProps {
   postId: number;
   t: Record<string, string>;
+  api?: CommentApi;
+  canWrite?: boolean;
+  readOnlyMessage?: string;
 }
 
 interface CommentInputProps {
@@ -115,6 +126,7 @@ interface CommentItemProps {
   comment: Comment;
   isReply?: boolean;
   isAdmin: boolean;
+  canManage: boolean;
   userId?: string;
   isEditing: boolean;
   editText: string;
@@ -132,6 +144,7 @@ function CommentItem({
   comment,
   isReply,
   isAdmin,
+  canManage,
   userId,
   isEditing,
   editText,
@@ -144,8 +157,8 @@ function CommentItem({
   onReply,
   t,
 }: CommentItemProps) {
-  const canEdit = userId === comment.userId;
-  const canDelete = isAdmin || userId === comment.userId;
+  const canEdit = canManage && userId === comment.userId;
+  const canDelete = canManage && (isAdmin || userId === comment.userId);
 
   if (isEditing) {
     return (
@@ -216,16 +229,24 @@ function CommentItem({
   );
 }
 
-export default function CommentSection({ postId, t }: CommentSectionProps) {
+export default function CommentSection({
+  postId,
+  t,
+  api,
+  canWrite,
+  readOnlyMessage,
+}: CommentSectionProps) {
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
 
   const userLevel = user?.level?.toLowerCase();
   const isAdmin = userLevel === 'admin' || userLevel === 'superadmin';
+  const allowWrite = canWrite ?? !!user;
+  const commentQueryKey = api?.queryKey ?? counselingKeys.comments(postId);
 
   const { data: comments = [], isLoading: commentsLoading } = useQuery({
-    queryKey: counselingKeys.comments(postId),
-    queryFn: () => fetchCounselingComments(postId),
+    queryKey: commentQueryKey,
+    queryFn: () => api?.fetchComments() ?? fetchCounselingComments(postId),
   });
 
   const [commentText, setCommentText] = useState('');
@@ -245,37 +266,41 @@ export default function CommentSection({ postId, t }: CommentSectionProps) {
 
   const { mutate: submitComment, isPending: commentSubmitting } = useMutation({
     mutationFn: ({ content, parentCommentId }: { content: string; parentCommentId?: number | null }) =>
-      createComment({
-        postId,
-        data: { userId: user!.userId, userName: user!.userName, content, parentCommentId },
-      }),
+      api
+        ? api.createComment({ userId: user!.userId, userName: user!.userName, content, parentCommentId })
+        : createComment({
+          postId,
+          data: { userId: user!.userId, userName: user!.userName, content, parentCommentId },
+        }),
     onSuccess: () => {
       setCommentText('');
       setReplyingTo(null);
       setReplyText('');
-      queryClient.invalidateQueries({ queryKey: counselingKeys.comments(postId) });
+      queryClient.invalidateQueries({ queryKey: commentQueryKey });
     },
   });
 
   const { mutate: submitCommentEdit, isPending: editSubmitting } = useMutation({
     mutationFn: ({ commentId, content }: { commentId: number; content: string }) =>
-      updateComment({
-        postId,
-        commentId,
-        data: { userId: user!.userId, userName: user!.userName, content },
-      }),
+      api
+        ? api.updateComment(commentId, { userId: user!.userId, userName: user!.userName, content })
+        : updateComment({
+          postId,
+          commentId,
+          data: { userId: user!.userId, userName: user!.userName, content },
+        }),
     onSuccess: () => {
       setEditingComment(null);
       setEditCommentText('');
-      queryClient.invalidateQueries({ queryKey: counselingKeys.comments(postId) });
+      queryClient.invalidateQueries({ queryKey: commentQueryKey });
     },
   });
 
   const { mutate: submitCommentDelete, isPending: commentDeleting } = useMutation({
-    mutationFn: (commentId: number) => deleteComment({ postId, commentId }),
+    mutationFn: (commentId: number) => api ? api.deleteComment(commentId) : deleteComment({ postId, commentId }),
     onSuccess: () => {
       setDeletingCommentId(null);
-      queryClient.invalidateQueries({ queryKey: counselingKeys.comments(postId) });
+      queryClient.invalidateQueries({ queryKey: commentQueryKey });
     },
   });
 
@@ -300,6 +325,7 @@ export default function CommentSection({ postId, t }: CommentSectionProps) {
                 <CommentItem
                   comment={comment}
                   isAdmin={isAdmin}
+                  canManage={allowWrite}
                   userId={user?.userId}
                   isEditing={editingComment?.id === comment.id}
                   editText={editCommentText}
@@ -318,13 +344,13 @@ export default function CommentSection({ postId, t }: CommentSectionProps) {
                     submitCommentEdit({ commentId: comment.id, content: editCommentText.trim() });
                   }}
                   onDelete={() => setDeletingCommentId(comment.id)}
-                  onReply={() => {
+                  onReply={allowWrite ? () => {
                     setReplyingTo(comment);
                     setReplyText('');
-                  }}
+                  } : undefined}
                   t={t}
                 />
-                {replyingTo?.id === comment.id && user && (
+                {replyingTo?.id === comment.id && user && allowWrite && (
                   <div className={'mt-3 pl-2'}>
                     <CommentInput
                       userName={user.userName}
@@ -355,6 +381,7 @@ export default function CommentSection({ postId, t }: CommentSectionProps) {
                           comment={reply}
                           isReply
                           isAdmin={isAdmin}
+                          canManage={allowWrite}
                           userId={user?.userId}
                           isEditing={editingComment?.id === reply.id}
                           editText={editCommentText}
@@ -386,7 +413,7 @@ export default function CommentSection({ postId, t }: CommentSectionProps) {
       )}
 
       {/* 댓글 작성 */}
-      {user ? (
+      {user && allowWrite ? (
         <div className={'mt-4'}>
           <CommentInput
             userName={user.userName}
@@ -404,7 +431,7 @@ export default function CommentSection({ postId, t }: CommentSectionProps) {
         </div>
       ) : (
         <p className={'mt-4 py-4 text-center text-sm text-sub border border-gray7 rounded-lg bg-gray9/30'}>
-          {t.loginToComment || '댓글을 작성하려면 로그인하세요.'}
+          {readOnlyMessage || t.loginToComment || '댓글을 작성하려면 로그인하세요.'}
         </p>
       )}
 

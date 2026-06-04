@@ -1,10 +1,14 @@
 package com.chodae.service;
 
 import com.chodae.dto.CommentCreateRequest;
+import com.chodae.dto.CommentDeleteResponse;
 import com.chodae.dto.CommentResponse;
+import com.chodae.dto.CounselingDeleteResponse;
 import com.chodae.dto.PagedListResponse;
 import com.chodae.dto.PreventionCreateRequest;
 import com.chodae.dto.PreventionResponse;
+import com.chodae.mapper.CommentMapper;
+import com.chodae.mapper.PostAttachMapper;
 import com.chodae.mapper.PreventionCommentMapper;
 import com.chodae.mapper.PreventionPostMapper;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +27,8 @@ public class PreventionService {
 
     private final PreventionPostMapper preventionPostMapper;
     private final PreventionCommentMapper preventionCommentMapper;
+    private final CommentMapper commentMapper;
+    private final PostAttachMapper postAttachMapper;
     private final AccessControlService accessControlService;
 
     public List<PreventionResponse> findAll() {
@@ -30,7 +36,11 @@ public class PreventionService {
     }
 
     public PagedListResponse<PreventionResponse> findAllWithPaging(int pageNumber, int itemCount, int pageSize, String sorting) {
-        long itemTotal = preventionPostMapper.countAll();
+        return findAllWithPaging(null, pageNumber, itemCount, pageSize, sorting);
+    }
+
+    public PagedListResponse<PreventionResponse> findAllWithPaging(String subMenu, int pageNumber, int itemCount, int pageSize, String sorting) {
+        long itemTotal = preventionPostMapper.countAll(subMenu);
         int totalPages = itemTotal > 0 ? (int) Math.ceil((double) itemTotal / itemCount) : 0;
 
         String sortColumn = "create_date";
@@ -49,7 +59,7 @@ public class PreventionService {
         }
 
         int offset = Math.max(0, (pageNumber - 1) * itemCount);
-        List<PreventionResponse> items = preventionPostMapper.findAllWithPaging(offset, itemCount, sortColumn, sortOrder);
+        List<PreventionResponse> items = preventionPostMapper.findAllWithPaging(subMenu, offset, itemCount, sortColumn, sortOrder);
 
         return PagedListResponse.<PreventionResponse>builder()
                 .items(items)
@@ -67,19 +77,29 @@ public class PreventionService {
     }
 
     public PreventionResponse findByIdAndUserId(Integer id, String userId) {
-        if (accessControlService.isSuperAdmin(userId)) {
+        if (accessControlService.isAdminOrSuperAdmin(userId)) {
             return preventionPostMapper.findById(id);
         }
         return preventionPostMapper.findByIdAndUserId(id, userId);
     }
 
+    public PreventionResponse findByIdForBoard(String subMenu, Integer id) {
+        PreventionResponse post = preventionPostMapper.findById(id);
+        if (post == null || !subMenu.equals(post.getSubMenu())) {
+            return null;
+        }
+        return post;
+    }
+
     @Transactional
     public PreventionResponse create(PreventionCreateRequest request) {
+        requireManagePermissionIfManagedBoard(request.getSubMenu(), request.getUserId());
         Map<String, Object> params = new HashMap<>();
         params.put("title", request.getTitle());
         params.put("content", request.getContent());
         params.put("userId", request.getUserId());
         params.put("userName", request.getUserName());
+        params.put("subMenu", request.getSubMenu());
         params.put("phone", request.getPhone());
         params.put("counselType", request.getCounselType());
         params.put("visibilityLevel", request.getVisibilityLevel());
@@ -97,12 +117,44 @@ public class PreventionService {
         return created;
     }
 
+    @Transactional
+    public PreventionResponse edit(String subMenu, Integer id, PreventionCreateRequest request) {
+        requireManagePermissionIfManagedBoard(subMenu, request.getUserId());
+        validateManagedPost(subMenu, id);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("title", request.getTitle());
+        params.put("content", request.getContent());
+        params.put("visibilityLevel", request.getVisibilityLevel());
+
+        int updated = preventionPostMapper.updateById(id, params);
+        if (updated == 0) {
+            throw new IllegalStateException("글 수정에 실패했습니다.");
+        }
+        return preventionPostMapper.findById(id);
+    }
+
+    @Transactional
+    public CounselingDeleteResponse deletePostById(String subMenu, Integer postId, String userId) {
+        requireManagePermissionIfManagedBoard(subMenu, userId);
+        validateManagedPost(subMenu, postId);
+
+        postAttachMapper.deleteAttachmentsByPostId(postId);
+        commentMapper.deleteCommentsByPostId(postId);
+        int deleted = preventionPostMapper.deletePostById(postId);
+        if (deleted == 0) {
+            throw new IllegalStateException("글 삭제에 실패했습니다.");
+        }
+        return new CounselingDeleteResponse(postId);
+    }
+
     public List<CommentResponse> findCommentsByPostId(Integer postId) {
         return preventionCommentMapper.findByVisibilityLevel(postId);
     }
 
     @Transactional
     public CommentResponse addComment(Integer postId, CommentCreateRequest request) {
+        requireManagePermissionIfManagedBoard(request.getSubMenu(), request.getUserId());
         PreventionResponse post = preventionPostMapper.findById(postId);
         if (post == null) {
             throw new IllegalArgumentException("글이 존재하지 않습니다.");
@@ -131,6 +183,34 @@ public class PreventionService {
         return preventionCommentMapper.findById(commentId);
     }
 
+    @Transactional
+    public CommentResponse updateComment(String subMenu, Integer postId, Integer commentId, CommentCreateRequest request) {
+        requireManagePermissionIfManagedBoard(subMenu, request.getUserId());
+        validateManagedPost(subMenu, postId);
+        validateComment(postId, commentId);
+
+        int updated = commentMapper.updateComment(commentId, request.getUserId(), request.getContent(), true);
+        if (updated == 0) {
+            throw new IllegalStateException("댓글 수정에 실패했습니다.");
+        }
+        return commentMapper.findById(commentId);
+    }
+
+    @Transactional
+    public CommentDeleteResponse deleteComment(String subMenu, Integer postId, Integer commentId, String userId) {
+        requireManagePermissionIfManagedBoard(subMenu, userId);
+        validateManagedPost(subMenu, postId);
+        validateComment(postId, commentId);
+
+        int deleted = commentMapper.deleteComment(commentId, userId, postId, true);
+        if (deleted == 0) {
+            throw new IllegalStateException("댓글 삭제에 실패했습니다.");
+        }
+        int count = commentMapper.countCommentsByPostId(postId);
+        preventionPostMapper.updateCommentCount(postId, count);
+        return new CommentDeleteResponse(commentId);
+    }
+
     private Integer resolveParentCommentId(Integer postId, Integer parentCommentId) {
         if (parentCommentId == null) {
             return null;
@@ -143,5 +223,29 @@ public class PreventionService {
             throw new IllegalArgumentException("대댓글에는 답글을 작성할 수 없습니다.");
         }
         return parentCommentId;
+    }
+
+    private void validateManagedPost(String subMenu, Integer postId) {
+        PreventionResponse post = preventionPostMapper.findById(postId);
+        if (post == null || !subMenu.equals(post.getSubMenu())) {
+            throw new IllegalArgumentException("글이 존재하지 않습니다.");
+        }
+    }
+
+    private void validateComment(Integer postId, Integer commentId) {
+        CommentResponse comment = commentMapper.findById(commentId);
+        if (comment == null || !postId.equals(comment.getPostId())) {
+            throw new IllegalArgumentException("댓글이 존재하지 않습니다.");
+        }
+    }
+
+    private void requireManagePermissionIfManagedBoard(String subMenu, String userId) {
+        if (isManagedBoard(subMenu) && !accessControlService.isAdminOrSuperAdmin(userId)) {
+            throw new IllegalArgumentException("관리자 권한이 필요합니다.");
+        }
+    }
+
+    private boolean isManagedBoard(String subMenu) {
+        return "resources".equals(subMenu);
     }
 }

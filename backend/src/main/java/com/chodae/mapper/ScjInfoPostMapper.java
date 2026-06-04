@@ -12,9 +12,9 @@ public interface ScjInfoPostMapper {
 
     List<ScjInfoResponse> findAll();
 
-    long countAll();
+    long countAll(@Param("subMenu") String subMenu);
 
-    List<ScjInfoResponse> findAllWithPaging(@Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
+    List<ScjInfoResponse> findAllWithPaging(@Param("subMenu") String subMenu, @Param("offset") int offset, @Param("limit") int limit, @Param("sortColumn") String sortColumn, @Param("sortOrder") String sortOrder);
 
     List<ScjInfoResponse> findByUserId(@Param("userId") String userId);
 
@@ -27,4 +27,8 @@ public interface ScjInfoPostMapper {
     int updateCommentCount(@Param("id") Integer id, @Param("commentCount") Integer commentCount);
 
     int updateVisibilityLevel(@Param("id") Integer id, @Param("visibilityLevel") String visibilityLevel);
+
+    int updateById(@Param("id") Integer id, @Param("params") Map<String, Object> params);
+
+    int deletePostById(@Param("id") Integer id);
 }
