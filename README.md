@@ -1,113 +1,139 @@
-# Chodae Recovery
+# 구리이단상담소 Frontend
 
-> The Chodae dev team, united in Christ, includes SD, JH, DH, and YL.
+신천지 관련 전문 상담 웹사이트의 프론트엔드 정적페이지입니다.
 
-![mainpage](./mainpage.png)
+## 배포
 
-신천지 관련 상담/정보 제공 사이트를 위한 모노레포 프로젝트입니다.
+해당 프로젝트는 chodae_recovery(private repo)의 frontend 부분을 sync한 프로젝트로, vercel에서 배포하고 있습니다.
 
-## 프로젝트 URL
+chodae_recovery/frontend-nextjs 에서 git push 가 발생하면 자동으로 아래 페이지에 배포됩니다.
 
-- 운영계
-http://182.222.129.4:4998
+![구리이단상담소 프론트 개발페이지](https://frontend-public-beta.vercel.app/)
 
-- API 문서
-http://182.222.129.4:4998/v3/api-docs
+## 기술 스택
 
-- Swagger UI
-http://182.222.129.4:4998/swagger-ui/index.html
+### Core
+- **Next.js** 15.5.12 (App Router)
+- **React** 19.0.0
+- **TypeScript** 5.9.3
+
+### Styling
+- **Tailwind CSS** 4.x
+- **Noto Sans KR** 폰트 (Google Fonts) - Pretendard 폰트 최적화 방법 확인중
+
+### 상태 관리
+- **Redux Toolkit** 2.5.0
+- **React Redux** 9.2.0
+
+### 유틸리티
+- **Zod** 4.x - 폼 유효성 검사
+- **dayjs** - 날짜 처리
+- **lucide-react** - 아이콘
+- **next-themes** - 다크/라이트 모드
+
+### 테스트
+- **Jest** 29.7.0
+- **Testing Library** (React, Jest-DOM)
+
+## 요구 사항
+
+- **Node.js** 20.19.3
+
+## 시작하기
+
+### 의존성 설치
+
+```bash
+npm install
+```
+
+### 개발 서버 실행
+
+```bash
+npm run dev
+```
+
+개발 서버는 [http://localhost:499](http://localhost:499)에서 실행됩니다.
+
+### 프로덕션 빌드
+
+```bash
+npm run build
+npm run start
+```
+
+### Docker 실행
+
+프론트엔드 이미지만 빌드할 때:
+
+```bash
+docker compose -f ../backend/docker-compose.yml build frontend
+```
+
+백엔드, DB, Redis, Nginx와 함께 실행할 때:
+
+```bash
+docker compose -f ../backend/docker-compose.yml up --build
+```
+
+Next.js 컨테이너는 [http://localhost:4998](http://localhost:4998), Nginx 프록시는 [http://localhost](http://localhost)에서 접근할 수 있습니다.
+
+### 테스트 실행
+
+```bash
+npm run test
+```
+
+### 린트 검사
+
+```bash
+npm run lint
+```
 
 ## 프로젝트 구조
 
 ```
-chodae_recovery/
-├── backend/           # Spring Boot 3.5 + MyBatis + MariaDB REST API
-├── frontend/   # Next.js 15 App Router + Tailwind v4
-├── .githooks/         # Git commit-msg hook
-└── history.md         # 작업 일지
+src/
+├── app/                    # Next.js App Router 페이지
+│   ├── [section]/          # 동적 섹션 라우팅
+│   ├── api/                # API Route Handlers
+│   ├── login/              # 로그인 페이지
+│   ├── signup/             # 회원가입 페이지
+│   └── layout.tsx          # 루트 레이아웃
+├── components/             # 재사용 가능한 컴포넌트
+│   ├── layout/             # 레이아웃 컴포넌트 (Header, Navigation 등)
+│   ├── theme/              # 테마 관련 컴포넌트
+│   └── ui/                 # UI 컴포넌트 (FormInput, Button 등)
+├── config/                 # 설정 파일 (네비게이션 등)
+├── layouts/                # 레이아웃 Provider
+├── lib/                    # 유틸리티 함수
+│   ├── api.ts              # API 호출 함수
+│   ├── date.ts             # 날짜 유틸리티
+│   ├── useMediaQuery.ts    # 미디어 쿼리 훅
+│   └── validations/        # Zod 스키마 (폼 유효성 검사)
+├── store/                  # Redux 상태 관리
+│   ├── authSlice.ts        # 인증 상태
+│   ├── navigationSlice.ts  # 네비게이션 상태
+│   └── themeSlice.ts       # 테마 상태
+└── styles/                 # 전역 스타일
+    ├── globals.css
+    ├── animations.css
+    └── scrollbar.css
 ```
 
-## 기술 스택
+## 주요 기능
 
-### Backend
-- Java 21, Spring Boot 3.5, MyBatis
-- MariaDB, Redis
-- JWT 인증
+- 📱 반응형 디자인 (모바일/데스크톱)
+- 🌓 다크/라이트 모드 지원
+- 🔐 사용자 인증 (로그인/회원가입)
+- 📋 동적 콘텐츠 라우팅
+- 🎨 Tailwind CSS 기반 스타일링
 
-### Frontend
-- Next.js 15 (App Router), React 19, TypeScript
-- Tailwind CSS v4, Zustand, TanStack Query
-- 다국어 지원 (ko, en, ja, zh, de)
-- Node >= 20
+## 경로 별칭
 
-## 시작하기
+`@/*` 경로 별칭을 사용하여 `src/` 디렉토리 내 파일을 임포트할 수 있습니다.
 
-### Backend
-
-```bash
-cd backend
-./gradlew bootRun
-```
-
-### Frontend
-
-```bash
-cd frontend-nextjs
-npm install
-npm run dev      # http://localhost:499
-```
-
-## Git 설정
-
-### Hook 활성화 (최초 1회)
-
-커밋 메시지 컨벤션을 자동 검증하는 hook이 포함되어 있습니다. 클론 후 프로젝트 루트에서 아래 명령어를 실행해주세요.
-
-```bash
-git config core.hooksPath .githooks
-```
-
-### 커밋 메시지 컨벤션
-
-```
-<접두사>: <내용 (~한다)>
-```
-
-**허용 접두사**
-
-| 접두사 | 용도 |
-|---|---|
-| `feat` | 새로운 기능 추가 |
-| `fix` | 버그 수정 |
-| `style` | UI/스타일 변경 |
-| `refactor` | 코드 리팩토링 |
-| `docs` | 문서 수정 |
-| `test` | 테스트 추가/수정 |
-
-**예시**
-
-```
-feat: 상담게시판 댓글 기능을 추가한다
-fix: 모바일 입력 시 자동 확대를 방지한다
-style: 댓글 수정 버튼 레이아웃을 변경한다
-refactor: CommentSection을 별도 컴포넌트로 분리한다
-docs: README에 커밋 컨벤션을 추가한다
-```
-
-### 브랜치 전략 (권장)
-
-기능 단위로 브랜치를 생성하고 PR로 머지합니다.
-
-```
-feat/<기능명>       # 기능 개발
-fix/<버그명>        # 버그 수정
-refactor/<대상>     # 리팩토링
-```
-
-**예시**
-
-```
-feat/press-board
-fix/mobile-scroll
-refactor/comment-section
+```typescript
+import { fetchApi } from '@/lib/api';
+import Header from '@/components/layout/Header';
 ```
