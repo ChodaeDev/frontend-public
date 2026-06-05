@@ -6,7 +6,7 @@
 
 해당 프로젝트는 chodae_recovery(private repo)의 frontend 부분을 sync한 프로젝트로, vercel에서 배포하고 있습니다.
 
-chodae_recovery/frontend-nextjs 에서 git push 가 발생하면 자동으로 아래 페이지에 배포됩니다.
+chodae_recovery/frontend 에서 git push 가 발생하면 자동으로 아래 페이지에 배포됩니다.
 
 ![구리이단상담소 프론트 개발페이지](https://frontend-public-beta.vercel.app/)
 
