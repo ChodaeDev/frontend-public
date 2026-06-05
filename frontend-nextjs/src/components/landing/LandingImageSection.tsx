@@ -31,7 +31,7 @@ export default function LandingImageSection({
       {/* 이미지 컨테이너 */}
       <div className={'relative w-full'}>
         <Image
-          src={'/assets/images/landingImage.png'}
+          src={'/assets/images/landing-image.png'}
           alt={'home'}
           width={1168}
           height={480}
