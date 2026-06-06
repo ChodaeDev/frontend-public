@@ -340,6 +340,7 @@
       "generic": "An error occurred while submitting the counseling request."
     },
     "counselingPost": "Counseling Post",
+    "post": "Post",
     "backToList": "Back to list",
     "edit": "Edit",
     "delete": "Delete",

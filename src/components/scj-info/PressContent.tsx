@@ -126,7 +126,7 @@ export default function PressContent({
   return (
     <div>
       {/* 상단 컨트롤: 개수 선택 + 검색 */}
-      <div className={'flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6'}>
+      <div className={'hidden sm:flex items-start sm:items-center justify-between gap-3 mb-6'}>
         <div className={'flex items-center gap-2'}>
           <FormSelect
             value={String(itemCount)}

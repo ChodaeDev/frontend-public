@@ -1,12 +1,12 @@
 import { fetchApi } from '@/lib/api';
 import type { Comment, VisibilityLevel } from '@/types/board';
 
-export interface SectionBoardRoute {
+export interface SubMenuBoardRoute {
   mainMenu: string;
   subMenu: string;
 }
 
-export interface SectionPostInput {
+export interface SubMenuPostInput {
   title: string;
   content: string;
   userId: string;
@@ -14,7 +14,7 @@ export interface SectionPostInput {
   visibilityLevel: VisibilityLevel;
 }
 
-export interface SectionBoardDetailData {
+export interface SubMenuBoardDetailData {
   id: number;
   title: string;
   content: string;
@@ -27,54 +27,54 @@ export interface SectionBoardDetailData {
   modifiedDate?: string;
 }
 
-export const sectionBoardKeys = {
-  all: ['sectionBoard'] as const,
-  board: (route: SectionBoardRoute) => [...sectionBoardKeys.all, route.mainMenu, route.subMenu] as const,
-  detail: (route: SectionBoardRoute, id: number) => [...sectionBoardKeys.board(route), 'detail', id] as const,
-  comments: (route: SectionBoardRoute, id: number) => [...sectionBoardKeys.board(route), 'comments', id] as const,
+export const subMenuBoardKeys = {
+  all: ['subMenuBoard'] as const,
+  board: (route: SubMenuBoardRoute) => [...subMenuBoardKeys.all, route.mainMenu, route.subMenu] as const,
+  detail: (route: SubMenuBoardRoute, id: number) => [...subMenuBoardKeys.board(route), 'detail', id] as const,
+  comments: (route: SubMenuBoardRoute, id: number) => [...subMenuBoardKeys.board(route), 'comments', id] as const,
 };
 
-function basePath(route: SectionBoardRoute) {
+function basePath(route: SubMenuBoardRoute) {
   return `/api/${ route.mainMenu }/${ route.subMenu }`;
 }
 
-export async function fetchSectionBoardDetail(route: SectionBoardRoute, id: number): Promise<SectionBoardDetailData> {
-  const { data } = await fetchApi<SectionBoardDetailData>(`${ basePath(route) }/detail/${ id }`);
+export async function fetchSubMenuBoardDetail(route: SubMenuBoardRoute, id: number): Promise<SubMenuBoardDetailData> {
+  const { data } = await fetchApi<SubMenuBoardDetailData>(`${ basePath(route) }/detail/${ id }`);
   if (!data) throw new Error('게시글을 찾을 수 없습니다.');
   return data;
 }
 
-export async function fetchSectionBoardComments(route: SectionBoardRoute, id: number): Promise<Comment[]> {
+export async function fetchSubMenuBoardComments(route: SubMenuBoardRoute, id: number): Promise<Comment[]> {
   const { data } = await fetchApi<Comment[]>(`${ basePath(route) }/detail/${ id }/comments`);
   return data ?? [];
 }
 
-export async function createSectionBoardPost(route: SectionBoardRoute, data: SectionPostInput): Promise<void> {
+export async function createSubMenuBoardPost(route: SubMenuBoardRoute, data: SubMenuPostInput): Promise<void> {
   await fetchApi(`${ basePath(route) }/form`, {
     method: 'POST',
     body: JSON.stringify(data),
   });
 }
 
-export async function updateSectionBoardPost(route: SectionBoardRoute, id: number, data: SectionPostInput): Promise<void> {
+export async function updateSubMenuBoardPost(route: SubMenuBoardRoute, id: number, data: SubMenuPostInput): Promise<void> {
   await fetchApi(`${ basePath(route) }/edit/${ id }`, {
     method: 'PUT',
     body: JSON.stringify(data),
   });
 }
 
-export async function deleteSectionBoardPost(route: SectionBoardRoute, id: number): Promise<void> {
+export async function deleteSubMenuBoardPost(route: SubMenuBoardRoute, id: number): Promise<void> {
   await fetchApi(`${ basePath(route) }/delete/${ id }`, {
     method: 'DELETE',
   });
 }
 
-export async function createSectionBoardComment({
+export async function createSubMenuBoardComment({
   route,
   postId,
   data,
 }: {
-  route: SectionBoardRoute;
+  route: SubMenuBoardRoute;
   postId: number;
   data: { userId: string; userName: string; content: string; parentCommentId?: number | null };
 }): Promise<void> {
@@ -84,13 +84,13 @@ export async function createSectionBoardComment({
   });
 }
 
-export async function updateSectionBoardComment({
+export async function updateSubMenuBoardComment({
   route,
   postId,
   commentId,
   data,
 }: {
-  route: SectionBoardRoute;
+  route: SubMenuBoardRoute;
   postId: number;
   commentId: number;
   data: { userId: string; userName: string; content: string };
@@ -101,12 +101,12 @@ export async function updateSectionBoardComment({
   });
 }
 
-export async function deleteSectionBoardComment({
+export async function deleteSubMenuBoardComment({
   route,
   postId,
   commentId,
 }: {
-  route: SectionBoardRoute;
+  route: SubMenuBoardRoute;
   postId: number;
   commentId: number;
 }): Promise<void> {

@@ -24,19 +24,19 @@ const sortFieldMap: Record<string, string> = {
   commentCount: 'commentCount',
 };
 
-interface SectionBoardContentProps {
+interface SubMenuBoardContentProps {
   locale: Locale;
   boardDict: BoardDict;
   endpoint: string;
   boardPath: string;
 }
 
-export default function SectionBoardContent({
+export default function SubMenuBoardContent({
   locale,
   boardDict,
   endpoint,
   boardPath,
-}: SectionBoardContentProps) {
+}: SubMenuBoardContentProps) {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
   const userLevel = user?.level?.toLowerCase();
@@ -167,7 +167,7 @@ export default function SectionBoardContent({
         </div>
       )}
 
-      <div className={'flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4'}>
+      <div className={'hidden sm:flex items-start sm:items-center justify-between gap-3 mb-4'}>
         <div className={'flex items-center gap-2'}>
           <FormSelect
             value={String(itemCount)}

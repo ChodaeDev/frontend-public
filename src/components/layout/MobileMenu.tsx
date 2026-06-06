@@ -77,14 +77,14 @@ const MobileMenu = () => {
     <>
       <button
         onClick={open}
-        className={'lg:hidden p-2 rounded-md text-sub hover:text-main hover:bg-background-secondary transition-colors'}
+        className={'xl:hidden p-2 rounded-md text-sub hover:text-main hover:bg-background-secondary transition-colors'}
         aria-label={t.header.openMenu || '메뉴 열기'}
       >
         <Menu size={24} />
       </button>
 
       {isOpen && createPortal(
-        <div className={'fixed inset-0 z-50 lg:hidden'}>
+        <div className={'fixed inset-0 z-50 xl:hidden'}>
           <div
             className={cn('absolute inset-0 bg-black/50', isClosing ? 'animate-fadeOut' : 'animate-fadeIn')}
             onClick={close}

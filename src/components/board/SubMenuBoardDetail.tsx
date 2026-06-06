@@ -11,24 +11,24 @@ import ConfirmModal from '@/components/ui/ConfirmModal';
 import { useTranslation } from '@/i18n/client';
 import { useAuthStore } from '@/store/authStore';
 import {
-  deleteSectionBoardComment,
-  deleteSectionBoardPost,
-  fetchSectionBoardComments,
-  fetchSectionBoardDetail,
-  sectionBoardKeys,
-  createSectionBoardComment,
-  updateSectionBoardComment,
-  type SectionBoardRoute,
-} from '@/lib/queries/sectionBoard';
+  deleteSubMenuBoardComment,
+  deleteSubMenuBoardPost,
+  fetchSubMenuBoardComments,
+  fetchSubMenuBoardDetail,
+  subMenuBoardKeys,
+  createSubMenuBoardComment,
+  updateSubMenuBoardComment,
+  type SubMenuBoardRoute,
+} from '@/lib/queries/subMenuBoard';
 import type { Locale } from '@/i18n/config';
 
-interface SectionBoardDetailProps {
+interface SubMenuBoardDetailProps {
   locale: Locale;
-  route: SectionBoardRoute;
+  route: SubMenuBoardRoute;
   postId: number;
 }
 
-export default function SectionBoardDetail({ locale, route, postId }: SectionBoardDetailProps) {
+export default function SubMenuBoardDetail({ locale, route, postId }: SubMenuBoardDetailProps) {
   const router = useRouter();
   const { dictionary } = useTranslation();
   const t = dictionary.board as unknown as Record<string, string>;
@@ -41,15 +41,15 @@ export default function SectionBoardDetail({ locale, route, postId }: SectionBoa
   const boardPath = `${ route.mainMenu }/${ route.subMenu }`;
 
   const { data: post, isLoading, isError } = useQuery({
-    queryKey: sectionBoardKeys.detail(route, postId),
-    queryFn: () => fetchSectionBoardDetail(route, postId),
+    queryKey: subMenuBoardKeys.detail(route, postId),
+    queryFn: () => fetchSubMenuBoardDetail(route, postId),
     retry: false,
   });
 
   const { mutate: handleDelete, isPending: deleting } = useMutation({
-    mutationFn: () => deleteSectionBoardPost(route, postId),
+    mutationFn: () => deleteSubMenuBoardPost(route, postId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: sectionBoardKeys.board(route) });
+      queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.board(route) });
       router.push(`/${ locale }/${ boardPath }`);
     },
     onSettled: () => setShowDeleteModal(false),
@@ -81,7 +81,7 @@ export default function SectionBoardDetail({ locale, route, postId }: SectionBoa
 
   return (
     <div>
-      <div className={'border-b border-gray7 mt-8 px-2 pb-2'}>
+      <div className={'border-b border-gray7 mt-8 pb-2'}>
         <div className={'flex items-start justify-between gap-4'}>
           <h2 className={'text-xl font-bold text-main'}>{post.title}</h2>
         </div>
@@ -97,7 +97,7 @@ export default function SectionBoardDetail({ locale, route, postId }: SectionBoa
       </div>
 
       {isAdmin && (
-        <div className={'w-full flex items-center gap-2 mx-2 my-3'}>
+        <div className={'w-full flex items-center gap-2 my-3'}>
           <Link
             href={`/${ locale }/${ boardPath }/${ postId }/edit`}
             className={'inline-flex items-center gap-1.5 px-4 py-2 text-sm border border-gray5 rounded-lg hover:bg-gray8 transition-colors'}
@@ -115,7 +115,7 @@ export default function SectionBoardDetail({ locale, route, postId }: SectionBoa
         </div>
       )}
 
-      <div className={'m-2 min-h-[calc(100vh-600px)]'}>
+      <div className={'my-2 min-h-[calc(100vh-600px)]'}>
         <div
           className={'tiptap text-main leading-relaxed prose prose-sm max-w-none'}
           dangerouslySetInnerHTML={{ __html: post.content }}
@@ -128,11 +128,11 @@ export default function SectionBoardDetail({ locale, route, postId }: SectionBoa
         canWrite={isAdmin}
         readOnlyMessage={'댓글 작성은 관리자만 가능합니다.'}
         api={{
-          queryKey: sectionBoardKeys.comments(route, postId),
-          fetchComments: () => fetchSectionBoardComments(route, postId),
-          createComment: (data) => createSectionBoardComment({ route, postId, data }),
-          updateComment: (commentId, data) => updateSectionBoardComment({ route, postId, commentId, data }),
-          deleteComment: (commentId) => deleteSectionBoardComment({ route, postId, commentId }),
+          queryKey: subMenuBoardKeys.comments(route, postId),
+          fetchComments: () => fetchSubMenuBoardComments(route, postId),
+          createComment: (data) => createSubMenuBoardComment({ route, postId, data }),
+          updateComment: (commentId, data) => updateSubMenuBoardComment({ route, postId, commentId, data }),
+          deleteComment: (commentId) => deleteSubMenuBoardComment({ route, postId, commentId }),
         }}
       />
 

@@ -4,22 +4,22 @@ import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
 import CounselingBoardContent from '@/components/board/CounselingBoardContent';
 import FreeBoardContent from '@/components/board/FreeBoardContent';
-import SectionBoardContent from '@/components/board/SectionBoardContent';
+import SubMenuBoardContent from '@/components/board/SubMenuBoardContent';
 import PressContent from '@/components/scj-info/PressContent';
 
-interface SectionContentProps {
+interface SubMenuContentProps {
   locale: Locale;
   mainMenu: string;
   subMenu: string;
   dictionary: Dictionary;
 }
 
-export default function SectionContent({
+export default function SubMenuContent({
   locale,
   mainMenu,
   subMenu,
   dictionary,
-}: SectionContentProps) {
+}: SubMenuContentProps) {
   const boardDict = dictionary.board as {
     requestCounseling: string;
     number: string;
@@ -68,7 +68,7 @@ export default function SectionContent({
   const boardEndpoint = boardEndpointMap[mainMenu]?.[subMenu];
   if (boardEndpoint) {
     return (
-      <SectionBoardContent
+      <SubMenuBoardContent
         locale={locale}
         boardDict={boardDict}
         endpoint={boardEndpoint}

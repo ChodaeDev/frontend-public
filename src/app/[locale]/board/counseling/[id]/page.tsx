@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import { getDictionary } from '@/i18n/getDictionary';
 import { isValidLocale } from '@/i18n/config';
 import { getNavItems } from '@/config/navigation';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import SubSideNav from '@/components/ui/SubSideNav';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import CounselingDetail from '@/components/board/CounselingDetail';
@@ -26,7 +28,7 @@ export default async function CounselingDetailPage({
   if (!boardNav || !counselingSub) notFound();
 
   const commonDict = dictionary.common as { home: string };
-  const boardDict = dictionary.board as { counselingPost: string };
+  const boardDict = dictionary.board as { counselingPost: string; backToList: string };
 
   return (
     <div className={'flex py-8 min-h-screen'}>
@@ -48,9 +50,13 @@ export default async function CounselingDetailPage({
             ]}
           />
 
-          <div>
-            <h1 className={'text-2xl font-bold text-gray1'}>{boardDict.counselingPost}</h1>
-          </div>
+          <Link
+            href={`/${ locale }/board/counseling`}
+            className={'inline-flex items-center gap-1.5 text-sm text-sub hover:text-main transition-colors'}
+          >
+            <ArrowLeft className={'size-4'} />
+            {boardDict.backToList || '목록으로'}
+          </Link>
         </div>
 
         <div className={'flex-1 min-w-0'}>

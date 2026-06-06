@@ -2,26 +2,28 @@ import { notFound } from 'next/navigation';
 import { getDictionary } from '@/i18n/getDictionary';
 import { isValidLocale } from '@/i18n/config';
 import { getNavItems } from '@/config/navigation';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import SubSideNav from '@/components/ui/SubSideNav';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import SectionBoardDetail from '@/components/board/SectionBoardDetail';
-import SectionBoardForm from '@/components/board/SectionBoardForm';
+import SubMenuBoardDetail from '@/components/board/SubMenuBoardDetail';
+import SubMenuBoardForm from '@/components/board/SubMenuBoardForm';
 
-const sectionBoardRoutes: Record<string, readonly string[]> = {
+const subMenuBoardRoutes: Record<string, readonly string[]> = {
   'scj-info': ['history', 'details', 'strategy', 'illegal-cases'],
   doctrine: ['references', 'legal'],
   prevention: ['resources'],
   withdrawal: ['damage-cases'],
 };
 
-export default async function SectionBoardActionPage({
+export default async function SubMenuBoardActionPage({
   params,
 }: {
   params: Promise<{ locale: string; mainMenu: string; subMenu: string; boardPath: string[] }>;
 }) {
   const { locale, mainMenu, subMenu, boardPath } = await params;
 
-  if (!isValidLocale(locale) || !sectionBoardRoutes[mainMenu]?.includes(subMenu)) {
+  if (!isValidLocale(locale) || !subMenuBoardRoutes[mainMenu]?.includes(subMenu)) {
     notFound();
   }
 
@@ -46,6 +48,7 @@ export default async function SectionBoardActionPage({
     write?: string;
     edit?: string;
     post?: string;
+    backToList?: string;
   };
   const boardHref = `/${ locale }/${ mainMenu }/${ subMenu }`;
   const title = isWrite
@@ -75,31 +78,41 @@ export default async function SectionBoardActionPage({
             ]}
           />
 
-          <div>
-            <h1 className={'text-2xl font-bold text-gray1'}>{title}</h1>
-            {subItem.description && (
-              <p className={'text-sm text-gray3 mt-1'}>{subItem.description}</p>
-            )}
-          </div>
+          {isDetail ? (
+            <Link
+              href={boardHref}
+              className={'inline-flex items-center gap-1.5 text-sm text-sub hover:text-main transition-colors'}
+            >
+              <ArrowLeft className={'size-4'} />
+              {boardDict.backToList || '목록으로'}
+            </Link>
+          ) : (
+            <div>
+              <h1 className={'text-2xl font-bold text-gray1'}>{title}</h1>
+              {subItem.description && (
+                <p className={'text-sm text-gray3 mt-1'}>{subItem.description}</p>
+              )}
+            </div>
+          )}
         </div>
 
         <div className={'flex-1 min-w-0'}>
           {isDetail && postId && (
-            <SectionBoardDetail
+            <SubMenuBoardDetail
               locale={locale}
               route={{ mainMenu, subMenu }}
               postId={postId}
             />
           )}
           {isWrite && (
-            <SectionBoardForm
+            <SubMenuBoardForm
               locale={locale}
               route={{ mainMenu, subMenu }}
               mode={'write'}
             />
           )}
           {isEdit && postId && (
-            <SectionBoardForm
+            <SubMenuBoardForm
               locale={locale}
               route={{ mainMenu, subMenu }}
               mode={'edit'}

@@ -71,12 +71,12 @@ export default function SideNav({ dictionary, locale }: SideNavProps) {
 
   return (
     <>
-      {/* sm 이상: 항상 표시 */}
+      {/* xl 이상: 항상 표시 */}
       <div className={'absolute top-0 right-3 2xl:right-auto 2xl:left-[calc(50%+42.25rem)] h-full pointer-events-none'}>
         <div className={'h-32'} />
         <nav
           className={
-            `hidden sm:flex sticky top-32 z-40 flex-col items-center gap-1
+            `hidden xl:flex sticky top-32 z-40 flex-col items-center gap-1
             bg-background/70 backdrop-blur-xs rounded-2xl p-1.5 shadow-lg border border-gray9 pointer-events-auto`
           }
         >
@@ -92,8 +92,8 @@ export default function SideNav({ dictionary, locale }: SideNavProps) {
         </nav>
       </div>
 
-      {/* sm 이하: FAB 토글 */}
-      <div className={'sm:hidden fixed bottom-6 right-4 z-40 flex flex-col items-end gap-3'}>
+      {/* xl 이하: FAB 토글 */}
+      <div className={'xl:hidden fixed bottom-6 right-4 z-40 flex flex-col items-end gap-3'}>
         {/* 확장 메뉴 */}
         <nav
           className={

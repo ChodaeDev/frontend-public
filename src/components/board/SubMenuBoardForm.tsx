@@ -17,23 +17,23 @@ import { useAuthStore } from '@/store/authStore';
 import { cn } from '@/lib/cn';
 import { freeBoardKeys } from '@/lib/queries/freeBoard';
 import {
-  createSectionBoardPost,
-  fetchSectionBoardDetail,
-  sectionBoardKeys,
-  updateSectionBoardPost,
-  type SectionPostInput,
-  type SectionBoardRoute,
-} from '@/lib/queries/sectionBoard';
+  createSubMenuBoardPost,
+  fetchSubMenuBoardDetail,
+  subMenuBoardKeys,
+  updateSubMenuBoardPost,
+  type SubMenuPostInput,
+  type SubMenuBoardRoute,
+} from '@/lib/queries/subMenuBoard';
 import type { Locale } from '@/i18n/config';
 
-interface SectionBoardFormProps {
+interface SubMenuBoardFormProps {
   locale: Locale;
-  route: SectionBoardRoute;
+  route: SubMenuBoardRoute;
   mode: 'write' | 'edit';
   postId?: number;
 }
 
-export default function SectionBoardForm({ locale, route, mode, postId }: SectionBoardFormProps) {
+export default function SubMenuBoardForm({ locale, route, mode, postId }: SubMenuBoardFormProps) {
   const router = useRouter();
   const pathname = usePathname();
   const { dictionary } = useTranslation();
@@ -53,8 +53,8 @@ export default function SectionBoardForm({ locale, route, mode, postId }: Sectio
   const [showSubmitModal, setShowSubmitModal] = useState(false);
 
   const { data: post, isLoading: postLoading, isError: postError } = useQuery({
-    queryKey: postId ? sectionBoardKeys.detail(route, postId) : sectionBoardKeys.board(route),
-    queryFn: () => fetchSectionBoardDetail(route, postId!),
+    queryKey: postId ? subMenuBoardKeys.detail(route, postId) : subMenuBoardKeys.board(route),
+    queryFn: () => fetchSubMenuBoardDetail(route, postId!),
     enabled: mode === 'edit' && !!postId && !!user,
     retry: false,
   });
@@ -84,10 +84,10 @@ export default function SectionBoardForm({ locale, route, mode, postId }: Sectio
   }, [mode, post]);
 
   const createMutation = useMutation({
-    mutationFn: (data: SectionPostInput) =>
-      createSectionBoardPost(route, data),
+    mutationFn: (data: SubMenuPostInput) =>
+      createSubMenuBoardPost(route, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: sectionBoardKeys.board(route) });
+      queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.board(route) });
       queryClient.removeQueries({ queryKey: freeBoardKeys.all });
       queryClient.invalidateQueries({ queryKey: freeBoardKeys.all });
       router.push(`/${ locale }/${ boardPath }`);
@@ -96,14 +96,14 @@ export default function SectionBoardForm({ locale, route, mode, postId }: Sectio
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: SectionPostInput }) =>
-      updateSectionBoardPost(route, id, data),
+    mutationFn: ({ id, data }: { id: number; data: SubMenuPostInput }) =>
+      updateSubMenuBoardPost(route, id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: sectionBoardKeys.board(route) });
+      queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.board(route) });
       queryClient.removeQueries({ queryKey: freeBoardKeys.all });
       queryClient.invalidateQueries({ queryKey: freeBoardKeys.all });
       if (postId) {
-        queryClient.invalidateQueries({ queryKey: sectionBoardKeys.detail(route, postId) });
+        queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.detail(route, postId) });
         router.push(`/${ locale }/${ boardPath }/${ postId }`);
         router.refresh();
       }

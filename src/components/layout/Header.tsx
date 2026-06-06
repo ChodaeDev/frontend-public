@@ -54,11 +54,11 @@ const Header = () => {
               <span className={'text-sub'}>{t.header.siteSubName || '구리이단상담소'}</span>
             </div>
           </Link>
-          <div className={'hidden lg:flex'}>
+          <div className={'hidden xl:flex'}>
             <Navigation />
           </div>
           <div className={'flex items-center gap-2'}>
-            <div className={'hidden lg:flex items-center gap-2'}>
+            <div className={'hidden xl:flex items-center gap-2'}>
               <LanguageSwitch />
               <ThemeSwitch />
               {user ? (

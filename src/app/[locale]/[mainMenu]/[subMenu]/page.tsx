@@ -4,7 +4,7 @@ import { locales, isValidLocale } from '@/i18n/config';
 import { getNavItems } from '@/config/navigation';
 import SubSideNav from '@/components/ui/SubSideNav';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import SectionContent from '@/components/section/SectionContent';
+import SubMenuContent from '@/components/subMenu/SubMenuContent';
 
 export function generateStaticParams() {
   const navItems = getNavItems('ko');
@@ -69,7 +69,7 @@ export default async function SubMenuPage({
         </div>
 
         <div className={'flex-1 min-w-0'}>
-          <SectionContent
+          <SubMenuContent
             locale={locale}
             mainMenu={mainMenu}
             subMenu={subMenu}
