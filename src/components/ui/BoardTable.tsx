@@ -123,7 +123,7 @@ function BoardTable<T>({
           {columns.map((column) => (
             <div
               key={`${ keyExtractor(item) }-${ column.id }`}
-              className={`${ column.className ?? '' } ${ column.hideOnMobile ? 'hidden sm:flex' : 'flex' } items-center border-b border-gray7 py-3.5 px-2 group-hover:bg-accent1/5 transition-colors`}
+              className={`${ column.className ?? '' } ${ column.hideOnMobile ? 'hidden sm:flex' : 'flex' } items-center border-b border-gray7 py-3.5 px-2 group-hover:bg-gray9 transition-colors`}
             >
               {column.id === 'select' && selectedIds && onSelectItem ? (
                 <input

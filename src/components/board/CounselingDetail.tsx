@@ -54,10 +54,18 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
     etc: t.counselTypeEtc || '기타 상담',
   };
 
-  // error 또는 post 없을 때 이전 페이지로 이동
+  // 비로그인 시 로그인 페이지로 리다이렉트
   useEffect(() => {
-    if (!user || user.userId !== 'admin') return;
-    if (!loading && (error || !post)) {
+    if (!loading && !user) {
+      alert(t.loginRequired || '로그인이 필요합니다');
+      router.replace(`/${ locale }/login?returnTo=${ encodeURIComponent(`/${ locale }/board/counseling/${ postId }`) }`);
+    }
+  }, [loading, user, router, locale, postId, t.loginRequired]);
+
+  // error 또는 post 없을 때 목록으로 이동
+  useEffect(() => {
+    if (!user || loading) return;
+    if (error || !post) {
       alert(error || t.postNotFound || '게시글을 찾을 수 없습니다.');
       router.replace(`/${ locale }/board/counseling`);
     }

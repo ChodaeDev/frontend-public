@@ -93,7 +93,7 @@ const MobileMenu = () => {
           <div
             className={cn('absolute top-0 right-0 h-full w-3/4 max-w-sm bg-background border-l border-gray9 flex flex-col', isClosing ? 'animate-slideOutRight' : 'animate-slideInRight')}
           >
-            <div className={'flex items-center justify-between px-4 py-4 border-b border-gray9 min-h-[89px]'}>
+            <div className={'flex items-center justify-between pl-6 pr-4 py-4 border-b border-gray9 min-h-[89px]'}>
               <span className={'text-lg font-bold text-main'}>{t.common.menu || '메뉴'}</span>
               <button
                 onClick={close}
@@ -119,7 +119,7 @@ const MobileMenu = () => {
                         <Link
                           key={sub.slug}
                           href={`/${ locale }/${ item.slug }/${ sub.slug }`}
-                          className={cn('block px-6 py-2 text-sm transition-colors', pathname === `/${ locale }/${ item.slug }/${ sub.slug }` ? 'text-accent1 font-semibold' : 'text-sub hover:text-main')}
+                          className={cn('block px-6 py-2 text-sm transition-colors rounded-lg', pathname === `/${ locale }/${ item.slug }/${ sub.slug }` ? 'text-accent1 bg-gray9 font-semibold' : 'text-sub hover:text-main hover:bg-gray9')}
                         >
                           {sub.label}
                         </Link>

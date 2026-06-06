@@ -30,6 +30,7 @@ export interface BoardItem {
   title: string;
   author: string;
   date: string;
+  visibilityLevel?: string;
 }
 
 export interface TestimonyItem {

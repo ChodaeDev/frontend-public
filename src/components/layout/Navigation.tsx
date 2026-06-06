@@ -23,7 +23,7 @@ const Navigation = () => {
         <Link
           key={item.slug}
           href={item.slug === '' ? `/${ locale }` : `/${ locale }/${ item.slug }`}
-          className={cn('px-3 py-1.5 rounded-md text-sm transition-colors whitespace-nowrap', isActive(item.slug) ? 'text-main font-black bg-gray9' : 'text-sub hover:text-main hover:bg-background-secondary')}
+          className={cn('px-3 py-1.5 rounded-md text-sm transition-colors whitespace-nowrap', isActive(item.slug) ? 'text-accent1 font-black bg-gray9' : 'text-sub hover:text-main hover:bg-background-secondary')}
         >
           {item.label}
         </Link>

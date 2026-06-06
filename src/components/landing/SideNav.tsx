@@ -20,7 +20,7 @@ const navItems = [
   { key: 'counseling' as const, icon: Phone, href: null },
   { key: 'exitMethods' as const, icon: DoorOpen, href: '/withdrawal/methods' },
   { key: 'testimonies' as const, icon: MessageSquareText, href: '/withdrawal/testimonies' },
-  { key: 'falseClaims' as const, icon: ShieldAlert, href: '/doctrine/falseClaims' },
+  { key: 'falseClaims' as const, icon: ShieldAlert, href: '/doctrine/false-claims' },
   { key: 'donation' as const, icon: Heart, href: null },
 ];
 
@@ -37,21 +37,21 @@ function NavButton({
 }) {
   const inner = (
     <>
-      <Icon className={'size-6 text-sub'} />
-      <span className={'text-xs text-sub leading-tight'}>{label}</span>
+      <Icon className={'size-6'} />
+      <span className={'text-xs leading-tight'}>{label}</span>
     </>
   );
 
   if (href) {
     return (
-      <Link href={`/${ locale }${ href }`} className={'flex flex-col items-center gap-1 w-18 py-2 rounded-xl hover:bg-gray8 transition-colors'}>
+      <Link href={`/${ locale }${ href }`} className={'flex flex-col items-center gap-1 w-18 py-2 rounded-xl text-sub hover:text-accent1 hover:bg-gray9 transition-colors'}>
         {inner}
       </Link>
     );
   }
 
   return (
-    <button className={'flex flex-col items-center gap-1 w-18 py-2 rounded-xl hover:bg-gray8 transition-colors'}>
+    <button className={'flex flex-col items-center gap-1 w-18 py-2 rounded-xl text-sub hover:text-accent1 hover:bg-gray9 transition-colors'}>
       {inner}
     </button>
   );
