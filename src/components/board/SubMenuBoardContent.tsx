@@ -11,12 +11,13 @@ import BoardTable from '@/components/ui/BoardTable';
 import Pagination from '@/components/ui/Pagination';
 import type { Locale } from '@/i18n/config';
 import { useAuthStore } from '@/store/authStore';
-import type { Paging } from '@/types/ui/paging';
 import type { Column } from '@/types/ui/boardTable';
 import type { BoardDict, BoardPost } from '@/types/board';
 import type { SortState } from '@/types/common/sort';
 import { cn } from '@/lib/cn';
 import { fetchFreeBoardList, freeBoardKeys, type FreeBoardPost } from '@/lib/queries/freeBoard';
+import { usePagination } from '@/lib/hooks/usePagination';
+import { useSearch } from '@/lib/hooks/useSearch';
 
 const sortFieldMap: Record<string, string> = {
   title: 'title',
@@ -41,14 +42,18 @@ export default function SubMenuBoardContent({
   const user = useAuthStore((state) => state.user);
   const userLevel = user?.level?.toLowerCase();
   const isAdmin = userLevel === 'admin' || userLevel === 'superadmin';
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemCount, setItemCount] = useState(10);
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [activeQuery, setActiveQuery] = useState('');
+
+  const { currentPage, setCurrentPage, itemCount, handleItemCountChange } = usePagination();
+  const { searchKeyword, setSearchKeyword, activeQuery, handleSearch, handleSearchKeyDown } = useSearch({ onSearch: () => setCurrentPage(1) });
   const [sortState, setSortState] = useState<SortState>({ fieldId: 'date', direction: 'desc' });
 
   const sortBy = sortFieldMap[sortState.fieldId] ?? 'date';
   const { direction } = sortState;
+
+  const handleSortChange = (sort: SortState) => {
+    setSortState(sort);
+    setCurrentPage(1);
+  };
 
   const { data: listData, isLoading: loading, isError } = useQuery({
     queryKey: freeBoardKeys.list({ page: currentPage, size: itemCount, sort: sortBy, direction, endpoint }),
@@ -66,40 +71,22 @@ export default function SubMenuBoardContent({
   });
 
   const allPosts: BoardPost[] = listData?.items.map(mapPost) ?? [];
-  const posts = activeQuery
+  const filtered = activeQuery
     ? allPosts.filter((post) => post.title.toLowerCase().includes(activeQuery.toLowerCase()))
     : allPosts;
-  const itemTotal = activeQuery ? posts.length : listData?.itemTotal ?? 0;
-  const totalPages = activeQuery ? 1 : listData?.totalPages ?? 1;
+  const noticePosts = filtered.filter((post) => post.isNotice);
+  const regularPosts = filtered.filter((post) => !post.isNotice);
+  const posts = [...noticePosts, ...regularPosts];
 
-  const handleItemCountChange = (count: number) => {
-    setItemCount(count);
-    setCurrentPage(1);
-  };
-
-  const handleSearch = () => {
-    setActiveQuery(searchKeyword.trim());
-    setCurrentPage(1);
-  };
-
-  const handleSortChange = (sort: SortState) => {
-    setSortState(sort);
-    setCurrentPage(1);
-  };
-
-  const handleSearchKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') handleSearch();
+  const paging = {
+    pageNumber: currentPage,
+    totalPages: activeQuery ? 1 : listData?.totalPages ?? 1,
+    itemTotal: activeQuery ? regularPosts.length : (listData?.itemTotal ?? 0) - noticePosts.length,
+    itemCount,
   };
 
   const handleRowClick = (post: BoardPost) => {
     router.push(`/${ locale }/${ boardPath }/${ post.id }`);
-  };
-
-  const paging: Paging = {
-    pageNumber: currentPage,
-    totalPages,
-    itemTotal,
-    itemCount,
   };
 
   const columns: Column<BoardPost>[] = [
@@ -209,12 +196,13 @@ export default function SubMenuBoardContent({
           emptyMessage={boardDict.emptyMessage || '게시글이 없습니다.'}
           currentSort={sortState}
           onSortChange={handleSortChange}
+          rowClassName={(post) => post.isNotice ? 'bg-accent1/5 group-hover:bg-accent1/10' : ''}
         />
       </div>
 
       <Pagination
         currentPage={currentPage}
-        totalPages={totalPages}
+        totalPages={paging.totalPages}
         onPageChange={(page) => setCurrentPage(page)}
       />
     </div>

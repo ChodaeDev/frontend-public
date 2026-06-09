@@ -55,7 +55,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
     etc: t.counselTypeEtc || '기타 상담',
   };
 
-  // 비로그인 시 로그인 페이지로 리다이렉트
+  // 비로그인 시 로그인 페이지로 리다이렉트 (공지글은 제외)
   useEffect(() => {
     if (!loading && !user && !isNotice) {
       alert(t.loginRequired || '로그인이 필요합니다');
@@ -72,10 +72,11 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
     }
   }, [loading, error, post, router, t.postNotFound, locale, user, isNotice]);
 
-  // 비공개 글 접근 권한 확인
+  // 비공개 글 접근 권한 확인 (공지글은 제외)
   useEffect(() => {
     if (!post) return;
-    if (!isNotice && post.visibilityLevel !== 'public' && !post.isOwner && !isAdmin) {
+    if (post.isNotice) return;
+    if (post.visibilityLevel !== 'public' && !post.isOwner && !isAdmin) {
       setNoAccess(true);
     } else {
       setNoAccess(false);

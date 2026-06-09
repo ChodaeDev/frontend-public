@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
@@ -12,6 +11,8 @@ import type { Locale } from '@/i18n/config';
 import type { PressPost, PressDict } from '@/types/press';
 import { cn } from '@/lib/cn';
 import { fetchPressList, pressKeys } from '@/lib/queries/press';
+import { usePagination } from '@/lib/hooks/usePagination';
+import { useSearch } from '@/lib/hooks/useSearch';
 
 interface PressContentProps {
   locale: Locale;
@@ -65,10 +66,13 @@ function PressCard({ post }: { post: PressPost }) {
 export default function PressContent({
   pressDict,
 }: PressContentProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemCount, setItemCount] = useState(12);
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [activeQuery, setActiveQuery] = useState('');
+  const {
+    currentPage, setCurrentPage, itemCount, handleItemCountChange,
+  } = usePagination({ defaultItemCount: 12 });
+
+  const {
+    searchKeyword, setSearchKeyword, activeQuery, handleSearch, handleSearchKeyDown,
+  } = useSearch({ onSearch: () => setCurrentPage(1) });
 
   // TODO: API 연동 후 useMockData 및 mock 관련 내용 제거
   const useMockData = true;
@@ -108,20 +112,6 @@ export default function PressContent({
   const totalPages = useMockData
     ? (mockPage?.totalPages ?? 1)
     : (listData?.paging?.totalPages ?? 1);
-
-  const handleItemCountChange = (count: number) => {
-    setItemCount(count);
-    setCurrentPage(1);
-  };
-
-  const handleSearch = () => {
-    setActiveQuery(searchKeyword.trim());
-    setCurrentPage(1);
-  };
-
-  const handleSearchKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') handleSearch();
-  };
 
   return (
     <div>

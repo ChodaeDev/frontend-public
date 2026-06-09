@@ -19,6 +19,7 @@ interface BoardTableProps<T> {
   emptyMessage?: string;
   errorMessage?: string;
   selectedIds?: string[];
+  rowClassName?: (item: T)=> string;
   onSortChange?: (sort: SortState)=> void;
   keyExtractor: (item: T)=> string;
   onRowClick?: (item: T)=> void;
@@ -40,6 +41,7 @@ function BoardTable<T>({
   onRowClick,
   selectedIds,
   onSelectItem,
+  rowClassName,
   gridClass = 'grid-cols-[repeat(auto-fit,minmax(100px,1fr))]',
 }: BoardTableProps<T>) {
   const handleSort = (fieldId: string) => {
@@ -114,34 +116,37 @@ function BoardTable<T>({
       </div>
 
       {/* 데이터 행 */}
-      {data.map((item, index) => (
-        <div
-          key={keyExtractor(item)}
-          className={`group contents ${ onRowClick ? 'cursor-pointer' : '' }`}
-          onClick={() => onRowClick?.(item)}
-        >
-          {columns.map((column) => (
-            <div
-              key={`${ keyExtractor(item) }-${ column.id }`}
-              className={`${ column.className ?? '' } ${ column.hideOnMobile ? 'hidden sm:flex' : 'flex' } items-center border-b border-gray7 py-3.5 px-2 group-hover:bg-gray9 transition-colors`}
-            >
-              {column.id === 'select' && selectedIds && onSelectItem ? (
-                <input
-                  id={`row-select-${ keyExtractor(item) }`}
-                  type={'checkbox'}
-                  checked={selectedIds.includes(keyExtractor(item))}
-                  onChange={(e) => e.stopPropagation()}
-                  onClick={(e) => handleSelectItem(e, keyExtractor(item))}
-                  className={'size-4'}
-                  aria-label={'행 선택'}
-                />
-              ) : (
-                column.accessor(item, index, paging)
-              )}
-            </div>
-          ))}
-        </div>
-      ))}
+      {data.map((item, index) => {
+        const rowCls = rowClassName?.(item) ?? '';
+        return (
+          <div
+            key={keyExtractor(item)}
+            className={`group contents ${ onRowClick ? 'cursor-pointer' : '' }`}
+            onClick={() => onRowClick?.(item)}
+          >
+            {columns.map((column) => (
+              <div
+                key={`${ keyExtractor(item) }-${ column.id }`}
+                className={`${ column.className ?? '' } ${ column.hideOnMobile ? 'hidden sm:flex' : 'flex' } items-center border-b border-gray7 py-3.5 px-2 ${ rowCls || 'group-hover:bg-gray9' } transition-colors`}
+              >
+                {column.id === 'select' && selectedIds && onSelectItem ? (
+                  <input
+                    id={`row-select-${ keyExtractor(item) }`}
+                    type={'checkbox'}
+                    checked={selectedIds.includes(keyExtractor(item))}
+                    onChange={(e) => e.stopPropagation()}
+                    onClick={(e) => handleSelectItem(e, keyExtractor(item))}
+                    className={'size-4'}
+                    aria-label={'행 선택'}
+                  />
+                ) : (
+                  column.accessor(item, index, paging)
+                )}
+              </div>
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 }

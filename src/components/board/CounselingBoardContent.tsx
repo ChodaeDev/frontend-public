@@ -11,12 +11,13 @@ import type { Locale } from '@/i18n/config';
 import { useAuthStore } from '@/store/authStore';
 import BoardTable from '@/components/ui/BoardTable';
 import Pagination from '@/components/ui/Pagination';
-import type { Paging } from '@/types/ui/paging';
 import type { Column } from '@/types/ui/boardTable';
 import type { BoardPost, BoardDict, CounselingPost } from '@/types/board';
 import type { SortState } from '@/types/common/sort';
 import { cn } from '@/lib/cn';
 import { counselingKeys, fetchCounselingList } from '@/lib/queries/counseling';
+import { usePagination } from '@/lib/hooks/usePagination';
+import { useSearch } from '@/lib/hooks/useSearch';
 
 const sortFieldMap: Record<string, string> = {
   title: 'title',
@@ -39,14 +40,17 @@ export default function CounselingBoardContent({
   const userLevel = user?.level?.toLowerCase();
   const isAdmin = userLevel === 'admin' || userLevel === 'superadmin';
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemCount, setItemCount] = useState(10);
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [activeQuery, setActiveQuery] = useState('');
+  const { currentPage, setCurrentPage, itemCount, handleItemCountChange } = usePagination();
+  const { searchKeyword, setSearchKeyword, activeQuery, handleSearch, handleSearchKeyDown } = useSearch({ onSearch: () => setCurrentPage(1) });
   const [sortState, setSortState] = useState<SortState>({ fieldId: 'date', direction: 'desc' });
 
   const sortBy = sortFieldMap[sortState.fieldId] ?? 'createDate';
   const { direction } = sortState;
+
+  const handleSortChange = (sort: SortState) => {
+    setSortState(sort);
+    setCurrentPage(1);
+  };
 
   const { data: listData, isLoading: loading, isError } = useQuery({
     queryKey: counselingKeys.list({ page: currentPage, size: itemCount, sort: sortBy, direction, query: activeQuery || undefined, userId: user?.userId }),
@@ -65,11 +69,19 @@ export default function CounselingBoardContent({
     counselType: item.counselType,
   });
 
-  const posts: BoardPost[] = listData?.payload.map(mapPost) ?? [];
-  const totalPages = listData?.paging.totalPages ?? 1;
-  const itemTotal = listData?.paging.itemTotal ?? 0;
+  const allPosts: BoardPost[] = listData?.payload.map(mapPost) ?? [];
+  const noticePosts = allPosts.filter((post) => post.isNotice);
+  const regularPosts = allPosts.filter((post) => !post.isNotice);
+  const posts = [...noticePosts, ...regularPosts];
 
-  // public 게시글은 isOwner 무관하게 접근 가능
+  const paging = {
+    pageNumber: currentPage,
+    totalPages: listData?.paging.totalPages ?? 1,
+    itemTotal: (listData?.paging.itemTotal ?? 0) - noticePosts.length,
+    itemCount,
+  };
+
+  // 공지글 및 public 게시글은 isOwner 무관하게 접근 가능
   // 비공개(partial/private) 게시글은 서버에서 반환한 isOwner로만 판단
   const isLocked = (post: BoardPost) => {
     if (post.isNotice) return false;
@@ -84,33 +96,6 @@ export default function CounselingBoardContent({
       return;
     }
     router.push(`/${ locale }/board/counseling/${ post.id }`);
-  };
-
-  const handleItemCountChange = (count: number) => {
-    setItemCount(count);
-    setCurrentPage(1);
-  };
-
-  const handleSearch = () => {
-    const keyword = searchKeyword.trim();
-    setActiveQuery(keyword);
-    setCurrentPage(1);
-  };
-
-  const handleSortChange = (sort: SortState) => {
-    setSortState(sort);
-    setCurrentPage(1);
-  };
-
-  const handleSearchKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') handleSearch();
-  };
-
-  const paging: Paging = {
-    pageNumber: currentPage,
-    totalPages,
-    itemTotal,
-    itemCount,
   };
 
   const columns: Column<BoardPost>[] = [
@@ -160,6 +145,9 @@ export default function CounselingBoardContent({
       hideOnMobile: true,
       sortable: true,
       accessor: (post) => {
+        if (post.isNotice) {
+          return <span className={'text-sm font-medium text-accent1'}>{boardDict.notice || '공지'}</span>;
+        }
         const counselTypeMap: Record<string, string> = {
           self: boardDict.counselTypeSelf?.split(' ')[0] || '본인',
           family: boardDict.counselTypeFamily?.split(' ')[0] || '가족',
@@ -255,13 +243,14 @@ export default function CounselingBoardContent({
           emptyMessage={boardDict.emptyMessage || '게시글이 없습니다.'}
           currentSort={sortState}
           onSortChange={handleSortChange}
+          rowClassName={(post) => post.isNotice ? 'bg-accent1/5 group-hover:bg-accent1/10' : ''}
         />
       </div>
 
       {/* 페이지네이션 */}
       <Pagination
         currentPage={currentPage}
-        totalPages={totalPages}
+        totalPages={paging.totalPages}
         onPageChange={(page) => setCurrentPage(page)}
       />
     </div>
