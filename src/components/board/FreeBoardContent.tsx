@@ -50,6 +50,7 @@ export default function FreeBoardContent({
     date: dayjs(item.createDate).format('YYYY-MM-DD'),
     commentCount: item.commentCount,
     visibilityLevel: item.visibilityLevel,
+    isNotice: item.isNotice,
   });
 
   const allPosts: BoardPost[] = listData?.items.map(mapPost) ?? [];

@@ -46,6 +46,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   const userLevel = user?.level?.toLowerCase();
   const isAdmin = userLevel === 'admin' || userLevel === 'superadmin';
   const isOwner = !!post?.isOwner || isAdmin;
+  const isNotice = !!post?.isNotice;
 
   const counselTypeMap: Record<string, string> = {
     self: t.counselTypeSelf || '본인 상담',
@@ -56,30 +57,30 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
 
   // 비로그인 시 로그인 페이지로 리다이렉트
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !user && !isNotice) {
       alert(t.loginRequired || '로그인이 필요합니다');
       router.replace(`/${ locale }/login?returnTo=${ encodeURIComponent(`/${ locale }/board/counseling/${ postId }`) }`);
     }
-  }, [loading, user, router, locale, postId, t.loginRequired]);
+  }, [loading, user, isNotice, router, locale, postId, t.loginRequired]);
 
   // error 또는 post 없을 때 목록으로 이동
   useEffect(() => {
-    if (!user || loading) return;
+    if ((!user && !isNotice) || loading) return;
     if (error || !post) {
       alert(error || t.postNotFound || '게시글을 찾을 수 없습니다.');
       router.replace(`/${ locale }/board/counseling`);
     }
-  }, [loading, error, post, router, t.postNotFound, locale, user]);
+  }, [loading, error, post, router, t.postNotFound, locale, user, isNotice]);
 
   // 비공개 글 접근 권한 확인
   useEffect(() => {
     if (!post) return;
-    if (post.visibilityLevel !== 'public' && !post.isOwner && !isAdmin) {
+    if (!isNotice && post.visibilityLevel !== 'public' && !post.isOwner && !isAdmin) {
       setNoAccess(true);
     } else {
       setNoAccess(false);
     }
-  }, [post, isAdmin]);
+  }, [post, isAdmin, isNotice]);
 
   // 게시글 삭제
   const { mutate: handleDelete, isPending: deleting } = useMutation({
@@ -131,7 +132,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
       <div className={'border-b border-gray7 mt-8 px-2 pb-2'}>
         <div className={'flex items-start justify-between gap-4'}>
           <h2 className={'text-xl font-bold text-main flex items-center gap-2'}>
-            {post.visibilityLevel !== 'public' && <Lock className={'size-4 text-gray3 shrink-0'} />}
+            {!isNotice && post.visibilityLevel !== 'public' && <Lock className={'size-4 text-gray3 shrink-0'} />}
             {post.title}
           </h2>
         </div>

@@ -7,6 +7,7 @@ export interface CounselingPost {
   isOwner: boolean;
   commentCount: number;
   visibilityLevel: VisibilityLevel;
+  isNotice?: boolean;
   counselType: string;
   createDate: string;
 }
@@ -46,6 +47,7 @@ export interface CounselingDetailData {
   counselType: string;
   commentCount: number;
   visibilityLevel: VisibilityLevel;
+  isNotice: boolean;
   createDate: string;
   modifiedDate: string;
 }

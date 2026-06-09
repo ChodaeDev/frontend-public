@@ -19,6 +19,7 @@ export interface FreeBoardPost {
   counselType?: string;
   commentCount: number;
   visibilityLevel: VisibilityLevel;
+  isNotice?: boolean;
   createDate: string;
   modifiedDate?: string;
 }

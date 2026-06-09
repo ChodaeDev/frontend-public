@@ -61,6 +61,7 @@ export default function CounselingBoardContent({
     date: dayjs(item.createDate).format('YYYY-MM-DD'),
     commentCount: item.commentCount,
     visibilityLevel: item.visibilityLevel,
+    isNotice: item.isNotice,
     counselType: item.counselType,
   });
 
@@ -71,6 +72,7 @@ export default function CounselingBoardContent({
   // public 게시글은 isOwner 무관하게 접근 가능
   // 비공개(partial/private) 게시글은 서버에서 반환한 isOwner로만 판단
   const isLocked = (post: BoardPost) => {
+    if (post.isNotice) return false;
     if (post.visibilityLevel === 'public') return false;
     if (isAdmin) return false;
     return !post.isOwner;
