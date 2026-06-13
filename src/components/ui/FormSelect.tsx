@@ -71,7 +71,7 @@ export default function FormSelect({
             'animate-slideDown',
           )}
         >
-          <Select.Viewport className={'p-1'}>
+          <Select.Viewport className={'p-1 max-h-60 overflow-y-auto'}>
             {options.map((opt) => (
               <Select.Item
                 key={opt.value}

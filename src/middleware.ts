@@ -12,6 +12,7 @@ const firstSubMenuMap: Record<string, string> = {
   prevention: 'measures',
   withdrawal: 'methods',
   board: 'counseling',
+  mypage: 'profile',
 };
 
 function getLocaleFromRequest(request: NextRequest): Locale {

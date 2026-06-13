@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { DayPicker } from 'react-day-picker';
 import { ko, enUS, ja, zhCN, de } from 'react-day-picker/locale';
 import dayjs from 'dayjs';
-import { Calendar } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { inputStyle, labelStyle } from './form-styles';
 import FormSelect from './FormSelect';
 import { getYears, getMonths, formatBirthday } from '@/lib/date';
@@ -34,23 +34,27 @@ export function BirthdayPicker({
 }: BirthdayPickerProps) {
   const { locale, dictionary } = useTranslation();
   const t = dictionary.common;
-  const displayLabel = label || dictionary.signup.birthday || '생년월일';
+  const displayLabel = label ?? (dictionary.userForm.birthday || '생년월일');
+  const defaultDate = new Date(1994, 2, 15);
 
   const [selected, setSelected] = useState<Date | undefined>(() => {
-    if (!defaultValue) return undefined;
-    const parsed = dayjs(defaultValue);
-    return parsed.isValid() ? parsed.toDate() : undefined;
+    if (defaultValue) {
+      const parsed = dayjs(defaultValue);
+      if (parsed.isValid()) return parsed.toDate();
+    }
+    return defaultDate;
   });
   const [isOpen, setIsOpen] = useState(false);
-  const [month, setMonth] = useState<Date>(selected ?? new Date());
+  const [month, setMonth] = useState<Date>(selected ?? defaultDate);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const years = getYears(1900);
+  const years = getYears(1930);
   const months = getMonths();
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+      const target = e.target as HTMLElement;
+      if (containerRef.current && !containerRef.current.contains(target)) {
         setIsOpen(false);
       }
     };
@@ -102,7 +106,7 @@ export function BirthdayPicker({
 
   return (
     <div className={className} ref={containerRef}>
-      <label className={labelStyle}>{displayLabel}</label>
+      {displayLabel && <label className={labelStyle}>{displayLabel}</label>}
 
       <div className={'relative'}>
         <button
@@ -121,20 +125,35 @@ export function BirthdayPicker({
             className={
               'animate-slideDown absolute z-50 mt-2 rounded-xl border border-gray7 bg-background p-4 shadow-xl'
             }
+            onMouseDown={(e) => e.stopPropagation()}
           >
-            <div className={'mb-3 flex gap-2'}>
+            <div className={'mb-3 flex items-center gap-1'}>
+              <button
+                type={'button'}
+                onClick={() => setMonth(dayjs(month).subtract(1, 'month').toDate())}
+                className={'shrink-0 size-8 flex items-center justify-center rounded-lg text-sub hover:bg-background-secondary transition-colors'}
+              >
+                <ChevronLeft className={'size-4'} />
+              </button>
               <FormSelect
                 value={String(month.getFullYear())}
                 onChange={handleYearChange}
-                options={years.map((y) => ({ value: String(y), label: `${ y }${ t.year || '년' }` }))}
+                options={years.map((y) => ({ value: String(y), label: `${ y }${ t.year ?? '년' }` }))}
                 className={'flex-1'}
               />
               <FormSelect
                 value={String(month.getMonth() + 1)}
                 onChange={handleMonthChange}
-                options={months.map((m) => ({ value: String(m), label: `${ m }${ t.month || '월' }` }))}
+                options={months.map((m) => ({ value: String(m), label: `${ m }${ t.month ?? '월' }` }))}
                 className={'flex-1'}
               />
+              <button
+                type={'button'}
+                onClick={() => setMonth(dayjs(month).add(1, 'month').toDate())}
+                className={'shrink-0 size-8 flex items-center justify-center rounded-lg text-sub hover:bg-background-secondary transition-colors'}
+              >
+                <ChevronRight className={'size-4'} />
+              </button>
             </div>
 
             <DayPicker
@@ -144,6 +163,8 @@ export function BirthdayPicker({
               month={month}
               onMonthChange={setMonth}
               locale={localeMap[locale as keyof typeof localeMap] || ko}
+              startMonth={new Date(1930, 0)}
+              endMonth={new Date()}
               showOutsideDays
               fixedWeeks
               classNames={{
@@ -157,9 +178,9 @@ export function BirthdayPicker({
                 week: 'flex',
                 day: 'size-9 flex items-center justify-center rounded-lg text-main transition-colors hover:bg-accent2/20',
                 day_button: 'size-full cursor-pointer',
-                selected: 'bg-accent1 text-inverse hover:bg-accent1',
+                selected: 'bg-accent1 text-white hover:bg-accent1',
                 today: 'font-bold text-accent2',
-                outside: 'text-gray7',
+                outside: '!text-gray5',
                 disabled: 'text-gray8 cursor-not-allowed',
               }}
             />
@@ -192,6 +213,7 @@ export function BirthdayPicker({
       </div>
 
       <input type={'hidden'} name={name} value={formatBirthday(selected)} />
+      <div className={'mt-1 min-h-4'} />
     </div>
   );
 }

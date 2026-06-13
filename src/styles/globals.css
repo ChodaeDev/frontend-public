@@ -54,6 +54,7 @@
   --animate-fadeOut: fadeOut 0.25s ease-in forwards;
   --animate-slideInRight: slideInRight 0.3s ease-out forwards;
   --animate-slideOutRight: slideOutRight 0.25s ease-in forwards;
+  --animate-formSlideUp: slideUp 0.3s ease-out both;
   --animate-heroSlideUp: heroSlideUp 0.6s ease-out both;
   --animate-heroSlideUp-delay-1: heroSlideUp 0.6s ease-out 0.15s both;
   --animate-heroSlideUp-delay-2: heroSlideUp 0.6s ease-out 0.3s both;

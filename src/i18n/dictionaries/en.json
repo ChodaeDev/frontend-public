@@ -18,7 +18,9 @@
     "year": "",
     "month": "",
     "logoutConfirmTitle": "Log Out",
-    "logoutConfirmMessage": "Are you sure you want to log out?"
+    "logoutConfirmMessage": "Are you sure you want to log out?",
+    "mypage": "My Page",
+    "userGreeting": "{name}"
   },
   "header": {
     "siteName": "Shincheonji Counseling",
@@ -115,19 +117,11 @@
     "userIdPlaceholder": "Enter your desired user ID",
     "password": "Password",
     "passwordPlaceholder": "Enter your password",
-    "userName": "Name",
-    "usernamePlaceholder": "Enter your name",
-    "nickname": "Nickname",
-    "nicknamePlaceholder": "Enter your nickname",
-    "phone": "Phone Number",
-    "phonePlaceholder": "e.g., 01012345678",
-    "church": "Church Name",
-    "churchPlaceholder": "Enter your church name",
-    "birthday": "Date of Birth",
-    "bio": "Introduction & Notes",
-    "bioPlaceholder": "Enter additional information such as reason for consultation",
+    "passwordConfirm": "Confirm Password",
+    "passwordConfirmPlaceholder": "Re-enter your password",
     "submit": "Complete Sign Up",
     "submitting": "Signing up...",
+    "successMessage": "Registration completed successfully.",
     "hasAccount": "Already have an account?",
     "loginLink": "Login",
     "errors": {
@@ -135,37 +129,90 @@
       "generic": "An error occurred during sign up."
     }
   },
+  "userForm": {
+    "userName": "Name",
+    "userNamePlaceholder": "Enter your name",
+    "nickName": "Nickname",
+    "nickNamePlaceholder": "Enter your nickname",
+    "phone": "Phone Number",
+    "phonePlaceholder": "e.g., 01012345678",
+    "church": "Church Name",
+    "churchPlaceholder": "Enter your church name",
+    "birthday": "Date of Birth",
+    "introduce": "Introduction & Notes",
+    "introducePlaceholder": "Enter additional information"
+  },
+  "mypage": {
+    "title": "My Page",
+    "profile": "Edit Profile",
+    "password": "Change Password",
+    "activity": "Activity",
+    "description": "View and edit your profile information.",
+    "submit": "Save",
+    "submitting": "Saving...",
+    "success": "Profile updated successfully.",
+    "errors": {
+      "serverError": "Cannot connect to server.",
+      "generic": "An error occurred while updating profile."
+    },
+    "passwordChange": {
+      "title": "Change Password",
+      "description": "Verify your current password and set a new one.",
+      "currentPassword": "Current Password",
+      "currentPasswordPlaceholder": "Enter current password",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "newPasswordConfirm": "Confirm New Password",
+      "newPasswordConfirmPlaceholder": "Re-enter new password",
+      "submit": "Change",
+      "submitting": "Changing...",
+      "success": "Password changed successfully.",
+      "errors": {
+        "serverError": "Cannot connect to server.",
+        "generic": "An error occurred while changing password."
+      }
+    }
+  },
   "validation": {
     "userId": {
+      "hint": "Letters, numbers, underscore, 4-20 chars",
       "required": "Please enter your user ID",
       "min": "User ID must be at least 4 characters",
       "max": "User ID must be 20 characters or less",
       "pattern": "Only letters, numbers, and underscores are allowed"
     },
     "password": {
+      "hint": "At least 8 chars with letters and numbers",
       "required": "Please enter your password",
       "min": "Password must be at least 8 characters",
       "letterRequired": "Must contain at least one letter",
       "numberRequired": "Must contain at least one number"
     },
     "userName": {
+      "hint": "Letters only, 2-20 chars",
+      "pattern": "Only Korean and English letters allowed",
       "required": "Please enter your name",
       "min": "Name must be at least 2 characters",
       "max": "Name must be 20 characters or less"
     },
-    "nickname": {
+    "nickName": {
+      "hint": "Letters, numbers, up to 20 chars",
+      "pattern": "Only Korean, English letters and numbers allowed",
       "max": "Nickname must be 20 characters or less"
     },
     "phone": {
+      "hint": "Numbers only, 9-11 digits",
       "required": "Please enter your phone number",
       "pattern": "Please enter numbers only",
-      "min": "Phone number must be at least 10 digits",
+      "min": "Phone number must be at least 9 digits",
       "max": "Phone number must be 11 digits or less"
     },
     "church": {
+      "hint": "Up to 50 chars",
       "max": "Church name must be 50 characters or less"
     },
     "description": {
+      "hint": "Up to 500 chars",
       "max": "Introduction must be 500 characters or less"
     }
   },

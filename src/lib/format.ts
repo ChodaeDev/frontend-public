@@ -14,15 +14,14 @@ export function stripNonDigits(value: string): string {
 export function formatPhone(value: string): string {
   const digits = stripNonDigits(value);
 
-  if (digits.startsWith('02')) {
-    if (digits.length <= 2) return digits;
-    if (digits.length <= 6) return `${ digits.slice(0, 2) }-${ digits.slice(2) }`;
-    if (digits.length <= 10) return `${ digits.slice(0, 2) }-${ digits.slice(2, 6) }-${ digits.slice(6) }`;
-    return `${ digits.slice(0, 2) }-${ digits.slice(2, 6) }-${ digits.slice(6, 10) }`;
-  }
+  // 9자리: 00-000-0000
+  if (digits.length <= 2) return digits;
+  if (digits.length <= 5) return `${ digits.slice(0, 2) }-${ digits.slice(2) }`;
+  if (digits.length <= 9) return `${ digits.slice(0, 2) }-${ digits.slice(2, 5) }-${ digits.slice(5) }`;
 
-  if (digits.length <= 3) return digits;
-  if (digits.length <= 7) return `${ digits.slice(0, 3) }-${ digits.slice(3) }`;
-  if (digits.length <= 11) return `${ digits.slice(0, 3) }-${ digits.slice(3, 7) }-${ digits.slice(7) }`;
+  // 10자리: 000-000-0000
+  if (digits.length <= 10) return `${ digits.slice(0, 3) }-${ digits.slice(3, 6) }-${ digits.slice(6) }`;
+
+  // 11자리: 000-0000-0000
   return `${ digits.slice(0, 3) }-${ digits.slice(3, 7) }-${ digits.slice(7, 11) }`;
 }

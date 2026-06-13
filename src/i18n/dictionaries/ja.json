@@ -18,7 +18,9 @@
     "year": "年",
     "month": "月",
     "logoutConfirmTitle": "ログアウト",
-    "logoutConfirmMessage": "本当にログアウトしますか？"
+    "logoutConfirmMessage": "本当にログアウトしますか？",
+    "mypage": "マイページ",
+    "userGreeting": "{name}様"
   },
   "header": {
     "siteName": "新天地専門相談所",
@@ -115,19 +117,11 @@
     "userIdPlaceholder": "使用するユーザーIDを入力してください",
     "password": "パスワード",
     "passwordPlaceholder": "パスワードを入力してください",
-    "userName": "氏名",
-    "usernamePlaceholder": "氏名を入力してください",
-    "nickname": "ニックネーム",
-    "nicknamePlaceholder": "ニックネームを入力してください",
-    "phone": "電話番号",
-    "phonePlaceholder": "例：01012345678",
-    "church": "教会名",
-    "churchPlaceholder": "通っている教会名を入力してください",
-    "birthday": "生年月日",
-    "bio": "紹介・備考",
-    "bioPlaceholder": "相談依頼の理由など追加情報を入力してください",
+    "passwordConfirm": "パスワード再入力",
+    "passwordConfirmPlaceholder": "パスワードを再入力してください",
     "submit": "会員登録完了",
     "submitting": "会員登録中...",
+    "successMessage": "会員登録が完了しました。",
     "hasAccount": "既に登録済みですか？",
     "loginLink": "ログイン",
     "errors": {
@@ -135,37 +129,90 @@
       "generic": "会員登録中にエラーが発生しました。"
     }
   },
+  "userForm": {
+    "userName": "氏名",
+    "userNamePlaceholder": "氏名を入力してください",
+    "nickName": "ニックネーム",
+    "nickNamePlaceholder": "ニックネームを入力してください",
+    "phone": "電話番号",
+    "phonePlaceholder": "例：01012345678",
+    "church": "教会名",
+    "churchPlaceholder": "通っている教会名を入力してください",
+    "birthday": "生年月日",
+    "introduce": "紹介・備考",
+    "introducePlaceholder": "追加情報を入力してください"
+  },
+  "mypage": {
+    "title": "マイページ",
+    "profile": "プロフィール編集",
+    "password": "パスワード変更",
+    "activity": "活動履歴",
+    "description": "個人情報を確認・修正できます。",
+    "submit": "保存",
+    "submitting": "保存中...",
+    "success": "プロフィールが更新されました。",
+    "errors": {
+      "serverError": "サーバーに接続できません。",
+      "generic": "プロフィール更新中にエラーが発生しました。"
+    },
+    "passwordChange": {
+      "title": "パスワード変更",
+      "description": "現在のパスワードを確認し、新しいパスワードに変更できます。",
+      "currentPassword": "現在のパスワード",
+      "currentPasswordPlaceholder": "現在のパスワードを入力してください",
+      "newPassword": "新しいパスワード",
+      "newPasswordPlaceholder": "新しいパスワードを入力してください",
+      "newPasswordConfirm": "新しいパスワード確認",
+      "newPasswordConfirmPlaceholder": "新しいパスワードを再入力してください",
+      "submit": "変更",
+      "submitting": "変更中...",
+      "success": "パスワードが変更されました。",
+      "errors": {
+        "serverError": "サーバーに接続できません。",
+        "generic": "パスワード変更中にエラーが発生しました。"
+      }
+    }
+  },
   "validation": {
     "userId": {
+      "hint": "英数字・アンダースコア 4〜20文字",
       "required": "ユーザーIDを入力してください",
       "min": "ユーザーIDは4文字以上である必要があります",
       "max": "ユーザーIDは20文字以下である必要があります",
       "pattern": "英字、数字、アンダースコアのみ使用可能です"
     },
     "password": {
+      "hint": "英字・数字を含む8文字以上",
       "required": "パスワードを入力してください",
       "min": "パスワードは8文字以上である必要があります",
       "letterRequired": "英字を含む必要があります",
       "numberRequired": "数字を含む必要があります"
     },
     "userName": {
+      "hint": "韓国語・英字 2〜20文字",
+      "pattern": "韓国語・英字のみ入力可能です",
       "required": "氏名を入力してください",
       "min": "氏名は2文字以上である必要があります",
       "max": "氏名は20文字以下である必要があります"
     },
-    "nickname": {
+    "nickName": {
+      "hint": "韓国語・英字・数字 20文字以下",
+      "pattern": "韓国語・英字・数字のみ入力可能です",
       "max": "ニックネームは20文字以下である必要があります"
     },
     "phone": {
+      "hint": "数字のみ 9〜11桁",
       "required": "電話番号を入力してください",
       "pattern": "数字のみ入力してください",
-      "min": "電話番号は10桁以上である必要があります",
+      "min": "電話番号は9桁以上である必要があります",
       "max": "電話番号は11桁以下である必要があります"
     },
     "church": {
+      "hint": "50文字以下",
       "max": "教会名は50文字以下である必要があります"
     },
     "description": {
+      "hint": "500文字以下",
       "max": "紹介は500文字以下である必要があります"
     }
   },

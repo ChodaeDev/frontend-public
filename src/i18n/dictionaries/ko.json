@@ -18,7 +18,9 @@
     "year": "년",
     "month": "월",
     "logoutConfirmTitle": "로그아웃",
-    "logoutConfirmMessage": "정말 로그아웃 하시겠습니까?"
+    "logoutConfirmMessage": "정말 로그아웃 하시겠습니까?",
+    "mypage": "마이페이지",
+    "userGreeting": "{name}님"
   },
   "header": {
     "siteName": "신천지 전문상담소",
@@ -115,19 +117,11 @@
     "userIdPlaceholder": "사용할 아이디를 입력하세요",
     "password": "비밀번호",
     "passwordPlaceholder": "비밀번호를 입력하세요",
-    "userName": "이름",
-    "usernamePlaceholder": "이름을 입력하세요",
-    "nickname": "닉네임",
-    "nicknamePlaceholder": "닉네임을 입력하세요",
-    "phone": "전화번호",
-    "phonePlaceholder": "예: 01012345678",
-    "church": "교회명",
-    "churchPlaceholder": "출석 중인 교회명을 입력하세요",
-    "birthday": "생년월일",
-    "bio": "소개 및 비고",
-    "bioPlaceholder": "상담 요청 사유 등 추가 정보를 입력하세요",
+    "passwordConfirm": "비밀번호 재입력",
+    "passwordConfirmPlaceholder": "비밀번호를 다시 입력하세요",
     "submit": "회원가입 완료",
     "submitting": "회원가입 중...",
+    "successMessage": "회원가입이 완료되었습니다.",
     "hasAccount": "이미 가입하셨나요?",
     "loginLink": "로그인",
     "errors": {
@@ -135,38 +129,88 @@
       "generic": "회원가입 중 오류가 발생했습니다."
     }
   },
+  "userForm": {
+    "userName": "이름",
+    "userNamePlaceholder": "이름을 입력하세요",
+    "nickName": "닉네임",
+    "nickNamePlaceholder": "닉네임을 입력하세요",
+    "phone": "전화번호",
+    "phonePlaceholder": "예: 01012345678",
+    "church": "교회명",
+    "churchPlaceholder": "출석 중인 교회명을 입력하세요",
+    "birthday": "생년월일",
+    "introduce": "소개 및 비고",
+    "introducePlaceholder": "추가 정보를 입력하세요"
+  },
+  "mypage": {
+    "title": "마이페이지",
+    "profile": "프로필 수정",
+    "password": "비밀번호 변경",
+    "activity": "활동 내역",
+    "description": "개인정보를 확인하고 수정할 수 있습니다.",
+    "submit": "저장",
+    "submitting": "저장 중...",
+    "success": "프로필이 수정되었습니다.",
+    "errors": {
+      "serverError": "서버에 연결할 수 없습니다.",
+      "generic": "프로필 수정 중 오류가 발생했습니다."
+    },
+    "passwordChange": {
+      "title": "비밀번호 변경",
+      "description": "현재 비밀번호를 확인한 후 새 비밀번호로 변경할 수 있습니다.",
+      "currentPassword": "현재 비밀번호",
+      "currentPasswordPlaceholder": "현재 비밀번호를 입력하세요",
+      "newPassword": "새 비밀번호",
+      "newPasswordPlaceholder": "새 비밀번호를 입력하세요",
+      "newPasswordConfirm": "새 비밀번호 확인",
+      "newPasswordConfirmPlaceholder": "새 비밀번호를 다시 입력하세요",
+      "submit": "변경",
+      "submitting": "변경 중...",
+      "success": "비밀번호가 변경되었습니다.",
+      "errors": {
+        "serverError": "서버에 연결할 수 없습니다.",
+        "generic": "비밀번호 변경 중 오류가 발생했습니다."
+      }
+    }
+  },
   "validation": {
     "userId": {
+      "hint": "영문, 숫자, 언더스코어 4~20자",
       "required": "아이디를 입력해주세요",
       "min": "아이디는 4자 이상이어야 합니다",
       "max": "아이디는 20자 이하여야 합니다",
       "pattern": "영문, 숫자, 언더스코어만 사용 가능합니다"
     },
     "password": {
+      "hint": "영문, 숫자 포함 8자 이상",
       "required": "비밀번호를 입력해주세요",
       "min": "비밀번호는 8자 이상이어야 합니다",
       "letterRequired": "영문자를 포함해야 합니다",
       "numberRequired": "숫자를 포함해야 합니다"
     },
     "userName": {
+      "hint": "한글, 영문 2~20자",
       "required": "이름을 입력해주세요",
       "min": "이름은 2자 이상이어야 합니다",
-      "max": "이름은 20자 이하여야 합니다"
+      "max": "이름은 20자 이하여야 합니다",
+      "pattern": "한글, 영문만 입력 가능합니다"
     },
-    "nickname": {
-      "max": "닉네임은 20자 이하여야 합니다"
+    "nickName": {
+      "hint": "한글, 영문, 숫자 20자 이하",
+      "pattern": "한글, 영문, 숫자만 입력 가능합니다"
     },
     "phone": {
+      "hint": "숫자만 9~11자리",
       "required": "전화번호를 입력해주세요",
       "pattern": "숫자만 입력해주세요",
-      "min": "전화번호는 10자리 이상이어야 합니다",
+      "min": "전화번호는 9자리 이상이어야 합니다",
       "max": "전화번호는 11자리 이하여야 합니다"
     },
     "church": {
-      "max": "교회명은 50자 이하여야 합니다"
+      "hint": "50자 이하"
     },
     "description": {
-      "max": "소개는 500자 이하여야 합니다"
+      "hint": "500자 이하"
     }
   },
   "footer": {

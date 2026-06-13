@@ -3,11 +3,12 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { LogIn, LogOut } from 'lucide-react';
+import { LogIn, LogOut, User } from 'lucide-react';
 import ThemeSwitch from '@/components/theme/ThemeSwitch';
 import LanguageSwitch from '@/components/ui/LanguageSwitch';
 import Navigation from '@/components/layout/Navigation';
 import MobileMenu from '@/components/layout/MobileMenu';
+import { Dropdown, DropdownTrigger, DropdownList, DropdownItem } from '@/components/ui/Dropdown';
 import { useAuthStore } from '@/store/authStore';
 import Image from 'next/image';
 import { useTranslation } from '@/i18n/client';
@@ -43,6 +44,10 @@ const Header = () => {
     handleLogout();
   };
 
+  const userGreeting = user
+    ? (t.common.userGreeting || '{name}님').replace('{name}', user.userName)
+    : '';
+
   return (
     <>
       <header className={cn('h-[89px] fixed w-full top-0 left-0 z-50 bg-background/80 backdrop-blur-sm border-b transition-colors duration-300', isScrolled ? 'border-gray9' : 'border-transparent')}>
@@ -62,13 +67,29 @@ const Header = () => {
               <LanguageSwitch />
               <ThemeSwitch />
               {user ? (
-                <button
-                  onClick={() => setShowLogoutModal(true)}
-                  className={'flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-sub transition-colors hover:bg-background-secondary hover:text-main'}
-                >
-                  <LogOut size={16} />
-                  {t.common.logout || '로그아웃'}
-                </button>
+                <Dropdown>
+                  <DropdownTrigger>
+                    <button
+                      className={'flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-sub transition-colors hover:bg-background-secondary hover:text-main cursor-pointer'}
+                    >
+                      <User size={16} />
+                      {userGreeting}
+                    </button>
+                  </DropdownTrigger>
+                  <DropdownList direction={'bottom'} align={'end'}>
+                    <DropdownItem onClick={() => router.push(`/${ locale }/mypage`)}>
+                      <div className={'px-3 py-2'}>{t.common.mypage || '마이페이지'}</div>
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setShowLogoutModal(true)}>
+                      <div className={'px-3 py-2 text-error'}>
+                        <span className={'flex items-center gap-1.5'}>
+                          <LogOut size={14} />
+                          {t.common.logout || '로그아웃'}
+                        </span>
+                      </div>
+                    </DropdownItem>
+                  </DropdownList>
+                </Dropdown>
               ) : (
                 <Link
                   href={`/${ locale }/login?returnTo=${ encodeURIComponent(pathname) }`}

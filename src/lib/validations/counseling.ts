@@ -11,7 +11,7 @@ export const counselingSchema = z.object({
   phone: z.string()
     .min(1, '연락처를 입력해주세요')
     .regex(/^[0-9]+$/, '숫자만 입력해주세요')
-    .min(10, '전화번호는 10자리 이상이어야 합니다')
+    .min(9, '전화번호는 9자리 이상이어야 합니다')
     .max(11, '전화번호는 11자리 이하여야 합니다'),
 });
 

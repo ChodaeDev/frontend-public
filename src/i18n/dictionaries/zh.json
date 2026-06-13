@@ -18,7 +18,9 @@
     "year": "年",
     "month": "月",
     "logoutConfirmTitle": "退出登录",
-    "logoutConfirmMessage": "确定要退出登录吗？"
+    "logoutConfirmMessage": "确定要退出登录吗？",
+    "mypage": "我的页面",
+    "userGreeting": "{name}"
   },
   "header": {
     "siteName": "新天地专业咨询所",
@@ -115,19 +117,11 @@
     "userIdPlaceholder": "请输入要使用的用户名",
     "password": "密码",
     "passwordPlaceholder": "请输入密码",
-    "userName": "姓名",
-    "usernamePlaceholder": "请输入姓名",
-    "nickname": "昵称",
-    "nicknamePlaceholder": "请输入昵称",
-    "phone": "电话号码",
-    "phonePlaceholder": "例：01012345678",
-    "church": "教会名称",
-    "churchPlaceholder": "请输入所在教会名称",
-    "birthday": "出生日期",
-    "bio": "简介及备注",
-    "bioPlaceholder": "请输入咨询原因等附加信息",
+    "passwordConfirm": "确认密码",
+    "passwordConfirmPlaceholder": "请再次输入密码",
     "submit": "完成注册",
     "submitting": "注册中...",
+    "successMessage": "注册已完成。",
     "hasAccount": "已有账号？",
     "loginLink": "登录",
     "errors": {
@@ -135,37 +129,90 @@
       "generic": "注册过程中发生错误。"
     }
   },
+  "userForm": {
+    "userName": "姓名",
+    "userNamePlaceholder": "请输入姓名",
+    "nickName": "昵称",
+    "nickNamePlaceholder": "请输入昵称",
+    "phone": "电话号码",
+    "phonePlaceholder": "例：01012345678",
+    "church": "教会名称",
+    "churchPlaceholder": "请输入所在教会名称",
+    "birthday": "出生日期",
+    "introduce": "简介及备注",
+    "introducePlaceholder": "请输入附加信息"
+  },
+  "mypage": {
+    "title": "我的页面",
+    "profile": "修改资料",
+    "password": "修改密码",
+    "activity": "活动记录",
+    "description": "查看和修改个人信息。",
+    "submit": "保存",
+    "submitting": "保存中...",
+    "success": "个人资料已更新。",
+    "errors": {
+      "serverError": "无法连接服务器。",
+      "generic": "更新个人资料时发生错误。"
+    },
+    "passwordChange": {
+      "title": "修改密码",
+      "description": "验证当前密码后可以设置新密码。",
+      "currentPassword": "当前密码",
+      "currentPasswordPlaceholder": "请输入当前密码",
+      "newPassword": "新密码",
+      "newPasswordPlaceholder": "请输入新密码",
+      "newPasswordConfirm": "确认新密码",
+      "newPasswordConfirmPlaceholder": "请再次输入新密码",
+      "submit": "修改",
+      "submitting": "修改中...",
+      "success": "密码已修改。",
+      "errors": {
+        "serverError": "无法连接服务器。",
+        "generic": "修改密码时发生错误。"
+      }
+    }
+  },
   "validation": {
     "userId": {
+      "hint": "英文、数字、下划线 4~20位",
       "required": "请输入用户名",
       "min": "用户名至少需要4个字符",
       "max": "用户名不能超过20个字符",
       "pattern": "只能使用英文字母、数字和下划线"
     },
     "password": {
+      "hint": "包含英文和数字，8位以上",
       "required": "请输入密码",
       "min": "密码至少需要8个字符",
       "letterRequired": "必须包含英文字母",
       "numberRequired": "必须包含数字"
     },
     "userName": {
+      "hint": "韩文、英文 2~20个字符",
+      "pattern": "只能输入韩文和英文",
       "required": "请输入姓名",
       "min": "姓名至少需要2个字符",
       "max": "姓名不能超过20个字符"
     },
-    "nickname": {
+    "nickName": {
+      "hint": "韩文、英文、数字 20个字符以下",
+      "pattern": "只能输入韩文、英文和数字",
       "max": "昵称不能超过20个字符"
     },
     "phone": {
+      "hint": "仅数字 9~11位",
       "required": "请输入电话号码",
       "pattern": "请只输入数字",
-      "min": "电话号码至少需要10位",
+      "min": "电话号码至少需要9位",
       "max": "电话号码不能超过11位"
     },
     "church": {
+      "hint": "50个字符以下",
       "max": "教会名称不能超过50个字符"
     },
     "description": {
+      "hint": "500个字符以下",
       "max": "简介不能超过500个字符"
     }
   },

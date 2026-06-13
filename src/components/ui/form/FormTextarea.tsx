@@ -1,4 +1,9 @@
+'use client';
+
+import { useState, useCallback } from 'react';
+import { Check } from 'lucide-react';
 import { inputStyle, labelStyle } from '../form-styles';
+import { cn } from '@/lib/cn';
 
 type FormTextareaProps = {
   label: string;
@@ -7,9 +12,11 @@ type FormTextareaProps = {
   rows?: number;
   required?: boolean;
   className?: string;
-  hint?: string;
   error?: string;
   defaultValue?: string;
+  hint?: string;
+  maxLength?: number;
+  validate?: (value: string)=> string | null;
 };
 
 export function FormTextarea({
@@ -19,20 +26,48 @@ export function FormTextarea({
   rows = 4,
   required,
   className,
-  hint,
   error,
   defaultValue,
+  hint,
+  maxLength,
+  validate,
 }: FormTextareaProps) {
-  const textareaClassName = error
-    ? inputStyle.replace('border-gray7', 'border-error')
-    : inputStyle;
+  const [dirty, setDirty] = useState(false);
+  const [localError, setLocalError] = useState<string | null>(null);
+  const [charCount, setCharCount] = useState(defaultValue?.length ?? 0);
+
+  const handleValidate = useCallback((value: string) => {
+    if (!validate) return;
+    setLocalError(validate(value));
+  }, [validate]);
+
+  const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    if (e.target.value) setDirty(true);
+    handleValidate(e.target.value);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = e.target;
+    setCharCount(value.length);
+    if (value.length > 0) {
+      setDirty(true);
+      handleValidate(value);
+    }
+  };
+
+  const displayError = error || (dirty ? localError : null);
+  const hasError = !!displayError;
+  const isValid = dirty && validate && !localError && !error;
+  const hintColor = displayError ? 'text-error' : isValid ? 'text-accent1' : 'text-gray4';
 
   return (
     <div className={className}>
-      <label htmlFor={name} className={labelStyle}>
-        {label}
-        {required && <span className={'text-error'}>{' *'}</span>}
-      </label>
+      {label && (
+        <label htmlFor={name} className={labelStyle}>
+          {label}
+          {required && <span className={'text-error'}>{' *'}</span>}
+        </label>
+      )}
       <textarea
         id={name}
         name={name}
@@ -40,16 +75,31 @@ export function FormTextarea({
         rows={rows}
         required={required}
         defaultValue={defaultValue}
-        className={textareaClassName}
-        aria-invalid={!!error}
-        aria-describedby={error ? `${ name }-error` : undefined}
+        className={cn(inputStyle, hasError && 'border-error')}
+        aria-invalid={hasError}
+        aria-describedby={displayError ? `${ name }-error` : hint ? `${ name }-hint` : undefined}
+        onBlur={handleBlur}
+        onChange={handleChange}
       />
-      {error && (
-        <p id={`${ name }-error`} className={'mt-1 text-xs text-error'}>
-          {error}
-        </p>
-      )}
-      {!error && hint && <p className={'mt-1 text-xs text-sub'}>{hint}</p>}
+      <div className={'mt-1 min-h-4 flex items-center justify-between'}>
+        <div>
+          {displayError ? (
+            <p id={`${ name }-error`} className={'text-xs text-error'}>
+              {displayError}
+            </p>
+          ) : hint ? (
+            <p id={`${ name }-hint`} className={cn('text-xs flex items-center gap-1', isValid ? 'text-accent1' : 'text-gray4')}>
+              {hint}
+              {isValid && <Check className={'size-3'} />}
+            </p>
+          ) : null}
+        </div>
+        {maxLength && (
+          <span className={cn('text-xs transition-opacity', dirty ? 'opacity-100' : 'opacity-0', hintColor)}>
+            {charCount}{'/'}{maxLength}
+          </span>
+        )}
+      </div>
     </div>
   );
 }

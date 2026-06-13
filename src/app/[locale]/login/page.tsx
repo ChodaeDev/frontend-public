@@ -103,6 +103,7 @@ function LoginForm() {
   const setUser = useAuthStore((state) => state.setUser);
   const { dictionary } = useTranslation();
   const t = dictionary.login;
+  const v = dictionary.validation as Record<string, Record<string, string>>;
   const [state, formAction, isPending] = useActionState(loginAction, initialState);
 
   useEffect(() => {
@@ -128,6 +129,18 @@ function LoginForm() {
     return errors[errorKey] || errorKey;
   };
 
+  const validateUserId = (value: string) => {
+    if (!value) return v.userId?.required || '아이디를 입력해주세요';
+    if (value.length < 4) return v.userId?.min || '아이디는 4자 이상이어야 합니다';
+    return null;
+  };
+
+  const validatePassword = (value: string) => {
+    if (!value) return v.password?.required || '비밀번호를 입력해주세요';
+    if (value.length < 8) return v.password?.min || '비밀번호는 8자 이상이어야 합니다';
+    return null;
+  };
+
   return (
     <div className={'relative flex min-h-[calc(100vh-89px)] items-center justify-center py-8'}>
       {(isPending || state.success || user) && (
@@ -140,7 +153,7 @@ function LoginForm() {
         </div>
       )}
 
-      <div className={'w-full max-w-md rounded-3xl bg-background-secondary p-4 sm:p-10 sm:shadow-2xl'}>
+      <div className={'w-full max-w-md rounded-3xl bg-background-secondary p-4 sm:p-10 sm:shadow-2xl animate-formSlideUp'}>
         <h1 className={'mb-2 text-center text-3xl font-bold text-main'}>{t.title || '로그인'}</h1>
         <p className={'mb-8 text-center text-sm text-sub'}>
           {t.description || '회원정보가 없다면 아래 링크에서 회원가입을 진행해주세요.'}
@@ -154,6 +167,8 @@ function LoginForm() {
             required
             error={state.fieldErrors.userId}
             defaultValue={state.previousInput.userId}
+            hint={v.userId?.hint || '영문, 숫자, 언더스코어 4~20자'}
+            validate={validateUserId}
           />
 
           <FormInput
@@ -164,6 +179,8 @@ function LoginForm() {
             required
             error={state.fieldErrors.password}
             defaultValue={state.previousInput.password}
+            hint={v.password?.hint || '영문, 숫자 포함 8자 이상'}
+            validate={validatePassword}
           />
 
           {state.error && (

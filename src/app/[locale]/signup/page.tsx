@@ -17,6 +17,7 @@ import {
 import { useTranslation } from '@/i18n/client';
 import { useAuthStore } from '@/store/authStore';
 import { cn } from '@/lib/cn';
+import { formatPhone, stripNonDigits } from '@/lib/format';
 
 type FormState = {
   error: string | null;
@@ -46,15 +47,12 @@ async function signupAction(prev: FormState, formData: FormData): Promise<FormSt
     };
   }
 
-  const body = {
-    ...result.data,
-    level: 'general',
-  };
+  const { ...body } = result.data;
 
   try {
     await fetchApi('/api/public/users/register', {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify({ ...body, level: 'general' }),
     });
 
     return { error: null, fieldErrors: {}, previousInput: {}, success: true };
@@ -82,6 +80,8 @@ export default function SignUpPage() {
   const locale = params.locale as string;
   const { dictionary } = useTranslation();
   const t = dictionary.signup;
+  const f = dictionary.userForm;
+  const v = dictionary.validation as Record<string, Record<string, string>>;
   const user = useAuthStore((state) => state.user);
   const [state, formAction, isPending] = useActionState(signupAction, initialState);
 
@@ -93,9 +93,10 @@ export default function SignUpPage() {
 
   useEffect(() => {
     if (state.success) {
+      alert(t.successMessage || '회원가입이 완료되었습니다.');
       router.push(`/${ locale }/login`);
     }
-  }, [state.success, router, locale]);
+  }, [state.success, router, locale, t.successMessage]);
 
   const getErrorMessage = (errorKey: string | null) => {
     if (!errorKey) return null;
@@ -103,9 +104,70 @@ export default function SignUpPage() {
     return errors[errorKey] || errorKey;
   };
 
+  // 실시간 validation 함수들
+  // TODO: 백엔드 API 추가 후 onBlur 시 아이디 중복 검증
+  // GET /api/public/users/check-id?userId=xxx
+  // Response: { "success": true, "data": { "exists": true/false } }
+  // 인증: 불필요 (public)
+  const validateUserId = (value: string) => {
+    if (!value) return v.userId?.required || '아이디를 입력해주세요';
+    if (value.length < 4) return v.userId?.min || '아이디는 4자 이상이어야 합니다';
+    if (value.length > 20) return v.userId?.max || '아이디는 20자 이하여야 합니다';
+    if (!/^[a-zA-Z0-9_]+$/.test(value)) return v.userId?.pattern || '영문, 숫자, 언더스코어만 사용 가능합니다';
+    return null;
+  };
+
+  const validatePassword = (value: string) => {
+    if (!value) return v.password?.required || '비밀번호를 입력해주세요';
+    if (value.length < 8) return v.password?.min || '비밀번호는 8자 이상이어야 합니다';
+    if (!/[A-Za-z]/.test(value)) return v.password?.letterRequired || '영문자를 포함해야 합니다';
+    if (!/[0-9]/.test(value)) return v.password?.numberRequired || '숫자를 포함해야 합니다';
+    return null;
+  };
+
+  const validatePasswordConfirm = (value: string) => {
+    if (!value) return '비밀번호를 다시 입력해주세요';
+    // password 필드 값을 직접 읽어 비교
+    const passwordInput = document.querySelector<HTMLInputElement>('input[name="password"]');
+    if (passwordInput && value !== passwordInput.value) return '비밀번호가 일치하지 않습니다';
+    return null;
+  };
+
+  const validateUserName = (value: string) => {
+    if (!value) return v.userName?.required || '이름을 입력해주세요';
+    if (value.length < 2) return v.userName?.min || '이름은 2자 이상이어야 합니다';
+    if (value.length > 20) return v.userName?.max || '이름은 20자 이하여야 합니다';
+    if (!/^[a-zA-Z가-힣\s]+$/.test(value)) return v.userName?.pattern || '한글, 영문만 입력 가능합니다';
+    return null;
+  };
+
+  const validateNickName = (value: string) => {
+    if (value.length > 20) return v.nickName?.max || '닉네임은 20자 이하여야 합니다';
+    if (value && !/^[a-zA-Z가-힣0-9\s]+$/.test(value)) return v.nickName?.pattern || '한글, 영문, 숫자만 입력 가능합니다';
+    return null;
+  };
+
+  const validateChurch = (value: string) => {
+    if (value.length > 50) return v.church?.max || '교회명은 50자 이하여야 합니다';
+    return null;
+  };
+
+  const validateDescription = (value: string) => {
+    if (value.length > 500) return v.description?.max || '소개는 500자 이하여야 합니다';
+    return null;
+  };
+
+  const validatePhone = (value: string) => {
+    if (!value) return v.phone?.required || '전화번호를 입력해주세요';
+    if (!/^[0-9]+$/.test(value)) return v.phone?.pattern || '숫자만 입력해주세요';
+    if (value.length < 9) return v.phone?.min || '전화번호는 9자리 이상이어야 합니다';
+    if (value.length > 11) return v.phone?.max || '전화번호는 11자리 이하여야 합니다';
+    return null;
+  };
+
   return (
     <div className={'relative flex min-h-[calc(100vh-89px)] items-center justify-center py-8'}>
-      {(isPending || state.success || user) && (
+      {(isPending || user) && (
         <div
           className={'absolute inset-0 z-10 flex items-center justify-center bg-background backdrop-blur-sm'}
           aria-live={'polite'}
@@ -115,13 +177,13 @@ export default function SignUpPage() {
         </div>
       )}
 
-      <div className={'w-full max-w-2xl rounded-3xl bg-background-secondary p-4 sm:p-10 sm:shadow-2xl'}>
+      <div className={'w-full max-w-2xl rounded-3xl bg-background-secondary p-4 sm:p-10 sm:shadow-2xl animate-formSlideUp'}>
         <h1 className={'mb-2 text-center text-3xl font-bold text-main'}>{t.title || '회원가입'}</h1>
         <p className={'mb-8 text-center text-sm text-sub'}>
           {t.description || '아래 정보를 입력하여 회원가입을 완료해주세요.'}
         </p>
 
-        <form action={formAction} className={'grid grid-cols-1 gap-2 md:gap-6 md:grid-cols-2'}>
+        <form action={formAction} className={'grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2'}>
           <FormInput
             label={t.userId || '아이디'}
             name={'userId'}
@@ -129,6 +191,19 @@ export default function SignUpPage() {
             required
             error={state.fieldErrors.userId}
             defaultValue={state.previousInput.userId}
+            hint={v.userId?.hint || '영문, 숫자, 언더스코어 4~20자'}
+            validate={validateUserId}
+          />
+
+          <FormInput
+            label={f.userName || '이름'}
+            name={'userName'}
+            placeholder={f.userNamePlaceholder || '이름을 입력하세요'}
+            required
+            error={state.fieldErrors.userName}
+            defaultValue={state.previousInput.userName}
+            hint={v.userName?.hint || '2~20자'}
+            validate={validateUserName}
           />
 
           <FormInput
@@ -139,55 +214,70 @@ export default function SignUpPage() {
             required
             error={state.fieldErrors.password}
             defaultValue={state.previousInput.password}
+            hint={v.password?.hint || '영문, 숫자 포함 8자 이상'}
+            validate={validatePassword}
           />
 
           <FormInput
-            label={t.userName || '이름'}
-            name={'userName'}
-            placeholder={t.usernamePlaceholder || '이름을 입력하세요'}
+            label={t.passwordConfirm || '비밀번호 재입력'}
+            name={'passwordConfirm'}
+            type={'password'}
+            placeholder={t.passwordConfirmPlaceholder || '비밀번호를 다시 입력하세요'}
             required
-            error={state.fieldErrors.userName}
-            defaultValue={state.previousInput.userName}
+            error={state.fieldErrors.passwordConfirm}
+            defaultValue={state.previousInput.passwordConfirm}
+            validate={validatePasswordConfirm}
           />
 
           <FormInput
-            label={t.nickname || '닉네임'}
+            label={f.nickName || '닉네임'}
             name={'nickName'}
-            placeholder={t.nicknamePlaceholder || '닉네임을 입력하세요'}
+            placeholder={f.nickNamePlaceholder || '닉네임을 입력하세요'}
             error={state.fieldErrors.nickName}
             defaultValue={state.previousInput.nickName}
+            hint={v.nickName?.hint || '20자 이하'}
+            validate={validateNickName}
           />
 
           <FormInput
-            label={t.phone || '전화번호'}
+            label={f.phone || '전화번호'}
             name={'phone'}
             type={'tel'}
-            placeholder={t.phonePlaceholder || '예: 01012345678'}
+            placeholder={'010-1234-5678'}
             required
             error={state.fieldErrors.phone}
             defaultValue={state.previousInput.phone}
+            hint={v.phone?.hint || '숫자만 10~11자리'}
+            validate={validatePhone}
+            format={formatPhone}
+            parse={stripNonDigits}
           />
 
           <FormInput
-            label={t.church || '교회명'}
+            label={f.church || '교회명'}
             name={'church'}
-            placeholder={t.churchPlaceholder || '출석 중인 교회명을 입력하세요'}
+            placeholder={f.churchPlaceholder || '출석 중인 교회명을 입력하세요'}
             error={state.fieldErrors.church}
             defaultValue={state.previousInput.church}
+            hint={v.church?.hint || '50자 이하'}
+            validate={validateChurch}
           />
 
           <BirthdayPicker
-            label={t.birthday || '생년월일'}
+            label={f.birthday || '생년월일'}
             defaultValue={state.previousInput.birthday}
           />
 
           <FormTextarea
-            label={t.bio || '소개 및 비고'}
+            label={f.introduce || '소개 및 비고'}
             name={'description'}
-            placeholder={t.bioPlaceholder || '상담 요청 사유 등 추가 정보를 입력하세요'}
+            placeholder={f.introducePlaceholder || '추가 정보를 입력하세요'}
             className={'md:col-span-2'}
             error={state.fieldErrors.description}
             defaultValue={state.previousInput.description}
+            hint={v.description?.hint || '500자 이하'}
+            maxLength={500}
+            validate={validateDescription}
           />
 
           {state.error && (
