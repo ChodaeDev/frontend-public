@@ -159,7 +159,7 @@ function LoginForm() {
           {t.description || '회원정보가 없다면 아래 링크에서 회원가입을 진행해주세요.'}
         </p>
 
-        <form action={formAction} className={'space-y-6'}>
+        <form action={formAction} className={'space-y-6 '}>
           <FormInput
             label={t.userId || '아이디'}
             name={'userId'}
@@ -188,10 +188,11 @@ function LoginForm() {
               {getErrorMessage(state.error)}
             </div>
           )}
-
-          <SubmitButton pendingText={t.submitting || '로그인 중...'}>
-            {t.submit || '로그인'}
-          </SubmitButton>
+          <div className={'w-full flex justify-center'}>
+            <SubmitButton pendingText={t.submitting || '로그인 중...'} className={'w-full rounded-full'}>
+              {t.submit || '로그인'}
+            </SubmitButton>
+          </div>
         </form>
 
         <div className={'mt-6 text-center text-sm text-sub'}>

@@ -213,7 +213,7 @@ export default function CounselingWriteForm() {
           </div>
         )}
 
-        <div className={'flex gap-3'}>
+        <div className={'flex justify-end gap-3'}>
           <button
             type={'button'}
             onClick={() => setShowCancelModal(true)}

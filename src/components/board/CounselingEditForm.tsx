@@ -241,7 +241,7 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
           </div>
         )}
 
-        <div className={'flex gap-3'}>
+        <div className={'flex justify-end gap-3'}>
           <button
             type={'button'}
             onClick={() => setShowCancelModal(true)}

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import { cancelButtonStyle, buttonPrimaryStyle } from './form-styles';
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -62,14 +63,14 @@ export default function ConfirmModal({
     <div className={'fixed inset-0 z-50 flex items-center justify-center'}>
       {/* Backdrop */}
       <div
-        className={cn('absolute inset-0 bg-black/50', isClosing ? 'animate-fadeOut' : 'animate-fadeIn')}
+        className={cn('absolute inset-0 bg-black/80', isClosing ? 'animate-fadeOut' : 'animate-fadeIn')}
         onClick={close}
       />
 
       {/* Modal */}
       <div
         className={cn(
-          'relative w-full max-w-sm rounded-xl bg-background shadow-xl',
+          'relative w-full max-w-sm rounded-xl bg-background shadow-xl border border-gray8',
           isClosing ? 'animate-fadeOut' : 'animate-slideDown',
         )}
       >
@@ -89,16 +90,16 @@ export default function ConfirmModal({
         <p className={'text-sm text-sub p-4 '}>{message}</p>
 
         {/* Footer */}
-        <div className={'flex gap-3 p-4 pt-0'}>
+        <div className={'flex justify-end gap-3 p-4 pt-0'}>
           <button
             onClick={close}
-            className={'w-full rounded-full border border-gray1 px-4 py-2.5 text-sm font-semibold transition-colors hover:bg-gray1 hover:text-inverse cursor-pointer'}
+            className={cancelButtonStyle}
           >
             {cancelText}
           </button>
           <button
             onClick={handleConfirm}
-            className={'w-full rounded-full bg-accent1 px-4 py-2.5 text-sm font-semibold text-inverse transition hover:opacity-90 cursor-pointer'}
+            className={buttonPrimaryStyle}
           >
             {confirmText}
           </button>

@@ -21,7 +21,7 @@ export function SubmitButton({
     <button
       type={'submit'}
       disabled={pending}
-      className={cn(className ?? buttonPrimaryStyle, 'cursor-pointer')}
+      className={cn(buttonPrimaryStyle, className)}
     >
       {pending ? pendingText : children}
     </button>

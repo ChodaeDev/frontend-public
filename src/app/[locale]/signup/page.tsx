@@ -297,7 +297,7 @@ export default function SignUpPage() {
           )}
 
           <div className={'md:col-span-2'}>
-            <SubmitButton pendingText={t.submitting || '회원가입 중...'}>
+            <SubmitButton pendingText={t.submitting || '회원가입 중...'} className={'w-full rounded-full'}>
               {t.submit || '회원가입 완료'}
             </SubmitButton>
           </div>
