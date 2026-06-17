@@ -105,16 +105,24 @@ export default function SignUpPage() {
   };
 
   // 실시간 validation 함수들
-  // TODO: 백엔드 API 추가 후 onBlur 시 아이디 중복 검증
-  // GET /api/public/users/check-id?userId=xxx
-  // Response: { "success": true, "data": { "exists": true/false } }
-  // 인증: 불필요 (public)
   const validateUserId = (value: string) => {
     if (!value) return v.userId?.required || '아이디를 입력해주세요';
     if (value.length < 4) return v.userId?.min || '아이디는 4자 이상이어야 합니다';
     if (value.length > 20) return v.userId?.max || '아이디는 20자 이하여야 합니다';
     if (!/^[a-zA-Z0-9_]+$/.test(value)) return v.userId?.pattern || '영문, 숫자, 언더스코어만 사용 가능합니다';
     return null;
+  };
+
+  const asyncValidateUserId = async (value: string) => {
+    try {
+      const res = await fetch(`/api/public/users/check-id?userId=${ encodeURIComponent(value) }`);
+      if (!res.ok) return '아이디 확인 중 오류가 발생했습니다';
+      const data = await res.json();
+      if (data.exists) return '이미 사용중인 아이디입니다';
+      return null;
+    } catch {
+      return '아이디 확인 중 오류가 발생했습니다';
+    }
   };
 
   const validatePassword = (value: string) => {
@@ -193,6 +201,8 @@ export default function SignUpPage() {
             defaultValue={state.previousInput.userId}
             hint={v.userId?.hint || '영문, 숫자, 언더스코어 4~20자'}
             validate={validateUserId}
+            asyncValidate={asyncValidateUserId}
+            validMessage={'사용 가능한 아이디입니다'}
           />
 
           <FormInput
