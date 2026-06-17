@@ -17,7 +17,9 @@ type FormInputProps = {
   defaultValue?: string;
   autoComplete?: string;
   hint?: string;
+  validMessage?: string;
   validate?: (value: string)=> string | null;
+  asyncValidate?: (value: string)=> Promise<string | null>;
   format?: (value: string)=> string;
   parse?: (value: string)=> string;
 };
@@ -34,26 +36,48 @@ export function FormInput({
   defaultValue,
   autoComplete,
   hint,
+  validMessage,
   validate,
+  asyncValidate,
   format,
   parse,
 }: FormInputProps) {
   const hasFormat = !!(format && parse);
   const [dirty, setDirty] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
+  const [asyncPending, setAsyncPending] = useState(false);
   const [displayValue, setDisplayValue] = useState(() => hasFormat ? format(defaultValue ?? '') : '');
   const [rawValue, setRawValue] = useState(() => hasFormat ? parse(defaultValue ?? '') : '');
   const inputRef = useRef<HTMLInputElement>(null);
+  const asyncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleValidate = useCallback((value: string) => {
     if (!validate) return;
     setLocalError(validate(value));
   }, [validate]);
 
+  const handleAsyncValidate = useCallback((value: string) => {
+    if (!asyncValidate) return;
+    const syncError = validate?.(value) ?? null;
+    if (syncError || !value) {
+      setAsyncPending(false);
+      return;
+    }
+
+    setAsyncPending(true);
+    if (asyncTimerRef.current) clearTimeout(asyncTimerRef.current);
+    asyncTimerRef.current = setTimeout(async () => {
+      const asyncError = await asyncValidate(value);
+      setLocalError(asyncError);
+      setAsyncPending(false);
+    }, 250);
+  }, [validate, asyncValidate]);
+
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const value = hasFormat ? rawValue : e.target.value;
     if (value) setDirty(true);
     handleValidate(value);
+    handleAsyncValidate(value);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,6 +94,7 @@ export function FormInput({
       if (parsed.length > 0) {
         setDirty(true);
         handleValidate(parsed);
+        handleAsyncValidate(parsed);
       }
 
       // 포맷 후 커서 위치 보정
@@ -92,13 +117,14 @@ export function FormInput({
       if (value.length > 0) {
         setDirty(true);
         handleValidate(value);
+        handleAsyncValidate(value);
       }
     }
   };
 
   const displayError = error || (dirty ? localError : null);
   const hasError = !!displayError;
-  const isValid = dirty && validate && !localError && !error;
+  const isValid = dirty && (validate || asyncValidate) && !localError && !error && !asyncPending;
 
   return (
     <div className={className}>
@@ -119,7 +145,7 @@ export function FormInput({
             disabled={disabled}
             value={displayValue}
             autoComplete={autoComplete}
-            className={cn(inputStyle, hasError && 'border-error', disabled && 'bg-gray7 text-sub cursor-not-allowed')}
+            className={cn(inputStyle, hasError && 'border-error focus:border-error focus:ring-error/30', disabled && 'bg-gray7 text-sub cursor-not-allowed')}
             aria-invalid={hasError}
             aria-describedby={displayError ? `${ name }-error` : hint ? `${ name }-hint` : undefined}
             onBlur={disabled ? undefined : handleBlur}
@@ -137,7 +163,7 @@ export function FormInput({
           defaultValue={defaultValue}
           autoComplete={autoComplete}
           disabled={disabled}
-          className={cn(inputStyle, hasError && 'border-error', disabled && 'bg-gray7 text-sub cursor-not-allowed')}
+          className={cn(inputStyle, hasError && 'border-error focus:border-error focus:ring-error/30', disabled && 'bg-gray7 text-sub cursor-not-allowed')}
           aria-invalid={hasError}
           aria-describedby={displayError ? `${ name }-error` : hint ? `${ name }-hint` : undefined}
           onBlur={disabled ? undefined : handleBlur}
@@ -148,6 +174,11 @@ export function FormInput({
         {displayError ? (
           <p id={`${ name }-error`} className={'text-xs text-error'}>
             {displayError}
+          </p>
+        ) : isValid && validMessage ? (
+          <p className={'text-xs text-accent1 flex items-center gap-1'}>
+            {validMessage}
+            <Check className={'size-3'} />
           </p>
         ) : hint ? (
           <p id={`${ name }-hint`} className={cn('text-xs flex items-center gap-1', isValid ? 'text-accent1' : 'text-gray4')}>

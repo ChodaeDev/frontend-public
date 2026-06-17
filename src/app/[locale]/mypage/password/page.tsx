@@ -104,14 +104,23 @@ export default function PasswordPage() {
     return errors[errorKey] || errorKey;
   };
 
-  // TODO: 백엔드 API 추가 후 onBlur 시 현재 비밀번호 검증
-  // POST /api/public/users/verify-password
-  // Request:  { "currentPassword": "string" }
-  // Response: { "success": true/false, "message": "string" }
-  // 인증: Authorization: Bearer <token> 필요
   const validateCurrentPassword = (value: string) => {
     if (!value) return '현재 비밀번호를 입력해주세요';
     return null;
+  };
+
+  const asyncValidateCurrentPassword = async (value: string) => {
+    try {
+      await fetchApi('/api/public/users/verify-password', {
+        method: 'POST',
+        body: JSON.stringify({ currentPassword: value }),
+      });
+      // success: true → 비밀번호 일치
+      return null;
+    } catch {
+      // success: false 또는 네트워크 에러 → 비밀번호 불일치
+      return '현재 비밀번호가 일치하지 않습니다';
+    }
   };
 
   const validateNewPassword = (value: string) => {
@@ -163,6 +172,8 @@ export default function PasswordPage() {
             placeholder={(t?.currentPasswordPlaceholder as string) || '현재 비밀번호를 입력하세요'}
             error={state.fieldErrors.currentPassword}
             validate={validateCurrentPassword}
+            asyncValidate={asyncValidateCurrentPassword}
+            validMessage={'현재 비밀번호 확인'}
           />
         </FormRow>
 
