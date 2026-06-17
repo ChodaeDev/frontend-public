@@ -65,7 +65,7 @@ const quickNavFallback: SideNavDictionary = {
   donation: '후원문의',
 };
 
-export default function SideNav({ dictionary, locale }: SideNavProps) {
+export default function RightSideNav({ dictionary, locale }: SideNavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const t = dictionary.home.quickNav;
 

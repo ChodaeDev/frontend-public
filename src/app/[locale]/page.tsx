@@ -1,7 +1,7 @@
 import { getDictionary } from '@/i18n/getDictionary';
 import { isValidLocale } from '@/i18n/config';
 import { notFound } from 'next/navigation';
-import { BoardPreviewSection, LandingImageSection, MinistrySection, NewsSection, QuickMenuSection, SideNav, TestimonySection } from '@/components/landing';
+import { BoardPreviewSection, LandingImageSection, MinistrySection, NewsSection, QuickMenuSection, RightSideNav, TestimonySection } from '@/components/landing';
 import VisitorTracker from '@/components/visitor/VisitorTracker';
 
 export default async function Home({
@@ -23,7 +23,7 @@ export default async function Home({
   return (
     <main className={'flex flex-col items-center min-h-screen pb-10'}>
       <VisitorTracker />
-      <SideNav dictionary={dictionary} locale={locale} />
+      <RightSideNav dictionary={dictionary} locale={locale} />
       <LandingImageSection
         dictionary={dictionary}
         locale={locale}

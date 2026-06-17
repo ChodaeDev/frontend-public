@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams, usePathname } from 'next/navigation';
-import SubSideNav from '@/components/ui/SubSideNav';
+import LeftSubMenuNav from '@/components/ui/LeftSubMenuNav';
 import { useTranslation } from '@/i18n/client';
 import type { Locale } from '@/i18n/config';
 import type { NavItem } from '@/config/navigation';
@@ -29,7 +29,7 @@ export default function MypageLayout({ children }: { children: React.ReactNode }
 
   return (
     <div className={'flex py-8 min-h-screen'}>
-      <SubSideNav
+      <LeftSubMenuNav
         navItem={navItem}
         currentSubSlug={currentSubSlug}
         locale={locale}

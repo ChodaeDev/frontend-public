@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getDictionary } from '@/i18n/getDictionary';
 import { locales, isValidLocale } from '@/i18n/config';
 import { getNavItems } from '@/config/navigation';
-import SubSideNav from '@/components/ui/SubSideNav';
+import LeftSubMenuNav from '@/components/ui/LeftSubMenuNav';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import SubMenuContent from '@/components/subMenu/SubMenuContent';
 
@@ -43,7 +43,7 @@ export default async function SubMenuPage({
 
   return (
     <div className={'flex py-8 min-h-screen'}>
-      <SubSideNav
+      <LeftSubMenuNav
         navItem={navItem}
         currentSubSlug={subMenu}
         locale={locale}

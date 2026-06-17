@@ -4,7 +4,7 @@ import { isValidLocale } from '@/i18n/config';
 import { getNavItems } from '@/config/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import SubSideNav from '@/components/ui/SubSideNav';
+import LeftSubMenuNav from '@/components/ui/LeftSubMenuNav';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import SubMenuBoardDetail from '@/components/board/SubMenuBoardDetail';
 import SubMenuBoardForm from '@/components/board/SubMenuBoardForm';
@@ -59,7 +59,7 @@ export default async function SubMenuBoardActionPage({
 
   return (
     <div className={'flex py-8 min-h-screen'}>
-      <SubSideNav
+      <LeftSubMenuNav
         navItem={navItem}
         currentSubSlug={subMenu}
         locale={locale}

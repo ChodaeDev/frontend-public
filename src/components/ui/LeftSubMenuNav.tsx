@@ -11,7 +11,7 @@ interface SubSideNavProps {
   locale: Locale;
 }
 
-export default function SubSideNav({ navItem, currentSubSlug, locale }: SubSideNavProps) {
+export default function LeftSubMenuNav({ navItem, currentSubSlug, locale }: SubSideNavProps) {
   return (
     <nav className={'hidden xl:block w-56 shrink-0 pr-4 mr-4 border-r border-gray9'}>
       <div className={'sticky top-28'}>
