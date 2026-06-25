@@ -7,8 +7,8 @@ import { ArrowLeft } from 'lucide-react';
 import LeftSubMenuNav from '@/components/ui/LeftSubMenuNav';
 import TopSubMenuTab from '@/components/ui/TopSubMenuTab';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import SubMenuBoardDetail from '@/components/board/SubMenuBoardDetail';
-import SubMenuBoardForm from '@/components/board/SubMenuBoardForm';
+import SubMenuBoardDetail from '@/components/subMenu/SubMenuBoardDetail';
+import SubMenuBoardForm from '@/components/subMenu/SubMenuBoardForm';
 
 const subMenuBoardRoutes: Record<string, readonly string[]> = {
   'scj-info': ['history', 'details', 'strategy', 'illegal-cases'],
