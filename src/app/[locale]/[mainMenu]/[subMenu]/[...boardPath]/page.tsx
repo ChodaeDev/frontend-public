@@ -13,8 +13,7 @@ import SubMenuBoardForm from '@/components/board/SubMenuBoardForm';
 const subMenuBoardRoutes: Record<string, readonly string[]> = {
   'scj-info': ['history', 'details', 'strategy', 'illegal-cases'],
   doctrine: ['references', 'legal'],
-  prevention: ['resources'],
-  withdrawal: ['damage-cases'],
+  prevention: ['damage-cases', 'prevention-materials'],
 };
 
 export default async function SubMenuBoardActionPage({

@@ -78,7 +78,7 @@
       "falseClaims": "新天地の虚偽反証",
       "exitMethods": "賢い脱退方法",
       "recruitmentTactics": "新天地の布教戦略",
-      "locations": "新天地の位置情報"
+      "locations": "新天地位置情報提供"
     },
     "boardPreview": {
       "counselingTitle": "相談掲示板",
@@ -241,17 +241,13 @@
         "label": "相談所紹介",
         "description": "相談所の情報とアクセス方法をご案内します。"
       },
-      "familyTips": {
-        "label": "被害家族の注意事項",
-        "description": "被害家族の方々が知っておくべき注意事項をご案内します。"
+      "minister": {
+        "label": "牧会者紹介",
+        "description": "相談所代表のシン・ヒョンウク牧師とキム・ガンリム牧師をご紹介します。"
       },
       "centers": {
         "label": "全国相談所案内",
         "description": "全国の相談所の位置と連絡先をご案内します。"
-      },
-      "minister": {
-        "label": "牧会者紹介",
-        "description": "相談所代表のシン・ヒョンウク牧師とキム・ガンリム牧師をご紹介します。"
       },
       "interviews": {
         "label": "インタビュー・報道",
@@ -302,17 +298,21 @@
     },
     "prevention": {
       "label": "新天地被害予防",
-      "measures": {
-        "label": "予防策",
-        "description": "新天地被害を予防するための方法をご案内します。"
+      "damageCases": {
+        "label": "新天地被害事例",
+        "description": "新天地による被害事例をまとめました。"
       },
-      "resources": {
-        "label": "予防資料",
-        "description": "被害予防のための教育資料を提供します。"
+      "preventionMaterials": {
+        "label": "予防策/予防資料",
+        "description": "新天地の被害を予防するための方法と教育資料を提供します。"
       },
       "locations": {
-        "label": "新天地の位置情報",
-        "description": "全国の新天地施設の位置情報を共有します。"
+        "label": "新天地位置情報提供",
+        "description": "全国の新天地施設の位置情報を提供します。"
+      },
+      "familyTips": {
+        "label": "被害家族の注意事項",
+        "description": "被害家族の方が必ず知っておくべき注意事項をご案内します。"
       }
     },
     "withdrawal": {
@@ -325,10 +325,6 @@
         "label": "脱退者の手記・証言",
         "description": "実際の脱退者の手記と証言を共有します。"
       },
-      "damageCases": {
-        "label": "新天地被害事例",
-        "description": "新天地による被害事例をまとめました。"
-      },
       "toMembers": {
         "label": "新天地の方々へ",
         "description": "現在新天地にいる方々へのメッセージです。"
@@ -339,10 +335,6 @@
       "counseling": {
         "label": "相談掲示板",
         "description": "新天地関連の相談を依頼できます。"
-      },
-      "free": {
-        "label": "自由掲示板",
-        "description": "自由に意見を交わせる場です。"
       }
     }
   },

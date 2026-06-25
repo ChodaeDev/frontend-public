@@ -78,7 +78,7 @@
       "falseClaims": "Widerlegte Falschaussagen",
       "exitMethods": "Sichere Ausstiegsmethoden",
       "recruitmentTactics": "Rekrutierungstaktiken",
-      "locations": "SCJ-Standorte"
+      "locations": "SCJ-Standortmeldungen"
     },
     "boardPreview": {
       "counselingTitle": "Beratungsforum",
@@ -241,17 +241,13 @@
         "label": "Einführung",
         "description": "Informationen über unser Beratungszentrum und Wegbeschreibung."
       },
-      "familyTips": {
-        "label": "Tipps für betroffene Familien",
-        "description": "Wichtige Richtlinien für Familien von Betroffenen."
+      "minister": {
+        "label": "Unsere Ministeren",
+        "description": "Vorstellung von Minister Shin Hyun-wook und Minister Kim Kang-rim."
       },
       "centers": {
         "label": "Landesweite Zentren",
         "description": "Standorte und Kontaktinformationen für Beratungszentren landesweit."
-      },
-      "minister": {
-        "label": "Unsere Ministeren",
-        "description": "Vorstellung von Minister Shin Hyun-wook und Minister Kim Kang-rim."
       },
       "interviews": {
         "label": "Interviews & Medien",
@@ -302,17 +298,21 @@
     },
     "prevention": {
       "label": "Prävention",
-      "measures": {
-        "label": "Präventivmaßnahmen",
-        "description": "Methoden zur Verhinderung von Shincheonji-bezogenem Schaden."
+      "damageCases": {
+        "label": "SCJ-Schadensfälle",
+        "description": "Eine Zusammenstellung von Schadensfällen durch SCJ."
       },
-      "resources": {
-        "label": "Präventionsressourcen",
-        "description": "Bildungsmaterialien zur Schadensprävention."
+      "preventionMaterials": {
+        "label": "Präventionstipps/Materialien",
+        "description": "Methoden und Bildungsmaterialien zur Prävention von SCJ-Schäden."
       },
       "locations": {
-        "label": "Shincheonji-Standorte",
-        "description": "Standortinformationen von Shincheonji-Einrichtungen landesweit."
+        "label": "SCJ-Standortmeldungen",
+        "description": "Melden und teilen Sie Standorte von SCJ-Einrichtungen."
+      },
+      "familyTips": {
+        "label": "Tipps für betroffene Familien",
+        "description": "Wichtige Vorsichtsmaßnahmen für betroffene Familienmitglieder."
       }
     },
     "withdrawal": {
@@ -325,10 +325,6 @@
         "label": "Ausstiegszeugnisse",
         "description": "Zeugnisse und Geschichten ehemaliger Mitglieder."
       },
-      "damageCases": {
-        "label": "Schadensfälle",
-        "description": "Dokumentierte Fälle von Schäden durch Shincheonji."
-      },
       "toMembers": {
         "label": "An aktuelle Mitglieder",
         "description": "Eine Nachricht an diejenigen, die derzeit in Shincheonji sind."
@@ -339,10 +335,6 @@
       "counseling": {
         "label": "Beratungsforum",
         "description": "Beratung zu Shincheonji anfordern."
-      },
-      "free": {
-        "label": "Freies Forum",
-        "description": "Ein Raum zum freien Austausch von Meinungen."
       }
     }
   },

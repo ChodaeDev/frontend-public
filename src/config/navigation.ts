@@ -18,8 +18,8 @@ const navStructure = [
   {
     key: 'about',
     slug: 'about',
-    subKeys: ['introduction', 'familyTips', 'centers', 'minister', 'interviews', 'videos'],
-    subSlugs: ['introduction', 'family-tips', 'centers', 'minister', 'interviews', 'videos'],
+    subKeys: ['introduction', 'minister', 'centers', 'interviews', 'videos'],
+    subSlugs: ['introduction', 'minister', 'centers', 'interviews', 'videos'],
   },
   {
     key: 'scjInfo',
@@ -36,20 +36,20 @@ const navStructure = [
   {
     key: 'prevention',
     slug: 'prevention',
-    subKeys: ['measures', 'resources', 'locations'],
-    subSlugs: ['measures', 'resources', 'locations'],
+    subKeys: ['damageCases', 'preventionMaterials', 'locations', 'familyTips'],
+    subSlugs: ['damage-cases', 'prevention-materials', 'locations', 'family-tips'],
   },
   {
     key: 'withdrawal',
     slug: 'withdrawal',
-    subKeys: ['methods', 'testimonies', 'damageCases', 'toMembers'],
-    subSlugs: ['methods', 'testimonies', 'damage-cases', 'to-members'],
+    subKeys: ['methods', 'testimonies', 'toMembers'],
+    subSlugs: ['methods', 'testimonies', 'to-members'],
   },
   {
     key: 'board',
     slug: 'board',
-    subKeys: ['counseling', 'free'],
-    subSlugs: ['counseling', 'free'],
+    subKeys: ['counseling'],
+    subSlugs: ['counseling'],
   },
 ];
 
@@ -102,19 +102,14 @@ export const navItems: NavItem[] = [
         description: '상담소에 대한 정보와 찾아오시는 길을 안내해 드립니다.',
       },
       {
-        label: '피해 가족 유의사항',
-        slug: 'family-tips',
-        description: '피해 가족분들이 꼭 알아야 할 주의사항을 안내합니다.',
+        label: '목회자 소개',
+        slug: 'minister',
+        description: '상담소 대표 신현욱 목사님과 김강림 목사님을 소개합니다.',
       },
       {
         label: '전국 상담소 안내',
         slug: 'centers',
         description: '전국에 있는 상담소 위치와 연락처를 안내해 드립니다.',
-      },
-      {
-        label: '목회자 소개',
-        slug: 'minister',
-        description: '상담소 대표 신현욱 목사님과 김강림 목사님을 소개합니다.',
       },
       {
         label: '인터뷰 및 언론보도',
@@ -185,19 +180,24 @@ export const navItems: NavItem[] = [
     slug: 'prevention',
     subMenus: [
       {
-        label: '예방책',
-        slug: 'measures',
-        description: '신천지 피해를 예방하기 위한 방법을 안내합니다.',
+        label: '신천지 피해사례',
+        slug: 'damage-cases',
+        description: '신천지로 인한 피해 사례를 정리했습니다.',
       },
       {
-        label: '예방 자료',
-        slug: 'resources',
-        description: '피해 예방을 위한 교육 자료를 제공합니다.',
+        label: '예방책/예방 자료',
+        slug: 'prevention-materials',
+        description: '신천지 피해를 예방하기 위한 방법과 교육 자료를 제공합니다.',
       },
       {
-        label: '신천지 위치정보',
+        label: '신천지 위치제보',
         slug: 'locations',
-        description: '전국 신천지 시설 위치 정보를 공유합니다.',
+        description: '전국 신천지 시설 위치 정보를 제보합니다.',
+      },
+      {
+        label: '피해 가족 유의사항',
+        slug: 'family-tips',
+        description: '피해 가족분들이 꼭 알아야 할 주의사항을 안내합니다.',
       },
     ],
   },
@@ -216,11 +216,6 @@ export const navItems: NavItem[] = [
         description: '실제 탈퇴자들의 수기와 간증을 공유합니다.',
       },
       {
-        label: '신천지 피해사례',
-        slug: 'damage-cases',
-        description: '신천지로 인한 피해 사례를 정리했습니다.',
-      },
-      {
         label: '신천지인들에게',
         slug: 'to-members',
         description: '현재 신천지에 있는 분들께 전하는 메시지입니다.',
@@ -236,11 +231,6 @@ export const navItems: NavItem[] = [
         label: '상담게시판',
         slug: 'counseling',
         description: '신천지 관련 상담을 요청할 수 있습니다.',
-      },
-      {
-        label: '자유게시판',
-        slug: 'free',
-        description: '자유롭게 의견을 나눌 수 있는 공간입니다.',
       },
       // { label: '세미나 요청', slug: 'seminar' },
     ],

@@ -58,10 +58,8 @@ export default function SubMenuContent({
       legal: '/api/doctrine/legal/list',
     },
     prevention: {
-      resources: '/api/prevention/resources/list',
-    },
-    withdrawal: {
-      'damage-cases': '/api/withdrawal/damage-cases/list',
+      'damage-cases': '/api/prevention/damage-cases/list',
+      'prevention-materials': '/api/prevention/prevention-materials/list',
     },
   };
 
