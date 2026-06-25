@@ -5,6 +5,7 @@ import { getNavItems } from '@/config/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import LeftSubMenuNav from '@/components/ui/LeftSubMenuNav';
+import TopSubMenuTab from '@/components/ui/TopSubMenuTab';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import CounselingDetail from '@/components/board/CounselingDetail';
 
@@ -39,7 +40,13 @@ export default async function CounselingDetailPage({
       />
 
       <div className={'w-full flex-col gap-10'}>
-        <div className={'flex flex-col sm:flex-row-reverse sm:items-start sm:justify-between gap-4 mb-8'}>
+        <TopSubMenuTab
+          navItem={boardNav}
+          currentSubSlug={'counseling'}
+          locale={locale}
+        />
+
+        <div className={'flex flex-col sm:items-start sm:justify-between xl:flex-row-reverse gap-4 mb-8'}>
           <Breadcrumb
             locale={locale}
             homeLabel={commonDict.home || '홈'}

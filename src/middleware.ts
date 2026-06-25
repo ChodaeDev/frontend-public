@@ -4,17 +4,6 @@ import { defaultLocale, isValidLocale, type Locale } from '@/i18n/config';
 const publicFile = /\.(.*)$/;
 const localeCookieName = 'NEXT_LOCALE';
 
-// mainMenu → 첫 번째 subMenu slug 매핑(SubMenu Card 진입점 페이지 사용 시 제거)
-const firstSubMenuMap: Record<string, string> = {
-  about: 'introduction',
-  'scj-info': 'history',
-  doctrine: 'false-claims',
-  prevention: 'measures',
-  withdrawal: 'methods',
-  board: 'counseling',
-  mypage: 'profile',
-};
-
 function getLocaleFromRequest(request: NextRequest): Locale {
   // 1. 쿠키에서 언어 설정 확인
   const cookieLocale = request.cookies.get(localeCookieName)?.value;
@@ -67,14 +56,6 @@ export function middleware(request: NextRequest) {
 
   // 이미 유효한 locale이 있는 경우
   if (isValidLocale(potentialLocale)) {
-    // mainMenu만 있는 경로면 첫 번째 subMenu로 redirect
-    const mainMenuSlug = pathnameSegments[2];
-    const hasSubPath = pathnameSegments.length > 3;
-    if (mainMenuSlug && !hasSubPath && firstSubMenuMap[mainMenuSlug]) {
-      const redirectUrl = new URL(`/${ potentialLocale }/${ mainMenuSlug }/${ firstSubMenuMap[mainMenuSlug] }`, request.url);
-      return NextResponse.redirect(redirectUrl);
-    }
-
     const response = NextResponse.next();
     // 쿠키에 현재 locale 저장
     response.cookies.set(localeCookieName, potentialLocale, {

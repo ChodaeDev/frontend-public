@@ -2,6 +2,7 @@
 
 import { useParams, usePathname } from 'next/navigation';
 import LeftSubMenuNav from '@/components/ui/LeftSubMenuNav';
+import TopSubMenuTab from '@/components/ui/TopSubMenuTab';
 import { useTranslation } from '@/i18n/client';
 import type { Locale } from '@/i18n/config';
 import type { NavItem } from '@/config/navigation';
@@ -35,6 +36,11 @@ export default function MypageLayout({ children }: { children: React.ReactNode }
         locale={locale}
       />
       <div className={'w-full flex-col gap-10'}>
+        <TopSubMenuTab
+          navItem={navItem}
+          currentSubSlug={currentSubSlug}
+          locale={locale}
+        />
         {children}
       </div>
     </div>
