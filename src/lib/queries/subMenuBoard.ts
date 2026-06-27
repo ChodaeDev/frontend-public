@@ -30,12 +30,48 @@ export interface SubMenuBoardDetailData {
 export const subMenuBoardKeys = {
   all: ['subMenuBoard'] as const,
   board: (route: SubMenuBoardRoute) => [...subMenuBoardKeys.all, route.mainMenu, route.subMenu] as const,
+  list: (params: SubMenuBoardListParams) => [...subMenuBoardKeys.all, 'list', params] as const,
   detail: (route: SubMenuBoardRoute, id: number) => [...subMenuBoardKeys.board(route), 'detail', id] as const,
   comments: (route: SubMenuBoardRoute, id: number) => [...subMenuBoardKeys.board(route), 'comments', id] as const,
 };
 
 function basePath(route: SubMenuBoardRoute) {
   return `/api/${ route.mainMenu }/${ route.subMenu }`;
+}
+
+// 게시판 목록 조회
+export interface SubMenuBoardPost {
+  id: number;
+  title: string;
+  userId: string;
+  userName: string;
+  commentCount: number;
+  visibilityLevel: VisibilityLevel;
+  createDate: string;
+  isNotice: boolean;
+}
+
+export interface SubMenuBoardListParams {
+  page: number;
+  size: number;
+  sort?: string;
+  direction?: string;
+  endpoint?: string;
+}
+
+export interface SubMenuBoardListResponse {
+  items: SubMenuBoardPost[];
+  totalPages: number;
+  itemTotal: number;
+}
+
+export async function fetchSubMenuBoardList(params: SubMenuBoardListParams): Promise<SubMenuBoardListResponse> {
+  const { page, size, sort = 'date', direction = 'desc', endpoint } = params;
+  if (!endpoint) throw new Error('endpoint is required');
+  const { data } = await fetchApi<SubMenuBoardListResponse>(
+    `${ endpoint }?page=${ page }&size=${ size }&sort=${ sort }&direction=${ direction }`,
+  );
+  return data ?? { items: [], totalPages: 1, itemTotal: 0 };
 }
 
 export async function fetchSubMenuBoardDetail(route: SubMenuBoardRoute, id: number): Promise<SubMenuBoardDetailData> {

@@ -78,7 +78,7 @@
       "falseClaims": "新天地虚假反证",
       "exitMethods": "明智的退出方法",
       "recruitmentTactics": "新天地传教策略",
-      "locations": "新天地位置信息"
+      "locations": "新天地位置举报"
     },
     "boardPreview": {
       "counselingTitle": "咨询公告板",
@@ -241,17 +241,13 @@
         "label": "咨询所简介",
         "description": "为您介绍咨询所的信息和交通指南。"
       },
-      "familyTips": {
-        "label": "受害家属注意事项",
-        "description": "受害家属必须了解的注意事项。"
+      "minister": {
+        "label": "牧师介绍",
+        "description": "介绍咨询所代表申铉旭牧师和金降临牧师。"
       },
       "centers": {
         "label": "全国咨询所指南",
         "description": "全国咨询所的位置和联系方式。"
-      },
-      "minister": {
-        "label": "牧师介绍",
-        "description": "介绍咨询所代表申铉旭牧师和金降临牧师。"
       },
       "interviews": {
         "label": "采访及媒体报道",
@@ -302,17 +298,21 @@
     },
     "prevention": {
       "label": "新天地受害预防",
-      "measures": {
-        "label": "预防措施",
-        "description": "介绍预防新天地受害的方法。"
+      "damageCases": {
+        "label": "新天地受害案例",
+        "description": "整理了新天地造成的受害案例。"
       },
-      "resources": {
-        "label": "预防资料",
-        "description": "提供受害预防教育资料。"
+      "preventionMaterials": {
+        "label": "预防措施/预防资料",
+        "description": "提供预防新天地危害的方法和教育资料。"
       },
       "locations": {
-        "label": "新天地位置信息",
-        "description": "共享全国新天地设施位置信息。"
+        "label": "新天地位置举报",
+        "description": "举报和分享全国新天地设施的位置信息。"
+      },
+      "familyTips": {
+        "label": "受害家庭注意事项",
+        "description": "受害家庭成员必须了解的注意事项。"
       }
     },
     "withdrawal": {
@@ -325,10 +325,6 @@
         "label": "退出者手记及见证",
         "description": "分享实际退出者的手记和见证。"
       },
-      "damageCases": {
-        "label": "新天地受害案例",
-        "description": "整理新天地造成的受害案例。"
-      },
       "toMembers": {
         "label": "致新天地成员",
         "description": "给目前在新天地的人的信息。"
@@ -339,10 +335,6 @@
       "counseling": {
         "label": "咨询公告板",
         "description": "可以请求新天地相关咨询。"
-      },
-      "free": {
-        "label": "自由公告板",
-        "description": "自由交流意见的空间。"
       }
     }
   },

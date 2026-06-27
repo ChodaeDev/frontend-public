@@ -104,13 +104,13 @@
   --warning: #fffb00;
   --error: #ff4848;
 
-  --text-primary: rgb(251, 251, 251);
-  --text-secondary: rgb(226, 226, 226);
+  --text-primary: rgb(245, 245, 245);
+  --text-secondary: rgb(221, 221, 221);
   --text-inverse: rgb(5, 5, 5);
 
-  --background: rgb(20, 20, 20);
+  --background: rgb(26, 26, 26);
   --background-secondary: rgb(32, 32, 32);
-  --foreground: rgb(255, 255, 255);
+  --foreground: rgb(252, 252, 252);
   --foreground-secondary: rgb(245, 245, 245);
 
   --gray-0: rgb(200, 200, 200);
@@ -119,10 +119,10 @@
   --gray-3: rgb(140, 140, 140);
   --gray-4: rgb(120, 120, 120);
   --gray-5: rgb(100, 100, 100);
-  --gray-6: rgb(80, 80, 80);
-  --gray-7: rgb(60, 60, 60);
-  --gray-8: rgb(45, 45, 45);
-  --gray-9: rgb(35, 35, 35);
+  --gray-6: rgb(82, 82, 82);
+  --gray-7: rgb(66, 66, 66);
+  --gray-8: rgb(54, 54, 54);
+  --gray-9: rgb(42, 42, 42);
   --edge: rgb(0, 0, 0);
 }
 

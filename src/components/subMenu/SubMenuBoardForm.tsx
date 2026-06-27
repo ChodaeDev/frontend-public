@@ -15,7 +15,6 @@ import {
 import { useTranslation } from '@/i18n/client';
 import { useAuthStore } from '@/store/authStore';
 import { cn } from '@/lib/cn';
-import { freeBoardKeys } from '@/lib/queries/freeBoard';
 import {
   createSubMenuBoardPost,
   fetchSubMenuBoardDetail,
@@ -88,8 +87,6 @@ export default function SubMenuBoardForm({ locale, route, mode, postId }: SubMen
       createSubMenuBoardPost(route, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.board(route) });
-      queryClient.removeQueries({ queryKey: freeBoardKeys.all });
-      queryClient.invalidateQueries({ queryKey: freeBoardKeys.all });
       router.push(`/${ locale }/${ boardPath }`);
       router.refresh();
     },
@@ -100,8 +97,6 @@ export default function SubMenuBoardForm({ locale, route, mode, postId }: SubMen
       updateSubMenuBoardPost(route, id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.board(route) });
-      queryClient.removeQueries({ queryKey: freeBoardKeys.all });
-      queryClient.invalidateQueries({ queryKey: freeBoardKeys.all });
       if (postId) {
         queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.detail(route, postId) });
         router.push(`/${ locale }/${ boardPath }/${ postId }`);

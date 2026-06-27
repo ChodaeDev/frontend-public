@@ -1,18 +1,21 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import dayjs from 'dayjs';
-import { Search } from 'lucide-react';
+import { Plus, Search } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import FormSelect from '@/components/ui/FormSelect';
 import BoardTable from '@/components/ui/BoardTable';
 import Pagination from '@/components/ui/Pagination';
 import type { Locale } from '@/i18n/config';
+import { useAuthStore } from '@/store/authStore';
 import type { Column } from '@/types/ui/boardTable';
 import type { BoardDict, BoardPost } from '@/types/board';
 import type { SortState } from '@/types/common/sort';
 import { cn } from '@/lib/cn';
-import { fetchFreeBoardList, freeBoardKeys, type FreeBoardPost } from '@/lib/queries/freeBoard';
+import { fetchSubMenuBoardList, subMenuBoardKeys, type SubMenuBoardPost } from '@/lib/queries/subMenuBoard';
 import { usePagination } from '@/lib/hooks/usePagination';
 import { useSearch } from '@/lib/hooks/useSearch';
 
@@ -22,14 +25,24 @@ const sortFieldMap: Record<string, string> = {
   commentCount: 'commentCount',
 };
 
-interface FreeBoardContentProps {
+interface SubMenuBoardContentProps {
   locale: Locale;
   boardDict: BoardDict;
+  endpoint: string;
+  boardPath: string;
 }
 
-export default function FreeBoardContent({
+export default function SubMenuBoardContent({
+  locale,
   boardDict,
-}: FreeBoardContentProps) {
+  endpoint,
+  boardPath,
+}: SubMenuBoardContentProps) {
+  const router = useRouter();
+  const user = useAuthStore((state) => state.user);
+  const userLevel = user?.level?.toLowerCase();
+  const isAdmin = userLevel === 'admin' || userLevel === 'superadmin';
+
   const { currentPage, setCurrentPage, itemCount, handleItemCountChange } = usePagination();
   const { searchKeyword, setSearchKeyword, activeQuery, handleSearch, handleSearchKeyDown } = useSearch({ onSearch: () => setCurrentPage(1) });
   const [sortState, setSortState] = useState<SortState>({ fieldId: 'date', direction: 'desc' });
@@ -43,11 +56,11 @@ export default function FreeBoardContent({
   };
 
   const { data: listData, isLoading: loading, isError } = useQuery({
-    queryKey: freeBoardKeys.list({ page: currentPage, size: itemCount, sort: sortBy, direction }),
-    queryFn: () => fetchFreeBoardList({ page: currentPage, size: itemCount, sort: sortBy, direction }),
+    queryKey: subMenuBoardKeys.list({ page: currentPage, size: itemCount, sort: sortBy, direction, endpoint }),
+    queryFn: () => fetchSubMenuBoardList({ page: currentPage, size: itemCount, sort: sortBy, direction, endpoint }),
   });
 
-  const mapPost = (item: FreeBoardPost): BoardPost => ({
+  const mapPost = (item: SubMenuBoardPost): BoardPost => ({
     id: item.id,
     title: item.title,
     author: item.userName,
@@ -70,6 +83,10 @@ export default function FreeBoardContent({
     totalPages: activeQuery ? 1 : listData?.totalPages ?? 1,
     itemTotal: activeQuery ? regularPosts.length : (listData?.itemTotal ?? 0) - noticePosts.length,
     itemCount,
+  };
+
+  const handleRowClick = (post: BoardPost) => {
+    router.push(`/${ locale }/${ boardPath }/${ post.id }`);
   };
 
   const columns: Column<BoardPost>[] = [
@@ -126,6 +143,18 @@ export default function FreeBoardContent({
 
   return (
     <div>
+      {isAdmin && (
+        <div className={'mb-6'}>
+          <Link
+            href={`/${ locale }/${ boardPath }/write`}
+            className={'inline-flex items-center gap-2 px-5 py-2.5 bg-accent1 text-white rounded-lg hover:bg-accent1/90 transition-colors font-medium'}
+          >
+            <Plus className={'size-5'} />
+            {boardDict.write || '글쓰기'}
+          </Link>
+        </div>
+      )}
+
       <div className={'hidden sm:flex items-start sm:items-center justify-between gap-3 mb-4'}>
         <div className={'flex items-center gap-2'}>
           <FormSelect
@@ -163,6 +192,7 @@ export default function FreeBoardContent({
           isError={isError}
           paging={paging}
           keyExtractor={(post) => String(post.id)}
+          onRowClick={handleRowClick}
           emptyMessage={boardDict.emptyMessage || '게시글이 없습니다.'}
           currentSort={sortState}
           onSortChange={handleSortChange}

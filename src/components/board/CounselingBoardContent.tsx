@@ -232,7 +232,7 @@ export default function CounselingBoardContent({
       {/* TODO: 조회수 기능 구현 후 gridClass를 sm:grid-cols-[64px_1fr_96px_96px_112px_64px] 으로 변경 */}
       <div className={cn('transition-opacity duration-200 min-h-[600px]', loading && posts.length > 0 && 'opacity-40 pointer-events-non')}>
         <BoardTable
-          gridClass={'grid-cols-[1fr_8fr_96px] sm:grid-cols-[1fr_6fr_1fr_1fr_96px]'}
+          gridClass={'grid-cols-[75px_8fr_96px] sm:grid-cols-[1fr_6fr_1fr_1fr_96px]'}
           data={posts}
           columns={columns}
           isLoading={loading && posts.length === 0}

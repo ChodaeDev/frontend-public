@@ -132,7 +132,7 @@ export default function BoardPreviewSection({ locale }: BoardPreviewSectionProps
         <BoardList
           title={t.damageCasesTitle || '신천지 피해사례'}
           viewAll={t.viewAll || '전체 보기'}
-          href={'/withdrawal/damage-cases'}
+          href={'/prevention/damage-cases'}
           items={mockDamageCases}
           locale={locale}
         />

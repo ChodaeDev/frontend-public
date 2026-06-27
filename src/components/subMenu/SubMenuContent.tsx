@@ -3,8 +3,7 @@
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
 import CounselingBoardContent from '@/components/board/CounselingBoardContent';
-import FreeBoardContent from '@/components/board/FreeBoardContent';
-import SubMenuBoardContent from '@/components/board/SubMenuBoardContent';
+import SubMenuBoardContent from '@/components/subMenu/SubMenuBoardContent';
 import PressContent from '@/components/scj-info/PressContent';
 
 interface SubMenuContentProps {
@@ -58,10 +57,8 @@ export default function SubMenuContent({
       legal: '/api/doctrine/legal/list',
     },
     prevention: {
-      resources: '/api/prevention/resources/list',
-    },
-    withdrawal: {
-      'damage-cases': '/api/withdrawal/damage-cases/list',
+      'damage-cases': '/api/prevention/damage-cases/list',
+      'prevention-materials': '/api/prevention/prevention-materials/list',
     },
   };
 
@@ -82,14 +79,6 @@ export default function SubMenuContent({
       if (subMenu === 'counseling') {
         return (
           <CounselingBoardContent
-            locale={locale}
-            boardDict={boardDict}
-          />
-        );
-      }
-      if (subMenu === 'free') {
-        return (
-          <FreeBoardContent
             locale={locale}
             boardDict={boardDict}
           />
