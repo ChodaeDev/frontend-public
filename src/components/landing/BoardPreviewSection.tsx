@@ -113,7 +113,7 @@ export default function BoardPreviewSection({ locale }: BoardPreviewSectionProps
     .map((post: CounselingPost) => ({
       id: String(post.id),
       title: post.title,
-      author: post.userName,
+      author: post.userId,
       date: post.createDate,
       visibilityLevel: post.visibilityLevel,
     }));

@@ -346,6 +346,7 @@
     "date": "Date",
     "views": "Views",
     "notice": "Notice",
+    "ownPost": "My Post",
     "emptyMessage": "No posts found.",
     "itemsPerPage": "per page",
     "searchByTitle": "Title",

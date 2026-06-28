@@ -346,6 +346,7 @@
     "date": "Datum",
     "views": "Aufrufe",
     "notice": "Hinweis",
+    "ownPost": "Eigener Beitrag",
     "emptyMessage": "Keine Beiträge gefunden.",
     "itemsPerPage": "pro Seite",
     "searchByTitle": "Titel",

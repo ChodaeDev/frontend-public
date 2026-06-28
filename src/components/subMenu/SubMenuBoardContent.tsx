@@ -92,8 +92,9 @@ export default function SubMenuBoardContent({
   const columns: Column<BoardPost>[] = [
     {
       id: 'number',
-      label: boardDict.number || '번호',
+      label: boardDict.number || '순번',
       className: 'justify-center',
+      hideOnMobile: true,
       accessor: (post, index, paging) => {
         if (post.isNotice) {
           return (
@@ -185,7 +186,7 @@ export default function SubMenuBoardContent({
 
       <div className={cn('transition-opacity duration-200 min-h-[600px]', loading && posts.length > 0 && 'opacity-40 pointer-events-none')}>
         <BoardTable
-          gridClass={'grid-cols-[1fr_8fr_96px] sm:grid-cols-[1fr_7fr_1fr_96px]'}
+          gridClass={'grid-cols-[1fr_96px] sm:grid-cols-[1fr_7fr_1fr_96px]'}
           data={posts}
           columns={columns}
           isLoading={loading && posts.length === 0}

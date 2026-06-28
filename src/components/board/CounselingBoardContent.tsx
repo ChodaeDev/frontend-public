@@ -60,7 +60,7 @@ export default function CounselingBoardContent({
   const mapPost = (item: CounselingPost): BoardPost => ({
     id: item.id,
     title: item.title,
-    author: item.userName,
+    author: item.userId,
     isOwner: item.isOwner,
     date: dayjs(item.createDate).format('YYYY-MM-DD'),
     commentCount: item.commentCount,
@@ -81,17 +81,14 @@ export default function CounselingBoardContent({
     itemCount,
   };
 
-  // 공지글 및 public 게시글은 isOwner 무관하게 접근 가능
-  // 비공개(partial/private) 게시글은 서버에서 반환한 isOwner로만 판단
-  const isLocked = (post: BoardPost) => {
-    if (post.isNotice) return false;
-    if (post.visibilityLevel === 'public') return false;
-    if (isAdmin) return false;
-    return !post.isOwner;
-  };
+  // 자물쇠 표시: 공지와 admin 제외 모든 글에 표시
+  const showLock = (post: BoardPost) => !post.isNotice && !isAdmin;
+
+  // 진입 가능: 공지, 본인글, admin만 진입 가능
+  const canAccess = (post: BoardPost) => post.isNotice || post.isOwner || isAdmin;
 
   const handleRowClick = (post: BoardPost) => {
-    if (isLocked(post)) {
+    if (!canAccess(post)) {
       alert('비공개 글입니다. 작성자만 확인할 수 있습니다.');
       return;
     }
@@ -101,8 +98,9 @@ export default function CounselingBoardContent({
   const columns: Column<BoardPost>[] = [
     {
       id: 'number',
-      label: boardDict.number || '번호',
+      label: boardDict.number || '순번',
       className: 'justify-center',
+      hideOnMobile: true,
       accessor: (post, index, paging) => {
         if (post.isNotice) {
           return (
@@ -123,20 +121,22 @@ export default function CounselingBoardContent({
       label: boardDict.title || '제목',
       className: 'justify-start',
       sortable: true,
-      accessor: (post) => {
-        const locked = isLocked(post);
-        return (
-          <span className={'text-main flex items-center gap-1.5'}>
-            {locked && <Lock className={'size-3.5 text-gray3 shrink-0'} />}
-            <div className={'truncate max-w-[120px] sm:max-w-full'}>
-              {post.title}
-            </div>
-            <span className={'text-xs text-accent1 font-medium'}>
-              {'['}{post.commentCount ?? 0}{']'}
+      accessor: (post) => (
+        <span className={'text-main flex items-center gap-1.5'}>
+          {showLock(post) && <Lock className={'size-3.5 text-gray3 shrink-0'} />}
+          {!post.isNotice && post.isOwner && !isAdmin && (
+            <span className={'shrink-0 px-1.5 py-0.5 text-[10px] font-medium text-main bg-accent4 rounded-full'}>
+              {boardDict.ownPost || '본인글'}
             </span>
+          )}
+          <div className={'truncate max-w-[calc(100vw-190px)] sm:max-w-full'}>
+            {post.title}
+          </div>
+          <span className={'text-xs text-accent1 font-medium'}>
+            {'['}{post.commentCount ?? 0}{']'}
           </span>
-        );
-      },
+        </span>
+      ),
     },
     {
       id: 'counselType',
@@ -232,7 +232,7 @@ export default function CounselingBoardContent({
       {/* TODO: 조회수 기능 구현 후 gridClass를 sm:grid-cols-[64px_1fr_96px_96px_112px_64px] 으로 변경 */}
       <div className={cn('transition-opacity duration-200 min-h-[600px]', loading && posts.length > 0 && 'opacity-40 pointer-events-non')}>
         <BoardTable
-          gridClass={'grid-cols-[75px_8fr_96px] sm:grid-cols-[1fr_6fr_1fr_1fr_96px]'}
+          gridClass={'grid-cols-[1fr_96px] sm:grid-cols-[1fr_6fr_1fr_1fr_96px]'}
           data={posts}
           columns={columns}
           isLoading={loading && posts.length === 0}

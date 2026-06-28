@@ -346,6 +346,7 @@
     "date": "作成日",
     "views": "閲覧数",
     "notice": "お知らせ",
+    "ownPost": "自分の投稿",
     "emptyMessage": "投稿がありません。",
     "itemsPerPage": "件ずつ表示",
     "searchByTitle": "タイトル",

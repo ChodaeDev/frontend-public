@@ -27,6 +27,7 @@ export default function SubMenuContent({
     date: string;
     views: string;
     notice: string;
+    ownPost: string;
     emptyMessage: string;
     itemsPerPage: string;
     searchByTitle: string;

@@ -3,7 +3,7 @@ export type VisibilityLevel = 'public' | 'partial' | 'private';
 export interface CounselingPost {
   id: number;
   title: string;
-  userName: string;
+  userId: string;
   isOwner: boolean;
   commentCount: number;
   visibilityLevel: VisibilityLevel;
@@ -72,6 +72,7 @@ export interface BoardDict {
   date: string;
   views: string;
   notice: string;
+  ownPost: string;
   emptyMessage: string;
   itemsPerPage: string;
   searchByTitle: string;
