@@ -338,6 +338,30 @@
       }
     }
   },
+  "minister": {
+    "tabs": { "shin": "Pastor Shin Hyun-wook", "kim": "Pastor Kim Gang-rim" },
+    "shin": {
+      "name": "Pastor Shin Hyun-wook",
+      "quote": "20 years of Shincheonji education,\n20 years of Shincheonji recovery ministry",
+      "description": "Based on 20 years of experience as a minister and education director in Shincheonji, he is dedicated to counseling, recovery, and prevention ministry for those affected by Shincheonji.",
+      "timeline": [
+        { "year": "2026 Present", "items": ["Senior Pastor of Chodae Church (Presbyterian, Hapdong)", "Director of the General Assembly Cult Countermeasures Committee Counseling Center", "Director of the Korea Christian Cult Counseling Association Guri Counseling Center", "Instructor at Bible Vaccine Center"] },
+        { "year": "2014", "items": ["Ordained as Pastor (Presbyterian, Hapdong)"] },
+        { "year": "2009", "items": ["Entered Chongshin University Graduate School of Theology"] },
+        { "year": "March 2007", "items": ["Founded Chodae Church", "Press conference announcing departure from Shincheonji"] },
+        { "year": "December 2006", "items": ["Left Shincheonji"] },
+        { "year": "1995", "items": ["7th Education Director of Shincheonji General Assembly"] },
+        { "year": "1992", "items": ["Planted Shincheonji John Tribe Saebit Church", "Senior Minister (1992–2006)"] },
+        { "year": "1991", "items": ["Education Instructor at Shincheonji Headquarters"] },
+        { "year": "1988", "items": ["Youth President of Shincheonji Headquarters Church"] },
+        { "year": "1987", "items": ["Evangelist at Shincheonji Branch Church Dongmun Church"] },
+        { "year": "1986", "items": ["Joined a Shincheonji branch church through the deception of the senior pastor"] },
+        { "year": "1982", "items": ["Baptized at a Presbyterian orthodox church"] }
+      ]
+    },
+    "kim": { "name": "Pastor Kim Gang-rim", "quote": "", "description": "", "timeline": [] },
+    "preparing": "Coming soon."
+  },
   "board": {
     "requestCounseling": "Request Counseling",
     "number": "No.",

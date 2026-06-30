@@ -338,6 +338,30 @@
       }
     }
   },
+  "minister": {
+    "tabs": { "shin": "Pastor Shin Hyun-wook", "kim": "Pastor Kim Gang-rim" },
+    "shin": {
+      "name": "Pastor Shin Hyun-wook",
+      "quote": "20 Jahre Shincheonji-Ausbildung,\n20 Jahre Shincheonji-Wiederherstellungsdienst",
+      "description": "Basierend auf 20 Jahren Erfahrung als Geistlicher und Ausbildungsleiter in Shincheonji widmet er sich der Beratung, Wiederherstellung und Prävention für Betroffene von Shincheonji.",
+      "timeline": [
+        { "year": "2026 Gegenwart", "items": ["Leitender Pastor der Chodae-Gemeinde (Presbyterianisch, Hapdong)", "Leiter der Beratungsstelle des Sekten-Gegenmaßnahmenausschusses der Generalversammlung", "Leiter der Beratungsstelle Guri der Koreanischen Christlichen Sektenberatungsvereinigung", "Dozent am Bibelimpfzentrum"] },
+        { "year": "2014", "items": ["Ordination zum Pastor (Presbyterianisch, Hapdong)"] },
+        { "year": "2009", "items": ["Eintritt in die Theologische Hochschule der Chongshin-Universität"] },
+        { "year": "März 2007", "items": ["Gründung der Chodae-Gemeinde", "Pressekonferenz zum Austritt aus Shincheonji"] },
+        { "year": "Dezember 2006", "items": ["Austritt aus Shincheonji"] },
+        { "year": "1995", "items": ["7. Ausbildungsleiter der Shincheonji-Generalversammlung"] },
+        { "year": "1992", "items": ["Gründung der Shincheonji-Johannes-Stamm-Saebit-Gemeinde", "Leitender Geistlicher (1992–2006)"] },
+        { "year": "1991", "items": ["Ausbildungsdozent in der Shincheonji-Zentrale"] },
+        { "year": "1988", "items": ["Jugendvorsitzender der Shincheonji-Zentralgemeinde"] },
+        { "year": "1987", "items": ["Evangelist in der Shincheonji-Zweigstelle Dongmun-Gemeinde"] },
+        { "year": "1986", "items": ["Durch die Täuschung des leitenden Pastors einer Shincheonji-Zweigstelle beigetreten"] },
+        { "year": "1982", "items": ["Taufe in einer presbyterianischen orthodoxen Gemeinde"] }
+      ]
+    },
+    "kim": { "name": "Pastor Kim Gang-rim", "quote": "", "description": "", "timeline": [] },
+    "preparing": "Demnächst verfügbar."
+  },
   "board": {
     "requestCounseling": "Beratung anfordern",
     "number": "Nr.",

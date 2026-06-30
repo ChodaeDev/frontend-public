@@ -4,6 +4,7 @@ import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
 import CounselingBoardContent from '@/components/board/CounselingBoardContent';
 import SubMenuBoardContent from '@/components/subMenu/SubMenuBoardContent';
+import MinisterContent from '@/components/about/MinisterContent';
 import PressContent from '@/components/scj-info/PressContent';
 
 interface SubMenuContentProps {
@@ -86,6 +87,15 @@ export default function SubMenuContent({
         );
       }
       return null;
+    case 'about':
+      if (subMenu === 'minister') {
+        return <MinisterContent />;
+      }
+      return (
+        <div className={'text-sub'}>
+          <p>{'서비스 준비중입니다.'}</p>
+        </div>
+      );
     case 'scj-info':
       if (subMenu === 'press') {
         return (

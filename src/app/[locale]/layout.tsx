@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
-import { Noto_Sans_KR } from 'next/font/google';
+import { Noto_Sans_KR, Gowun_Batang } from 'next/font/google';
 import '@/styles/globals.css';
 import ThemeLayout from '@/layouts/ThemeProvider';
 import { QueryProvider } from '@/store/QueryProvider';
@@ -15,6 +15,13 @@ const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
   weight: ['400', '500', '700', '900'],
   variable: '--font-noto-sans-kr',
+  display: 'swap',
+});
+
+const gowunBatang = Gowun_Batang({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-gowun-batang',
   display: 'swap',
 });
 
@@ -84,7 +91,7 @@ export default async function LocaleLayout({
           }}
         /> */}
       </head>
-      <body className={`${ notoSansKr.variable } font-sans antialiased`}>
+      <body className={`${ notoSansKr.variable } ${ gowunBatang.variable } font-sans antialiased`}>
         <QueryProvider>
           <ThemeLayout>
             <TranslationProvider dictionary={dictionary} locale={locale}>

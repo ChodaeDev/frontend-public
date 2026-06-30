@@ -40,7 +40,7 @@ export default function MinistrySection({ dictionary, locale }: MinistrySectionP
           {ministers.map((minister, index) => (
             <Link
               key={index}
-              href={`/${ locale }/about/minister`}
+              href={`/${ locale }/about/minister?tab=${ index === 0 ? 'shin' : 'kim' }`}
               className={'group relative w-1/2 sm:w-72 aspect-3/4 rounded-3xl overflow-hidden bg-accent4'}
             >
               <Image
