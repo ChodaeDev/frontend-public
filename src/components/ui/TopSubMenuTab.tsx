@@ -53,7 +53,7 @@ export default function TopSubMenuTab({ navItem, currentSubSlug, locale }: TopSu
 
   return (
     <div>
-      <Link href={`/${ locale }/${ navItem.slug }`}>
+      <Link className={'block xl:hidden'} href={`/${ locale }/${ navItem.slug }`}>
         <div className={'text-base font-bold text-main transition-colors'}>
           {navItem.label}
         </div>

@@ -57,7 +57,7 @@ export default async function SubMenuPage({
           locale={locale}
         />
 
-        <div className={'flex flex-col sm:items-start sm:justify-between xl:flex-row-reverse gap-4 mb-8'}>
+        <div className={'hidden xl:flex flex-col sm:items-start sm:justify-between xl:flex-row-reverse gap-4 mb-8'}>
           <Breadcrumb
             locale={locale}
             homeLabel={commonDict.home || '홈'}
@@ -68,11 +68,17 @@ export default async function SubMenuPage({
           />
 
           <div>
-            <h1 className={'text-2xl font-bold text-gray1'}>{subItem.label}</h1>
+            <h1 className={'text-2xl font-bold text-gray1 mb-1'}>{subItem.label}</h1>
             {subItem.description && (
-              <p className={'text-sm text-gray3 mt-1'}>{subItem.description}</p>
+              <p className={'text-sm text-gray3'}>{subItem.description}</p>
             )}
           </div>
+        </div>
+
+        <div className={'block xl:hidden'}>
+          {subItem.description && (
+            <p className={'text-sm text-accent1/60 mt-[-20px] mb-6'}>{subItem.description}</p>
+          )}
         </div>
 
         <div className={'flex-1 min-w-0'}>

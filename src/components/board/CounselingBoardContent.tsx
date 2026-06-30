@@ -104,7 +104,7 @@ export default function CounselingBoardContent({
       accessor: (post, index, paging) => {
         if (post.isNotice) {
           return (
-            <span className={'inline-block px-2 py-0.5 text-xs font-medium text-white bg-accent1 rounded'}>
+            <span className={'inline-block px-2 py-0.5 text-xs font-medium text-white bg-accent1 rounded shrink-0'}>
               {boardDict.notice || '공지'}
             </span>
           );
