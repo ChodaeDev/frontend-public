@@ -4,6 +4,8 @@ import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
 import CounselingBoardContent from '@/components/board/CounselingBoardContent';
 import SubMenuBoardContent from '@/components/subMenu/SubMenuBoardContent';
+import IntroductionContent from '@/components/about/IntroductionContent';
+import DirectionsContent from '@/components/about/DirectionsContent';
 import MinisterContent from '@/components/about/MinisterContent';
 import PressContent from '@/components/scj-info/PressContent';
 
@@ -88,6 +90,12 @@ export default function SubMenuContent({
       }
       return null;
     case 'about':
+      if (subMenu === 'introduction') {
+        return <IntroductionContent />;
+      }
+      if (subMenu === 'directions') {
+        return <DirectionsContent />;
+      }
       if (subMenu === 'minister') {
         return <MinisterContent />;
       }

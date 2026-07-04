@@ -18,8 +18,8 @@ const navStructure = [
   {
     key: 'about',
     slug: 'about',
-    subKeys: ['introduction', 'minister', 'centers', 'interviews', 'videos'],
-    subSlugs: ['introduction', 'minister', 'centers', 'interviews', 'videos'],
+    subKeys: ['introduction', 'minister', 'centers', 'interviews', 'videos', 'directions'],
+    subSlugs: ['introduction', 'minister', 'centers', 'interviews', 'videos', 'directions'],
   },
   {
     key: 'scjInfo',
@@ -97,9 +97,9 @@ export const navItems: NavItem[] = [
     slug: 'about',
     subMenus: [
       {
-        label: '상담소 소개',
+        label: '상담소 소개 및 인사말',
         slug: 'introduction',
-        description: '상담소에 대한 정보와 찾아오시는 길을 안내해 드립니다.',
+        description: '구리이단상담소의 사역과 마음을 소개합니다.',
       },
       {
         label: '목회자 소개',
@@ -120,6 +120,11 @@ export const navItems: NavItem[] = [
         label: '동영상 자료',
         slug: 'videos',
         description: '신천지 관련 동영상 자료를 제공합니다.',
+      },
+      {
+        label: '오시는 길',
+        slug: 'directions',
+        description: '구리이단상담소 찾아오시는 길을 안내합니다.',
       },
     ],
   },

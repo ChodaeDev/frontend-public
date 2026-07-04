@@ -238,8 +238,8 @@
     "about": {
       "label": "About Us",
       "introduction": {
-        "label": "Introduction",
-        "description": "Information about our counseling center and directions."
+        "label": "About Us & Greetings",
+        "description": "Introducing the ministry and heart of Guri Cult Counseling Center."
       },
       "minister": {
         "label": "Our Ministers",
@@ -256,6 +256,10 @@
       "videos": {
         "label": "Video Resources",
         "description": "Video materials related to Shincheonji."
+      },
+      "directions": {
+        "label": "Directions",
+        "description": "How to find the Guri Cult Counseling Center."
       }
     },
     "scjInfo": {
@@ -338,28 +342,247 @@
       }
     }
   },
+  "directions": {
+    "address": "Address",
+    "addressValue": "499 Achasan-ro, Bldg B, 4F #404, Guri-si, Gyeonggi-do",
+    "addressSub": "(Gyomun-dong, Jungang Heights Tium)",
+    "oldAddress": "Old Address",
+    "oldAddressValue": "282-1 Gyomun-dong, Guri-si, Gyeonggi-do (Jungang Heights Tium B-404)",
+    "phone": "Phone",
+    "phoneValue": "0505-369-3391",
+    "hours": "Hours",
+    "hoursValue": "Weekdays 10:00 ~ 18:00\nSaturday 10:00 ~ 13:00",
+    "note": "※ In-person counseling requires a prior appointment.",
+    "floor": "4F",
+    "byBus": "By Bus",
+    "byTrain": "By Subway/Rail",
+    "byCar": "By Car",
+    "busRoutes": [
+      {
+        "from": "From Yongsan Station",
+        "steps": [
+          "경의중앙선 → 중랑역/동부시장",
+          "201번, 202번, 165번 일반버스"
+        ],
+        "stop": "교문사거리 하차"
+      },
+      {
+        "from": "From Gangbyeon Bus Terminal",
+        "steps": [
+          "지하철 7호선 고속터미널역 → 상봉역, 중앙우체국",
+          "51번, 165번, 202번 일반버스"
+        ],
+        "stop": "교문사거리 하차"
+      },
+      {
+        "from": "From Dong Seoul Bus Terminal",
+        "steps": [
+          "강변역",
+          "97번, 1번, 1-1번, 1, 2번, 15번 일반버스"
+        ],
+        "stop": "삼육고교, 구리소방서앞 하차"
+      },
+      {
+        "from": "From Gimpo Airport",
+        "steps": [
+          "공항버스 8843번 → 건영·성원 아파트",
+          "1-1번 버스"
+        ],
+        "stop": "교문사거리 하차"
+      }
+    ],
+    "trainRoutes": [
+      {
+        "from": "From Yongsan Station",
+        "steps": [
+          "용산역 경의중앙선 → 구리역",
+          "일반버스 15번 또는 마을버스 6번 (구리역, 롯데백화점)"
+        ],
+        "stop": "삼육고교 하차"
+      },
+      {
+        "from": "From Gangnam Express Bus Terminal",
+        "steps": [
+          "고속터미널역 3호선 → 옥수역 경의중앙선 → 구리역",
+          "일반버스 15번 또는 마을버스 6번 (구리역, 롯데백화점)"
+        ],
+        "stop": "삼육고교 하차"
+      },
+      {
+        "from": "From Dong Seoul Bus Terminal",
+        "steps": [
+          "강변역 2호선 → 왕십리역 경의중앙선 → 구리역",
+          "일반버스 15번 또는 마을버스 6번 (구리역, 롯데백화점)"
+        ],
+        "stop": "삼육고교 하차"
+      },
+      {
+        "from": "From Gimpo Airport",
+        "steps": [
+          "김포공항역 공항철도 → 공덕역 경의중앙선 → 구리역",
+          "일반버스 15번 또는 마을버스 6번 (구리역, 롯데백화점)"
+        ],
+        "stop": "삼육고교 하차"
+      }
+    ],
+    "carRoutes": [
+      {
+        "from": "From Gyeongbu Expressway",
+        "steps": [
+          "경부고속도로 → 서울톨게이트 통과",
+          "약 4.3km 직진",
+          "서울외곽순환고속도로 판교JC, 구리방향 진입",
+          "약 29km 직진",
+          "남양주IC 진출",
+          "약 2km 직진"
+        ],
+        "stop": "교문사거리에서 좌회전 도착"
+      },
+      {
+        "from": "From Jungbu Expressway",
+        "steps": [
+          "중부고속도로 → 서울외곽순환고속도로 하남JC",
+          "구리, 상일방향",
+          "약 10km 직진",
+          "남양주IC 진출",
+          "약 2.2km 직진"
+        ],
+        "stop": "교문사거리에서 좌회전 도착"
+      }
+    ]
+  },
+  "introduction": {
+    "greeting": "We sincerely welcome all of you who have visited the Guri Cult Counseling Center website.",
+    "paragraphs": [
+      {
+        "text": "The Guri Cult Counseling Center is a counseling center affiliated with Chodae Church of the Presbyterian Church of Korea (Hapdong) denomination and is a member of the Korean Christian Cult Counseling Association. Our center provides counseling and prevention ministry to help individuals, families, and churches who are experiencing difficulties due to Shincheonji.",
+        "highlights": []
+      },
+      {
+        "text": "The most distinctive feature of the Guri Cult Counseling Center is that all of our counseling ministers have personally experienced Shincheonji for more than 10 years. With this unique background, all ministers have gathered with a heart of repentance and a sense of mission, making this a specialized Shincheonji counseling center. Led by Director Pastor Shin Hyun-wook, our full-time counseling ministers strive to provide practical help for recovery and healing based on their real experience with Shincheonji and years of counseling ministry.",
+        "highlights": [
+          "all of our counseling ministers have personally experienced Shincheonji for more than 10 years",
+          "specialized Shincheonji counseling center"
+        ]
+      },
+      {
+        "text": "The Guri Cult Counseling Center has been conducting counseling and prevention activities primarily offline. However, with the hope that more people can access accurate information about Shincheonji and receive the help they need, we have created this website.",
+        "highlights": []
+      },
+      {
+        "text": "While information about Shincheonji has been available through various channels, the sheer volume of information has sometimes made it difficult to find what is actually needed. Therefore, this website focuses on systematically organizing Shincheonji-related materials and counseling information so that anyone can more easily understand and utilize them.",
+        "highlights": []
+      },
+      {
+        "text": "We hope this website will serve as an opportunity for those struggling within Shincheonji to discern the truth and move toward recovery. We hope it will be a channel of comfort and courage for affected families in their overwhelming situations, and practical help for churches and believers in prevention and response.",
+        "highlights": [
+          "an opportunity for those struggling within Shincheonji to discern the truth and move toward recovery",
+          "a channel of comfort and courage for affected families in their overwhelming situations",
+          "practical help for churches and believers in prevention and response"
+        ]
+      },
+      {
+        "text": "The Guri Cult Counseling Center will continue to do its best to be a counseling center that values each soul and helps with recovery and healing in the truth.",
+        "highlights": []
+      }
+    ],
+    "closing": "We bless all who visit this website with the abundant grace and love of the Lord."
+  },
   "minister": {
-    "tabs": { "shin": "Pastor Shin Hyun-wook", "kim": "Pastor Kim Gang-rim" },
+    "tabs": {
+      "shin": "Pastor Shin Hyun-wook",
+      "kim": "Pastor Kim Gang-rim"
+    },
     "shin": {
       "name": "Pastor Shin Hyun-wook",
       "quote": "20 years of Shincheonji education,\n20 years of Shincheonji recovery ministry",
       "description": "Based on 20 years of experience as a minister and education director in Shincheonji, he is dedicated to counseling, recovery, and prevention ministry for those affected by Shincheonji.",
       "timeline": [
-        { "year": "2026 Present", "items": ["Senior Pastor of Chodae Church (Presbyterian, Hapdong)", "Director of the General Assembly Cult Countermeasures Committee Counseling Center", "Director of the Korea Christian Cult Counseling Association Guri Counseling Center", "Instructor at Bible Vaccine Center"] },
-        { "year": "2014", "items": ["Ordained as Pastor (Presbyterian, Hapdong)"] },
-        { "year": "2009", "items": ["Entered Chongshin University Graduate School of Theology"] },
-        { "year": "March 2007", "items": ["Founded Chodae Church", "Press conference announcing departure from Shincheonji"] },
-        { "year": "December 2006", "items": ["Left Shincheonji"] },
-        { "year": "1995", "items": ["7th Education Director of Shincheonji General Assembly"] },
-        { "year": "1992", "items": ["Planted Shincheonji John Tribe Saebit Church", "Senior Minister (1992–2006)"] },
-        { "year": "1991", "items": ["Education Instructor at Shincheonji Headquarters"] },
-        { "year": "1988", "items": ["Youth President of Shincheonji Headquarters Church"] },
-        { "year": "1987", "items": ["Evangelist at Shincheonji Branch Church Dongmun Church"] },
-        { "year": "1986", "items": ["Joined a Shincheonji branch church through the deception of the senior pastor"] },
-        { "year": "1982", "items": ["Received baptism at a Presbyterian orthodox church"] }
+        {
+          "year": "2026 Present",
+          "items": [
+            "Senior Pastor of Chodae Church (Presbyterian, Hapdong)",
+            "Director of the General Assembly Cult Countermeasures Committee Counseling Center",
+            "Director of the Korea Christian Cult Counseling Association Guri Counseling Center",
+            "Instructor at Bible Vaccine Center"
+          ]
+        },
+        {
+          "year": "2014",
+          "items": [
+            "Ordained as Pastor (Presbyterian, Hapdong)"
+          ]
+        },
+        {
+          "year": "2009",
+          "items": [
+            "Entered Chongshin University Graduate School of Theology"
+          ]
+        },
+        {
+          "year": "March 2007",
+          "items": [
+            "Founded Chodae Church",
+            "Press conference announcing departure from Shincheonji"
+          ]
+        },
+        {
+          "year": "December 2006",
+          "items": [
+            "Left Shincheonji"
+          ]
+        },
+        {
+          "year": "1995",
+          "items": [
+            "7th Education Director of Shincheonji General Assembly"
+          ]
+        },
+        {
+          "year": "1992",
+          "items": [
+            "Planted Shincheonji John Tribe Saebit Church",
+            "Senior Minister (1992–2006)"
+          ]
+        },
+        {
+          "year": "1991",
+          "items": [
+            "Education Instructor at Shincheonji Headquarters"
+          ]
+        },
+        {
+          "year": "1988",
+          "items": [
+            "Youth President of Shincheonji Headquarters Church"
+          ]
+        },
+        {
+          "year": "1987",
+          "items": [
+            "Evangelist at Shincheonji Branch Church Dongmun Church"
+          ]
+        },
+        {
+          "year": "1986",
+          "items": [
+            "Joined a Shincheonji branch church through the deception of the senior pastor"
+          ]
+        },
+        {
+          "year": "1982",
+          "items": [
+            "Received baptism at a Presbyterian orthodox church"
+          ]
+        }
       ]
     },
-    "kim": { "name": "Pastor Kim Gang-rim", "quote": "", "description": "", "timeline": [] },
+    "kim": {
+      "name": "Pastor Kim Gang-rim",
+      "quote": "",
+      "description": "",
+      "timeline": []
+    },
     "preparing": "Coming soon."
   },
   "board": {

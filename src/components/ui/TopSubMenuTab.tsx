@@ -64,7 +64,7 @@ export default function TopSubMenuTab({ navItem, currentSubSlug, locale }: TopSu
         onValueChange={(slug) => router.push(`/${ locale }/${ navItem.slug }/${ slug }`)}
       >
         <Tabs.List
-          className={'relative flex gap-5 overflow-x-auto scrollbar-none -mx-4 px-4 md:-mx-6 md:px-6 lg:-mx-10 lg:px-10 border-b border-gray9'}
+          className={'relative flex gap-5 overflow-x-auto scrollbar-none -mx-4 mt-4 px-4 md:-mx-6 md:px-6 lg:-mx-10 lg:px-10 border-b border-gray9'}
         >
           {navItem.subMenus?.map((sub) => (
             <Tabs.Trigger

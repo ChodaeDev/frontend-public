@@ -238,8 +238,8 @@
     "about": {
       "label": "Über uns",
       "introduction": {
-        "label": "Einführung",
-        "description": "Informationen über unser Beratungszentrum und Wegbeschreibung."
+        "label": "Über uns & Grußwort",
+        "description": "Wir stellen den Dienst und das Anliegen des Guri-Sektenberatungszentrums vor."
       },
       "minister": {
         "label": "Unsere Ministeren",
@@ -256,6 +256,10 @@
       "videos": {
         "label": "Videoressourcen",
         "description": "Videomaterialien zu Shincheonji."
+      },
+      "directions": {
+        "label": "Anfahrt",
+        "description": "So finden Sie das Guri-Sektenberatungszentrum."
       }
     },
     "scjInfo": {
@@ -338,28 +342,247 @@
       }
     }
   },
+  "directions": {
+    "address": "Adresse",
+    "addressValue": "499 Achasan-ro, Geb. B, 4. OG Nr. 404, Guri-si, Gyeonggi-do",
+    "addressSub": "(Gyomun-dong, Jungang Heights Tium)",
+    "oldAddress": "Alte Adresse",
+    "oldAddressValue": "282-1 Gyomun-dong, Guri-si, Gyeonggi-do (Jungang Heights Tium B-404)",
+    "phone": "Telefon",
+    "phoneValue": "0505-369-3391",
+    "hours": "Beratungszeiten",
+    "hoursValue": "Werktags 10:00 ~ 18:00\nSamstag 10:00 ~ 13:00",
+    "note": "※ Persönliche Beratung erfordert eine vorherige Terminvereinbarung.",
+    "floor": "4. OG",
+    "byBus": "Mit dem Bus",
+    "byTrain": "Mit U-Bahn/Bahn",
+    "byCar": "Mit dem Auto",
+    "busRoutes": [
+      {
+        "from": "Von Yongsan-Bahnhof",
+        "steps": [
+          "경의중앙선 → 중랑역/동부시장",
+          "201번, 202번, 165번 일반버스"
+        ],
+        "stop": "교문사거리 하차"
+      },
+      {
+        "from": "Vom Gangbyeon Busbahnhof",
+        "steps": [
+          "지하철 7호선 고속터미널역 → 상봉역, 중앙우체국",
+          "51번, 165번, 202번 일반버스"
+        ],
+        "stop": "교문사거리 하차"
+      },
+      {
+        "from": "Vom Dong Seoul Busbahnhof",
+        "steps": [
+          "강변역",
+          "97번, 1번, 1-1번, 1, 2번, 15번 일반버스"
+        ],
+        "stop": "삼육고교, 구리소방서앞 하차"
+      },
+      {
+        "from": "Vom Flughafen Gimpo",
+        "steps": [
+          "공항버스 8843번 → 건영·성원 아파트",
+          "1-1번 버스"
+        ],
+        "stop": "교문사거리 하차"
+      }
+    ],
+    "trainRoutes": [
+      {
+        "from": "Von Yongsan-Bahnhof",
+        "steps": [
+          "용산역 경의중앙선 → 구리역",
+          "일반버스 15번 또는 마을버스 6번 (구리역, 롯데백화점)"
+        ],
+        "stop": "삼육고교 하차"
+      },
+      {
+        "from": "Vom Gangnam Express-Busbahnhof",
+        "steps": [
+          "고속터미널역 3호선 → 옥수역 경의중앙선 → 구리역",
+          "일반버스 15번 또는 마을버스 6번 (구리역, 롯데백화점)"
+        ],
+        "stop": "삼육고교 하차"
+      },
+      {
+        "from": "Vom Dong Seoul Busbahnhof",
+        "steps": [
+          "강변역 2호선 → 왕십리역 경의중앙선 → 구리역",
+          "일반버스 15번 또는 마을버스 6번 (구리역, 롯데백화점)"
+        ],
+        "stop": "삼육고교 하차"
+      },
+      {
+        "from": "Vom Flughafen Gimpo",
+        "steps": [
+          "김포공항역 공항철도 → 공덕역 경의중앙선 → 구리역",
+          "일반버스 15번 또는 마을버스 6번 (구리역, 롯데백화점)"
+        ],
+        "stop": "삼육고교 하차"
+      }
+    ],
+    "carRoutes": [
+      {
+        "from": "Von der Gyeongbu-Autobahn",
+        "steps": [
+          "경부고속도로 → 서울톨게이트 통과",
+          "약 4.3km 직진",
+          "서울외곽순환고속도로 판교JC, 구리방향 진입",
+          "약 29km 직진",
+          "남양주IC 진출",
+          "약 2km 직진"
+        ],
+        "stop": "교문사거리에서 좌회전 도착"
+      },
+      {
+        "from": "Von der Jungbu-Autobahn",
+        "steps": [
+          "중부고속도로 → 서울외곽순환고속도로 하남JC",
+          "구리, 상일방향",
+          "약 10km 직진",
+          "남양주IC 진출",
+          "약 2.2km 직진"
+        ],
+        "stop": "교문사거리에서 좌회전 도착"
+      }
+    ]
+  },
+  "introduction": {
+    "greeting": "Wir heißen alle Besucher der Website des Guri-Sektenberatungszentrums herzlich willkommen.",
+    "paragraphs": [
+      {
+        "text": "Das Guri-Sektenberatungszentrum ist ein der Chodae-Kirche der Presbyterianischen Kirche Koreas (Hapdong) angeschlossenes Beratungszentrum und Mitglied des Verbands der koreanischen christlichen Sektenberatungsstellen. Unser Zentrum widmet sich der Beratungs- und Präventionsarbeit, um Einzelpersonen, Familien und Gemeinden zu helfen, die durch Shincheonji in Schwierigkeiten geraten sind.",
+        "highlights": []
+      },
+      {
+        "text": "Das herausragendste Merkmal des Guri-Sektenberatungszentrums ist, dass alle Beratungsmitarbeiter Shincheonji über mehr als 10 Jahre persönlich erfahren haben. Mit diesem besonderen Hintergrund haben sich alle Mitarbeiter mit einem Herzen der Reue und einem Gefühl der Berufung zusammengefunden, was dies zu einem spezialisierten Shincheonji-Beratungszentrum macht. Unter der Leitung von Direktor Pastor Shin Hyun-wook bemühen sich unsere hauptamtlichen Beratungsmitarbeiter, auf der Grundlage ihrer realen Erfahrungen mit Shincheonji und jahrelanger Beratungsarbeit praktische Hilfe für Genesung und Heilung zu bieten.",
+        "highlights": [
+          "alle Beratungsmitarbeiter Shincheonji über mehr als 10 Jahre persönlich erfahren haben",
+          "spezialisierten Shincheonji-Beratungszentrum"
+        ]
+      },
+      {
+        "text": "Das Guri-Sektenberatungszentrum hat seine Beratungs- und Präventionsarbeit bisher hauptsächlich offline durchgeführt. In der Hoffnung, dass mehr Menschen Zugang zu genauen Informationen über Shincheonji erhalten und die benötigte Hilfe bekommen können, haben wir diese Website eingerichtet.",
+        "highlights": []
+      },
+      {
+        "text": "Obwohl Informationen über Shincheonji bereits über verschiedene Kanäle in großem Umfang verfügbar waren, machte es die schiere Menge an Informationen manchmal schwierig, das tatsächlich Benötigte zu finden. Daher konzentriert sich diese Website darauf, Materialien zu Shincheonji und Beratungsinformationen systematisch zu ordnen, damit jeder sie leichter verstehen und nutzen kann.",
+        "highlights": []
+      },
+      {
+        "text": "Wir hoffen, dass diese Website für Menschen, die innerhalb von Shincheonji kämpfen, eine Gelegenheit sein wird, die Wahrheit zu erkennen und den Weg zur Genesung einzuschlagen. Wir hoffen, dass sie für betroffene Familien in ihrer überwältigenden Situation ein Kanal des Trostes und des Mutes sein wird und für Gemeinden und Gläubige eine praktische Hilfe bei der Prävention und Bewältigung.",
+        "highlights": [
+          "die Wahrheit zu erkennen und den Weg zur Genesung einzuschlagen",
+          "ein Kanal des Trostes und des Mutes",
+          "praktische Hilfe bei der Prävention und Bewältigung"
+        ]
+      },
+      {
+        "text": "Das Guri-Sektenberatungszentrum wird auch in Zukunft sein Bestes tun, um ein Beratungszentrum zu sein, das jede Seele wertschätzt und bei der Genesung und Heilung in der Wahrheit hilft.",
+        "highlights": []
+      }
+    ],
+    "closing": "Wir segnen alle Besucher dieser Website mit der reichlichen Gnade und Liebe des Herrn."
+  },
   "minister": {
-    "tabs": { "shin": "Pastor Shin Hyun-wook", "kim": "Pastor Kim Gang-rim" },
+    "tabs": {
+      "shin": "Pastor Shin Hyun-wook",
+      "kim": "Pastor Kim Gang-rim"
+    },
     "shin": {
       "name": "Pastor Shin Hyun-wook",
       "quote": "20 Jahre Shincheonji-Ausbildung,\n20 Jahre Shincheonji-Wiederherstellungsdienst",
       "description": "Basierend auf 20 Jahren Erfahrung als Geistlicher und Ausbildungsleiter in Shincheonji widmet er sich der Beratung, Wiederherstellung und Prävention für Betroffene von Shincheonji.",
       "timeline": [
-        { "year": "2026 Gegenwart", "items": ["Leitender Pastor der Chodae-Gemeinde (Presbyterianisch, Hapdong)", "Leiter der Beratungsstelle des Sekten-Gegenmaßnahmenausschusses der Generalversammlung", "Leiter der Beratungsstelle Guri der Koreanischen Christlichen Sektenberatungsvereinigung", "Dozent am Bibelimpfzentrum"] },
-        { "year": "2014", "items": ["Ordination zum Pastor (Presbyterianisch, Hapdong)"] },
-        { "year": "2009", "items": ["Eintritt in die Theologische Hochschule der Chongshin-Universität"] },
-        { "year": "März 2007", "items": ["Gründung der Chodae-Gemeinde", "Pressekonferenz zum Austritt aus Shincheonji"] },
-        { "year": "Dezember 2006", "items": ["Austritt aus Shincheonji"] },
-        { "year": "1995", "items": ["7. Ausbildungsleiter der Shincheonji-Generalversammlung"] },
-        { "year": "1992", "items": ["Gründung der Shincheonji-Johannes-Stamm-Saebit-Gemeinde", "Leitender Geistlicher (1992–2006)"] },
-        { "year": "1991", "items": ["Ausbildungsdozent in der Shincheonji-Zentrale"] },
-        { "year": "1988", "items": ["Jugendvorsitzender der Shincheonji-Zentralgemeinde"] },
-        { "year": "1987", "items": ["Evangelist in der Shincheonji-Zweigstelle Dongmun-Gemeinde"] },
-        { "year": "1986", "items": ["Durch die Täuschung des leitenden Pastors einer Shincheonji-Zweigstelle beigetreten"] },
-        { "year": "1982", "items": ["Empfang der Taufe in einer presbyterianischen orthodoxen Gemeinde"] }
+        {
+          "year": "2026 Gegenwart",
+          "items": [
+            "Leitender Pastor der Chodae-Gemeinde (Presbyterianisch, Hapdong)",
+            "Leiter der Beratungsstelle des Sekten-Gegenmaßnahmenausschusses der Generalversammlung",
+            "Leiter der Beratungsstelle Guri der Koreanischen Christlichen Sektenberatungsvereinigung",
+            "Dozent am Bibelimpfzentrum"
+          ]
+        },
+        {
+          "year": "2014",
+          "items": [
+            "Ordination zum Pastor (Presbyterianisch, Hapdong)"
+          ]
+        },
+        {
+          "year": "2009",
+          "items": [
+            "Eintritt in die Theologische Hochschule der Chongshin-Universität"
+          ]
+        },
+        {
+          "year": "März 2007",
+          "items": [
+            "Gründung der Chodae-Gemeinde",
+            "Pressekonferenz zum Austritt aus Shincheonji"
+          ]
+        },
+        {
+          "year": "Dezember 2006",
+          "items": [
+            "Austritt aus Shincheonji"
+          ]
+        },
+        {
+          "year": "1995",
+          "items": [
+            "7. Ausbildungsleiter der Shincheonji-Generalversammlung"
+          ]
+        },
+        {
+          "year": "1992",
+          "items": [
+            "Gründung der Shincheonji-Johannes-Stamm-Saebit-Gemeinde",
+            "Leitender Geistlicher (1992–2006)"
+          ]
+        },
+        {
+          "year": "1991",
+          "items": [
+            "Ausbildungsdozent in der Shincheonji-Zentrale"
+          ]
+        },
+        {
+          "year": "1988",
+          "items": [
+            "Jugendvorsitzender der Shincheonji-Zentralgemeinde"
+          ]
+        },
+        {
+          "year": "1987",
+          "items": [
+            "Evangelist in der Shincheonji-Zweigstelle Dongmun-Gemeinde"
+          ]
+        },
+        {
+          "year": "1986",
+          "items": [
+            "Durch die Täuschung des leitenden Pastors einer Shincheonji-Zweigstelle beigetreten"
+          ]
+        },
+        {
+          "year": "1982",
+          "items": [
+            "Empfang der Taufe in einer presbyterianischen orthodoxen Gemeinde"
+          ]
+        }
       ]
     },
-    "kim": { "name": "Pastor Kim Gang-rim", "quote": "", "description": "", "timeline": [] },
+    "kim": {
+      "name": "Pastor Kim Gang-rim",
+      "quote": "",
+      "description": "",
+      "timeline": []
+    },
     "preparing": "Demnächst verfügbar."
   },
   "board": {
