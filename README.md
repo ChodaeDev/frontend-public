@@ -76,7 +76,7 @@ docker compose -f ../backend/docker-compose.yml build frontend
 docker compose -f ../backend/docker-compose.yml up --build
 ```
 
-Next.js 컨테이너는 [http://localhost:4998](http://localhost:4998), Nginx 프록시는 [http://localhost](http://localhost)에서 접근할 수 있습니다.
+서비스는 Nginx를 통해 [http://localhost](http://localhost)에서 접근합니다. 운영 환경 주소는 [https://antiscj.or.kr](https://antiscj.or.kr)입니다. Next.js 컨테이너의 `499` 포트는 Docker 내부 네트워크 전용이며 호스트에 직접 공개하지 않습니다.
 
 ### 테스트 실행
 
