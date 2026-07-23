@@ -25,7 +25,7 @@ const DropdownTrigger = ({ children }: { children: React.ReactElement }) => {
 const DropdownList = ({
   children,
   align = 'start',
-  direction = 'bottom',
+  direction = 'left',
 }: {
   children: ReactNode;
   align?: 'start' | 'end';
