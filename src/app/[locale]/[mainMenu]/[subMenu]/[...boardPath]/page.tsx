@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getDictionary } from '@/i18n/getDictionary';
 import { isValidLocale } from '@/i18n/config';
@@ -9,6 +10,20 @@ import TopSubMenuTab from '@/components/ui/TopSubMenuTab';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import SubMenuBoardDetail from '@/components/subMenu/SubMenuBoardDetail';
 import SubMenuBoardForm from '@/components/subMenu/SubMenuBoardForm';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; mainMenu: string; subMenu: string; boardPath: string[] }>;
+}): Promise<Metadata> {
+  const { locale, mainMenu, subMenu } = await params;
+  if (!isValidLocale(locale)) return {};
+  const dictionary = await getDictionary(locale);
+  const navItems = getNavItems(locale, dictionary);
+  const navItem = navItems.find((item) => item.slug === mainMenu);
+  const subItem = navItem?.subMenus?.find((s) => s.slug === subMenu);
+  return { title: subItem?.label || subMenu };
+}
 
 const subMenuBoardRoutes: Record<string, readonly string[]> = {
   'scj-info': ['history', 'details', 'strategy', 'illegal-cases'],

@@ -91,7 +91,7 @@ export default function NewsSection({ locale }: NewsSectionProps) {
                   />
                 ) : (
                   <Image
-                    src={'/assets/images/no-image.svg'}
+                    src={'/assets/images/no-image.png'}
                     alt={news.title}
                     fill
                     className={'object-contain p-2'}

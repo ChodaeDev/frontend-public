@@ -48,9 +48,42 @@ export async function generateMetadata({
 
   const dictionary = await getDictionary(locale);
 
+  const siteName = dictionary.metadata.title || '구리이단상담소';
+  const description = dictionary.metadata.description || '신천지 관련 전문 상담';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.antiscj.or.kr';
+  const ogImage = `${ siteUrl }/assets/images/thumbnail.png`;
+
   return {
-    title: dictionary.metadata.title || '구리이단상담소',
-    description: dictionary.metadata.description || '신천지 관련 전문 상담',
+    title: {
+      template: `%s | ${ siteName }`,
+      default: siteName,
+    },
+    description,
+    openGraph: {
+      title: siteName,
+      description,
+      url: `${ siteUrl }/${ locale }`,
+      siteName,
+      images: [
+        {
+          url: ogImage,
+          width: 1920,
+          height: 1080,
+          alt: siteName,
+        },
+      ],
+      locale: locale === 'ko' ? 'ko_KR' : locale,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: siteName,
+      description,
+      images: [ogImage],
+    },
+    verification: {
+      google: 'h-WGXHzaD9aAVH_2Ph7c1qCKobDF6xlhUj3FAzoX05g',
+    },
     icons: {
       icon: [
         { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -81,15 +114,69 @@ export default async function LocaleLayout({
   }
 
   const dictionary = await getDictionary(locale);
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.antiscj.or.kr';
+  const siteName = dictionary.metadata.title || '구리이단상담소';
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${ siteUrl }/#organization`,
+        name: siteName,
+        url: siteUrl,
+        logo: `${ siteUrl }/favicon/favicon-256x256.png`,
+        description: dictionary.metadata.description || '신천지 관련 전문 상담',
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${ siteUrl }/#website`,
+        url: siteUrl,
+        name: siteName,
+        publisher: { '@id': `${ siteUrl }/#organization` },
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        '@id': `${ siteUrl }/#navigation`,
+        name: 'Main Navigation',
+        hasPart: [
+          {
+            '@type': 'SiteNavigationElement',
+            name: '상담소 소개 및 인사말',
+            url: `${ siteUrl }/${ locale }/about/introduction`,
+          },
+          {
+            '@type': 'SiteNavigationElement',
+            name: '상담게시판',
+            url: `${ siteUrl }/${ locale }/board/counseling`,
+          },
+          {
+            '@type': 'SiteNavigationElement',
+            name: '신천지 정보',
+            url: `${ siteUrl }/${ locale }/scj-info/details`,
+          },
+          {
+            '@type': 'SiteNavigationElement',
+            name: '거짓 반증',
+            url: `${ siteUrl }/${ locale }/doctrine/false-claims`,
+          },
+          {
+            '@type': 'SiteNavigationElement',
+            name: '지혜로운 탈퇴방법',
+            url: `${ siteUrl }/${ locale }/withdrawal/methods`,
+          },
+        ],
+      },
+    ],
+  };
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        {/* <script
-          dangerouslySetInnerHTML={{
-            __html: '(function(){if(navigator.platform.indexOf(\'Win\')>-1)document.documentElement.classList.add(\'os-windows\')})()',
-          }}
-        /> */}
+        <script
+          type={'application/ld+json'}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className={`${ notoSansKr.variable } ${ gowunBatang.variable } font-sans antialiased`}>
         <QueryProvider>

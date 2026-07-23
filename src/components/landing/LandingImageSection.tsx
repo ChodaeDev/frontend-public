@@ -27,12 +27,15 @@ export default function LandingImageSection({
   stats,
 }: LandingImageSectionProps) {
   return (
-    <div className={'animate-fadeIn w-full my-10'}>
+    <section className={'animate-fadeIn w-full my-10'}>
+      <h1 className={'animate-heroSlideUp text-2xl lg:text-4xl font-bold text-main lg:sr-only'}>
+        {dictionary.home.title || '신천지 전문 구리 이단 상담소'}
+      </h1>
       {/* 이미지 컨테이너 */}
       <div className={'relative w-full'}>
         <Image
           src={'/assets/images/landing-image.png'}
-          alt={'home'}
+          alt={dictionary.home.title || '신천지 전문 구리 이단 상담소'}
           width={1168}
           height={480}
           priority
@@ -43,9 +46,9 @@ export default function LandingImageSection({
         {/* 텍스트 콘텐츠 - lg 이상에서 이미지 위 오버레이 */}
         <div className={'hidden lg:flex absolute bottom-0 left-0 right-0 p-10 flex-row justify-between items-end gap-4'}>
           <div>
-            <h1 className={'animate-heroSlideUp text-4xl font-bold text-white'}>
+            <p className={'animate-heroSlideUp text-4xl font-bold text-white'} aria-hidden={'true'}>
               {dictionary.home.title || '신천지 전문 구리 이단 상담소'}
-            </h1>
+            </p>
             <p className={'animate-heroSlideUp-delay-1 text-lg text-white/90 mt-2'}>
               {dictionary.home.subtitle || '신천지로 인한 문제가 있을 경우 적극적으로 도움을 드리겠습니다.'}
             </p>
@@ -91,9 +94,6 @@ export default function LandingImageSection({
       {/* 텍스트 콘텐츠 - lg 미만에서 이미지 아래 표시 */}
       <div className={'w-full flex lg:hidden flex-col sm:flex-row items-center gap-4 pt-4'}>
         <div className={'w-full'}>
-          <h1 className={'animate-heroSlideUp text-2xl font-bold text-main'}>
-            {dictionary.home.title || '신천지 전문 구리 이단 상담소'}
-          </h1>
           <p className={'animate-heroSlideUp-delay-1 text-base text-gray1'}>
             {dictionary.home.subtitle || '신천지로 인한 문제가 있을 경우 적극적으로 도움을 드리겠습니다.'}
           </p>
@@ -134,6 +134,6 @@ export default function LandingImageSection({
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

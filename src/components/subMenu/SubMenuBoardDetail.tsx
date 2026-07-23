@@ -80,21 +80,21 @@ export default function SubMenuBoardDetail({ locale, route, postId }: SubMenuBoa
   }
 
   return (
-    <div>
-      <div className={'border-b border-gray7 mt-8 pb-2'}>
+    <article>
+      <header className={'border-b border-gray7 mt-8 pb-2'}>
         <div className={'flex items-start justify-between gap-4'}>
-          <h2 className={'text-xl font-bold text-main'}>{post.title}</h2>
+          <h1 className={'text-xl font-bold text-main'}>{post.title}</h1>
         </div>
         <div className={'flex flex-col sm:flex-row sm:items-center sm:justify-between mt-2 text-sm gap-1'}>
           <span>{t.author || '작성자'}{': '}<span className={'text-main font-medium'}>{post.userName}</span></span>
           <div className={'flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-gray1'}>
-            <span>{t.createdDate || '작성'}{': '}{dayjs(post.createDate).format('YYYY.MM.DD HH:mm')}</span>
+            <span>{t.createdDate || '작성'}{': '}<time dateTime={post.createDate}>{dayjs(post.createDate).format('YYYY.MM.DD HH:mm')}</time></span>
             {post.modifiedDate && post.modifiedDate !== post.createDate && (
-              <span>{t.modifiedDate || '수정'}{': '}{dayjs(post.modifiedDate).format('YYYY.MM.DD HH:mm')}</span>
+              <span>{t.modifiedDate || '수정'}{': '}<time dateTime={post.modifiedDate}>{dayjs(post.modifiedDate).format('YYYY.MM.DD HH:mm')}</time></span>
             )}
           </div>
         </div>
-      </div>
+      </header>
 
       {isAdmin && (
         <div className={'w-full flex items-center gap-2 my-3'}>
@@ -145,6 +145,6 @@ export default function SubMenuBoardDetail({ locale, route, postId }: SubMenuBoa
         confirmText={deleting ? (t.loading || '불러오는 중...') : (t.delete || '삭제')}
         cancelText={t.cancel || '취소'}
       />
-    </div>
+    </article>
   );
 }

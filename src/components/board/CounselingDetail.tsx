@@ -128,14 +128,14 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
   }
 
   return (
-    <div>
+    <article>
       {/* 게시글 헤더 */}
-      <div className={'border-b border-gray7 mt-8 px-2 pb-2'}>
+      <header className={'border-b border-gray7 mt-8 px-2 pb-2'}>
         <div className={'flex items-start justify-between gap-4'}>
-          <h2 className={'text-xl font-bold text-main flex items-center gap-2'}>
+          <h1 className={'text-xl font-bold text-main flex items-center gap-2'}>
             {!isNotice && post.visibilityLevel !== 'public' && <Lock className={'size-4 text-gray3 shrink-0'} />}
             {post.title}
-          </h2>
+          </h1>
         </div>
         <div className={'flex flex-col sm:flex-row sm:items-center sm:justify-between mt-2 text-sm gap-1'}>
           <div>
@@ -143,13 +143,13 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
             <span className={'text-main font-medium'}>{counselTypeMap[post.counselType] || post.counselType}</span>
           </div>
           <div className={'flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-gray1'}>
-            <span>{t.createdDate || '작성'}{': '}{dayjs(post.createDate).format('YYYY.MM.DD HH:mm')}</span>
+            <span>{t.createdDate || '작성'}{': '}<time dateTime={post.createDate}>{dayjs(post.createDate).format('YYYY.MM.DD HH:mm')}</time></span>
             {post.modifiedDate && post.modifiedDate !== post.createDate && (
-              <span>{t.modifiedDate || '수정'}{': '}{dayjs(post.modifiedDate).format('YYYY.MM.DD HH:mm')}</span>
+              <span>{t.modifiedDate || '수정'}{': '}<time dateTime={post.modifiedDate}>{dayjs(post.modifiedDate).format('YYYY.MM.DD HH:mm')}</time></span>
             )}
           </div>
         </div>
-      </div>
+      </header>
 
       {/* 게시글 메타 정보 */}
       <div className={'border-b border-gray7 px-2 py-3 bg-gray9'}>
@@ -204,6 +204,6 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
         confirmText={deleting ? (t.loading || '불러오는 중...') : (t.delete || '삭제')}
         cancelText={t.cancel || '취소'}
       />
-    </div>
+    </article>
   );
 }

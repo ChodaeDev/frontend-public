@@ -50,7 +50,7 @@ function BoardList({
   return (
     <div className={'flex-1 min-w-0'}>
       <div className={'flex items-center justify-between mb-4 px-2'}>
-        <h3 className={'text-xl font-bold text-main'}>{title}</h3>
+        <h2 className={'text-xl font-bold text-main'}>{title}</h2>
         <Link
           href={`/${ locale }${ href }`}
           className={'text-sm text-sub hover:text-accent1 transition-colors'}

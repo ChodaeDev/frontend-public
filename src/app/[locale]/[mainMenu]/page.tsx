@@ -1,9 +1,23 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 import { getDictionary } from '@/i18n/getDictionary';
 import { locales, isValidLocale } from '@/i18n/config';
 import { getNavItems } from '@/config/navigation';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; mainMenu: string }>;
+}): Promise<Metadata> {
+  const { locale, mainMenu } = await params;
+  if (!isValidLocale(locale)) return {};
+  const dictionary = await getDictionary(locale);
+  const navItems = getNavItems(locale, dictionary);
+  const navItem = navItems.find((item) => item.slug === mainMenu);
+  return { title: navItem?.label || mainMenu };
+}
 
 export function generateStaticParams() {
   const navItems = getNavItems('ko');

@@ -41,7 +41,7 @@ function PressCard({ post }: { post: PressPost }) {
           />
         ) : (
           <Image
-            src={'/assets/images/no-image.svg'}
+            src={'/assets/images/no-image.png'}
             alt={post.title}
             fill
             className={'object-contain p-2'}

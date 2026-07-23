@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { getDictionary } from '@/i18n/getDictionary';
 import { isValidLocale } from '@/i18n/config';
-import MypageLayoutContent from './MypageLayoutContent';
 
 export async function generateMetadata({
   params,
@@ -11,10 +10,10 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isValidLocale(locale)) return {};
   const dictionary = await getDictionary(locale);
-  const t = dictionary.mypage as { title?: string };
-  return { title: t.title || '마이페이지' };
+  const t = dictionary.login as { title?: string };
+  return { title: t.title || '로그인' };
 }
 
-export default function MypageLayout({ children }: { children: React.ReactNode }) {
-  return <MypageLayoutContent>{children}</MypageLayoutContent>;
+export default function LoginLayout({ children }: { children: React.ReactNode }) {
+  return children;
 }

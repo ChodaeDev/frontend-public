@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getDictionary } from '@/i18n/getDictionary';
 import { isValidLocale } from '@/i18n/config';
@@ -8,6 +9,18 @@ import LeftSubMenuNav from '@/components/ui/LeftSubMenuNav';
 import TopSubMenuTab from '@/components/ui/TopSubMenuTab';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import CounselingDetail from '@/components/board/CounselingDetail';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isValidLocale(locale)) return {};
+  const dictionary = await getDictionary(locale);
+  const boardDict = dictionary.board as { counselingPost?: string };
+  return { title: boardDict.counselingPost || '상담글' };
+}
 
 export default async function CounselingDetailPage({
   params,

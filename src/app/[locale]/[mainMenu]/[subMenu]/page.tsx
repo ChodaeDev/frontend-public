@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getDictionary } from '@/i18n/getDictionary';
 import { locales, isValidLocale } from '@/i18n/config';
@@ -6,6 +7,20 @@ import LeftSubMenuNav from '@/components/ui/LeftSubMenuNav';
 import TopSubMenuTab from '@/components/ui/TopSubMenuTab';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import SubMenuContent from '@/components/subMenu/SubMenuContent';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; mainMenu: string; subMenu: string }>;
+}): Promise<Metadata> {
+  const { locale, mainMenu, subMenu } = await params;
+  if (!isValidLocale(locale)) return {};
+  const dictionary = await getDictionary(locale);
+  const navItems = getNavItems(locale, dictionary);
+  const navItem = navItems.find((item) => item.slug === mainMenu);
+  const subItem = navItem?.subMenus?.find((s) => s.slug === subMenu);
+  return { title: subItem?.label || navItem?.label || subMenu };
+}
 
 export function generateStaticParams() {
   const navItems = getNavItems('ko');

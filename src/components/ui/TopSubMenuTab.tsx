@@ -52,7 +52,7 @@ export default function TopSubMenuTab({ navItem, currentSubSlug, locale }: TopSu
   }, [currentSubSlug, indicator.left, indicator.width]);
 
   return (
-    <div>
+    <nav aria-label={navItem.label}>
       <Link className={'block xl:hidden'} href={`/${ locale }/${ navItem.slug }`}>
         <div className={'text-base font-bold text-main transition-colors'}>
           {navItem.label}
@@ -89,6 +89,6 @@ export default function TopSubMenuTab({ navItem, currentSubSlug, locale }: TopSu
           />
         </Tabs.List>
       </Tabs.Root>
-    </div>
+    </nav>
   );
 }
