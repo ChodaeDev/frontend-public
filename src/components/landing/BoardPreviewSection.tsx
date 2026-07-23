@@ -24,13 +24,13 @@ interface BoardPreviewSectionProps {
 }
 
 // TODO: API 호출로 대체
-const mockDamageCases: BoardItem[] = [
-  { id: 'd001', title: '가족 해체 위기까지 몰린 신천지 피해 사례', author: 'idtest123', date: '2026-03-07' },
-  { id: 'd002', title: '대학생 타겟 포교로 인한 학업 중단 사례', author: 'idtest123', date: '2026-03-03' },
-  { id: 'd003', title: '직장 내 신천지 포교 피해 경험담', author: 'idtest123', date: '2026-02-28' },
-  { id: 'd004', title: '헌금 강요로 경제적 피해를 입은 사례', author: 'idtest123', date: '2026-02-22' },
-  { id: 'd005', title: '신천지 탈퇴 후 지속되는 회유와 협박', author: 'idtest123', date: '2026-02-15' },
-];
+const today = dayjs().format('YYYY-MM-DD');
+const mockDamageCases: BoardItem[] = Array.from({ length: 5 }, (_, i) => ({
+  id: `d00${ i + 1 }`,
+  title: '피해사례 준비중입니다.',
+  author: 'test',
+  date: today,
+}));
 
 function BoardList({
   title,

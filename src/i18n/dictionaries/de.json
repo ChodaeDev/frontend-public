@@ -91,6 +91,13 @@
       "testimonies": "Berichte",
       "falseClaims": "Widerlegung",
       "donation": "Spenden"
+    },
+    "notice": {
+      "title": "Hinweis",
+      "body": "Diese Website befindet sich derzeit in der Entwicklung.\nDas Beratungsforum wurde vorab gestartet.\nWir werden Ihnen bald einen besseren Service bieten. Vielen Dank.",
+      "counseling": "Zum Beratungsforum",
+      "hideToday": "Heute nicht mehr anzeigen",
+      "hideForever": "Nicht mehr anzeigen"
     }
   },
   "login": {

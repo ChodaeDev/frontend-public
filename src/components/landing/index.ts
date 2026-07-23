@@ -5,3 +5,4 @@ export { default as NewsSection } from './NewsSection';
 export { default as QuickMenuSection } from './QuickMenuSection';
 export { default as RightSideNav } from './RightSideNav';
 export { default as TestimonySection } from './TestimonySection';
+export { default as NoticePopup } from './NoticePopup';

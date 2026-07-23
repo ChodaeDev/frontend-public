@@ -91,6 +91,13 @@
       "testimonies": "退出经历",
       "falseClaims": "虚假反证",
       "donation": "捐赠咨询"
+    },
+    "notice": {
+      "title": "公告",
+      "body": "本网站目前正在开发中，\n咨询留言板已率先上线。\n我们将以更好的服务与您见面。谢谢。",
+      "counseling": "前往咨询留言板",
+      "hideToday": "今天不再显示",
+      "hideForever": "不再显示"
     }
   },
   "login": {

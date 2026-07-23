@@ -91,6 +91,13 @@
       "testimonies": "脱退体験",
       "falseClaims": "虚偽反証",
       "donation": "後援問合せ"
+    },
+    "notice": {
+      "title": "お知らせ",
+      "body": "当サイトは現在開発中です。\nまず相談掲示板を先行オープンいたしました。\nより良いサービスでお届けいたします。ありがとうございます。",
+      "counseling": "相談掲示板へ",
+      "hideToday": "今日は表示しない",
+      "hideForever": "今後表示しない"
     }
   },
   "login": {

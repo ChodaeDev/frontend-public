@@ -91,6 +91,13 @@
       "testimonies": "Testimonies",
       "falseClaims": "Refutations",
       "donation": "Donate"
+    },
+    "notice": {
+      "title": "Notice",
+      "body": "This site is currently under development.\nWe've launched the counseling board first to serve you sooner.\nThank you for your patience — more features are on the way.",
+      "counseling": "Go to Counseling Board",
+      "hideToday": "Don't show today",
+      "hideForever": "Don't show again"
     }
   },
   "login": {
