@@ -23,12 +23,12 @@ interface TestimonySectionProps {
 
 // TODO: API 호출로 대체
 const mockTestimonies: TestimonyItem[] = [
-  { id: 'idtest123', title: '2015년 신천지 탈퇴 간증', image: '/assets/images/mock/testimony1.png', date: '2025-03-15' },
-  { id: 'idtest123', title: '신천지에서 2개월동안 감금당하고 협박 당한 사연', image: '/assets/images/mock/testimony2.png', date: '2025-02-20' },
-  { id: 'idtest123', title: '포교 현장에서 탈퇴까지, 신천지의 실체를 증언합니다', image: '/assets/images/mock/testimony3.png', date: '2025-01-10' },
-  { id: 'idtest123', title: '대학생 시절 빠진 신천지, 졸업 후 겨우 벗어나다', image: '/assets/images/mock/testimony1.png', date: '2024-12-05' },
-  { id: 'idtest123', title: '신천지 탈퇴 후 교회로 돌아온 감사의 간증', image: '/assets/images/mock/testimony2.png', date: '2024-11-18' },
-  { id: 'idtest123', title: '가정이 무너질 뻔했던 위기, 상담소 덕분에 회복했습니다', image: '/assets/images/mock/testimony3.png', date: '2024-10-22' },
+  { id: 'test', title: '후기 및 간증 인터뷰 준비중입니다.', image: '/assets/images/no-image.png', date: dayjs().format('YYYY-MM-DD') },
+  { id: 'test', title: '후기 및 간증 인터뷰 준비중입니다.', image: '/assets/images/no-image.png', date: dayjs().format('YYYY-MM-DD') },
+  { id: 'test', title: '후기 및 간증 인터뷰 준비중입니다.', image: '/assets/images/no-image.png', date: dayjs().format('YYYY-MM-DD') },
+  { id: 'test', title: '후기 및 간증 인터뷰 준비중입니다.', image: '/assets/images/no-image.png', date: dayjs().format('YYYY-MM-DD') },
+  { id: 'test', title: '후기 및 간증 인터뷰 준비중입니다.', image: '/assets/images/no-image.png', date: dayjs().format('YYYY-MM-DD') },
+  { id: 'test', title: '후기 및 간증 인터뷰 준비중입니다.', image: '/assets/images/no-image.png', date: dayjs().format('YYYY-MM-DD') },
 ];
 
 const lgCardWidth = 420;
