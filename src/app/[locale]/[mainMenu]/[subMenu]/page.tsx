@@ -19,7 +19,13 @@ export async function generateMetadata({
   const navItems = getNavItems(locale, dictionary);
   const navItem = navItems.find((item) => item.slug === mainMenu);
   const subItem = navItem?.subMenus?.find((s) => s.slug === subMenu);
-  return { title: subItem?.label || navItem?.label || subMenu };
+  const title = subItem?.label || navItem?.label || subMenu;
+  const description = subItem?.description || '';
+
+  return {
+    title,
+    ...(description && { description }),
+  };
 }
 
 export function generateStaticParams() {

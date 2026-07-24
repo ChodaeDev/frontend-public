@@ -60,7 +60,10 @@ export async function generateMetadata({
     },
     description,
     openGraph: {
-      title: siteName,
+      title: {
+        template: `%s | ${ siteName }`,
+        default: siteName,
+      },
       description,
       url: `${ siteUrl }/${ locale }`,
       siteName,
@@ -77,7 +80,10 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: siteName,
+      title: {
+        template: `%s | ${ siteName }`,
+        default: siteName,
+      },
       description,
       images: [ogImage],
     },

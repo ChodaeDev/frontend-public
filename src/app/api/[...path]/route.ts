@@ -18,10 +18,16 @@ async function proxy(req: NextRequest) {
     duplex: 'half',
   });
 
-  return new Response(res.body, {
+  const body = await res.arrayBuffer();
+
+  const responseHeaders = new Headers(res.headers);
+  responseHeaders.delete('content-encoding');
+  responseHeaders.delete('content-length');
+
+  return new Response(body, {
     status: res.status,
     statusText: res.statusText,
-    headers: res.headers,
+    headers: responseHeaders,
   });
 }
 

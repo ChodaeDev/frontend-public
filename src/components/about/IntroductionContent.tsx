@@ -1,7 +1,6 @@
 'use client';
 
 import { useTranslation } from '@/i18n/client';
-import Image from 'next/image';
 
 interface IntroParagraph {
   text: string;
