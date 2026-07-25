@@ -165,7 +165,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
       </div>
 
       {isOwner && (
-        <div className={'w-full flex items-center gap-2 mx-2 my-3'}>
+        <div className={'w-full flex justify-end items-center gap-2 my-3'}>
           <Link
             href={`/${ locale }/board/counseling/${ postId }/edit`}
             className={'inline-flex items-center gap-1.5 px-4 py-2 text-sm border border-gray5 rounded-lg hover:bg-gray8 transition-colors'}
@@ -184,7 +184,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
       )}
 
       {/* 게시글 본문 */}
-      <div className={'m-2 min-h-[calc(100vh-600px)]'}>
+      <div className={'mx-2 my-8 min-h-[calc(100vh-600px)]'}>
         <div
           className={'tiptap text-main leading-relaxed prose prose-sm max-w-none'}
           dangerouslySetInnerHTML={{ __html: post.content }}

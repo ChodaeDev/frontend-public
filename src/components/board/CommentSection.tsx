@@ -182,7 +182,13 @@ function CommentItem({
       <div className={'min-h-7 flex items-center justify-between'}>
         <span className={'text-sm font-semibold text-main inline-flex items-center gap-1'}>
           {isReply && <CornerDownRight className={'size-3.5 text-gray3'} />}
-          {comment.userName}
+          <span className={'text-sm font-semibold text-main mb-0.5'}>{comment.userName}</span>
+          {comment.userId === 'admin' && (
+            <span className={'text-xs font-medium text-white bg-accent1/60 px-1.5 py-0.5 rounded'}>{'관리자'}</span>
+          )}
+          {comment.userId === 'kangheesuk' && (
+            <span className={'text-xs font-medium text-white bg-accent2/60 px-1.5 py-0.5 rounded'}>{'간사'}</span>
+          )}
         </span>
         {(canEdit || canDelete) && (
           <Dropdown>
