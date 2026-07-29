@@ -8,6 +8,7 @@ import IntroductionContent from '@/components/about/IntroductionContent';
 import DirectionsContent from '@/components/about/DirectionsContent';
 import MinisterContent from '@/components/about/MinisterContent';
 import CentersContent from '@/components/about/CentersContent';
+import MethodsContent from '@/components/withdrawal/MethodsContent';
 import ToMembersContent from '@/components/withdrawal/ToMembersContent';
 import PressContent from '@/components/scj-info/PressContent';
 
@@ -124,6 +125,9 @@ export default function SubMenuContent({
         </div>
       );
     case 'withdrawal':
+      if (subMenu === 'methods') {
+        return <MethodsContent />;
+      }
       if (subMenu === 'to-members') {
         return <ToMembersContent />;
       }

@@ -4,7 +4,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
-import Image from '@tiptap/extension-image';
+import { captionImage } from '@/lib/tiptap/captionImage';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import {
@@ -21,7 +21,6 @@ import {
   Heading1,
   Heading2,
   Heading3,
-  Pilcrow,
 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { compressImage } from '@/lib/compressImage';
@@ -78,7 +77,7 @@ export default function RichTextEditor({
       StarterKit,
       Underline,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
-      Image.configure({ inline: false, allowBase64: true }),
+      captionImage.configure({ inline: false, allowBase64: true }),
       Link.configure({ openOnClick: false, HTMLAttributes: { class: 'text-accent1 underline' } }),
       Placeholder.configure({ placeholder }),
     ],

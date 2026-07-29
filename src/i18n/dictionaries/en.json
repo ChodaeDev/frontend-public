@@ -674,6 +674,65 @@
     "itemsPerPage": " per page",
     "loading": "Loading..."
   },
+  "methodsContent": {
+    "imageAlt": "Wise Withdrawal Methods",
+    "sections": [
+      {
+        "heading": "1. If You Are a Shincheonji Member",
+        "items": [
+          {
+            "title": "Investigating is not a sin (e.g., Thomas)",
+            "description": "Jesus did not condemn Thomas as a sinner, but personally showed him the nail marks in His hands (John 20:27)."
+          },
+          {
+            "title": "The chairman himself said to verify.",
+            "description": "Is merely questioning Shincheonji the forbidden fruit? Can even past Shincheonji materials be forbidden fruit?"
+          },
+          {
+            "title": "Examine the evidence and fulfillment according to Deuteronomy 18:20-22",
+            "description": "2 Corinthians 11:14 - An angel of light disguises itself; a con artist never admits to being one. Satan is the one who cuts off communication and sows discord, seeking to place himself in God's seat (Ezekiel 28 / Matthew 23:2)."
+          },
+          {
+            "title": "Who are the seven demons?",
+            "description": "Things get worse by joining Shincheonji, not by leaving it."
+          }
+        ]
+      },
+      {
+        "heading": "2. If a Family Member or Friend Is in Shincheonji",
+        "items": [
+          {
+            "title": "Do not panic",
+            "description": "They are still our friends, family, and fellow human beings. The sensational portrayals in the media represent only a part; excessive worry can escalate the situation and cloud your judgment."
+          },
+          {
+            "title": "Never hastily attempt religious counseling — doctrinal discussions will not get through",
+            "description": "Many cases exist where people underestimated the situation and tried to resolve it carelessly, only to push the person deeper into Shincheonji."
+          },
+          {
+            "title": "First, secure solid evidence that they are in Shincheonji",
+            "description": "Without concrete evidence, they will hide the truth with lies."
+          },
+          {
+            "title": "Based on evidence, assess how much of their life is kept secret",
+            "description": "Even within Shincheonji, the degree of commitment varies; you can roughly gauge their involvement by how much Shincheonji work they do."
+          },
+          {
+            "title": "Show genuine love — not the false, legalistic love of Shincheonji — starting from family and friends",
+            "description": "Simply leaving Shincheonji is not everything; how they live after leaving and their recovery is what truly matters."
+          },
+          {
+            "title": "Even when attempting dialogue, build trust with family/friends first",
+            "description": "Never blame, mock, or look down on them. Approach with respect and suggest verifying things together."
+          },
+          {
+            "title": "Most claims about monetary demands or negative counseling methods from Shincheonji are not true",
+            "description": "Casual counseling is possible anywhere — at a cafe or any setting. Coercive methods are no longer used except in truly necessary cases."
+          }
+        ]
+      }
+    ]
+  },
   "toMembersContent": {
     "paragraphs": [
       {

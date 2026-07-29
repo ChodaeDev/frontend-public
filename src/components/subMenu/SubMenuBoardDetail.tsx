@@ -115,7 +115,7 @@ export default function SubMenuBoardDetail({ locale, route, postId }: SubMenuBoa
         </div>
       )}
 
-      <div className={'my-2 min-h-[calc(100vh-600px)]'}>
+      <div className={'my-12 min-h-[calc(100vh-600px)]'}>
         <div
           className={'tiptap text-main'}
           dangerouslySetInnerHTML={{ __html: post.content }}

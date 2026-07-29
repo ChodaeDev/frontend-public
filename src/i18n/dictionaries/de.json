@@ -674,6 +674,65 @@
     "itemsPerPage": " pro Seite",
     "loading": "Wird geladen..."
   },
+  "methodsContent": {
+    "imageAlt": "Kluge Austritts-Methoden",
+    "sections": [
+      {
+        "heading": "1. Wenn Sie selbst Shincheonji-Mitglied sind",
+        "items": [
+          {
+            "title": "Nachforschen ist keine Sünde (z.B. Thomas)",
+            "description": "Jesus tadelte Thomas nicht als Sünder, sondern zeigte ihm persönlich die Nägelmale in seinen Händen (Johannes 20:27)."
+          },
+          {
+            "title": "Der Vorsitzende selbst sagte, man solle es überprüfen.",
+            "description": "Ist es schon die verbotene Frucht, Shincheonji nur zu hinterfragen? Können selbst vergangene Shincheonji-Materialien die verbotene Frucht sein?"
+          },
+          {
+            "title": "Prüfe Beweis und Erfüllung gemäß 5. Mose 18:20-22",
+            "description": "2. Korinther 11:14 – Ein Engel des Lichts verkleidet sich selbst; ein Betrüger gibt nie zu, ein Betrüger zu sein. Satan ist derjenige, der Kommunikation unterbricht und Zwietracht sät und sich selbst auf Gottes Thron setzen will (Hesekiel 28 / Matthäus 23:2)."
+          },
+          {
+            "title": "Wer sind die sieben Dämonen?",
+            "description": "Die Situation verschlechtert sich durch den Eintritt in Shincheonji, nicht durch das Verlassen."
+          }
+        ]
+      },
+      {
+        "heading": "2. Wenn ein Familienmitglied oder Freund in Shincheonji ist",
+        "items": [
+          {
+            "title": "Geraten Sie nicht in Panik",
+            "description": "Sie sind immer noch unsere Freunde, Familie und Mitmenschen. Die schockierenden Darstellungen in den Medien zeigen nur einen Teil; übermäßige Sorge kann die Situation eskalieren und das rationale Denken lähmen."
+          },
+          {
+            "title": "Versuchen Sie niemals voreilig religiöse Beratung — Gespräche über Lehren werden nicht durchdringen",
+            "description": "Viele Fälle zeigen, dass Leute die Situation unterschätzten und die Person dadurch nur noch tiefer in Shincheonji trieben."
+          },
+          {
+            "title": "Sichern Sie zunächst handfeste Beweise, dass die Person bei Shincheonji ist",
+            "description": "Ohne konkrete Beweise werden sie die Wahrheit mit Lügen verbergen."
+          },
+          {
+            "title": "Ermitteln Sie anhand der Beweise, wie viel ihres Lebens geheim gehalten wird",
+            "description": "Auch innerhalb von Shincheonji variiert der Grad des Engagements; anhand des Umfangs der Shincheonji-Arbeit lässt sich eine ungefähre Einschätzung vornehmen."
+          },
+          {
+            "title": "Zeigen Sie echte Liebe — nicht die falsche, gesetzliche Liebe von Shincheonji — beginnend mit Familie und Freunden",
+            "description": "Es geht nicht nur darum, Shincheonji zu verlassen; wie man danach lebt und die Genesung sind das, was wirklich zählt."
+          },
+          {
+            "title": "Selbst wenn Sie den Dialog versuchen, bauen Sie zuerst Vertrauen mit Familie/Freunden auf",
+            "description": "Machen Sie niemals Vorwürfe, spotten Sie nicht und schauen Sie nicht auf die Person herab. Nähern Sie sich mit Respekt und schlagen Sie vor, die Dinge gemeinsam zu überprüfen."
+          },
+          {
+            "title": "Die meisten Behauptungen über Geldforderungen oder negative Beratungsmethoden von Shincheonji sind nicht wahr",
+            "description": "Zwanglose Beratung ist überall möglich — im Café oder an jedem anderen Ort. Zwangsmaßnahmen werden nur in wirklich notwendigen Fällen angewandt."
+          }
+        ]
+      }
+    ]
+  },
   "toMembersContent": {
     "paragraphs": [
       {
