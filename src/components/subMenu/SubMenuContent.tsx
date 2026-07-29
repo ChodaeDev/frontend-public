@@ -7,6 +7,8 @@ import SubMenuBoardContent from '@/components/subMenu/SubMenuBoardContent';
 import IntroductionContent from '@/components/about/IntroductionContent';
 import DirectionsContent from '@/components/about/DirectionsContent';
 import MinisterContent from '@/components/about/MinisterContent';
+import CentersContent from '@/components/about/CentersContent';
+import ToMembersContent from '@/components/withdrawal/ToMembersContent';
 import PressContent from '@/components/scj-info/PressContent';
 
 interface SubMenuContentProps {
@@ -99,6 +101,9 @@ export default function SubMenuContent({
       if (subMenu === 'minister') {
         return <MinisterContent />;
       }
+      if (subMenu === 'centers') {
+        return <CentersContent />;
+      }
       return (
         <div className={'text-sub'}>
           <p>{'서비스 준비중입니다.'}</p>
@@ -112,6 +117,15 @@ export default function SubMenuContent({
             pressDict={pressDict}
           />
         );
+      }
+      return (
+        <div className={'text-sub'}>
+          <p>{'서비스 준비중입니다.'}</p>
+        </div>
+      );
+    case 'withdrawal':
+      if (subMenu === 'to-members') {
+        return <ToMembersContent />;
       }
       return (
         <div className={'text-sub'}>

@@ -109,7 +109,7 @@ export const navItems: NavItem[] = [
       {
         label: '전국 상담소 안내',
         slug: 'centers',
-        description: '전국에 있는 상담소 위치와 연락처를 안내해 드립니다.',
+        description: '전국에 있는 상담소를 안내해 드립니다.',
       },
       {
         label: '인터뷰 및 언론보도',

@@ -254,7 +254,7 @@
       },
       "centers": {
         "label": "Nationwide Centers",
-        "description": "Locations and contact information for counseling centers nationwide."
+        "description": "Information about counseling centers nationwide."
       },
       "interviews": {
         "label": "Interviews & Media",
@@ -673,6 +673,36 @@
     "searchPlaceholder": "Enter search keyword",
     "itemsPerPage": " per page",
     "loading": "Loading..."
+  },
+  "toMembersContent": {
+    "paragraphs": [
+      {
+        "text": "Sadly, not all Shincheonji members believe they are saved in the name of Jesus. What distinguishes them from orthodox churches is that they believe salvation comes through Jesus' new name — that is, the name of Man-hee Lee.",
+        "highlights": ["they believe salvation comes through Jesus' new name — that is, the name of Man-hee Lee"]
+      },
+      {
+        "text": "Furthermore, Shincheonji members believe that even though their own physical immortality is not guaranteed before the union of spirit and flesh, Man-hee Lee himself will never die physically and will live forever. They believe he is the Advocate (Paraclete). Yet Man-hee Lee himself has stated in court and in public, 'I never said I was the Advocate, I never said I wouldn't die, there is no savior other than Jesus' — such blatant contradictions push the limits of patience for any person of faith.",
+        "highlights": ["I never said I was the Advocate, I never said I wouldn't die, there is no savior other than Jesus"]
+      },
+      {
+        "text": "When I think of Shincheonji members who are blind to a few Bible verses and have gone all in with their lives without knowing the true nature of Man-hee Lee — especially the members of Saebit Church that I pioneered and pastored, and among them the ministers who serve faithfully from dawn to late night without properly caring for their families — my heart aches with regret and sorrow, and tears blur my vision.",
+        "highlights": []
+      },
+      {
+        "text": "Thankfully, by the grace of God, after many twists and turns, I came to see that Man-hee Lee is not the promised true shepherd, but rather the false Christ and false prophet prophesied for the last days. I was able to experience the overwhelming joy and gratitude of salvation by restoring our Lord Jesus Christ to the throne I had once given over to Man-hee Lee. Hallelujah!",
+        "highlights": ["the false Christ and false prophet prophesied for the last days", "restoring our Lord Jesus Christ to the throne"]
+      },
+      {
+        "text": "I spent my golden years — my twenties and thirties, when I should have been learning and preparing with the most passion both spiritually and in the world — blinded by mere zeal to know the Bible, losing discernment, deceived by Man-hee Lee, and wasting my life. I was furious and resentful, blaming myself and falling into despair.",
+        "highlights": []
+      },
+      {
+        "text": "However, with the conviction that there should be no more victims like me, with a desire to atone for my sins as a chief of sinners, and with a heavy sense of responsibility, I declare a holy war against Man-hee Lee. I resolve to devote the life that has been given back to me to the faith recovery movement of turning pitiful Shincheonji members back to Jesus, and to the ministry of combating the many cults that pose a serious threat to the Korean church.",
+        "highlights": ["faith recovery movement", "ministry of combating cults"]
+      }
+    ],
+    "emphasis": "Let me emphasize once more at this time.",
+    "closing": "The reality of Shincheonji is a thoroughly fabricated illusion — a patchwork imitation made from doctrines that Man-hee Lee himself was deceived by as he wandered through numerous cults. The fact is that Man-hee Lee will absolutely never live forever in the flesh. My earnest prayer is that Shincheonji members, even after the death of their leader, will not seek another savior, another recipient of revelation, another overcomer, or another Advocate, but will return to Jesus Christ — the one and only eternal Savior testified by the Bible.\n\nJust as in the parable of the prodigal son, where one must leave home to know the preciousness of parents and family, the experience of Shincheonji is undoubtedly a deep wound — yet because of it, I came to realize even more deeply how warm and precious the embrace of our Lord, our first love, truly is.\n\nI urge all believers: when you encounter victims who have been led astray by cults and enslaved to vanity, please remember that before they are targets of condemnation and criticism, they are lost sheep and prodigal children who have left home. Please pray for them with the Lord's compassionate heart, and when they come to their senses and return, embrace them warmly with love.\n\nAnd I pray in the name of the Lord that you will guard your faith and your church with a strong sense of ownership, armed with the Word, and achieve revival and growth as healthy believers in healthy churches."
   },
   "notFound": {
     "title": "Page Not Found",

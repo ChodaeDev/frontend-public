@@ -254,7 +254,7 @@
       },
       "centers": {
         "label": "Landesweite Zentren",
-        "description": "Standorte und Kontaktinformationen für Beratungszentren landesweit."
+        "description": "Informationen über Beratungszentren landesweit."
       },
       "interviews": {
         "label": "Interviews & Medien",
@@ -673,6 +673,36 @@
     "searchPlaceholder": "Suchbegriff eingeben",
     "itemsPerPage": " pro Seite",
     "loading": "Wird geladen..."
+  },
+  "toMembersContent": {
+    "paragraphs": [
+      {
+        "text": "Bedauerlicherweise glauben nicht alle Mitglieder von Shincheonji, dass sie im Namen Jesu gerettet werden. Was sie von orthodoxen Kirchen unterscheidet, ist ihr Glaube, dass die Erlösung durch den neuen Namen Jesu kommt — nämlich durch den Namen von Man-hee Lee.",
+        "highlights": ["ihr Glaube, dass die Erlösung durch den neuen Namen Jesu kommt — nämlich durch den Namen von Man-hee Lee"]
+      },
+      {
+        "text": "Darüber hinaus glauben Shincheonji-Mitglieder, dass, obwohl ihre eigene körperliche Unsterblichkeit vor der Vereinigung von Geist und Fleisch nicht garantiert ist, Man-hee Lee selbst niemals körperlich sterben und ewig leben wird. Sie glauben, er sei der Beistand (Paraklet). Doch Man-hee Lee selbst hat vor Gericht und in der Öffentlichkeit erklärt: 'Ich habe nie gesagt, ich sei der Beistand, ich habe nie gesagt, ich würde nicht sterben, es gibt keinen Erlöser außer Jesus' — solch offensichtliche Widersprüche bringen jeden Gläubigen an die Grenzen seiner Geduld.",
+        "highlights": ["Ich habe nie gesagt, ich sei der Beistand, ich habe nie gesagt, ich würde nicht sterben, es gibt keinen Erlöser außer Jesus"]
+      },
+      {
+        "text": "Wenn ich an die Shincheonji-Mitglieder denke, die von ein paar Bibelversen geblendet ihr ganzes Leben einsetzen, ohne die wahre Natur von Man-hee Lee zu kennen — besonders die Mitglieder der Saebit-Gemeinde, die ich gegründet und geleitet habe, und unter ihnen die Mitarbeiter, die von morgens früh bis spät in die Nacht treu dienen, ohne sich richtig um ihre Familien zu kümmern — dann wird mir das Herz schwer vor Bedauern und Trauer, und Tränen trüben meinen Blick.",
+        "highlights": []
+      },
+      {
+        "text": "Glücklicherweise konnte ich durch Gottes Gnade nach vielen Wendungen erkennen, dass Man-hee Lee nicht der verheißene wahre Hirte ist, sondern vielmehr der für die Endzeit prophezeite falsche Christus und falsche Prophet. Ich durfte die überwältigende Freude und Dankbarkeit der Erlösung erfahren, als ich unseren Herrn Jesus Christus wieder auf den Thron setzte, den ich einst an Man-hee Lee übergeben hatte. Halleluja!",
+        "highlights": ["der für die Endzeit prophezeite falsche Christus und falsche Prophet", "unseren Herrn Jesus Christus wieder auf den Thron setzte"]
+      },
+      {
+        "text": "Meine goldenen Jahre — meine Zwanziger und Dreißiger, in denen ich mit größter Leidenschaft sowohl geistlich als auch weltlich hätte lernen und mich vorbereiten sollen — habe ich aus bloßem Eifer, die Bibel zu kennen, die Urteilskraft verloren, wurde von Man-hee Lee getäuscht und habe mein Leben verschwendet. Ich war wütend und verbittert, machte mir Vorwürfe und verfiel in Verzweiflung.",
+        "highlights": []
+      },
+      {
+        "text": "Doch mit der Überzeugung, dass es keine weiteren Opfer wie mich geben darf, mit dem Wunsch, für meine Sünden als Anführer der Sünder zu büßen, und mit einem schweren Verantwortungsgefühl erkläre ich einen heiligen Krieg gegen Man-hee Lee. Ich bin entschlossen, mein neu geschenktes Leben der Glaubenswiederherstellungsbewegung zu widmen, um die bedauernswerten Shincheonji-Mitglieder zu Jesus zurückzuführen, und dem Dienst der Bekämpfung der vielen Sekten, die eine ernsthafte Bedrohung für die koreanische Kirche darstellen.",
+        "highlights": ["Glaubenswiederherstellungsbewegung", "Dienst der Bekämpfung der Sekten"]
+      }
+    ],
+    "emphasis": "Lassen Sie mich dies noch einmal betonen.",
+    "closing": "Die Realität von Shincheonji ist eine gründlich fabrizierte Illusion — ein zusammengeflicktes Imitat aus Lehren, von denen Man-hee Lee selbst getäuscht wurde, als er durch zahlreiche Sekten wanderte. Tatsache ist, dass Man-hee Lee absolut niemals ewig im Fleisch leben wird. Mein inständiges Gebet ist, dass die Shincheonji-Mitglieder, selbst nach dem Tod ihres Anführers, nicht nach einem anderen Erlöser, einem anderen Offenbarungsempfänger, einem anderen Überwinder oder einem anderen Beistand suchen, sondern zu Jesus Christus zurückkehren — dem einzigen ewigen Erlöser, von dem die Bibel Zeugnis gibt.\n\nWie im Gleichnis vom verlorenen Sohn, wo man das Elternhaus verlassen muss, um die Kostbarkeit von Eltern und Familie zu erkennen, ist die Erfahrung bei Shincheonji zweifellos eine tiefe Wunde — doch gerade dadurch durfte ich noch tiefer erkennen, wie warm und kostbar die Umarmung unseres Herrn, unserer ersten Liebe, wirklich ist.\n\nIch bitte alle Gläubigen: Wenn ihr Opfern begegnet, die von Sekten in die Irre geführt wurden und der Nichtigkeit dienen, denkt daran, dass sie, bevor sie Ziele der Verurteilung und Kritik sind, verlorene Schafe und verlorene Söhne und Töchter sind, die von zu Hause weggegangen sind. Betet für sie mit dem barmherzigen Herzen des Herrn, und wenn sie zur Besinnung kommen und zurückkehren, nehmt sie warm und liebevoll auf.\n\nUnd ich bete im Namen des Herrn, dass ihr euren Glauben und eure Gemeinde mit einem starken Verantwortungsbewusstsein bewahrt, mit dem Wort gewappnet, und als gesunde Gläubige in gesunden Gemeinden Erweckung und Wachstum erfahrt."
   },
   "notFound": {
     "title": "Seite nicht gefunden",
