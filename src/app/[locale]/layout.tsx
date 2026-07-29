@@ -10,6 +10,7 @@ import { locales, isValidLocale } from '@/i18n/config';
 import { getDictionary } from '@/i18n/getDictionary';
 import { TranslationProvider } from '@/i18n/client';
 import ScrollToTop from '@/components/layout/ScrollToTop';
+import AuthGuard from '@/components/auth/AuthGuard';
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
@@ -189,6 +190,7 @@ export default async function LocaleLayout({
           <ThemeLayout>
             <TranslationProvider dictionary={dictionary} locale={locale}>
               <ScrollToTop />
+              <AuthGuard />
               <div className={'relative h-full'}>
                 <Header />
                 <main className={'mt-[89px] max-w-7xl min-h-[calc(100vh-89px)] mx-auto px-4 md:px-6 lg:px-10'}>
