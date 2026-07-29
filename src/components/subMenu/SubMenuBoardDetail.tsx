@@ -49,7 +49,7 @@ export default function SubMenuBoardDetail({ locale, route, postId }: SubMenuBoa
   const { mutate: handleDelete, isPending: deleting } = useMutation({
     mutationFn: () => deleteSubMenuBoardPost(route, postId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.board(route) });
+      queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.all });
       router.push(`/${ locale }/${ boardPath }`);
     },
     onSettled: () => setShowDeleteModal(false),
@@ -97,7 +97,7 @@ export default function SubMenuBoardDetail({ locale, route, postId }: SubMenuBoa
       </header>
 
       {isAdmin && (
-        <div className={'w-full flex items-center gap-2 my-3'}>
+        <div className={'w-full flex justify-end items-center gap-2 my-3'}>
           <Link
             href={`/${ locale }/${ boardPath }/${ postId }/edit`}
             className={'inline-flex items-center gap-1.5 px-4 py-2 text-sm border border-gray5 rounded-lg hover:bg-gray8 transition-colors'}
@@ -117,7 +117,7 @@ export default function SubMenuBoardDetail({ locale, route, postId }: SubMenuBoa
 
       <div className={'my-2 min-h-[calc(100vh-600px)]'}>
         <div
-          className={'tiptap text-main leading-relaxed prose prose-sm max-w-none'}
+          className={'tiptap text-main'}
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
       </div>

@@ -1,5 +1,5 @@
 
-/* Tiptap 에디터 */
+/* Tiptap 에디터 & 렌더링 공통 타이포그래피 */
 .tiptap {
   outline: none;
 }
@@ -12,29 +12,117 @@
   height: 0;
 }
 
+/* 빈 <p> 태그 줄 높이 유지 */
+.tiptap p:empty::before {
+  content: '';
+  display: inline-block;
+}
+
+/* 단락 */
+.tiptap p {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  line-height: 1.7;
+}
+
+/* 제목 */
+.tiptap h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.tiptap h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.tiptap h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+  line-height: 1.4;
+}
+
+/* 링크 */
 .tiptap a {
   color: var(--primary);
   text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
+.tiptap a:hover {
+  text-decoration-color: var(--primary);
+}
+
+/* 인용구 */
+.tiptap blockquote {
+  border-left: 4px solid var(--primary);
+  background-color: var(--background-secondary);
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+  border-radius: 0 0.25rem 0.25rem 0;
+  color: var(--text-secondary);
+  font-style: normal;
+}
+
+.tiptap blockquote p {
+  margin-bottom: 0;
+}
+
+/* 이미지 */
 .tiptap img {
   max-width: 100%;
   height: auto;
   border-radius: 0.5rem;
-  margin: 0.5rem 0;
+  margin: 0.75rem 0;
 }
 
+/* 리스트 */
 .tiptap ul {
   list-style-type: disc !important;
   padding-left: 1.5rem !important;
+  margin: 0.5rem 0;
 }
 
 .tiptap ol {
   list-style-type: decimal !important;
   padding-left: 1.5rem !important;
+  margin: 0.5rem 0;
 }
 
 .tiptap li {
   margin: 0.25rem 0;
   display: list-item !important;
+  line-height: 1.7;
+}
+
+.tiptap li::marker {
+  color: var(--gray-3);
+}
+
+/* 수평선 */
+.tiptap hr {
+  border: none;
+  border-top: 1px solid var(--gray-7);
+  margin: 1.5rem 0;
+}
+
+/* 굵게/기울임 */
+.tiptap strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.tiptap em {
+  font-style: italic;
 }

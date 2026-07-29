@@ -18,6 +18,10 @@ import {
   ListOrdered,
   Image as ImageIcon,
   Link as LinkIcon,
+  Heading1,
+  Heading2,
+  Heading3,
+  Pilcrow,
 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { compressImage } from '@/lib/compressImage';
@@ -124,6 +128,37 @@ export default function RichTextEditor({
     <div className={cn('rounded-lg border overflow-hidden', error ? 'border-error' : 'border-gray7')}>
       {/* 툴바 */}
       <div className={'flex flex-wrap items-center gap-0.5 px-2 py-1.5 border-b border-gray7 bg-gray9/30'}>
+        <ToolbarButton
+          onClick={() => editor.chain().focus().setParagraph().run()}
+          active={!editor.isActive('heading')}
+          title={'본문'}
+        >
+          <span className={'text-xs flex items-center'}>{'본문'}</span>
+        </ToolbarButton>
+        <ToolbarButton
+          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+          active={editor.isActive('heading', { level: 1 })}
+          title={'제목 1'}
+        >
+          <Heading1 className={iconSize} />
+        </ToolbarButton>
+        <ToolbarButton
+          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          active={editor.isActive('heading', { level: 2 })}
+          title={'제목 2'}
+        >
+          <Heading2 className={iconSize} />
+        </ToolbarButton>
+        <ToolbarButton
+          onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+          active={editor.isActive('heading', { level: 3 })}
+          title={'제목 3'}
+        >
+          <Heading3 className={iconSize} />
+        </ToolbarButton>
+
+        <ToolbarDivider />
+
         <ToolbarButton
           onClick={handleImageUpload}
           title={'이미지 삽입'}

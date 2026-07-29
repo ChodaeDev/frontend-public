@@ -86,9 +86,8 @@ export default function SubMenuBoardForm({ locale, route, mode, postId }: SubMen
     mutationFn: (data: SubMenuPostInput) =>
       createSubMenuBoardPost(route, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.board(route) });
+      queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.all });
       router.push(`/${ locale }/${ boardPath }`);
-      router.refresh();
     },
   });
 
@@ -96,11 +95,9 @@ export default function SubMenuBoardForm({ locale, route, mode, postId }: SubMen
     mutationFn: ({ id, data }: { id: number; data: SubMenuPostInput }) =>
       updateSubMenuBoardPost(route, id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.board(route) });
+      queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.all });
       if (postId) {
-        queryClient.invalidateQueries({ queryKey: subMenuBoardKeys.detail(route, postId) });
         router.push(`/${ locale }/${ boardPath }/${ postId }`);
-        router.refresh();
       }
     },
   });

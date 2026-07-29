@@ -186,7 +186,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
       {/* 게시글 본문 */}
       <div className={'mx-2 my-8 min-h-[calc(100vh-600px)]'}>
         <div
-          className={'tiptap text-main leading-relaxed prose prose-sm max-w-none'}
+          className={'tiptap text-main'}
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
       </div>
