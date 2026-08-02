@@ -1,149 +1,64 @@
 'use client';
 
-import type { Locale } from '@/i18n/config';
-import type { Dictionary } from '@/i18n/getDictionary';
-import CounselingBoardContent from '@/components/board/CounselingBoardContent';
+import { lazy, Suspense, type ComponentType } from 'react';
 import SubMenuBoardContent from '@/components/subMenu/SubMenuBoardContent';
-import IntroductionContent from '@/components/about/IntroductionContent';
-import DirectionsContent from '@/components/about/DirectionsContent';
-import MinisterContent from '@/components/about/MinisterContent';
-import CentersContent from '@/components/about/CentersContent';
-import MethodsContent from '@/components/withdrawal/MethodsContent';
-import ToMembersContent from '@/components/withdrawal/ToMembersContent';
-import PressContent from '@/components/scj-info/PressContent';
-import HistoryContent from '@/components/scj-info/HistoryContent';
 
-interface SubMenuContentProps {
-  locale: Locale;
-  mainMenu: string;
-  subMenu: string;
-  dictionary: Dictionary;
+const boardEndpointMap: Record<string, { endpoint: string; boardPath: string }> = {
+  'scj-info/details': { endpoint: '/api/scj-info/details/list', boardPath: 'scj-info/details' },
+  'scj-info/strategy': { endpoint: '/api/scj-info/strategy/list', boardPath: 'scj-info/strategy' },
+  'scj-info/illegal-cases': { endpoint: '/api/scj-info/illegal-cases/list', boardPath: 'scj-info/illegal-cases' },
+  'doctrine/references': { endpoint: '/api/doctrine/references/list', boardPath: 'doctrine/references' },
+  'doctrine/legal': { endpoint: '/api/doctrine/legal/list', boardPath: 'doctrine/legal' },
+  'prevention/damage-cases': { endpoint: '/api/prevention/damage-cases/list', boardPath: 'prevention/damage-cases' },
+  'prevention/prevention-materials': { endpoint: '/api/prevention/prevention-materials/list', boardPath: 'prevention/prevention-materials' },
+};
+
+const contentMap: Record<string, ComponentType> = {
+  'board/counseling': lazy(() => import('@/components/board/CounselingBoardContent')),
+  'about/introduction': lazy(() => import('@/components/about/IntroductionContent')),
+  'about/directions': lazy(() => import('@/components/about/DirectionsContent')),
+  'about/minister': lazy(() => import('@/components/about/MinisterContent')),
+  'about/centers': lazy(() => import('@/components/about/CentersContent')),
+  'scj-info/history': lazy(() => import('@/components/scj-info/HistoryContent')),
+  'scj-info/press': lazy(() => import('@/components/scj-info/PressContent')),
+  'withdrawal/methods': lazy(() => import('@/components/withdrawal/MethodsContent')),
+  'withdrawal/to-members': lazy(() => import('@/components/withdrawal/ToMembersContent')),
+};
+
+function PreparingFallback() {
+  return (
+    <div className={'text-sub'}>
+      <p>{'서비스 준비중입니다.'}</p>
+    </div>
+  );
 }
 
-export default function SubMenuContent({
-  locale,
-  mainMenu,
-  subMenu,
-  dictionary,
-}: SubMenuContentProps) {
-  const boardDict = dictionary.board as {
-    requestCounseling: string;
-    number: string;
-    title: string;
-    author: string;
-    date: string;
-    views: string;
-    notice: string;
-    ownPost: string;
-    emptyMessage: string;
-    itemsPerPage: string;
-    searchByTitle: string;
-    searchByAuthor: string;
-    searchPlaceholder: string;
-    search: string;
-  };
+interface SubMenuContentProps {
+  mainMenu: string;
+  subMenu: string;
+}
 
-  const pressDict = dictionary.press as {
-    title: string;
-    emptyMessage: string;
-    pressName: string;
-    date: string;
-    searchPlaceholder: string;
-    itemsPerPage: string;
-    loading: string;
-  };
+export default function SubMenuContent({ mainMenu, subMenu }: SubMenuContentProps) {
+  const key = `${ mainMenu }/${ subMenu }`;
 
-  const boardEndpointMap: Record<string, Record<string, string>> = {
-    'scj-info': {
-      details: '/api/scj-info/details/list',
-      strategy: '/api/scj-info/strategy/list',
-      'illegal-cases': '/api/scj-info/illegal-cases/list',
-    },
-    doctrine: {
-      references: '/api/doctrine/references/list',
-      legal: '/api/doctrine/legal/list',
-    },
-    prevention: {
-      'damage-cases': '/api/prevention/damage-cases/list',
-      'prevention-materials': '/api/prevention/prevention-materials/list',
-    },
-  };
-
-  const boardEndpoint = boardEndpointMap[mainMenu]?.[subMenu];
-  if (boardEndpoint) {
+  const board = boardEndpointMap[key];
+  if (board) {
     return (
       <SubMenuBoardContent
-        locale={locale}
-        boardDict={boardDict}
-        endpoint={boardEndpoint}
-        boardPath={`${ mainMenu }/${ subMenu }`}
+        endpoint={board.endpoint}
+        boardPath={board.boardPath}
       />
     );
   }
 
-  switch (mainMenu) {
-    case 'board':
-      if (subMenu === 'counseling') {
-        return (
-          <CounselingBoardContent
-            locale={locale}
-            boardDict={boardDict}
-          />
-        );
-      }
-      return null;
-    case 'about':
-      if (subMenu === 'introduction') {
-        return <IntroductionContent />;
-      }
-      if (subMenu === 'directions') {
-        return <DirectionsContent />;
-      }
-      if (subMenu === 'minister') {
-        return <MinisterContent />;
-      }
-      if (subMenu === 'centers') {
-        return <CentersContent />;
-      }
-      return (
-        <div className={'text-sub'}>
-          <p>{'서비스 준비중입니다.'}</p>
-        </div>
-      );
-    case 'scj-info':
-      if (subMenu === 'history') {
-        return <HistoryContent />;
-      }
-      if (subMenu === 'press') {
-        return (
-          <PressContent
-            locale={locale}
-            pressDict={pressDict}
-          />
-        );
-      }
-      return (
-        <div className={'text-sub'}>
-          <p>{'서비스 준비중입니다.'}</p>
-        </div>
-      );
-    case 'withdrawal':
-      if (subMenu === 'methods') {
-        return <MethodsContent />;
-      }
-      if (subMenu === 'to-members') {
-        return <ToMembersContent />;
-      }
-      return (
-        <div className={'text-sub'}>
-          <p>{'서비스 준비중입니다.'}</p>
-        </div>
-      );
-    default:
-      return (
-        <div className={'text-sub'}>
-          <p>{'서비스 준비중입니다.'}</p>
-        </div>
-      );
+  const Component = contentMap[key];
+  if (Component) {
+    return (
+      <Suspense>
+        <Component />
+      </Suspense>
+    );
   }
+
+  return <PreparingFallback />;
 }

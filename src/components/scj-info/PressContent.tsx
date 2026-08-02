@@ -7,17 +7,12 @@ import { mockPressData } from '@/lib/mocks/press';
 import { useQuery } from '@tanstack/react-query';
 import FormSelect from '@/components/ui/FormSelect';
 import Pagination from '@/components/ui/Pagination';
-import type { Locale } from '@/i18n/config';
-import type { PressPost, PressDict } from '@/types/press';
+import { useTranslation } from '@/i18n/client';
+import type { PressDict, PressPost } from '@/types/press';
 import { cn } from '@/lib/cn';
 import { fetchPressList, pressKeys } from '@/lib/queries/press';
 import { usePagination } from '@/lib/hooks/usePagination';
 import { useSearch } from '@/lib/hooks/useSearch';
-
-interface PressContentProps {
-  locale: Locale;
-  pressDict: PressDict;
-}
 
 function PressCard({ post }: { post: PressPost }) {
   return (
@@ -63,9 +58,9 @@ function PressCard({ post }: { post: PressPost }) {
   );
 }
 
-export default function PressContent({
-  pressDict,
-}: PressContentProps) {
+export default function PressContent() {
+  const { dictionary } = useTranslation();
+  const pressDict = dictionary.press as PressDict;
   const {
     currentPage, setCurrentPage, itemCount, handleItemCountChange,
   } = usePagination({ defaultItemCount: 12 });

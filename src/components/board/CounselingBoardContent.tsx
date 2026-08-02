@@ -7,12 +7,12 @@ import dayjs from 'dayjs';
 import { Plus, Search, Lock } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import FormSelect from '@/components/ui/FormSelect';
-import type { Locale } from '@/i18n/config';
+import { useTranslation } from '@/i18n/client';
 import { useAuthStore } from '@/store/authStore';
 import BoardTable from '@/components/ui/BoardTable';
 import Pagination from '@/components/ui/Pagination';
 import type { Column } from '@/types/ui/boardTable';
-import type { BoardPost, BoardDict, CounselingPost } from '@/types/board';
+import type { BoardDict, BoardPost, CounselingPost } from '@/types/board';
 import type { SortState } from '@/types/common/sort';
 import { cn } from '@/lib/cn';
 import { counselingKeys, fetchCounselingList } from '@/lib/queries/counseling';
@@ -26,16 +26,10 @@ const sortFieldMap: Record<string, string> = {
   views: 'views',
 };
 
-export interface CounselingBoardContentProps {
-  locale: Locale;
-  boardDict: BoardDict;
-}
-
-export default function CounselingBoardContent({
-  locale,
-  boardDict,
-}: CounselingBoardContentProps) {
+export default function CounselingBoardContent() {
   const router = useRouter();
+  const { dictionary, locale } = useTranslation();
+  const boardDict = dictionary.board as BoardDict;
   const user = useAuthStore((state) => state.user);
   const userLevel = user?.level?.toLowerCase();
   const isAdmin = userLevel === 'admin' || userLevel === 'superadmin';

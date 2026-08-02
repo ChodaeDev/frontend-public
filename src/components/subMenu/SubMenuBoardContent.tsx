@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import FormSelect from '@/components/ui/FormSelect';
 import BoardTable from '@/components/ui/BoardTable';
 import Pagination from '@/components/ui/Pagination';
-import type { Locale } from '@/i18n/config';
+import { useTranslation } from '@/i18n/client';
 import { useAuthStore } from '@/store/authStore';
 import type { Column } from '@/types/ui/boardTable';
 import type { BoardDict, BoardPost } from '@/types/board';
@@ -26,19 +26,17 @@ const sortFieldMap: Record<string, string> = {
 };
 
 interface SubMenuBoardContentProps {
-  locale: Locale;
-  boardDict: BoardDict;
   endpoint: string;
   boardPath: string;
 }
 
 export default function SubMenuBoardContent({
-  locale,
-  boardDict,
   endpoint,
   boardPath,
 }: SubMenuBoardContentProps) {
   const router = useRouter();
+  const { dictionary, locale } = useTranslation();
+  const boardDict = dictionary.board as BoardDict;
   const user = useAuthStore((state) => state.user);
   const userLevel = user?.level?.toLowerCase();
   const isAdmin = userLevel === 'admin' || userLevel === 'superadmin';

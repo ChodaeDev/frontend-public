@@ -104,10 +104,8 @@ export default async function SubMenuPage({
 
         <div className={'flex-1 min-w-0'}>
           <SubMenuContent
-            locale={locale}
             mainMenu={mainMenu}
             subMenu={subMenu}
-            dictionary={dictionary}
           />
         </div>
       </div>
