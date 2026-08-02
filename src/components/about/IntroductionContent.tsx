@@ -38,7 +38,7 @@ export default function IntroductionContent() {
   };
 
   return (
-    <article className={'max-w-2xl my-10'}>
+    <article className={'max-w-2xl mx-auto my-10'}>
       <p className={'text-lg font-bold text-accent1 mb-10 tracking-wide leading-relaxed'}>
         {t.greeting}
       </p>

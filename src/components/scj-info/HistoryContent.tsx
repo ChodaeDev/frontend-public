@@ -100,7 +100,7 @@ export default function HistoryContent() {
   };
 
   return (
-    <article className={'max-w-2xl my-10'}>
+    <article className={'max-w-2xl mx-auto my-10'}>
       {/* 인트로 */}
       {t.intro && (
         <p className={'text-main text-justify leading-[1.9] tracking-[0.02em] mb-10'}>
