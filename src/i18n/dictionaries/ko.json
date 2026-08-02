@@ -162,6 +162,15 @@
       "serverError": "서버에 연결할 수 없습니다.",
       "generic": "프로필 수정 중 오류가 발생했습니다."
     },
+    "deleteAccount": "회원 탈퇴",
+    "deleteConfirmTitle": "회원 탈퇴",
+    "deleteConfirmMessage": "정말 탈퇴하시겠습니까? 탈퇴 후에는 계정을 복구할 수 없습니다.",
+    "deleteConfirm": "탈퇴",
+    "deleteCancel": "취소",
+    "deleteSuccess": "회원 탈퇴가 완료되었습니다.",
+    "deleteSuccessTitle": "회원 탈퇴 완료",
+    "deleteSuccessMessage": "회원 탈퇴가 완료되었습니다.\n그동안 이용해 주셔서 진심으로 감사드립니다.\n\n언제든 다시 찾아주시면 따뜻하게 맞이하겠습니다.",
+    "deleteError": "회원 탈퇴에 실패했습니다.",
     "passwordChange": {
       "title": "비밀번호 변경",
       "description": "현재 비밀번호를 확인한 후 새 비밀번호로 변경할 수 있습니다.",

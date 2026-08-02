@@ -1,8 +1,9 @@
 'use client';
 
-import { useActionState, useEffect } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { fetchApi } from '@/lib/api';
+import { fetchApi, fetchWithAuth } from '@/lib/api';
+import ConfirmModal from '@/components/ui/ConfirmModal';
 import { FormInput, FormTextarea, SubmitButton } from '@/components/ui/form';
 import { BirthdayPicker } from '@/components/ui/BirthdayPicker';
 import { errorStyle } from '@/components/ui/form-styles';
@@ -95,7 +96,27 @@ export default function MyPage() {
   const errors = (t.errors || {}) as Record<string, string>;
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
+  const logout = useAuthStore((state) => state.logout);
   const [state, formAction, isPending] = useActionState(updateProfileAction, initialState);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const handleDeleteAccount = async () => {
+    if (!user) return;
+    try {
+      const res = await fetchWithAuth(`/api/public/users/${ user.id }`, { method: 'DELETE' });
+      if (res.ok) {
+        logout();
+        window.location.href = `/${ locale }?accountDeleted=true`;
+        return;
+      } else {
+        const data = await res.json().catch(() => null);
+        alert(data?.message || (t.deleteError as string) || '회원 탈퇴에 실패했습니다.');
+      }
+    } catch {
+      alert((errors.serverError as string) || '서버에 연결할 수 없습니다.');
+    }
+    setShowDeleteModal(false);
+  };
 
   // 비로그인 시 로그인 페이지로 리다이렉트
   useEffect(() => {
@@ -275,7 +296,14 @@ export default function MyPage() {
           </div>
         )}
 
-        <div className={'flex justify-end'}>
+        <div className={'flex w-full justify-between items-center'}>
+          <button
+            type={'button'}
+            onClick={() => setShowDeleteModal(true)}
+            className={'w-32 rounded-md px-4 py-3 text-sm font-semibold text-error outline outline-error transition duration-200 hover:bg-error hover:text-white cursor-pointer'}
+          >
+            {(t.deleteAccount as string) || '회원 탈퇴'}
+          </button>
           <SubmitButton
             pendingText={(t.submitting as string) || '저장 중...'}
             className={'w-40 rounded-md bg-accent1 px-4 py-3 text-sm font-semibold text-inverse shadow-md transition duration-200 hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-accent1/30 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer'}
@@ -284,6 +312,17 @@ export default function MyPage() {
           </SubmitButton>
         </div>
       </form>
+
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleDeleteAccount}
+        title={(t.deleteConfirmTitle as string) || '회원 탈퇴'}
+        message={(t.deleteConfirmMessage as string) || '정말 탈퇴하시겠습니까? 탈퇴 후에는 계정을 복구할 수 없습니다.'}
+        confirmText={(t.deleteConfirm as string) || '탈퇴'}
+        cancelText={(t.deleteCancel as string) || '취소'}
+        confirmVariant={'danger'}
+      />
     </div>
   );
 }

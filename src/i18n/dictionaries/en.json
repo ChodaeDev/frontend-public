@@ -178,7 +178,16 @@
         "serverError": "Cannot connect to server.",
         "generic": "An error occurred while changing password."
       }
-    }
+    },
+    "deleteAccount": "Delete Account",
+    "deleteConfirmTitle": "Delete Account",
+    "deleteConfirmMessage": "Are you sure you want to delete your account? This action cannot be undone.",
+    "deleteConfirm": "Delete",
+    "deleteCancel": "Cancel",
+    "deleteSuccess": "Your account has been deleted.",
+    "deleteError": "Failed to delete account.",
+    "deleteSuccessTitle": "Account Deleted",
+    "deleteSuccessMessage": "Your account has been successfully deleted.\nThank you for being with us.\n\nYou are always welcome to return."
   },
   "validation": {
     "userId": {
@@ -778,11 +787,15 @@
     "paragraphs": [
       {
         "text": "Sadly, not all Shincheonji members believe they are saved in the name of Jesus. What distinguishes them from orthodox churches is that they believe salvation comes through Jesus' new name — that is, the name of Man-hee Lee.",
-        "highlights": ["they believe salvation comes through Jesus' new name — that is, the name of Man-hee Lee"]
+        "highlights": [
+          "they believe salvation comes through Jesus' new name — that is, the name of Man-hee Lee"
+        ]
       },
       {
         "text": "Furthermore, Shincheonji members believe that even though their own physical immortality is not guaranteed before the union of spirit and flesh, Man-hee Lee himself will never die physically and will live forever. They believe he is the Advocate (Paraclete). Yet Man-hee Lee himself has stated in court and in public, 'I never said I was the Advocate, I never said I wouldn't die, there is no savior other than Jesus' — such blatant contradictions push the limits of patience for any person of faith.",
-        "highlights": ["I never said I was the Advocate, I never said I wouldn't die, there is no savior other than Jesus"]
+        "highlights": [
+          "I never said I was the Advocate, I never said I wouldn't die, there is no savior other than Jesus"
+        ]
       },
       {
         "text": "When I think of Shincheonji members who are blind to a few Bible verses and have gone all in with their lives without knowing the true nature of Man-hee Lee — especially the members of Saebit Church that I pioneered and pastored, and among them the ministers who serve faithfully from dawn to late night without properly caring for their families — my heart aches with regret and sorrow, and tears blur my vision.",
@@ -790,7 +803,10 @@
       },
       {
         "text": "Thankfully, by the grace of God, after many twists and turns, I came to see that Man-hee Lee is not the promised true shepherd, but rather the false Christ and false prophet prophesied for the last days. I was able to experience the overwhelming joy and gratitude of salvation by restoring our Lord Jesus Christ to the throne I had once given over to Man-hee Lee. Hallelujah!",
-        "highlights": ["the false Christ and false prophet prophesied for the last days", "restoring our Lord Jesus Christ to the throne"]
+        "highlights": [
+          "the false Christ and false prophet prophesied for the last days",
+          "restoring our Lord Jesus Christ to the throne"
+        ]
       },
       {
         "text": "I spent my golden years — my twenties and thirties, when I should have been learning and preparing with the most passion both spiritually and in the world — blinded by mere zeal to know the Bible, losing discernment, deceived by Man-hee Lee, and wasting my life. I was furious and resentful, blaming myself and falling into despair.",
@@ -798,7 +814,10 @@
       },
       {
         "text": "However, with the conviction that there should be no more victims like me, with a desire to atone for my sins as a chief of sinners, and with a heavy sense of responsibility, I declare a holy war against Man-hee Lee. I resolve to devote the life that has been given back to me to the faith recovery movement of turning pitiful Shincheonji members back to Jesus, and to the ministry of combating the many cults that pose a serious threat to the Korean church.",
-        "highlights": ["faith recovery movement", "ministry of combating cults"]
+        "highlights": [
+          "faith recovery movement",
+          "ministry of combating cults"
+        ]
       }
     ],
     "emphasis": "Let me emphasize once more at this time.",
@@ -812,7 +831,9 @@
         "paragraphs": [
           {
             "text": "Park Tae-sun is known to have studied the Bible under Kim Baek-mun, a mystical sect leader, alongside Moon Sun-myung of the Unification Church. Park Tae-sun, who died in 1990, established the Olive Tree Movement in 1955 and gathered followers through unique doctrines inherited from Kim Baek-mun and miraculous signs such as 'divine healing.' In 1980, he revised his doctrines and renamed the organization Cheonbuism. Followers lived communally in settlements called 'Faith Villages' and operated businesses producing socks, cosmetics, food products, and more. Around the 1960s–70s, Park caused major social controversies through forced consumption of 'Holy Water (Water of Life)' and 'Zion Caramel' manufactured in the Faith Village under the pretext of divine healing—leading to follower deaths—as well as charges of promiscuity based on the so-called 'Blood Sharing (spiritual-physical union)' doctrine, fraud, perjury, and assault.",
-            "highlights": ["charges of promiscuity based on the so-called 'Blood Sharing (spiritual-physical union)' doctrine, fraud, perjury, and assault"]
+            "highlights": [
+              "charges of promiscuity based on the so-called 'Blood Sharing (spiritual-physical union)' doctrine, fraud, perjury, and assault"
+            ]
           },
           {
             "text": "In 1957, Lee Man-hee entered this Faith Village and lived there for 10 years, following Park Tae-sun who called himself God. He then joined the 'Tabernacle Temple' in Gwacheon, Gyeonggi Province in 1967. Yoo Jae-yeol, also from the Olive Tree Movement, established the Tabernacle Temple in 1966 and proclaimed the end of the world in 1969, which failed to materialize. According to the Dong-A Ilbo dated April 3, 1975, Yoo relocated followers en masse to Cheonggyesan Mountain in Gwacheon, built a church and luxury homes using their labor, and was reported to the police by some followers for immoral conduct with female members. Yoo was eventually arrested on fraud charges in September of the same year.",
@@ -820,11 +841,15 @@
           },
           {
             "text": "Afterward, Lee Man-hee followed Mok Yeong-deuk, a former Unification Church lecturer, and then Baek Man-bong. Baek had broken away from Yoo Jae-yeol at the Tabernacle Temple and established the Recreation Church, causing controversy by claiming March 13, 1980, would be the day of the apocalypse, along with about 100 followers.",
-            "highlights": ["claiming March 13, 1980, would be the day of the apocalypse"]
+            "highlights": [
+              "claiming March 13, 1980, would be the day of the apocalypse"
+            ]
           },
           {
             "text": "When nothing happened on Baek Man-bong's proclaimed day of the apocalypse, Lee Man-hee fought with Baek, left with some followers, and began holding worship services at his own home. In September 1980, he was arrested for defamation after publicly criticizing Yoo Jae-yeol. After his release in February 1981, he began meeting with a small group of followers, claiming that the 'Two Witnesses'—representing Moses and Elijah—were Shin Gwang-il and Lee Man-hee. He later changed this claim to Shin Jong-hwan and Lee Man-hee, then reversed it again to Hong Jong-hyo and Lee Man-hee. After parting ways with Hong Jong-hyo as well, Lee elevated himself to the status of Moses. He then claimed to be an apostle with John's mission before gradually upgrading his status to the Advocate (Paraclete) Holy Spirit.",
-            "highlights": ["gradually upgrading his status to the Advocate (Paraclete) Holy Spirit"]
+            "highlights": [
+              "gradually upgrading his status to the Advocate (Paraclete) Holy Spirit"
+            ]
           },
           {
             "text": "In 1984, he appointed his followers as the 7 Spirits, 12 Apostles, and 24 Elders, and launched Shincheonji.",
@@ -841,11 +866,16 @@
           },
           {
             "text": "Not only the 'Divine-Human Unity' doctrine—a modification of the 'Blood Sharing (spiritual-physical union)' doctrine—but also the headquarters location in Gwacheon, Gyeonggi Province, the use of 'Tabernacle Temple' in the organization's name, and the 12-Tribe organizational structure all share the same lineage. Currently, Shincheonji members employ unconventional methods for their proselytization activities.",
-            "highlights": ["'Divine-Human Unity' doctrine—a modification of the 'Blood Sharing (spiritual-physical union)' doctrine"]
+            "highlights": [
+              "'Divine-Human Unity' doctrine—a modification of the 'Blood Sharing (spiritual-physical union)' doctrine"
+            ]
           },
           {
             "text": "These include the so-called 'Harvester Strategy' and 'Mountain Moving Strategy.' The Harvester Strategy involves covertly registering at other churches (called 'harvest fields') and luring their members away. The Mountain Moving Strategy similarly involves covertly joining another church, then seducing the pastor to take over the entire church.",
-            "highlights": ["Harvester Strategy", "Mountain Moving Strategy"]
+            "highlights": [
+              "Harvester Strategy",
+              "Mountain Moving Strategy"
+            ]
           },
           {
             "text": "The number of followers is estimated at approximately 240,000 to 250,000 (as of 2025).",
@@ -861,19 +891,27 @@
         "timeline": [
           {
             "year": "1931",
-            "items": ["Born in Cheongdo-gun, Gyeongsangbuk-do"]
+            "items": [
+              "Born in Cheongdo-gun, Gyeongsangbuk-do"
+            ]
           },
           {
             "year": "1957",
-            "items": ["Entered Park Tae-sun's Faith Village, lived there for 10 years"]
+            "items": [
+              "Entered Park Tae-sun's Faith Village, lived there for 10 years"
+            ]
           },
           {
             "year": "1967",
-            "items": ["Joined Yoo Jae-yeol's Tabernacle Temple in Gwacheon, Gyeonggi Province"]
+            "items": [
+              "Joined Yoo Jae-yeol's Tabernacle Temple in Gwacheon, Gyeonggi Province"
+            ]
           },
           {
             "year": "1975",
-            "items": ["Yoo Jae-yeol arrested on fraud charges"]
+            "items": [
+              "Yoo Jae-yeol arrested on fraud charges"
+            ]
           },
           {
             "year": "1980",
@@ -884,7 +922,9 @@
           },
           {
             "year": "1981",
-            "items": ["Released in February, began meetings with small group of followers"]
+            "items": [
+              "Released in February, began meetings with small group of followers"
+            ]
           }
         ]
       },
@@ -915,15 +955,21 @@
           },
           {
             "year": "2012",
-            "items": ["Established HWPL (Heavenly Culture, World Peace, Restoration of Light)"]
+            "items": [
+              "Established HWPL (Heavenly Culture, World Peace, Restoration of Light)"
+            ]
           },
           {
             "year": "2014",
-            "items": ["Held large-scale 'World Peace Summit' with Kim Nam-hee (head of World Women's Peace Group), who was in a de facto cohabitation and successor arrangement with Lee Man-hee"]
+            "items": [
+              "Held large-scale 'World Peace Summit' with Kim Nam-hee (head of World Women's Peace Group), who was in a de facto cohabitation and successor arrangement with Lee Man-hee"
+            ]
           },
           {
             "year": "2017",
-            "items": ["Kim Nam-hee left Shincheonji"]
+            "items": [
+              "Kim Nam-hee left Shincheonji"
+            ]
           },
           {
             "year": "2020",
@@ -934,11 +980,15 @@
           },
           {
             "year": "August 2022",
-            "items": ["Supreme Court finalized guilty verdict for embezzlement and obstruction of business related to assembly venues (3 years imprisonment, 5 years suspended)"]
+            "items": [
+              "Supreme Court finalized guilty verdict for embezzlement and obstruction of business related to assembly venues (3 years imprisonment, 5 years suspended)"
+            ]
           },
           {
             "year": "As of 2025",
-            "items": ["Estimated approximately 240,000–250,000 followers"]
+            "items": [
+              "Estimated approximately 240,000–250,000 followers"
+            ]
           }
         ]
       }

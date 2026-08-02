@@ -178,7 +178,16 @@
         "serverError": "Verbindung zum Server nicht möglich.",
         "generic": "Beim Ändern des Passworts ist ein Fehler aufgetreten."
       }
-    }
+    },
+    "deleteAccount": "Konto löschen",
+    "deleteConfirmTitle": "Konto löschen",
+    "deleteConfirmMessage": "Möchten Sie Ihr Konto wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "deleteConfirm": "Löschen",
+    "deleteCancel": "Abbrechen",
+    "deleteSuccess": "Ihr Konto wurde gelöscht.",
+    "deleteError": "Kontolöschung fehlgeschlagen.",
+    "deleteSuccessTitle": "Konto gelöscht",
+    "deleteSuccessMessage": "Ihr Konto wurde erfolgreich gelöscht.\nVielen Dank, dass Sie bei uns waren.\n\nSie sind jederzeit herzlich willkommen zurückzukehren."
   },
   "validation": {
     "userId": {
@@ -778,11 +787,15 @@
     "paragraphs": [
       {
         "text": "Bedauerlicherweise glauben nicht alle Mitglieder von Shincheonji, dass sie im Namen Jesu gerettet werden. Was sie von orthodoxen Kirchen unterscheidet, ist ihr Glaube, dass die Erlösung durch den neuen Namen Jesu kommt — nämlich durch den Namen von Man-hee Lee.",
-        "highlights": ["ihr Glaube, dass die Erlösung durch den neuen Namen Jesu kommt — nämlich durch den Namen von Man-hee Lee"]
+        "highlights": [
+          "ihr Glaube, dass die Erlösung durch den neuen Namen Jesu kommt — nämlich durch den Namen von Man-hee Lee"
+        ]
       },
       {
         "text": "Darüber hinaus glauben Shincheonji-Mitglieder, dass, obwohl ihre eigene körperliche Unsterblichkeit vor der Vereinigung von Geist und Fleisch nicht garantiert ist, Man-hee Lee selbst niemals körperlich sterben und ewig leben wird. Sie glauben, er sei der Beistand (Paraklet). Doch Man-hee Lee selbst hat vor Gericht und in der Öffentlichkeit erklärt: 'Ich habe nie gesagt, ich sei der Beistand, ich habe nie gesagt, ich würde nicht sterben, es gibt keinen Erlöser außer Jesus' — solch offensichtliche Widersprüche bringen jeden Gläubigen an die Grenzen seiner Geduld.",
-        "highlights": ["Ich habe nie gesagt, ich sei der Beistand, ich habe nie gesagt, ich würde nicht sterben, es gibt keinen Erlöser außer Jesus"]
+        "highlights": [
+          "Ich habe nie gesagt, ich sei der Beistand, ich habe nie gesagt, ich würde nicht sterben, es gibt keinen Erlöser außer Jesus"
+        ]
       },
       {
         "text": "Wenn ich an die Shincheonji-Mitglieder denke, die von ein paar Bibelversen geblendet ihr ganzes Leben einsetzen, ohne die wahre Natur von Man-hee Lee zu kennen — besonders die Mitglieder der Saebit-Gemeinde, die ich gegründet und geleitet habe, und unter ihnen die Mitarbeiter, die von morgens früh bis spät in die Nacht treu dienen, ohne sich richtig um ihre Familien zu kümmern — dann wird mir das Herz schwer vor Bedauern und Trauer, und Tränen trüben meinen Blick.",
@@ -790,7 +803,10 @@
       },
       {
         "text": "Glücklicherweise konnte ich durch Gottes Gnade nach vielen Wendungen erkennen, dass Man-hee Lee nicht der verheißene wahre Hirte ist, sondern vielmehr der für die Endzeit prophezeite falsche Christus und falsche Prophet. Ich durfte die überwältigende Freude und Dankbarkeit der Erlösung erfahren, als ich unseren Herrn Jesus Christus wieder auf den Thron setzte, den ich einst an Man-hee Lee übergeben hatte. Halleluja!",
-        "highlights": ["der für die Endzeit prophezeite falsche Christus und falsche Prophet", "unseren Herrn Jesus Christus wieder auf den Thron setzte"]
+        "highlights": [
+          "der für die Endzeit prophezeite falsche Christus und falsche Prophet",
+          "unseren Herrn Jesus Christus wieder auf den Thron setzte"
+        ]
       },
       {
         "text": "Meine goldenen Jahre — meine Zwanziger und Dreißiger, in denen ich mit größter Leidenschaft sowohl geistlich als auch weltlich hätte lernen und mich vorbereiten sollen — habe ich aus bloßem Eifer, die Bibel zu kennen, die Urteilskraft verloren, wurde von Man-hee Lee getäuscht und habe mein Leben verschwendet. Ich war wütend und verbittert, machte mir Vorwürfe und verfiel in Verzweiflung.",
@@ -798,7 +814,10 @@
       },
       {
         "text": "Doch mit der Überzeugung, dass es keine weiteren Opfer wie mich geben darf, mit dem Wunsch, für meine Sünden als Anführer der Sünder zu büßen, und mit einem schweren Verantwortungsgefühl erkläre ich einen heiligen Krieg gegen Man-hee Lee. Ich bin entschlossen, mein neu geschenktes Leben der Glaubenswiederherstellungsbewegung zu widmen, um die bedauernswerten Shincheonji-Mitglieder zu Jesus zurückzuführen, und dem Dienst der Bekämpfung der vielen Sekten, die eine ernsthafte Bedrohung für die koreanische Kirche darstellen.",
-        "highlights": ["Glaubenswiederherstellungsbewegung", "Dienst der Bekämpfung der Sekten"]
+        "highlights": [
+          "Glaubenswiederherstellungsbewegung",
+          "Dienst der Bekämpfung der Sekten"
+        ]
       }
     ],
     "emphasis": "Lassen Sie mich dies noch einmal betonen.",
@@ -812,7 +831,9 @@
         "paragraphs": [
           {
             "text": "Park Tae-sun soll gemeinsam mit Moon Sun-myung von der Vereinigungskirche die Bibel bei Kim Baek-mun, einem mystischen Sektenführer, studiert haben. Park Tae-sun, der 1990 starb, gründete 1955 die Olivenbaum-Bewegung und sammelte Anhänger durch einzigartige von Kim Baek-mun übernommene Lehren und wundersame Zeichen wie „göttliche Heilung”. 1980 überarbeitete er seine Lehren und benannte die Organisation in Cheonbuismus um. Die Anhänger lebten in Gemeinschaftssiedlungen namens „Glaubensdörfer” und betrieben Unternehmen für Socken, Kosmetik, Lebensmittel und mehr. In den 1960er–70er Jahren verursachte Park große gesellschaftliche Kontroversen durch erzwungenen Konsum von „Heiligem Wasser (Wasser des Lebens)” und „Zion-Karamell” aus dem Glaubensdorf unter dem Vorwand göttlicher Heilung – was zum Tod von Anhängern führte – sowie durch Anschuldigungen der Promiskuität basierend auf der sogenannten „Blutteilung (geistig-körperliche Vereinigung)”-Lehre, Betrug, Meineid und Körperverletzung.",
-            "highlights": ["Anschuldigungen der Promiskuität basierend auf der sogenannten „Blutteilung (geistig-körperliche Vereinigung)”-Lehre, Betrug, Meineid und Körperverletzung"]
+            "highlights": [
+              "Anschuldigungen der Promiskuität basierend auf der sogenannten „Blutteilung (geistig-körperliche Vereinigung)”-Lehre, Betrug, Meineid und Körperverletzung"
+            ]
           },
           {
             "text": "1957 zog Lee Man-hee in dieses Glaubensdorf und lebte dort 10 Jahre lang als Anhänger von Park Tae-sun, der sich selbst als Gott bezeichnete. 1967 trat er dem „Zelttempel” in Gwacheon, Provinz Gyeonggi, bei. Yoo Jae-yeol, ebenfalls aus der Olivenbaum-Bewegung stammend, gründete 1966 den Zelttempel und verkündete 1969 das Ende der Welt, das jedoch nicht eintrat. Laut der Dong-A Ilbo vom 3. April 1975 siedelte Yoo Anhänger massenhaft zum Cheonggyesan-Berg in Gwacheon um, ließ durch deren Arbeit eine Kirche und Luxusvillen bauen und wurde von einigen Anhängern wegen unsittlichem Verhalten mit weiblichen Mitgliedern bei der Polizei angezeigt. Yoo wurde schließlich im September desselben Jahres wegen Betrugs verhaftet.",
@@ -820,11 +841,15 @@
           },
           {
             "text": "Danach folgte Lee Man-hee Mok Yeong-deuk, einem ehemaligen Dozenten der Vereinigungskirche, und dann Baek Man-bong. Baek hatte sich von Yoo Jae-yeol im Zelttempel getrennt und die Neuschöpfungskirche gegründet. Er behauptete, der 13. März 1980 sei der Tag der Apokalypse, und verursachte mit etwa 100 Anhängern Aufsehen.",
-            "highlights": ["behauptete, der 13. März 1980 sei der Tag der Apokalypse"]
+            "highlights": [
+              "behauptete, der 13. März 1980 sei der Tag der Apokalypse"
+            ]
           },
           {
             "text": "Als an Baek Man-bongs proklamiertem Tag der Apokalypse nichts geschah, stritt sich Lee Man-hee mit Baek, verließ ihn mit einigen Anhängern und begann Gottesdienste in seinem eigenen Haus abzuhalten. Im September 1980 wurde er wegen Verleumdung von Yoo Jae-yeol verhaftet. Nach seiner Entlassung im Februar 1981 begann er Treffen mit einer kleinen Gruppe von Anhängern und behauptete, die „Zwei Zeugen” – stellvertretend für Mose und Elia – seien Shin Gwang-il und Lee Man-hee. Später änderte er dies zu Shin Jong-hwan und Lee Man-hee, dann erneut zu Hong Jong-hyo und Lee Man-hee. Nach der Trennung auch von Hong Jong-hyo erhob sich Lee zum Status des Mose. Dann bezeichnete er sich als Apostel mit der Mission des Johannes, bevor er seinen Status schrittweise zum Beistand (Paraklet) Heiligen Geist aufwertete.",
-            "highlights": ["schrittweise zum Beistand (Paraklet) Heiligen Geist aufwertete"]
+            "highlights": [
+              "schrittweise zum Beistand (Paraklet) Heiligen Geist aufwertete"
+            ]
           },
           {
             "text": "1984 ernannte er seine Anhänger zu den 7 Geistern, 12 Aposteln und 24 Ältesten und gründete Shincheonji.",
@@ -841,11 +866,16 @@
           },
           {
             "text": "Nicht nur die „Göttlich-menschliche Einheits”-Lehre – eine Abwandlung der „Blutteilung (geistig-körperliche Vereinigung)”-Lehre – sondern auch der Hauptsitz in Gwacheon, die Verwendung von „Zelttempel” im Organisationsnamen und die 12-Stämme-Organisationsstruktur teilen dieselbe Abstammungslinie. Derzeit setzen Shincheonji-Mitglieder unkonventionelle Methoden für ihre Missionierungsaktivitäten ein.",
-            "highlights": ["„Göttlich-menschliche Einheits”-Lehre – eine Abwandlung der „Blutteilung (geistig-körperliche Vereinigung)”-Lehre"]
+            "highlights": [
+              "„Göttlich-menschliche Einheits”-Lehre – eine Abwandlung der „Blutteilung (geistig-körperliche Vereinigung)”-Lehre"
+            ]
           },
           {
             "text": "Dazu gehören die sogenannte „Ernter-Strategie” und die „Bergversetzungs-Strategie”. Die Ernter-Strategie besteht darin, sich verdeckt bei anderen Kirchen (als „Erntefelder” bezeichnet) anzumelden und deren Mitglieder abzuwerben. Die Bergversetzungs-Strategie beinhaltet ebenfalls die verdeckte Anmeldung bei einer anderen Kirche, wobei dann der Pastor verführt wird, um die gesamte Kirche zu übernehmen.",
-            "highlights": ["Ernter-Strategie", "Bergversetzungs-Strategie"]
+            "highlights": [
+              "Ernter-Strategie",
+              "Bergversetzungs-Strategie"
+            ]
           },
           {
             "text": "Die Anzahl der Anhänger wird auf etwa 240.000 bis 250.000 geschätzt (Stand 2025).",
@@ -861,19 +891,27 @@
         "timeline": [
           {
             "year": "1931",
-            "items": ["Geboren in Cheongdo-gun, Gyeongsangbuk-do"]
+            "items": [
+              "Geboren in Cheongdo-gun, Gyeongsangbuk-do"
+            ]
           },
           {
             "year": "1957",
-            "items": ["Eintritt in Park Tae-suns Glaubensdorf, 10 Jahre dort gelebt"]
+            "items": [
+              "Eintritt in Park Tae-suns Glaubensdorf, 10 Jahre dort gelebt"
+            ]
           },
           {
             "year": "1967",
-            "items": ["Beitritt zu Yoo Jae-yeols Zelttempel in Gwacheon, Provinz Gyeonggi"]
+            "items": [
+              "Beitritt zu Yoo Jae-yeols Zelttempel in Gwacheon, Provinz Gyeonggi"
+            ]
           },
           {
             "year": "1975",
-            "items": ["Yoo Jae-yeol wegen Betrugs verhaftet"]
+            "items": [
+              "Yoo Jae-yeol wegen Betrugs verhaftet"
+            ]
           },
           {
             "year": "1980",
@@ -884,7 +922,9 @@
           },
           {
             "year": "1981",
-            "items": ["Entlassung im Februar, Beginn von Treffen mit kleiner Anhängergruppe"]
+            "items": [
+              "Entlassung im Februar, Beginn von Treffen mit kleiner Anhängergruppe"
+            ]
           }
         ]
       },
@@ -915,15 +955,21 @@
           },
           {
             "year": "2012",
-            "items": ["Gründung von HWPL (Himmlische Kultur, Weltfrieden, Wiederherstellung des Lichts)"]
+            "items": [
+              "Gründung von HWPL (Himmlische Kultur, Weltfrieden, Wiederherstellung des Lichts)"
+            ]
           },
           {
             "year": "2014",
-            "items": ["Veranstaltung eines gro\u00dfen \u201eWeltfriedensgipfels\u201c mit Kim Nam-hee (Vorsitzende der World Women\u2019s Peace Group), die in einer faktischen Lebensgemeinschaft und Nachfolge-Konstellation mit Lee Man-hee stand"]
+            "items": [
+              "Veranstaltung eines großen „Weltfriedensgipfels“ mit Kim Nam-hee (Vorsitzende der World Women’s Peace Group), die in einer faktischen Lebensgemeinschaft und Nachfolge-Konstellation mit Lee Man-hee stand"
+            ]
           },
           {
             "year": "2017",
-            "items": ["Kim Nam-hee verlie\u00df Shincheonji"]
+            "items": [
+              "Kim Nam-hee verließ Shincheonji"
+            ]
           },
           {
             "year": "2020",
@@ -934,11 +980,15 @@
           },
           {
             "year": "August 2022",
-            "items": ["Oberster Gerichtshof bestätigte rechtskräftig den Schuldspruch wegen Unterschlagung und Geschäftsbehinderung im Zusammenhang mit Versammlungsorten (3 Jahre Haft, 5 Jahre auf Bewährung)"]
+            "items": [
+              "Oberster Gerichtshof bestätigte rechtskräftig den Schuldspruch wegen Unterschlagung und Geschäftsbehinderung im Zusammenhang mit Versammlungsorten (3 Jahre Haft, 5 Jahre auf Bewährung)"
+            ]
           },
           {
             "year": "Stand 2025",
-            "items": ["Geschätzt etwa 240.000–250.000 Anhänger"]
+            "items": [
+              "Geschätzt etwa 240.000–250.000 Anhänger"
+            ]
           }
         ]
       }

@@ -3,6 +3,7 @@ import { isValidLocale } from '@/i18n/config';
 import { notFound } from 'next/navigation';
 import { BoardPreviewSection, LandingImageSection, MinistrySection, NewsSection, NoticePopup, QuickMenuSection, RightSideNav, TestimonySection } from '@/components/landing';
 import VisitorTracker from '@/components/visitor/VisitorTracker';
+import AccountDeletedModal from '@/components/ui/AccountDeletedModal';
 
 export default async function Home({
   params,
@@ -24,6 +25,7 @@ export default async function Home({
     <main className={'flex flex-col items-center min-h-screen pb-10'}>
       <VisitorTracker />
       <NoticePopup />
+      <AccountDeletedModal />
       <RightSideNav dictionary={dictionary} locale={locale} />
       <LandingImageSection
         dictionary={dictionary}

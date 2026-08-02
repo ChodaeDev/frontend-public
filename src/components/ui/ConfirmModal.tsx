@@ -14,6 +14,7 @@ interface ConfirmModalProps {
   message: string;
   confirmText?: string;
   cancelText?: string;
+  confirmVariant?: 'primary' | 'danger';
 }
 
 export default function ConfirmModal({
@@ -24,6 +25,7 @@ export default function ConfirmModal({
   message,
   confirmText = '확인',
   cancelText = '취소',
+  confirmVariant = 'primary',
 }: ConfirmModalProps) {
   const [isClosing, setIsClosing] = useState(false);
 
@@ -36,11 +38,7 @@ export default function ConfirmModal({
   }, [onClose]);
 
   const handleConfirm = useCallback(() => {
-    setIsClosing(true);
-    setTimeout(() => {
-      setIsClosing(false);
-      onConfirm();
-    }, 200);
+    onConfirm();
   }, [onConfirm]);
 
   useEffect(() => {
@@ -99,7 +97,9 @@ export default function ConfirmModal({
           </button>
           <button
             onClick={handleConfirm}
-            className={buttonPrimaryStyle}
+            className={confirmVariant === 'danger'
+              ? 'w-fit min-w-24 rounded-md bg-error px-4 py-3 text-sm font-semibold text-inverse shadow-md transition duration-200 hover:opacity-90 active:scale-98'
+              : buttonPrimaryStyle}
           >
             {confirmText}
           </button>
