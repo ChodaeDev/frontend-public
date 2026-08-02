@@ -55,12 +55,12 @@
       "title": "In der Wahrheit\ngehen wir gemeinsam\nden Weg der Heilung\nund Versöhnung",
       "ministers": [
         {
-          "name": "Minister Shin Hyun-wook",
+          "name": "Minister Hyun-wook Shin",
           "role": "#Gemeindepfarrer #SektenberatungsLeiter\n#KoreanischeKirchenmedien #PCK(Hapdong)Sektenexperte"
         },
         {
-          "name": "Minister Kim Kang-rim",
-          "role": "#StellvertretenderPfarrer"
+          "name": "Minister Kang-rim Kim",
+          "role": "#Stellv.Pastor(Jugendarbeit) #GuriSektenberatungszentrum\n#Chongshin-Univ.Anti-Sekten-Ausschuss(Ehem.)\n#ChongshinTheologicalSeminary #Chongshin-Univ.Theologie"
         }
       ]
     },
@@ -231,7 +231,7 @@
     "directions": "Anfahrt",
     "organizationName": "Presbyterianische Kirche Korea (Hapdong) Chodae-Kirche - Guri Sektenberatungszentrum",
     "minister": "Leitender Minister",
-    "ministerName": "Shin Hyun-wook",
+    "ministerName": "Hyun-wook Shin",
     "addressLabel": "Adresse",
     "addressValue": "499 Achasan-ro, Gyomun-dong, Guri-si, Gyeonggi-do (Jungang Heights Tium B-404)",
     "phone": "Kontakt",
@@ -250,7 +250,7 @@
       },
       "minister": {
         "label": "Unsere Ministeren",
-        "description": "Vorstellung von Minister Shin Hyun-wook und Minister Kim Kang-rim."
+        "description": "Vorstellung von Minister Hyun-wook Shin und Minister Kang-rim Kim."
       },
       "centers": {
         "label": "Landesweite Zentren",
@@ -466,7 +466,7 @@
         "highlights": []
       },
       {
-        "text": "Das herausragendste Merkmal des Guri-Sektenberatungszentrums ist, dass alle Beratungsmitarbeiter Shincheonji über mehr als 10 Jahre persönlich erfahren haben. Mit diesem besonderen Hintergrund haben sich alle Mitarbeiter mit einem Herzen der Reue und einem Gefühl der Berufung zusammengefunden, was dies zu einem spezialisierten Shincheonji-Beratungszentrum macht. Unter der Leitung von Direktor Pastor Shin Hyun-wook bemühen sich unsere hauptamtlichen Beratungsmitarbeiter, auf der Grundlage ihrer realen Erfahrungen mit Shincheonji und jahrelanger Beratungsarbeit praktische Hilfe für Genesung und Heilung zu bieten.",
+        "text": "Das herausragendste Merkmal des Guri-Sektenberatungszentrums ist, dass alle Beratungsmitarbeiter Shincheonji über mehr als 10 Jahre persönlich erfahren haben. Mit diesem besonderen Hintergrund haben sich alle Mitarbeiter mit einem Herzen der Reue und einem Gefühl der Berufung zusammengefunden, was dies zu einem spezialisierten Shincheonji-Beratungszentrum macht. Unter der Leitung von Direktor Pastor Hyun-wook Shin bemühen sich unsere hauptamtlichen Beratungsmitarbeiter, auf der Grundlage ihrer realen Erfahrungen mit Shincheonji und jahrelanger Beratungsarbeit praktische Hilfe für Genesung und Heilung zu bieten.",
         "highlights": [
           "alle Beratungsmitarbeiter Shincheonji über mehr als 10 Jahre persönlich erfahren haben",
           "spezialisierten Shincheonji-Beratungszentrum"
@@ -497,11 +497,11 @@
   },
   "minister": {
     "tabs": {
-      "shin": "Pastor Shin Hyun-wook",
+      "shin": "Pastor Hyun-wook Shin",
       "kim": "Pastor Kim Gang-rim"
     },
     "shin": {
-      "name": "Pastor Shin Hyun-wook",
+      "name": "Pastor Hyun-wook Shin",
       "quote": "20 Jahre Shincheonji-Ausbildung,\n20 Jahre Shincheonji-Wiederherstellungsdienst",
       "description": "Basierend auf 20 Jahren Erfahrung als Geistlicher und Ausbildungsleiter in Shincheonji widmet er sich der Beratung, Wiederherstellung und Prävention für Betroffene von Shincheonji.",
       "timeline": [
@@ -585,10 +585,51 @@
       ]
     },
     "kim": {
-      "name": "Pastor Kim Gang-rim",
-      "quote": "",
-      "description": "",
-      "timeline": []
+      "name": "Pastor Kang-rim Kim",
+      "quote": "Die Gnade der Bekehrung teilen\nund die nächste Generation aufbauen",
+      "description": "Nach etwa einem Jahr Erfahrung bei Shincheonji während seiner Universitätszeit wurde er durch Pastor Shin Hyeon-wook des Guri-Beratungszentrums bekehrt und begann seinen Dienst als Fachberater für Sektenopfer. Derzeit widmet er sich auf Grundlage seiner persönlichen Erfahrung Präventionsseminaren für Jugendliche und Studierende sowie dem Wiederherstellungsdienst für Aussteiger.",
+      "timeline": [
+        {
+          "year": "Gegenwärtig (2026)",
+          "items": [
+            "Stellvertretender Pastor der Chodae-Gemeinde (Jugendarbeit)",
+            "Berater am Guri Sektenberatungszentrum"
+          ]
+        },
+        {
+          "year": "Oktober 2024",
+          "items": [
+            "Ordination zum Pastor (Presbyterianische Kirche Koreas, Hapdong)"
+          ]
+        },
+        {
+          "year": "Mai 2017",
+          "items": [
+            "Ernennung zum Evangelisten am Guri Sektenberatungszentrum"
+          ]
+        },
+        {
+          "year": "Dezember 2015",
+          "items": [
+            "Bekehrung durch das Guri-Beratungszentrum"
+          ]
+        },
+        {
+          "year": "März 2015",
+          "items": [
+            "Einführung in Shincheonji durch einen Universitätsfreund"
+          ]
+        }
+      ],
+      "education": [
+        "Bachelor in Theologie, Chongshin-Universität",
+        "Master of Divinity, Chongshin Theological Seminary"
+      ],
+      "career": [
+        "Ehemaliger Vorsitzender des studentischen Anti-Sekten-Ausschusses der Chongshin-Universität",
+        "Aktuell stellvertretender Pastor der Chodae-Gemeinde (Jugendarbeit)",
+        "Aktuell Berater am Guri Sektenberatungszentrum"
+      ]
     },
     "preparing": "Demnächst verfügbar."
   },

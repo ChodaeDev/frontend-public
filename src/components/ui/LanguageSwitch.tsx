@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import {
   Dropdown,
   DropdownList,
@@ -14,6 +14,7 @@ import { useTranslation } from '@/i18n/client';
 
 const LanguageSwitch = () => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
   const isLgScreen = useIsLgScreen();
   const { locale: currentLocale, dictionary } = useTranslation();
@@ -24,10 +25,14 @@ const LanguageSwitch = () => {
     segments[1] = newLocale;
     const newPath = segments.join('/');
 
+    // 쿼리스트링 보존
+    const query = searchParams.toString();
+    const fullPath = query ? `${ newPath }?${ query }` : newPath;
+
     // 쿠키 설정
     document.cookie = `next_locale=${ newLocale };path=/;max-age=${ 60 * 60 * 24 * 365 }`;
 
-    router.push(newPath);
+    router.push(fullPath);
   };
 
   return (

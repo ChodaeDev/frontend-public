@@ -55,12 +55,12 @@
       "title": "In truth,\nwe walk together\ntoward recovery\nand reconciliation",
       "ministers": [
         {
-          "name": "Minister Shin Hyun-wook",
+          "name": "Minister Hyun-wook Shin",
           "role": "#SeniorMinister #CultCounselingDirector\n#KoreanChurchMediaCommittee #PCK(Hapdong)CultExpert"
         },
         {
-          "name": "Minister Kim Kang-rim",
-          "role": "#AssociateMinister"
+          "name": "Minister Kang-rim Kim",
+          "role": "#AssociatePastor(YouthMinistry) #GuriHeresyCounselingCenter\n#ChongshinUniv.StudentAnti-CultCommitteeChairman(Former)\n#ChongshinTheologicalSeminary #ChongshinUniv.Theology"
         }
       ]
     },
@@ -231,7 +231,7 @@
     "directions": "Directions",
     "organizationName": "Presbyterian Church of Korea (Hapdong) Chodae Church - Guri Cult Counseling Center",
     "minister": "Senior Minister",
-    "ministerName": "Shin Hyun-wook",
+    "ministerName": "Hyun-wook Shin",
     "addressLabel": "Address",
     "addressValue": "499 Achasan-ro, Gyomun-dong, Guri-si, Gyeonggi-do (Jungang Heights Tium B-404)",
     "phone": "Contact",
@@ -250,7 +250,7 @@
       },
       "minister": {
         "label": "Our Ministers",
-        "description": "Introduction to Minister Shin Hyun-wook and Minister Kim Kang-rim."
+        "description": "Introduction to Minister Hyun-wook Shin and Minister Kang-rim Kim."
       },
       "centers": {
         "label": "Nationwide Centers",
@@ -466,7 +466,7 @@
         "highlights": []
       },
       {
-        "text": "The most distinctive feature of the Guri Cult Counseling Center is that all of our counseling ministers have personally experienced Shincheonji for more than 10 years. With this unique background, all ministers have gathered with a heart of repentance and a sense of mission, making this a specialized Shincheonji counseling center. Led by Director Pastor Shin Hyun-wook, our full-time counseling ministers strive to provide practical help for recovery and healing based on their real experience with Shincheonji and years of counseling ministry.",
+        "text": "The most distinctive feature of the Guri Cult Counseling Center is that all of our counseling ministers have personally experienced Shincheonji for more than 10 years. With this unique background, all ministers have gathered with a heart of repentance and a sense of mission, making this a specialized Shincheonji counseling center. Led by Director Pastor Hyun-wook Shin, our full-time counseling ministers strive to provide practical help for recovery and healing based on their real experience with Shincheonji and years of counseling ministry.",
         "highlights": [
           "all of our counseling ministers have personally experienced Shincheonji for more than 10 years",
           "specialized Shincheonji counseling center"
@@ -497,11 +497,11 @@
   },
   "minister": {
     "tabs": {
-      "shin": "Pastor Shin Hyun-wook",
+      "shin": "Pastor Hyun-wook Shin",
       "kim": "Pastor Kim Gang-rim"
     },
     "shin": {
-      "name": "Pastor Shin Hyun-wook",
+      "name": "Pastor Hyun-wook Shin",
       "quote": "20 years of Shincheonji education,\n20 years of Shincheonji recovery ministry",
       "description": "Based on 20 years of experience as a minister and education director in Shincheonji, he is dedicated to counseling, recovery, and prevention ministry for those affected by Shincheonji.",
       "timeline": [
@@ -585,10 +585,51 @@
       ]
     },
     "kim": {
-      "name": "Pastor Kim Gang-rim",
-      "quote": "",
-      "description": "",
-      "timeline": []
+      "name": "Pastor Kang-rim Kim",
+      "quote": "Sharing the grace of conversion,\nbuilding the next generation",
+      "description": "After approximately one year of experience in Shincheonji during university, he was converted through Pastor Shin Hyeon-wook of the Guri Counseling Center and began his ministry as a professional counselor for cult victims. He is currently dedicated to prevention seminars for youth and university students and recovery ministry for those who have left, based on his personal experience.",
+      "timeline": [
+        {
+          "year": "Present (2026)",
+          "items": [
+            "Associate Pastor at Chodae Church (Youth Ministry)",
+            "Counselor at Guri Heresy Counseling Center"
+          ]
+        },
+        {
+          "year": "October 2024",
+          "items": [
+            "Ordained as Pastor (Presbyterian Church of Korea, Hapdong)"
+          ]
+        },
+        {
+          "year": "May 2017",
+          "items": [
+            "Appointed as Evangelist at Guri Heresy Counseling Center"
+          ]
+        },
+        {
+          "year": "December 2015",
+          "items": [
+            "Converted through the Guri Counseling Center"
+          ]
+        },
+        {
+          "year": "March 2015",
+          "items": [
+            "Introduced to Shincheonji by a university friend"
+          ]
+        }
+      ],
+      "education": [
+        "Bachelor of Theology, Chongshin University",
+        "Master of Divinity, Chongshin Theological Seminary"
+      ],
+      "career": [
+        "Former Chairman, Student Anti-Cult Committee at Chongshin University",
+        "Current Associate Pastor at Chodae Church (Youth Ministry)",
+        "Current Counselor at Guri Heresy Counseling Center"
+      ]
     },
     "preparing": "Coming soon."
   },
