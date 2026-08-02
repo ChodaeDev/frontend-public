@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import {
   Dropdown,
@@ -12,7 +13,7 @@ import { useIsLgScreen } from '@/lib/useMediaQuery';
 import { locales, localeNames, localeFlags, type Locale } from '@/i18n/config';
 import { useTranslation } from '@/i18n/client';
 
-const LanguageSwitch = () => {
+function LanguageSwitchInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -64,6 +65,12 @@ const LanguageSwitch = () => {
       </DropdownList>
     </Dropdown>
   );
-};
+}
 
-export default LanguageSwitch;
+export default function LanguageSwitch() {
+  return (
+    <Suspense>
+      <LanguageSwitchInner />
+    </Suspense>
+  );
+}
