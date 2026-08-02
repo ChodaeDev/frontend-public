@@ -11,6 +11,7 @@ import CentersContent from '@/components/about/CentersContent';
 import MethodsContent from '@/components/withdrawal/MethodsContent';
 import ToMembersContent from '@/components/withdrawal/ToMembersContent';
 import PressContent from '@/components/scj-info/PressContent';
+import HistoryContent from '@/components/scj-info/HistoryContent';
 
 interface SubMenuContentProps {
   locale: Locale;
@@ -54,7 +55,6 @@ export default function SubMenuContent({
 
   const boardEndpointMap: Record<string, Record<string, string>> = {
     'scj-info': {
-      history: '/api/scj-info/history/list',
       details: '/api/scj-info/details/list',
       strategy: '/api/scj-info/strategy/list',
       'illegal-cases': '/api/scj-info/illegal-cases/list',
@@ -111,6 +111,9 @@ export default function SubMenuContent({
         </div>
       );
     case 'scj-info':
+      if (subMenu === 'history') {
+        return <HistoryContent />;
+      }
       if (subMenu === 'press') {
         return (
           <PressContent
