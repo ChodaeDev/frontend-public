@@ -34,25 +34,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   });
 
-  // 메인 메뉴 페이지
+  // 서브 메뉴 페이지
   for (const nav of navItems) {
-    if (!nav.slug) continue;
+    if (!nav.slug || !nav.subMenus) continue;
 
-    entries.push({
-      url: `${ siteUrl }/${ defaultLocale }/${ nav.slug }`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-      alternates: {
-        languages: Object.fromEntries(
-          locales.map((locale) => [locale, `${ siteUrl }/${ locale }/${ nav.slug }`]),
-        ),
-      },
-    });
-
-    // 서브 메뉴 페이지
-    if (nav.subMenus) {
-      for (const sub of nav.subMenus) {
+    for (const sub of nav.subMenus) {
         const priority = isPriorityPage(nav.slug, sub.slug) ? 0.9 : 0.6;
 
         entries.push({
@@ -66,7 +52,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
             ),
           },
         });
-      }
     }
   }
 
