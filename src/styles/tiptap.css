@@ -7,7 +7,7 @@
 .tiptap p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
-  color: var(--gray-5);
+  color: var(--gray-3);
   pointer-events: none;
   height: 0;
 }
@@ -23,6 +23,7 @@
   margin-top: 0;
   margin-bottom: 0.75rem;
   line-height: 1.7;
+  text-align: justify;
 }
 
 /* 제목 */
@@ -30,7 +31,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-top: 1.5rem;
+  margin-top: 3.5rem;
   margin-bottom: 0.75rem;
   line-height: 1.4;
 }
@@ -39,7 +40,7 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-top: 1.25rem;
+  margin-top: 2.75rem;
   margin-bottom: 0.5rem;
   line-height: 1.4;
 }
@@ -48,7 +49,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-top: 1rem;
+  margin-top: 1.75rem;
   margin-bottom: 0.4rem;
   line-height: 1.4;
 }
@@ -151,6 +152,21 @@
 
 .tiptap li::marker {
   color: var(--gray-3);
+}
+
+/* 인용구 */
+.tiptap blockquote.scripture {
+  border-left-color: var(--secondary);
+  background-color: color-mix(in srgb, var(--secondary) 5%, transparent);
+}
+
+.tiptap blockquote.scripture cite {
+  display: block;
+  font-style: normal;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-top: 0.5rem;
 }
 
 /* 수평선 */

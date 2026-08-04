@@ -16,14 +16,14 @@ export default function Breadcrumb({ items, locale, homeLabel }: BreadcrumbProps
   ];
 
   return (
-    <nav aria-label={'Breadcrumb'} className={'hidden xl:flex flex-wrap items-center text-sm text-sub'}>
+    <nav aria-label={'Breadcrumb'} className={'hidden xl:flex flex-wrap items-center text-[13px] text-gray3'}>
       {allItems.map((item, index) => {
         const isLast = index === allItems.length - 1;
 
         return (
           <span key={index} className={'flex items-center'}>
             {index > 0 && (
-              <ChevronRight className={'size-4 mx-1.5 text-gray4'} />
+              <ChevronRight className={'size-4 mx-1.5 text-gray7'} />
             )}
             {item.href && !isLast ? (
               <Link
@@ -33,7 +33,7 @@ export default function Breadcrumb({ items, locale, homeLabel }: BreadcrumbProps
                 {item.label}
               </Link>
             ) : (
-              <span className={isLast ? 'text-main font-medium' : ''}>
+              <span className={isLast ? 'text-gray1 font-medium' : ''}>
                 {item.label}
               </span>
             )}

@@ -39,19 +39,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     if (!nav.slug || !nav.subMenus) continue;
 
     for (const sub of nav.subMenus) {
-        const priority = isPriorityPage(nav.slug, sub.slug) ? 0.9 : 0.6;
+      const priority = isPriorityPage(nav.slug, sub.slug) ? 0.9 : 0.6;
 
-        entries.push({
-          url: `${ siteUrl }/${ defaultLocale }/${ nav.slug }/${ sub.slug }`,
-          lastModified: new Date(),
-          changeFrequency: 'weekly',
-          priority,
-          alternates: {
-            languages: Object.fromEntries(
-              locales.map((locale) => [locale, `${ siteUrl }/${ locale }/${ nav.slug }/${ sub.slug }`]),
-            ),
-          },
-        });
+      entries.push({
+        url: `${ siteUrl }/${ defaultLocale }/${ nav.slug }/${ sub.slug }`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority,
+        alternates: {
+          languages: Object.fromEntries(
+            locales.map((locale) => [locale, `${ siteUrl }/${ locale }/${ nav.slug }/${ sub.slug }`]),
+          ),
+        },
+      });
     }
   }
 
