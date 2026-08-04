@@ -80,7 +80,7 @@ const article: Article = {
     { name: '성경 (개역개정): 요한일서 4:1, 사도행전 17:11', grade: 'C' },
   ],
   createdDate: '2026-08-04',
-  modifiedDate: '',
+  modifiedDate: '2026-08-04',
 };
 
 export default article;
