@@ -19,6 +19,7 @@ const contentMap: Record<string, ComponentType> = {
   'about/directions': lazy(() => import('@/components/about/DirectionsContent')),
   'about/minister': lazy(() => import('@/components/about/MinisterContent')),
   'about/centers': lazy(() => import('@/components/about/CentersContent')),
+  'doctrine/false-claims': lazy(() => import('@/components/doctrine/FalseClaimsContent')),
   'scj-info/history': lazy(() => import('@/components/scj-info/HistoryContent')),
   'scj-info/press': lazy(() => import('@/components/scj-info/PressContent')),
   'withdrawal/methods': lazy(() => import('@/components/withdrawal/MethodsContent')),

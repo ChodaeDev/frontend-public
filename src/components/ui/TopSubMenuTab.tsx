@@ -20,12 +20,7 @@ export default function TopSubMenuTab({ navItem, currentSubSlug, locale }: TopSu
   const tabRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
   const [animate, setAnimate] = useState(false);
 
-  // 이전 위치를 sessionStorage에서 복원하여 초기값으로 사용
-  const [indicator, setIndicator] = useState<{ left: number; width: number }>(() => {
-    if (typeof window === 'undefined') return { left: 0, width: 0 };
-    const saved = sessionStorage.getItem(storageKey);
-    return saved ? JSON.parse(saved) : { left: 0, width: 0 };
-  });
+  const [indicator, setIndicator] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
 
   // 활성 탭이 보이도록 스크롤
   useLayoutEffect(() => {
@@ -33,23 +28,28 @@ export default function TopSubMenuTab({ navItem, currentSubSlug, locale }: TopSu
     tab?.scrollIntoView({ behavior: 'instant', inline: 'center', block: 'nearest' });
   }, [currentSubSlug]);
 
-  // 이전 위치를 먼저 paint한 후, 다음 프레임에서 새 위치로 업데이트하여 transition 발동
+  // mount 시 sessionStorage에서 이전 위치 복원 → 다음 프레임에서 새 위치로 전환
   useEffect(() => {
     const tab = tabRefs.current.get(currentSubSlug);
     if (!tab) return;
 
     const next = { left: tab.offsetLeft, width: tab.offsetWidth };
+    const saved = sessionStorage.getItem(storageKey);
+    const prev = saved ? JSON.parse(saved) : null;
 
-    // 이전 위치와 같으면(첫 진입) 애니메이션 없이 즉시 적용
-    if (indicator.left === next.left && indicator.width === next.width) return;
-
-    // 이전 위치가 paint된 후 다음 프레임에서 새 위치 적용
-    requestAnimationFrame(() => {
-      setAnimate(true);
+    // 이전 위치가 있고 현재와 다르면 애니메이션 적용
+    if (prev && (prev.left !== next.left || prev.width !== next.width)) {
+      setIndicator(prev);
+      requestAnimationFrame(() => {
+        setAnimate(true);
+        setIndicator(next);
+        sessionStorage.setItem(storageKey, JSON.stringify(next));
+      });
+    } else {
       setIndicator(next);
       sessionStorage.setItem(storageKey, JSON.stringify(next));
-    });
-  }, [currentSubSlug, indicator.left, indicator.width]);
+    }
+  }, [currentSubSlug]);
 
   return (
     <nav aria-label={navItem.label}>
