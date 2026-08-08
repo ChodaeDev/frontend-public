@@ -119,7 +119,7 @@ export default function BoardPreviewSection({ locale }: BoardPreviewSectionProps
     }));
 
   return (
-    <section className={'w-full mt-10 mb-20'}>
+    <section className={'w-full my-10'}>
       <div className={'grid grid-cols-1 lg:grid-cols-2 gap-20 sm:gap-10'}>
         <BoardList
           title={t.counselingTitle || '상담 게시판'}

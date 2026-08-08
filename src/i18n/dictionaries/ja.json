@@ -75,7 +75,7 @@
     "quickMenu": {
       "counseling": "相談依頼",
       "testimonies": "脱退体験記",
-      "falseClaims": "新天地の虚偽反証",
+      "falseClaims": "新天地教理検証",
       "exitMethods": "賢い脱退方法",
       "recruitmentTactics": "新天地の布教戦略",
       "locations": "新天地位置情報提供"
@@ -89,7 +89,7 @@
       "counseling": "相談電話",
       "exitMethods": "脱退方法",
       "testimonies": "脱退体験",
-      "falseClaims": "虚偽反証",
+      "falseClaims": "教理検証",
       "donation": "後援問合せ"
     },
     "notice": {
@@ -304,8 +304,8 @@
     "doctrine": {
       "label": "新天地教理反証",
       "falseClaims": {
-        "label": "虚偽反証",
-        "description": "新天地教理の虚偽の主張を反証します。"
+        "label": "教理検証",
+        "description": "新天地教理の主張を検証します。"
       },
       "references": {
         "label": "新天地の実態参考資料",

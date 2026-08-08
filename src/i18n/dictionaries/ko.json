@@ -75,7 +75,7 @@
     "quickMenu": {
       "counseling": "상담 요청",
       "testimonies": "탈퇴 후기",
-      "falseClaims": "신천지 거짓 반증",
+      "falseClaims": "신천지 교리 검증",
       "exitMethods": "지혜로운 탈퇴 방법",
       "recruitmentTactics": "신천지 포교 전략",
       "locations": "신천지 위치제보"
@@ -89,7 +89,7 @@
       "counseling": "상담전화",
       "exitMethods": "탈퇴방법",
       "testimonies": "탈퇴후기",
-      "falseClaims": "거짓반증",
+      "falseClaims": "교리검증",
       "donation": "후원문의"
     },
     "notice": {
@@ -301,8 +301,8 @@
     "doctrine": {
       "label": "신천지 교리반증",
       "falseClaims": {
-        "label": "거짓 반증",
-        "description": "신천지 교리의 거짓된 주장을 반증합니다."
+        "label": "교리 검증",
+        "description": "신천지 교리의 거짓된 주장을 검증합니다."
       },
       "references": {
         "label": "신천지 실체 참고 자료",

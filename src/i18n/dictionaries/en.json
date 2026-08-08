@@ -75,7 +75,7 @@
     "quickMenu": {
       "counseling": "Request Counseling",
       "testimonies": "Exit Testimonies",
-      "falseClaims": "False Claims Refuted",
+      "falseClaims": "SCJ Doctrine Verification",
       "exitMethods": "Safe Exit Methods",
       "recruitmentTactics": "Recruitment Tactics",
       "locations": "SCJ Location Reports"
@@ -89,7 +89,7 @@
       "counseling": "Call Us",
       "exitMethods": "Exit Guide",
       "testimonies": "Testimonies",
-      "falseClaims": "Refutations",
+      "falseClaims": "Verification",
       "donation": "Donate"
     },
     "notice": {
@@ -304,8 +304,8 @@
     "doctrine": {
       "label": "Doctrine Analysis",
       "falseClaims": {
-        "label": "False Claims Refuted",
-        "description": "Refuting false claims in Shincheonji doctrine."
+        "label": "Doctrine Verification",
+        "description": "Verifying claims in Shincheonji doctrine."
       },
       "references": {
         "label": "Reference Materials",

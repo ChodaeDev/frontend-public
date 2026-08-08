@@ -164,7 +164,7 @@ export const navItems: NavItem[] = [
     slug: 'doctrine',
     subMenus: [
       {
-        label: '거짓 반증',
+        label: '교리 검증',
         slug: 'false-claims',
         description: '신천지 교리의 거짓된 주장을 반증합니다.',
       },

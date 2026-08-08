@@ -33,7 +33,7 @@ const quickMenuItems: { icon: LucideIcon; labelKey: keyof QuickMenuDictionary; h
 const fallback: QuickMenuDictionary = {
   counseling: '상담 요청',
   testimonies: '탈퇴 후기',
-  falseClaims: '신천지 거짓 반증',
+  falseClaims: '신천지 교리 검증',
   exitMethods: '지혜로운 탈퇴 방법',
   recruitmentTactics: '신천지 포교 전략',
   locations: '신천지 위치정보',

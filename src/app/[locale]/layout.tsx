@@ -164,7 +164,7 @@ export default async function LocaleLayout({
           },
           {
             '@type': 'SiteNavigationElement',
-            name: '거짓 반증',
+            name: '교리 검증',
             url: `${ siteUrl }/${ locale }/doctrine/false-claims`,
           },
           {

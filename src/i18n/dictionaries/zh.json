@@ -75,7 +75,7 @@
     "quickMenu": {
       "counseling": "咨询请求",
       "testimonies": "退出经历",
-      "falseClaims": "新天地虚假反证",
+      "falseClaims": "新天地教义验证",
       "exitMethods": "明智的退出方法",
       "recruitmentTactics": "新天地传教策略",
       "locations": "新天地位置举报"
@@ -89,7 +89,7 @@
       "counseling": "咨询电话",
       "exitMethods": "退出方法",
       "testimonies": "退出经历",
-      "falseClaims": "虚假反证",
+      "falseClaims": "教义验证",
       "donation": "捐赠咨询"
     },
     "notice": {
@@ -304,8 +304,8 @@
     "doctrine": {
       "label": "新天地教义反证",
       "falseClaims": {
-        "label": "虚假反证",
-        "description": "反驳新天地教义中的虚假主张。"
+        "label": "教义验证",
+        "description": "验证新天地教义中的主张。"
       },
       "references": {
         "label": "新天地实态参考资料",

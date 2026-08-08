@@ -75,7 +75,7 @@
     "quickMenu": {
       "counseling": "Beratung anfordern",
       "testimonies": "Ausstiegsberichte",
-      "falseClaims": "Widerlegte Falschaussagen",
+      "falseClaims": "SCJ-Lehrenüberprüfung",
       "exitMethods": "Sichere Ausstiegsmethoden",
       "recruitmentTactics": "Rekrutierungstaktiken",
       "locations": "SCJ-Standortmeldungen"
@@ -89,7 +89,7 @@
       "counseling": "Anrufen",
       "exitMethods": "Ausstieg",
       "testimonies": "Berichte",
-      "falseClaims": "Widerlegung",
+      "falseClaims": "Lehrenüberprüfung",
       "donation": "Spenden"
     },
     "notice": {
@@ -304,8 +304,8 @@
     "doctrine": {
       "label": "Lehranalyse",
       "falseClaims": {
-        "label": "Widerlegte Falschaussagen",
-        "description": "Widerlegung falscher Behauptungen in der Shincheonji-Lehre."
+        "label": "Lehrenüberprüfung",
+        "description": "Überprüfung der Behauptungen in der Shincheonji-Lehre."
       },
       "references": {
         "label": "Referenzmaterialien",
