@@ -11,6 +11,7 @@ function FalseClaimsContentInner() {
   const searchParams = useSearchParams();
   const { locale } = useTranslation();
   const articleId = searchParams.get('article');
+  const seriesParam = searchParams.get('series');
 
   if (articleId) {
     const article = getArticleById(articleId, locale);
@@ -19,7 +20,9 @@ function FalseClaimsContentInner() {
     }
   }
 
-  return <FalseClaimsList />;
+  const initialSeries = seriesParam !== null ? Number(seriesParam) : undefined;
+
+  return <FalseClaimsList initialSeries={initialSeries} />;
 }
 
 export default function FalseClaimsContent() {

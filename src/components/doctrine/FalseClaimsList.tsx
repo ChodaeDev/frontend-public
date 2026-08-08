@@ -1,19 +1,37 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 import { useTranslation } from '@/i18n/client';
 import { seriesList, getArticlesBySeries } from '@/content/refutation';
 import type { Locale } from '@/i18n/config';
 
-export default function FalseClaimsList() {
+interface FalseClaimsListProps {
+  initialSeries?: number;
+}
+
+export default function FalseClaimsList({ initialSeries }: FalseClaimsListProps) {
   const { locale } = useTranslation();
+  const seriesRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const [openSeries, setOpenSeries] = useState<Set<number>>(() => {
-    // 글이 있는 첫 번째 시리즈를 기본으로 열어둠
+    if (initialSeries !== undefined && !isNaN(initialSeries)) {
+      return new Set([initialSeries]);
+    }
     const first = seriesList.find((s) => s.articleIds.length > 0);
     return first ? new Set([first.number]) : new Set();
   });
+
+  useEffect(() => {
+    if (initialSeries !== undefined && !isNaN(initialSeries)) {
+      const el = seriesRefs.current[initialSeries];
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    }
+  }, [initialSeries]);
 
   const toggle = (num: number) => {
     setOpenSeries((prev) => {
@@ -64,6 +82,7 @@ export default function FalseClaimsList() {
           return (
             <div
               key={series.number}
+              ref={(el) => { seriesRefs.current[series.number] = el; }}
               className={`border rounded-lg ${ isOpen ? 'border-gray3' : 'border-gray7' }`}
             >
               {/* 헤더 (토글) */}
