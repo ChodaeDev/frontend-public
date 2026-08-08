@@ -18,14 +18,14 @@ const navStructure = [
   {
     key: 'about',
     slug: 'about',
-    subKeys: ['introduction', 'minister', 'centers', 'interviews', 'videos', 'directions'],
-    subSlugs: ['introduction', 'minister', 'centers', 'interviews', 'videos', 'directions'],
+    subKeys: ['introduction', 'minister', 'centers', 'interviews', 'directions'],
+    subSlugs: ['introduction', 'minister', 'centers', 'interviews', 'directions'],
   },
   {
     key: 'scjInfo',
     slug: 'scj-info',
-    subKeys: ['history', 'details', 'strategy', 'illegalCases', 'press'],
-    subSlugs: ['history', 'details', 'strategy', 'illegal-cases', 'press'],
+    subKeys: ['history', 'details', 'strategy', 'illegalCases', 'press', 'videos'],
+    subSlugs: ['history', 'details', 'strategy', 'illegal-cases', 'press', 'videos'],
   },
   {
     key: 'doctrine',
@@ -112,14 +112,9 @@ export const navItems: NavItem[] = [
         description: '전국에 있는 상담소를 안내해 드립니다.',
       },
       {
-        label: '인터뷰 및 언론보도',
+        label: '자료 및 언론보도',
         slug: 'interviews',
-        description: '상담소 관련 인터뷰와 언론보도 자료입니다.',
-      },
-      {
-        label: '동영상 자료',
-        slug: 'videos',
-        description: '신천지 관련 동영상 자료를 제공합니다.',
+        description: '이단상담소 소식, 외부 세미나, 방송 출연 자료입니다.',
       },
       {
         label: '오시는 길',
@@ -156,6 +151,11 @@ export const navItems: NavItem[] = [
         label: '신천지 언론보도',
         slug: 'press',
         description: '신천지 관련 언론보도 자료 모음입니다.',
+      },
+      {
+        label: '동영상 자료',
+        slug: 'videos',
+        description: '신천지 관련 뉴스, 시사 프로그램 영상을 제공합니다.',
       },
     ],
   },

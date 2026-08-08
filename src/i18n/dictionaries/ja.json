@@ -266,12 +266,8 @@
         "description": "全国の相談所をご案内します。"
       },
       "interviews": {
-        "label": "インタビュー・報道",
-        "description": "相談所関連のインタビューと報道資料です。"
-      },
-      "videos": {
-        "label": "動画資料",
-        "description": "新天地関連の動画資料を提供します。"
+        "label": "資料及びメディア報道",
+        "description": "相談所のニュース、外部セミナー、放送出演資料です。"
       },
       "directions": {
         "label": "アクセス",
@@ -299,6 +295,10 @@
       "press": {
         "label": "新天地の報道",
         "description": "新天地関連の報道資料集です。"
+      },
+      "videos": {
+        "label": "動画資料",
+        "description": "新天地関連ニュース、時事番組の映像を提供します。"
       }
     },
     "doctrine": {

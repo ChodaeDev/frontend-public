@@ -266,12 +266,8 @@
         "description": "Informationen über Beratungszentren landesweit."
       },
       "interviews": {
-        "label": "Interviews & Medien",
-        "description": "Interviews und Medienberichte über unser Zentrum."
-      },
-      "videos": {
-        "label": "Videoressourcen",
-        "description": "Videomaterialien zu Shincheonji."
+        "label": "Materialien & Medienberichte",
+        "description": "Neuigkeiten des Beratungszentrums, externe Seminare und Medienauftritte."
       },
       "directions": {
         "label": "Anfahrt",
@@ -299,6 +295,10 @@
       "press": {
         "label": "Presseberichte",
         "description": "Sammlung von Medienberichten über Shincheonji."
+      },
+      "videos": {
+        "label": "Videomaterial",
+        "description": "Shincheonji-bezogene Nachrichten und aktuelle Sendungen."
       }
     },
     "doctrine": {

@@ -266,12 +266,8 @@
         "description": "全国咨询所指南。"
       },
       "interviews": {
-        "label": "采访及媒体报道",
-        "description": "咨询所相关的采访和媒体报道资料。"
-      },
-      "videos": {
-        "label": "视频资料",
-        "description": "提供新天地相关视频资料。"
+        "label": "资料及媒体报道",
+        "description": "咨询所动态、外部讲座、广播出演资料。"
       },
       "directions": {
         "label": "交通指南",
@@ -299,6 +295,10 @@
       "press": {
         "label": "新天地媒体报道",
         "description": "新天地相关媒体报道资料汇总。"
+      },
+      "videos": {
+        "label": "视频资料",
+        "description": "新天地相关新闻及时事节目视频。"
       }
     },
     "doctrine": {

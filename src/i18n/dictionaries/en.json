@@ -266,12 +266,8 @@
         "description": "Information about counseling centers nationwide."
       },
       "interviews": {
-        "label": "Interviews & Media",
-        "description": "Interviews and media coverage about our center."
-      },
-      "videos": {
-        "label": "Video Resources",
-        "description": "Video materials related to Shincheonji."
+        "label": "Resources & Media Coverage",
+        "description": "Counseling center news, external seminars, and broadcast appearances."
       },
       "directions": {
         "label": "Directions",
@@ -299,6 +295,10 @@
       "press": {
         "label": "Press Coverage",
         "description": "Collection of media reports about Shincheonji."
+      },
+      "videos": {
+        "label": "Video Resources",
+        "description": "Shincheonji-related news and current affairs program videos."
       }
     },
     "doctrine": {

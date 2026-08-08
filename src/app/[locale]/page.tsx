@@ -1,7 +1,7 @@
 import { getDictionary } from '@/i18n/getDictionary';
 import { isValidLocale } from '@/i18n/config';
 import { notFound } from 'next/navigation';
-import { BoardPreviewSection, LandingImageSection, MinistrySection, NewsSection, NoticePopup, QuickMenuSection, RightSideNav, TestimonySection } from '@/components/landing';
+import { BoardPreviewSection, LandingImageSection, MinistrySection, NoticePopup, PressSlideSection, QuickMenuSection, RefutationSection, RightSideNav } from '@/components/landing';
 import VisitorTracker from '@/components/visitor/VisitorTracker';
 import AccountDeletedModal from '@/components/ui/AccountDeletedModal';
 
@@ -37,9 +37,9 @@ export default async function Home({
         locale={locale}
       />
       <MinistrySection dictionary={dictionary} locale={locale} />
-      <TestimonySection dictionary={dictionary} locale={locale} />
+      <PressSlideSection dictionary={dictionary} locale={locale} />
       <BoardPreviewSection dictionary={dictionary} locale={locale} />
-      <NewsSection dictionary={dictionary} locale={locale} />
+      <RefutationSection locale={locale} />
     </main>
   );
 }
