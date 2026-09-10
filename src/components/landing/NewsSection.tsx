@@ -31,13 +31,13 @@ export default function NewsSection({ locale }: NewsSectionProps) {
   const useMockData = true;
 
   const { data: listData, isLoading } = useQuery({
-    queryKey: pressKeys.list({ page: 1, size: 4, sort: 'createDate', direction: 'desc' }),
-    queryFn: () => fetchPressList({ page: 1, size: 4, sort: 'createDate', direction: 'desc' }),
+    queryKey: pressKeys.list({ page: 1, size: 4, sort: 'publishedAt', direction: 'desc' }),
+    queryFn: () => fetchPressList({ page: 1, size: 4, sort: 'publishedAt', direction: 'desc' }),
     enabled: !useMockData,
   });
 
   const posts: PressPost[] = useMockData
-    ? [...mockPressData].sort((a, b) => dayjs(b.createDate).valueOf() - dayjs(a.createDate).valueOf()).slice(0, 4)
+    ? [...mockPressData].filter((p) => p.isPublished).sort((a, b) => dayjs(b.publishedAt).valueOf() - dayjs(a.publishedAt).valueOf()).slice(0, 4)
     : (listData?.payload?.slice(0, 4) ?? []);
 
   return (
@@ -105,7 +105,7 @@ export default function NewsSection({ locale }: NewsSectionProps) {
                 <div className={'flex items-center justify-between'}>
                   <span className={'text-sm text-sub'}>{news.pressName}</span>
                   <span className={'text-sm text-gray3'}>
-                    {dayjs(news.createDate).format('YYYY.MM.DD')}
+                    {dayjs(news.publishedAt).format('YYYY.MM.DD')}
                   </span>
                 </div>
               </div>

@@ -13,6 +13,8 @@ import { cn } from '@/lib/cn';
 import { fetchPressList, pressKeys } from '@/lib/queries/press';
 import { usePagination } from '@/lib/hooks/usePagination';
 import { useSearch } from '@/lib/hooks/useSearch';
+import { useAuthStore } from '@/store/authStore';
+import PressAdminContent from '@/components/scj-info/PressAdminContent';
 
 function PressCard({ post }: { post: PressPost }) {
   return (
@@ -50,7 +52,7 @@ function PressCard({ post }: { post: PressPost }) {
         <div className={'flex items-center justify-between'}>
           <span className={'text-sm text-sub'}>{post.pressName}</span>
           <span className={'text-sm text-gray3'}>
-            {dayjs(post.createDate).format('YYYY.MM.DD')}
+            {dayjs(post.publishedAt).format('YYYY.MM.DD')}
           </span>
         </div>
       </div>
@@ -61,6 +63,10 @@ function PressCard({ post }: { post: PressPost }) {
 export default function PressContent() {
   const { dictionary } = useTranslation();
   const pressDict = dictionary.press as PressDict;
+  const user = useAuthStore((s) => s.user);
+  const userLevel = user?.level?.toLowerCase();
+  const isAdmin = userLevel === 'admin' || userLevel === 'superadmin';
+
   const {
     currentPage, setCurrentPage, itemCount, handleItemCountChange,
   } = usePagination({ defaultItemCount: 12 });
@@ -87,8 +93,9 @@ export default function PressContent() {
   });
 
   const getMockPage = () => {
-    const sorted = [...mockPressData].sort(
-      (a, b) => dayjs(b.createDate).valueOf() - dayjs(a.createDate).valueOf(),
+    const published = mockPressData.filter((p) => p.isPublished);
+    const sorted = [...published].sort(
+      (a, b) => dayjs(b.publishedAt).valueOf() - dayjs(a.publishedAt).valueOf(),
     );
     const filtered = activeQuery
       ? sorted.filter((p) => p.title.includes(activeQuery) || p.pressName.includes(activeQuery))
@@ -176,6 +183,9 @@ export default function PressContent() {
         totalPages={totalPages}
         onPageChange={(page) => setCurrentPage(page)}
       />
+
+      {/* 관리자 큐레이션 영역 */}
+      {isAdmin && <PressAdminContent />}
     </div>
   );
 }

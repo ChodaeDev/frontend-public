@@ -16,7 +16,7 @@ export const pressKeys = {
 };
 
 export async function fetchPressList(params: PressListParams): Promise<PressListResponse> {
-  const { page, size, sort = 'createDate', direction = 'desc', query } = params;
+  const { page, size, sort = 'publishedAt', direction = 'desc', query } = params;
   const urlParams = new URLSearchParams({
     pageNumber: String(page),
     itemCount: String(size),

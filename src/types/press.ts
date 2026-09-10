@@ -4,7 +4,17 @@ export interface PressPost {
   pressName: string;
   thumbnailUrl: string;
   sourceUrl: string;
-  createDate: string;
+  publishedAt: string;
+  isPublished: boolean;
+  createdAt: string;
+}
+
+export interface PressPostInput {
+  title: string;
+  pressName: string;
+  thumbnailUrl: string;
+  sourceUrl: string;
+  publishedAt: string;
 }
 
 export interface PressListResponse {

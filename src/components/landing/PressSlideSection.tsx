@@ -40,13 +40,13 @@ export default function PressSlideSection({ locale }: PressSlideSectionProps) {
   const useMockData = true;
 
   const { data: listData } = useQuery({
-    queryKey: pressKeys.list({ page: 1, size: 8, sort: 'createDate', direction: 'desc' }),
-    queryFn: () => fetchPressList({ page: 1, size: 8, sort: 'createDate', direction: 'desc' }),
+    queryKey: pressKeys.list({ page: 1, size: 8, sort: 'publishedAt', direction: 'desc' }),
+    queryFn: () => fetchPressList({ page: 1, size: 8, sort: 'publishedAt', direction: 'desc' }),
     enabled: !useMockData,
   });
 
   const posts: PressPost[] = useMockData
-    ? [...mockPressData].sort((a, b) => dayjs(b.createDate).valueOf() - dayjs(a.createDate).valueOf()).slice(0, 8)
+    ? [...mockPressData].filter((p) => p.isPublished).sort((a, b) => dayjs(b.publishedAt).valueOf() - dayjs(a.publishedAt).valueOf()).slice(0, 8)
     : (listData?.payload?.slice(0, 8) ?? []);
 
   const totalItems = posts.length;
@@ -302,7 +302,7 @@ export default function PressSlideSection({ locale }: PressSlideSectionProps) {
                   <div className={'flex items-center justify-between'}>
                     <span className={'text-sm text-sub'}>{item.pressName}</span>
                     <span className={'text-sm text-gray3'}>
-                      {dayjs(item.createDate).format('YYYY.MM.DD')}
+                      {dayjs(item.publishedAt).format('YYYY.MM.DD')}
                     </span>
                   </div>
                 </div>

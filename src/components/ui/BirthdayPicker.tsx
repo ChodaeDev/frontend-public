@@ -24,6 +24,7 @@ type BirthdayPickerProps = {
   label?: string;
   defaultValue?: string;
   className?: string;
+  onChange?: (value: string)=> void;
 };
 
 export function BirthdayPicker({
@@ -31,6 +32,7 @@ export function BirthdayPicker({
   label,
   defaultValue,
   className,
+  onChange,
 }: BirthdayPickerProps) {
   const { locale, dictionary } = useTranslation();
   const t = dictionary.common;
@@ -85,6 +87,7 @@ export function BirthdayPicker({
     if (date) {
       setMonth(date);
       setIsOpen(false);
+      onChange?.(formatBirthday(date));
     }
   };
 
