@@ -34,6 +34,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   });
 
+  // 홈페이지 본문 (갈림길 다음 화면)
+  entries.push({
+    url: `${ siteUrl }/${ defaultLocale }/home`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.9,
+    alternates: {
+      languages: Object.fromEntries(
+        locales.map((locale) => [locale, `${ siteUrl }/${ locale }/home`]),
+      ),
+    },
+  });
+
   // 서브 메뉴 페이지
   for (const nav of navItems) {
     if (!nav.slug || !nav.subMenus) continue;

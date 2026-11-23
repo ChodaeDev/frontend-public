@@ -70,7 +70,7 @@ const MobileMenu = () => {
 
   const isActive = (slug: string) => {
     const basePath = `/${ locale }`;
-    if (slug === '') return pathname === basePath || pathname === `${ basePath }/`;
+    if (slug === '') return pathname === `${ basePath }/home`;
     return pathname.startsWith(`${ basePath }/${ slug }`);
   };
 
@@ -109,7 +109,7 @@ const MobileMenu = () => {
               {navItems.map((item) => (
                 <div key={item.slug} className={'mb-2'}>
                   <Link
-                    href={item.slug === '' ? `/${ locale }` : `/${ locale }/${ item.slug }`}
+                    href={item.slug === '' ? `/${ locale }/home` : `/${ locale }/${ item.slug }`}
                     className={cn('block px-6 py-2.5 text-base font-bold transition-colors', isActive(item.slug) ? 'text-accent1' : 'text-main')}
                   >
                     {item.label}

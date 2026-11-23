@@ -106,7 +106,7 @@ export default function MyPage() {
       const res = await fetchWithAuth(`/api/public/users/${ user.id }`, { method: 'DELETE' });
       if (res.ok) {
         logout();
-        window.location.href = `/${ locale }?accountDeleted=true`;
+        window.location.href = `/${ locale }/home?accountDeleted=true`;
         return;
       } else {
         const data = await res.json().catch(() => null);

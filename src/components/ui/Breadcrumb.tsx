@@ -11,7 +11,7 @@ interface BreadcrumbProps {
 
 export default function Breadcrumb({ items, locale, homeLabel }: BreadcrumbProps) {
   const allItems: BreadcrumbItem[] = [
-    { label: homeLabel, href: `/${ locale }` },
+    { label: homeLabel, href: `/${ locale }/home` },
     ...items,
   ];
 

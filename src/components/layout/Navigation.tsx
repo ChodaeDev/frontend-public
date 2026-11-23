@@ -13,7 +13,7 @@ const Navigation = () => {
 
   const isActive = (slug: string) => {
     const basePath = `/${ locale }`;
-    if (slug === '') return pathname === basePath || pathname === `${ basePath }/`;
+    if (slug === '') return pathname === `${ basePath }/home`;
     return pathname.startsWith(`${ basePath }/${ slug }`);
   };
 
@@ -22,7 +22,7 @@ const Navigation = () => {
       {navItems.map((item) => (
         <Link
           key={item.slug}
-          href={item.slug === '' ? `/${ locale }` : `/${ locale }/${ item.slug }`}
+          href={item.slug === '' ? `/${ locale }/home` : `/${ locale }/${ item.slug }`}
           className={cn('px-3 py-1.5 rounded-md text-sm transition-colors duration-300 whitespace-nowrap text-sub hover:bg-gray9', isActive(item.slug) ? 'text-accent1 font-black' : 'hover:text-main')}
         >
           {item.label}

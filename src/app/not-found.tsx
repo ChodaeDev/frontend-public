@@ -13,7 +13,7 @@ export default function RootNotFound() {
       </div>
 
       <Link
-        href={'/ko'}
+        href={'/ko/home'}
         className={'inline-flex items-center gap-2 rounded-lg bg-accent1 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent1/90'}
       >
         <Home className={'size-4'} />

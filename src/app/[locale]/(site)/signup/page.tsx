@@ -87,7 +87,7 @@ export default function SignUpPage() {
 
   useEffect(() => {
     if (user) {
-      router.replace(`/${ locale }`);
+      router.replace(`/${ locale }/home`);
     }
   }, [user, router, locale]);
 

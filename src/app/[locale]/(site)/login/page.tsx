@@ -108,7 +108,7 @@ function LoginForm() {
 
   useEffect(() => {
     if (user) {
-      router.replace(returnTo ?? `/${ locale }`);
+      router.replace(returnTo ?? `/${ locale }/home`);
     }
   }, [user, router, locale, returnTo]);
 
