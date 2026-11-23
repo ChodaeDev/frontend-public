@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useTranslation } from '@/i18n/client';
+import { usePageContent } from '@/i18n/content';
 
 interface MethodItem {
   title: string;
@@ -14,11 +15,11 @@ interface MethodSection {
 }
 
 export default function MethodsContent() {
-  const { dictionary, locale } = useTranslation();
-  const t = dictionary.methodsContent as {
+  const { locale } = useTranslation();
+  const t = usePageContent<{
     imageAlt: string;
     sections: MethodSection[];
-  };
+  }>('methods', locale);
 
   const imageSrc = locale === 'ko'
     ? '/assets/images/withdrawal-methods-ko.png'

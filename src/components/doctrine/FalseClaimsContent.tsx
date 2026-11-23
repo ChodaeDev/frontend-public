@@ -1,15 +1,17 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, use } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslation } from '@/i18n/client';
-import { getArticleById } from '@/content/refutation';
+import { getArticleById, loadRefutationTranslation } from '@/content/refutation';
 import FalseClaimsList from '@/components/doctrine/FalseClaimsList';
 import FalseClaimsDetail from '@/components/doctrine/FalseClaimsDetail';
 
 function FalseClaimsContentInner() {
   const searchParams = useSearchParams();
   const { locale } = useTranslation();
+  // 해당 언어 번역을 불러온 뒤 목록·상세를 그린다 (한국어는 바로 통과)
+  use(loadRefutationTranslation(locale));
   const articleId = searchParams.get('article');
   const seriesParam = searchParams.get('series');
 

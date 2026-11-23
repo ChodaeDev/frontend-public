@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 import { useTranslation } from '@/i18n/client';
-import { seriesList, getArticlesBySeries } from '@/content/refutation';
+import { getSeriesList, getArticlesBySeries } from '@/content/refutation';
 import type { Locale } from '@/i18n/config';
 
 interface FalseClaimsListProps {
@@ -12,7 +12,9 @@ interface FalseClaimsListProps {
 }
 
 export default function FalseClaimsList({ initialSeries }: FalseClaimsListProps) {
-  const { locale } = useTranslation();
+  const { locale, dictionary } = useTranslation();
+  const t = dictionary.falseClaims;
+  const seriesList = getSeriesList(locale);
   const seriesRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const [openSeries, setOpenSeries] = useState<Set<number>>(() => {
     if (initialSeries !== undefined && !isNaN(initialSeries)) {
@@ -56,12 +58,12 @@ export default function FalseClaimsList({ initialSeries }: FalseClaimsListProps)
   return (
     <div className={'w-full my-10'}>
       <p className={'text-gray1 text-center mb-10'}>
-        {'현재 시리즈 제작 및 검증 중입니다. 한국어(KO)만 지원됩니다.'}
+        {t.notice}
       </p>
 
       <div className={'flex items-center justify-end gap-2 mb-4'}>
         <span className={'h-[22px] text-sm text-sub'}>
-          {'목차'}
+          {t.toc}
         </span>
         <button
           onClick={toggleAll}
@@ -96,11 +98,11 @@ export default function FalseClaimsList({ initialSeries }: FalseClaimsListProps)
               >
                 <div className={'flex items-center gap-2'}>
                   <span className={`text-xs font-bold px-2 py-0.5 rounded ${ isOpen ? 'text-white bg-accent1' : 'text-accent1 bg-accent1/10' }`}>
-                    {`${ series.number }부`}
+                    {t.part.replace('{n}', String(series.number))}
                   </span>
                   <h3 className={`text-base font-bold ${ isOpen ? 'text-accent1' : 'text-main' }`}>{series.title}</h3>
                   {!hasArticles && (
-                    <span className={'text-xs text-gray4'}>{'(준비 중)'}</span>
+                    <span className={'text-xs text-gray4'}>{t.preparing}</span>
                   )}
                 </div>
                 {hasArticles && (

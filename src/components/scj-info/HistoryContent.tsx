@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useTranslation } from '@/i18n/client';
+import { usePageContent } from '@/i18n/content';
 
 interface HistoryParagraph {
   text: string;
@@ -92,12 +93,12 @@ function renderParagraph(paragraph: HistoryParagraph) {
 }
 
 export default function HistoryContent() {
-  const { dictionary } = useTranslation();
-  const t = dictionary.historyContent as {
+  const { locale } = useTranslation();
+  const t = usePageContent<{
     intro: string;
     textSections: HistoryTextSection[];
     timelineSections: TimelineSection[];
-  };
+  }>('history', locale);
 
   return (
     <article className={'max-w-2xl mx-auto my-10'}>

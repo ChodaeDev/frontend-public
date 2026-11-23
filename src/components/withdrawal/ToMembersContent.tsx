@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslation } from '@/i18n/client';
+import { usePageContent } from '@/i18n/content';
 
 interface ToMembersParagraph {
   text: string;
@@ -8,12 +9,12 @@ interface ToMembersParagraph {
 }
 
 export default function ToMembersContent() {
-  const { dictionary } = useTranslation();
-  const t = dictionary.toMembersContent as {
+  const { locale } = useTranslation();
+  const t = usePageContent<{
     paragraphs: ToMembersParagraph[];
     emphasis: string;
     closing: string;
-  };
+  }>('toMembers', locale);
 
   const renderParagraph = (paragraph: ToMembersParagraph) => {
     if (!paragraph.highlights?.length) return paragraph.text;

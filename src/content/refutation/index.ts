@@ -180,8 +180,6 @@ articleModules.ko['11-09'] = ko1109;
 articleModules.ko['11-10'] = ko1110;
 articleModules.ko['11-11'] = ko1111;
 
-// 다른 locale은 파일이 있으면 import, 없으면 ko fallback
-
 export const seriesList: SeriesInfo[] = [
   { number: 0, title: '검증을 시작하며', articleIds: ['00-01', '00-02', '00-03', '00-04'] },
   { number: 1, title: '비유풀이의 문제', articleIds: ['01-01', '01-02', '01-03', '01-04', '01-05', '01-06', '01-07'] },
@@ -197,17 +195,79 @@ export const seriesList: SeriesInfo[] = [
   { number: 11, title: '신천지에서 자주 하는 반론', articleIds: ['11-01', '11-02', '11-03', '11-04', '11-05', '11-06', '11-07', '11-08', '11-09', '11-10', '11-11'] },
 ];
 
+// ─── 다국어 ───────────────────────────────────────────────
+// 한국어(ko/*.ts)가 원본이다. 다른 언어는 i18n/{locale}.json에 번역만 담고,
+// 그 언어로 볼 때만 동적으로 불러와 한국어 원본 위에 덮어쓴다.
+
+export interface RefutationTranslation {
+  series: Record<string, string>;
+  articles: Record<string, {
+    seriesTitle?: string;
+    title?: string;
+    description?: string;
+    content?: string;
+    selfCheckQuestions?: string[];
+    sources?: string[];
+  }>;
+}
+
+const translationLoaders: Partial<Record<Locale, ()=> Promise<{ default: RefutationTranslation }>>> = {
+  en: () => import('./i18n/en.json'),
+  ja: () => import('./i18n/ja.json'),
+  zh: () => import('./i18n/zh.json'),
+  de: () => import('./i18n/de.json'),
+};
+
+const translations: Partial<Record<Locale, RefutationTranslation>> = {};
+const translationPromises = new Map<Locale, Promise<void>>();
+// use()가 바로 통과하도록 이미 끝난 상태로 표시한 Promise
+const resolved = Object.assign(Promise.resolve(), { status: 'fulfilled' as const, value: undefined });
+
+/** 해당 언어 번역을 불러온다. use()에 넘겨 Suspense로 기다린다. 한국어와 이미 불러온 언어는 즉시 통과한다. */
+export function loadRefutationTranslation(locale: Locale): Promise<void> {
+  const loader = translationLoaders[locale];
+  if (!loader || translations[locale]) return resolved;
+  let promise = translationPromises.get(locale);
+  if (!promise) {
+    promise = loader().then((module) => {
+      translations[locale] = module.default;
+    });
+    translationPromises.set(locale, promise);
+  }
+  return promise;
+}
+
+function localize(article: Article, locale: Locale): Article {
+  const tr = translations[locale]?.articles[article.id];
+  if (!tr) return article;
+  return {
+    ...article,
+    seriesTitle: tr.seriesTitle ?? article.seriesTitle,
+    title: tr.title ?? article.title,
+    description: tr.description ?? article.description,
+    content: tr.content ?? article.content,
+    selfCheckQuestions: tr.selfCheckQuestions ?? article.selfCheckQuestions,
+    sources: article.sources.map((source, i) => ({ ...source, name: tr.sources?.[i] ?? source.name })),
+  };
+}
+
+/** 번역이 있는 글인지 (없으면 한국어 원문을 보여 준다) */
+export function isTranslated(id: string, locale: Locale): boolean {
+  return locale === 'ko' || !!translations[locale]?.articles[id];
+}
+
+export function getSeriesList(locale: Locale = 'ko'): SeriesInfo[] {
+  const titles = translations[locale]?.series;
+  return seriesList.map((series) => ({ ...series, title: titles?.[String(series.number)] ?? series.title }));
+}
+
 export function getArticleById(id: string, locale: Locale = 'ko'): Article | undefined {
-  return articleModules[locale]?.[id] ?? articleModules.ko[id];
+  const article = articleModules.ko[id];
+  return article ? localize(article, locale) : undefined;
 }
 
 export function getAllArticles(locale: Locale = 'ko'): Article[] {
-  const koArticles = Object.values(articleModules.ko);
-  if (locale === 'ko' || !articleModules[locale]) return koArticles;
-
-  return koArticles.map((koArticle) =>
-    articleModules[locale]?.[koArticle.id] ?? koArticle,
-  );
+  return Object.values(articleModules.ko).map((article) => localize(article, locale));
 }
 
 export function getArticlesBySeries(seriesNumber: number, locale: Locale = 'ko'): Article[] {
