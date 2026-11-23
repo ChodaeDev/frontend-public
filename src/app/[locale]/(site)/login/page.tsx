@@ -97,7 +97,11 @@ function LoginForm() {
   const params = useParams();
   const locale = params.locale as string;
   const searchParams = useSearchParams();
-  const returnTo = searchParams.get('returnTo');
+  // 같은 사이트 안의 경로만 허용한다 (//evil.com, https://... 차단)
+  const rawReturnTo = searchParams.get('returnTo');
+  const returnTo = rawReturnTo && rawReturnTo.startsWith('/') && !rawReturnTo.startsWith('//') && !rawReturnTo.startsWith('/\\')
+    ? rawReturnTo
+    : null;
   const user = useAuthStore((state) => state.user);
   const setAuth = useAuthStore((state) => state.setAuth);
   const setUser = useAuthStore((state) => state.setUser);
