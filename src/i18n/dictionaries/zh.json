@@ -29,6 +29,14 @@
     "openMenu": "打开菜单",
     "closeMenu": "关闭菜单"
   },
+  "gate": {
+    "counselEyebrow": "立即咨询",
+    "counselTitle": "如果怀疑家人、朋友或亲戚\n加入了新天地",
+    "counselCta": "立即申请咨询",
+    "homeEyebrow": "网站首页",
+    "homeTitle": "想先了解\n新天地是什么地方",
+    "homeCta": "浏览网站"
+  },
   "theme": {
     "light": "浅色",
     "dark": "深色",

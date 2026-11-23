@@ -88,3 +88,62 @@
     transform: translateY(0);
   }
 }
+
+/* 랜딩 갈림길 배경 블롭: 시작점으로 돌아오는 경로라 끊김 없이 흐른다 */
+@keyframes gateDriftA {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(14%, 8%) scale(1.12);
+  }
+  66% {
+    transform: translate(4%, 18%) scale(0.94);
+  }
+}
+
+@keyframes gateDriftB {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1.05);
+  }
+  33% {
+    transform: translate(-16%, 10%) scale(0.92);
+  }
+  66% {
+    transform: translate(-6%, -12%) scale(1.15);
+  }
+}
+
+@keyframes gateDriftC {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(0.96);
+  }
+  33% {
+    transform: translate(12%, -14%) scale(1.1);
+  }
+  66% {
+    transform: translate(-10%, -6%) scale(1.02);
+  }
+}
+
+/* 블롭 묶음 전체를 아주 천천히 회전시켜 색이 섞이며 도는 느낌을 준다 */
+@keyframes gateSwirl {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-gateDriftA,
+  .animate-gateDriftB,
+  .animate-gateDriftC,
+  .animate-gateSwirl {
+    animation: none;
+  }
+}

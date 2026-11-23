@@ -29,6 +29,14 @@
     "openMenu": "메뉴 열기",
     "closeMenu": "메뉴 닫기"
   },
+  "gate": {
+    "counselEyebrow": "바로 상담",
+    "counselTitle": "내 가족이나 친구, 친척이\n신천지에 다니는 것 같다면",
+    "counselCta": "바로 상담 신청",
+    "homeEyebrow": "홈페이지",
+    "homeTitle": "신천지가 어떤 곳인지\n먼저 알아보고 싶다면",
+    "homeCta": "홈페이지 둘러보기"
+  },
   "theme": {
     "light": "Light",
     "dark": "Dark",

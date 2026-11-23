@@ -29,6 +29,14 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
   },
+  "gate": {
+    "counselEyebrow": "Counseling",
+    "counselTitle": "Worried a loved one\nis in Shincheonji?",
+    "counselCta": "Request counseling now",
+    "homeEyebrow": "Website",
+    "homeTitle": "Want to learn about\nShincheonji first?",
+    "homeCta": "Explore the website"
+  },
   "theme": {
     "light": "Light",
     "dark": "Dark",

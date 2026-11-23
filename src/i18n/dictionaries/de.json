@@ -29,6 +29,14 @@
     "openMenu": "Menü öffnen",
     "closeMenu": "Menü schließen"
   },
+  "gate": {
+    "counselEyebrow": "Beratung",
+    "counselTitle": "Familie oder Freunde\nbei Shincheonji?",
+    "counselCta": "Jetzt Beratung anfragen",
+    "homeEyebrow": "Website",
+    "homeTitle": "Erst mehr über\nShincheonji erfahren?",
+    "homeCta": "Website ansehen"
+  },
   "theme": {
     "light": "Hell",
     "dark": "Dunkel",

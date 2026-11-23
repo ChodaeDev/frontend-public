@@ -45,6 +45,14 @@
   /* 기타 */
   --color-edge: var(--edge);
 
+  /* 랜딩 갈림길 (상담: 노랑·빨강·보라 / 홈: 보라·파랑·연두) */
+  --color-gate-warm1: var(--gate-warm-1);
+  --color-gate-warm2: var(--gate-warm-2);
+  --color-gate-warm3: var(--gate-warm-3);
+  --color-gate-cool1: var(--gate-cool-1);
+  --color-gate-cool2: var(--gate-cool-2);
+  --color-gate-cool3: var(--gate-cool-3);
+
   /* 애니메이션 */
   --animate-slideDown: slideDown 0.15s ease-out;
   --animate-slideUp: slideUp 0.15s ease-out;
@@ -58,6 +66,10 @@
   --animate-heroSlideUp: heroSlideUp 0.6s ease-out both;
   --animate-heroSlideUp-delay-1: heroSlideUp 0.6s ease-out 0.15s both;
   --animate-heroSlideUp-delay-2: heroSlideUp 0.6s ease-out 0.3s both;
+  --animate-gateDriftA: gateDriftA 8s ease-in-out infinite;
+  --animate-gateDriftB: gateDriftB 10s ease-in-out infinite;
+  --animate-gateDriftC: gateDriftC 12s ease-in-out infinite;
+  --animate-gateSwirl: gateSwirl 24s linear infinite;
 }
 
 /* Light Mode (기본) */
@@ -91,6 +103,13 @@
   --gray-8: rgb(215, 215, 215);
   --gray-9: rgb(235, 235, 235);
   --edge: rgb(255, 255, 255);
+
+  --gate-warm-1: #ffd23f;
+  --gate-warm-2: #ff6b5b;
+  --gate-warm-3: #b46cf0;
+  --gate-cool-1: #9b7bff;
+  --gate-cool-2: #4f8dff;
+  --gate-cool-3: #7ee081;
 }
 
 /* Dark Mode */
@@ -124,6 +143,13 @@
   --gray-8: rgb(54, 54, 54);
   --gray-9: rgb(42, 42, 42);
   --edge: rgb(0, 0, 0);
+
+  --gate-warm-1: #e0b000;
+  --gate-warm-2: #e0473a;
+  --gate-warm-3: #9548d6;
+  --gate-cool-1: #7a56f0;
+  --gate-cool-2: #2f6fe8;
+  --gate-cool-3: #4cbf55;
 }
 
 body {

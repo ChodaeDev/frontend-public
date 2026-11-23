@@ -29,6 +29,14 @@
     "openMenu": "メニューを開く",
     "closeMenu": "メニューを閉じる"
   },
+  "gate": {
+    "counselEyebrow": "すぐに相談",
+    "counselTitle": "家族や友人、親戚が\n新天地に通っているようなら",
+    "counselCta": "今すぐ相談を申し込む",
+    "homeEyebrow": "ホームページ",
+    "homeTitle": "新天地がどんな所か\nまず知りたいなら",
+    "homeCta": "ホームページを見る"
+  },
   "theme": {
     "light": "ライト",
     "dark": "ダーク",
