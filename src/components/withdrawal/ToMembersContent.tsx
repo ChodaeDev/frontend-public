@@ -38,7 +38,7 @@ export default function ToMembersContent() {
   };
 
   return (
-    <article className={'max-w-2xl my-10'}>
+    <article className={'max-w-2xl mx-auto my-10'}>
       <div className={'flex flex-col gap-8'}>
         {t.paragraphs.map((paragraph, i) => (
           <p key={i} className={'text-main text-justify leading-[1.9] tracking-[0.02em]'}>
