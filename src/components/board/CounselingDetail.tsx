@@ -5,16 +5,18 @@ import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import { ArrowLeft, Pencil, Trash2, Lock } from 'lucide-react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '@/i18n/client';
 import { useAuthStore } from '@/store/authStore';
 import { formatPhone } from '@/lib/format';
 import ConfirmModal from '@/components/ui/ConfirmModal';
 import CommentSection from '@/components/board/CommentSection';
+import GuestPasswordGate from '@/components/board/GuestPasswordGate';
+import { useCounselingPostAccess } from '@/lib/hooks/useCounselingPostAccess';
 import {
   counselingKeys,
-  fetchCounselingDetail,
   deleteCounselingPost,
+  guestCommentApi,
 } from '@/lib/queries/counseling';
 
 interface CounselingDetailProps {
@@ -31,14 +33,22 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
 
   const queryClient = useQueryClient();
 
-  const { data: post, isLoading: loading, error: postError } = useQuery({
-    queryKey: counselingKeys.detail(postId),
-    queryFn: () => fetchCounselingDetail(postId),
-    retry: false,
-  });
+  // 비회원 글은 비밀번호 확인 → 토큰으로 열람 (토큰은 메모리에만 있어 진입할 때마다 다시 입력)
+  const {
+    post,
+    loading,
+    error: postError,
+    needsPassword,
+    isGuestLocked,
+    accessToken,
+    unlock,
+    unlocking,
+    unlockError,
+  } = useCounselingPostAccess(postId);
+  const isGuestPost = post?.authorType === 'guest' || isGuestLocked;
 
   const [noAccess, setNoAccess] = useState(false);
-  const error = postError ? (postError as Error).message || t.postNotFound || '게시글을 찾을 수 없습니다.' : null;
+  const error = postError && !needsPassword ? (postError as Error).message || t.postNotFound || '게시글을 찾을 수 없습니다.' : null;
 
   // 게시글 삭제 상태
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -55,27 +65,33 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
     etc: t.counselTypeEtc || '기타 상담',
   };
 
-  // 비로그인 시 로그인 페이지로 리다이렉트 (공지글은 제외)
+  // 비로그인 시 로그인 페이지로 리다이렉트 (공지글·비회원 글은 제외)
   useEffect(() => {
-    if (!loading && !user && !isNotice) {
+    if (!loading && !user && !isNotice && !needsPassword && !isGuestPost) {
       alert(t.loginRequired || '로그인이 필요합니다');
       router.replace(`/${ locale }/login?returnTo=${ encodeURIComponent(`/${ locale }/board/counseling/${ postId }`) }`);
     }
-  }, [loading, user, isNotice, router, locale, postId, t.loginRequired]);
+  }, [loading, user, isNotice, needsPassword, isGuestPost, router, locale, postId, t.loginRequired]);
 
   // error 또는 post 없을 때 목록으로 이동
   useEffect(() => {
-    if ((!user && !isNotice) || loading) return;
+    if (needsPassword || loading) return;
+    if (!user && !isNotice && !isGuestPost) return;
     if (error || !post) {
       alert(error || t.postNotFound || '게시글을 찾을 수 없습니다.');
       router.replace(`/${ locale }/board/counseling`);
     }
-  }, [loading, error, post, router, t.postNotFound, locale, user, isNotice]);
+  }, [loading, error, post, router, t.postNotFound, locale, user, isNotice, isGuestPost, needsPassword]);
 
   // 비공개 글 접근 권한 확인 (공지글은 제외)
   useEffect(() => {
     if (!post) return;
     if (post.isNotice) return;
+    // 비회원 글은 토큰 검증을 통과해야만 응답이 오므로 여기까지 왔다면 열람 가능
+    if (post.authorType === 'guest') {
+      setNoAccess(false);
+      return;
+    }
     if (post.visibilityLevel !== 'public' && !post.isOwner && !isAdmin) {
       setNoAccess(true);
     } else {
@@ -85,7 +101,7 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
 
   // 게시글 삭제
   const { mutate: handleDelete, isPending: deleting } = useMutation({
-    mutationFn: () => deleteCounselingPost(postId),
+    mutationFn: () => deleteCounselingPost(postId, accessToken),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: counselingKeys.all });
       router.push(`/${ locale }/board/counseling`);
@@ -103,6 +119,11 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
         <p className={'mt-3 text-sm'}>{t.loading || '불러오는 중...'}</p>
       </div>
     );
+  }
+
+  // 비회원 글: 비밀번호 입력
+  if (needsPassword) {
+    return <GuestPasswordGate onSubmit={unlock} pending={unlocking} error={unlockError} />;
   }
 
   // error/!post는 useEffect에서 alert + router.back() 처리
@@ -154,7 +175,12 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
       {/* 게시글 메타 정보 */}
       <div className={'border-b border-gray7 px-2 py-3 bg-gray9'}>
         <div className={'flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-sm'}>
-          <span>{t.author || '작성자'}{': '}<span className={'text-main font-medium'}>{post.userName}</span></span>
+          <span className={'inline-flex items-center gap-1.5'}>
+            {t.author || '작성자'}{': '}<span className={'text-main font-medium'}>{post.userName}</span>
+            {isGuestPost && (
+              <span className={'text-xs font-medium text-sub bg-gray8 px-1.5 py-0.5 rounded'}>{t.guestBadge || '비회원'}</span>
+            )}
+          </span>
           <div className={'flex items-center gap-2'}>
             <span className={'text-sub'}>{t.phone || '연락처'}{': '}</span>
             <span className={'inline-flex items-center gap-1.5'}>
@@ -192,7 +218,17 @@ export default function CounselingDetail({ postId }: CounselingDetailProps) {
       </div>
 
       {/* 댓글 영역 */}
-      <CommentSection postId={postId} t={t as unknown as Record<string, string>} />
+      {isGuestPost && accessToken ? (
+        // 비밀번호로 연 비회원 글: 로그인 여부와 상관없이 글 작성자(비회원) 신분으로 댓글을 단다
+        <CommentSection
+          postId={postId}
+          t={t as unknown as Record<string, string>}
+          api={guestCommentApi(postId, accessToken)}
+          actor={{ userId: post.userId, userName: post.userName }}
+        />
+      ) : (
+        <CommentSection postId={postId} t={t as unknown as Record<string, string>} />
+      )}
 
       {/* 게시글 삭제 확인 모달 */}
       <ConfirmModal

@@ -16,3 +16,27 @@ export const counselingSchema = z.object({
 });
 
 export type CounselingInput = z.infer<typeof counselingSchema>;
+
+/** 비회원 글 비밀번호: 4자 이상만 요구한다 (최대 20자) */
+export const guestPasswordMinLength = 4;
+export const guestPasswordMaxLength = 20;
+
+export const guestPasswordSchema = z.string()
+  .min(guestPasswordMinLength, `비밀번호는 ${ guestPasswordMinLength }자 이상 입력해주세요`)
+  .max(guestPasswordMaxLength, `비밀번호는 ${ guestPasswordMaxLength }자 이하로 입력해주세요`);
+
+export const guestCounselingSchema = counselingSchema.extend({
+  guestName: z.string()
+    .trim()
+    .min(1, '이름을 입력해주세요')
+    .max(20, '이름은 20자 이하로 입력해주세요'),
+  password: guestPasswordSchema,
+  passwordConfirm: z.string().min(1, '비밀번호를 한 번 더 입력해주세요'),
+  passwordNoticeAgree: z.literal(true, { error: '비밀번호 안내를 확인해주세요' }),
+  agreePrivacy: z.literal(true, { error: '개인정보 수집·이용에 동의해주세요' }),
+}).refine((data) => data.password === data.passwordConfirm, {
+  message: '비밀번호가 서로 다릅니다',
+  path: ['passwordConfirm'],
+});
+
+export type GuestCounselingInput = z.infer<typeof guestCounselingSchema>;

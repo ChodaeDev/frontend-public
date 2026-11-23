@@ -54,13 +54,15 @@ export default function CounselingBoardContent() {
   const mapPost = (item: CounselingPost): BoardPost => ({
     id: item.id,
     title: item.title,
-    author: item.userId,
+    // 비회원 글은 아이디가 없으므로 이름을 보여준다
+    author: item.authorType === 'guest' ? (item.userName ?? '') : item.userId,
     isOwner: item.isOwner,
     date: dayjs(item.createDate).format('YYYY-MM-DD'),
     commentCount: item.commentCount,
     visibilityLevel: item.visibilityLevel,
     isNotice: item.isNotice,
     counselType: item.counselType,
+    authorType: item.authorType,
   });
 
   const allPosts: BoardPost[] = listData?.payload.map(mapPost) ?? [];
@@ -78,8 +80,8 @@ export default function CounselingBoardContent() {
   // 자물쇠 표시: 공지와 admin 제외 모든 글에 표시
   const showLock = (post: BoardPost) => !post.isNotice && !isAdmin;
 
-  // 진입 가능: 공지, 본인글, admin만 진입 가능
-  const canAccess = (post: BoardPost) => post.isNotice || post.isOwner || isAdmin;
+  // 진입 가능: 공지, 본인글, admin, 비회원 글(상세에서 비밀번호 확인)
+  const canAccess = (post: BoardPost) => post.isNotice || post.isOwner || isAdmin || post.authorType === 'guest';
 
   const handleRowClick = (post: BoardPost) => {
     if (!canAccess(post)) {
@@ -159,7 +161,14 @@ export default function CounselingBoardContent() {
       id: 'author',
       label: boardDict.author || '작성자',
       className: 'justify-center',
-      accessor: (post) => <span className={'text-sm text-sub'}>{post.author}</span>,
+      accessor: (post) => (
+        <span className={'inline-flex items-center gap-1 text-sm text-sub'}>
+          {post.author}
+          {post.authorType === 'guest' && (
+            <span className={'text-[11px] text-gray3 bg-gray9 px-1 rounded'}>{boardDict.guestBadge || '비회원'}</span>
+          )}
+        </span>
+      ),
     },
     {
       id: 'date',

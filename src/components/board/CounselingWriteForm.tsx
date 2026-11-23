@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { Lock } from 'lucide-react';
 import { useRouter, useParams, usePathname } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import FormSelect from '@/components/ui/FormSelect';
@@ -91,13 +92,12 @@ export default function CounselingWriteForm() {
 
     setFieldErrors({});
     setSubmitError(null);
-    const visibilityLevel = formData.get('visibilityLevel') === 'on' ? 'partial' : 'public';
-
+    // 상담글은 모두 비공개(잠금)로 등록한다
     submitPost({
       ...result.data,
       userId: user.userId,
       userName: user.userName,
-      visibilityLevel,
+      visibilityLevel: 'partial',
     });
   };
 
@@ -108,6 +108,10 @@ export default function CounselingWriteForm() {
   return (
     <>
       <form ref={formRef} className={'grid grid-cols-1 gap-6'}>
+        <p className={'flex items-center gap-2 rounded-lg bg-background-secondary px-4 py-3 text-sm text-sub'}>
+          <Lock className={'size-4 shrink-0 text-gray3'} />
+          {t.allPostsPrivateNotice || '상담글은 모두 비공개로 올라갑니다. 관리자와 작성자만 볼 수 있습니다.'}
+        </p>
         <input type={'hidden'} name={'userId'} value={user.userId} />
         <input type={'hidden'} name={'userName'} value={user.userName} />
 
@@ -192,19 +196,6 @@ export default function CounselingWriteForm() {
           {fieldErrors.phone && (
             <p className={'mt-1 text-xs text-error'}>{fieldErrors.phone}</p>
           )}
-        </div>
-
-        <div className={'flex items-center gap-2'}>
-          <input
-            id={'visibilityLevel'}
-            name={'visibilityLevel'}
-            type={'checkbox'}
-            defaultChecked
-            className={'h-4 w-4 rounded border-gray7 accent-accent1'}
-          />
-          <label htmlFor={'visibilityLevel'} className={'text-sm text-main'}>
-            {t.visibilityLevel || '비공개'}
-          </label>
         </div>
 
         {submitError && (

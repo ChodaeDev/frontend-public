@@ -31,6 +31,8 @@ interface CommentSectionProps {
   api?: CommentApi;
   canWrite?: boolean;
   readOnlyMessage?: string;
+  /** 로그인 사용자 대신 댓글 작성자로 쓸 정보 (비회원 글을 비밀번호로 연 경우) */
+  actor?: { userId: string; userName: string };
 }
 
 interface CommentInputProps {
@@ -241,13 +243,15 @@ export default function CommentSection({
   api,
   canWrite,
   readOnlyMessage,
+  actor: actorProp,
 }: CommentSectionProps) {
   const user = useAuthStore((state) => state.user);
+  const actor = actorProp ?? (user ? { userId: user.userId, userName: user.userName } : null);
   const queryClient = useQueryClient();
 
   const userLevel = user?.level?.toLowerCase();
   const isAdmin = userLevel === 'admin' || userLevel === 'superadmin';
-  const allowWrite = canWrite ?? !!user;
+  const allowWrite = canWrite ?? !!actor;
   const commentQueryKey = api?.queryKey ?? counselingKeys.comments(postId);
 
   const { data: comments = [], isLoading: commentsLoading } = useQuery({
@@ -273,10 +277,10 @@ export default function CommentSection({
   const { mutate: submitComment, isPending: commentSubmitting } = useMutation({
     mutationFn: ({ content, parentCommentId }: { content: string; parentCommentId?: number | null }) =>
       api
-        ? api.createComment({ userId: user!.userId, userName: user!.userName, content, parentCommentId })
+        ? api.createComment({ userId: actor!.userId, userName: actor!.userName, content, parentCommentId })
         : createComment({
           postId,
-          data: { userId: user!.userId, userName: user!.userName, content, parentCommentId },
+          data: { userId: actor!.userId, userName: actor!.userName, content, parentCommentId },
         }),
     onSuccess: () => {
       setCommentText('');
@@ -289,11 +293,11 @@ export default function CommentSection({
   const { mutate: submitCommentEdit, isPending: editSubmitting } = useMutation({
     mutationFn: ({ commentId, content }: { commentId: number; content: string }) =>
       api
-        ? api.updateComment(commentId, { userId: user!.userId, userName: user!.userName, content })
+        ? api.updateComment(commentId, { userId: actor!.userId, userName: actor!.userName, content })
         : updateComment({
           postId,
           commentId,
-          data: { userId: user!.userId, userName: user!.userName, content },
+          data: { userId: actor!.userId, userName: actor!.userName, content },
         }),
     onSuccess: () => {
       setEditingComment(null);
@@ -332,7 +336,7 @@ export default function CommentSection({
                   comment={comment}
                   isAdmin={isAdmin}
                   canManage={allowWrite}
-                  userId={user?.userId}
+                  userId={actor?.userId}
                   isEditing={editingComment?.id === comment.id}
                   editText={editCommentText}
                   editSubmitting={editSubmitting}
@@ -356,10 +360,10 @@ export default function CommentSection({
                   } : undefined}
                   t={t}
                 />
-                {replyingTo?.id === comment.id && user && allowWrite && (
+                {replyingTo?.id === comment.id && actor && allowWrite && (
                   <div className={'mt-3 pl-2'}>
                     <CommentInput
-                      userName={user.userName}
+                      userName={actor.userName}
                       value={replyText}
                       onChange={setReplyText}
                       onSubmit={() => {
@@ -388,7 +392,7 @@ export default function CommentSection({
                           isReply
                           isAdmin={isAdmin}
                           canManage={allowWrite}
-                          userId={user?.userId}
+                          userId={actor?.userId}
                           isEditing={editingComment?.id === reply.id}
                           editText={editCommentText}
                           editSubmitting={editSubmitting}
@@ -419,10 +423,10 @@ export default function CommentSection({
       )}
 
       {/* 댓글 작성 */}
-      {user && allowWrite ? (
+      {actor && allowWrite ? (
         <div className={'mt-4'}>
           <CommentInput
-            userName={user.userName}
+            userName={actor.userName}
             value={commentText}
             onChange={setCommentText}
             onSubmit={() => {

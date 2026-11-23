@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useParams, usePathname } from 'next/navigation';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import FormSelect from '@/components/ui/FormSelect';
 import {
   inputStyle,
@@ -26,7 +26,9 @@ import { formatPhone, stripNonDigits } from '@/lib/format';
 import PhoneInput from '@/components/ui/PhoneInput';
 import RichTextEditor from '@/components/ui/RichTextEditor';
 import ConfirmModal from '@/components/ui/ConfirmModal';
-import { counselingKeys, fetchCounselingDetail, updateCounselingPost } from '@/lib/queries/counseling';
+import { counselingKeys, updateCounselingPost } from '@/lib/queries/counseling';
+import { useCounselingPostAccess } from '@/lib/hooks/useCounselingPostAccess';
+import GuestPasswordGate from '@/components/board/GuestPasswordGate';
 
 interface CounselingEditFormProps {
   postId: number;
@@ -46,32 +48,40 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
   const [counselType, setCounselType] = useState('');
   const [content, setContent] = useState('');
   const [phone, setPhone] = useState('');
-  const [visibilityLevel, setVisibilityLevel] = useState(false);
 
   const [fieldErrors, setFieldErrors] = useState<FieldErrors<CounselingInput>>({});
 
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
-  const { data: post, isLoading: postLoading, isError: postError } = useQuery({
-    queryKey: counselingKeys.detail(postId),
-    queryFn: () => fetchCounselingDetail(postId),
-    enabled: !!user,
-  });
+  // 비회원 글이면 수정 화면에 들어올 때도 비밀번호를 다시 받는다
+  const {
+    post,
+    loading: postLoading,
+    error: postError,
+    needsPassword,
+    isGuestLocked,
+    accessToken,
+    unlock,
+    unlocking,
+    unlockError,
+  } = useCounselingPostAccess(postId);
+  const isGuestPost = post?.authorType === 'guest' || isGuestLocked;
 
   const initialized = useRef(false);
 
   useEffect(() => {
+    if (postLoading || needsPassword || isGuestPost) return;
     if (!user) {
       router.replace(`/${ locale }/login?returnTo=${ encodeURIComponent(pathname) }`);
     }
-  }, [user, router, locale, pathname]);
+  }, [user, router, locale, pathname, postLoading, needsPassword, isGuestPost]);
 
   useEffect(() => {
-    if (postError) {
+    if (postError && !needsPassword && (user || isGuestPost)) {
       router.replace(`/${ locale }/board/counseling`);
     }
-  }, [postError, locale, router]);
+  }, [postError, needsPassword, user, isGuestPost, locale, router]);
 
   useEffect(() => {
     if (post && !initialized.current) {
@@ -80,7 +90,6 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
       setCounselType(post.counselType);
       setContent(post.content);
       setPhone(formatPhone(post.phone));
-      setVisibilityLevel(post.visibilityLevel !== 'public');
     }
   }, [post]);
 
@@ -107,21 +116,31 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
     }
     setFieldErrors({});
 
+    // 비회원 글은 작성자 정보를 글에서 가져오고 열람 토큰으로 인증한다
+    const author = isGuestPost || !user
+      ? { userId: post!.userId, userName: post!.userName }
+      : { userId: user.userId, userName: user.userName };
+
     submitEdit({
       id: postId,
+      accessToken,
       data: {
         title: result.data.title,
         content: result.data.content,
-        userId: user!.userId,
-        userName: user!.userName,
-        visibilityLevel: visibilityLevel ? 'partial' : 'public',
+        ...author,
+        // 상담글은 모두 비공개(잠금)
+        visibilityLevel: 'partial',
         phone: result.data.phone,
         counselType: result.data.counselType,
       },
     });
   };
 
-  if (!user || postLoading || !initialized.current) {
+  if (needsPassword) {
+    return <GuestPasswordGate onSubmit={unlock} pending={unlocking} error={unlockError} />;
+  }
+
+  if ((!user && !isGuestPost) || postLoading || !initialized.current) {
     return (
       <div className={'py-20 text-center text-sub'}>
         <span className={'inline-block size-6 border-2 border-gray5 border-t-accent1 rounded-full animate-spin'} />
@@ -197,7 +216,7 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
           </label>
           <input
             id={'applicantName'}
-            value={user.userName}
+            value={post?.userName ?? user?.userName ?? ''}
             disabled
             className={cn(inputStyle, 'bg-gray7 cursor-not-allowed')}
           />
@@ -220,19 +239,6 @@ export default function CounselingEditForm({ postId }: CounselingEditFormProps) 
           {fieldErrors.phone && (
             <p className={'mt-1 text-xs text-error'}>{fieldErrors.phone}</p>
           )}
-        </div>
-
-        <div className={'flex items-center gap-2'}>
-          <input
-            id={'visibilityLevel'}
-            type={'checkbox'}
-            checked={visibilityLevel}
-            onChange={(e) => setVisibilityLevel(e.target.checked)}
-            className={'h-4 w-4 rounded border-gray7 accent-accent1'}
-          />
-          <label htmlFor={'visibilityLevel'} className={'text-sm text-main'}>
-            {t.visibilityLevel || '비공개'}
-          </label>
         </div>
 
         {mutationError && (

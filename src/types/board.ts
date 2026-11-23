@@ -1,5 +1,8 @@
 export type VisibilityLevel = 'public' | 'partial' | 'private';
 
+/** 작성자 구분: 회원 글 / 비회원(비밀번호 잠금) 글 */
+export type AuthorType = 'member' | 'guest';
+
 export interface CounselingPost {
   id: number;
   title: string;
@@ -10,6 +13,8 @@ export interface CounselingPost {
   isNotice?: boolean;
   counselType: string;
   createDate: string;
+  authorType?: AuthorType;
+  userName?: string;
 }
 
 export interface BoardListResponse {
@@ -34,6 +39,7 @@ export interface BoardPost {
   visibilityLevel?: VisibilityLevel;
   isNotice?: boolean;
   counselType?: string;
+  authorType?: AuthorType;
 }
 
 export interface CounselingDetailData {
@@ -50,6 +56,7 @@ export interface CounselingDetailData {
   isNotice: boolean;
   createDate: string;
   modifiedDate: string;
+  authorType?: AuthorType;
 }
 
 export interface Comment {
@@ -62,9 +69,11 @@ export interface Comment {
   visibilityLevel: VisibilityLevel;
   confirm: string;
   createDate: string;
+  authorType?: AuthorType;
 }
 
 export interface BoardDict {
+  guestBadge?: string;
   requestCounseling: string;
   number: string;
   title: string;
