@@ -92,6 +92,7 @@ import ko1107 from './ko/11-07';
 import ko1108 from './ko/11-08';
 import ko1109 from './ko/11-09';
 import ko1110 from './ko/11-10';
+import ko1111 from './ko/11-11';
 articleModules.ko['00-01'] = ko0001;
 articleModules.ko['00-02'] = ko0002;
 articleModules.ko['00-03'] = ko0003;
@@ -177,6 +178,7 @@ articleModules.ko['11-07'] = ko1107;
 articleModules.ko['11-08'] = ko1108;
 articleModules.ko['11-09'] = ko1109;
 articleModules.ko['11-10'] = ko1110;
+articleModules.ko['11-11'] = ko1111;
 
 // 다른 locale은 파일이 있으면 import, 없으면 ko fallback
 
@@ -192,7 +194,7 @@ export const seriesList: SeriesInfo[] = [
   { number: 8, title: '예언과 교리 변경', articleIds: ['08-01', '08-02', '08-03', '08-04', '08-05', '08-06', '08-07', '08-08', '08-09'] },
   { number: 9, title: '기독교 핵심 교리와 신천지', articleIds: ['09-01', '09-02', '09-03', '09-04', '09-05', '09-06', '09-07', '09-08'] },
   { number: 10, title: '성경 통달과 시험', articleIds: ['10-01', '10-02', '10-03', '10-04', '10-05', '10-06'] },
-  { number: 11, title: '신천지에서 자주 하는 반론', articleIds: ['11-01', '11-02', '11-03', '11-04', '11-05', '11-06', '11-07', '11-08', '11-09', '11-10'] },
+  { number: 11, title: '신천지에서 자주 하는 반론', articleIds: ['11-01', '11-02', '11-03', '11-04', '11-05', '11-06', '11-07', '11-08', '11-09', '11-10', '11-11'] },
 ];
 
 export function getArticleById(id: string, locale: Locale = 'ko'): Article | undefined {
